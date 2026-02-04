@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { Button } from "@/components/ui/button"
-import { Menu, X, Phone, ChevronDown, Sparkles, User, LogOut } from "lucide-react"
+import { Menu, X, Phone, ChevronDown, Sparkles, User, LogOut, LayoutDashboard } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link" // Import Link for navigation
 import Image from "next/image"
@@ -33,7 +33,7 @@ export default function Navbar() {
 
   const resourcesDropdown = [
     { name: "Blogs", href: "/blogs" },
-    { name: "Guides", href: "/guides" },
+    { name: "Guides", href: "/guide" },
   ]
 
   useEffect(() => {
@@ -155,8 +155,8 @@ export default function Navbar() {
   return (
     <nav
       className={`navbar fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-        ? "bg-white/80 backdrop-blur-xl border-b border-orange-500/20 shadow-lg shadow-orange-500/5"
-        : "bg-transparent"
+        ? "bg-white/90 backdrop-blur-xl border-b border-orange-500/20 shadow-lg shadow-orange-500/5"
+        : "bg-black/5 backdrop-blur-sm"
         }`}
     >
       <div className="container mx-auto px-6">
@@ -412,13 +412,42 @@ export default function Navbar() {
                   </Button>
                 </Link>
                 {session ? (
-                  <Button
-                    variant="ghost"
-                    className="w-full mt-2 text-red-600 hover:bg-red-50 justify-start"
-                    onClick={() => signOut()}
-                  >
-                    <LogOut className="w-4 h-4 mr-2" /> Sign Out
-                  </Button>
+                  <div className="mt-4 border-t border-gray-100 pt-4">
+                    <div className="px-4 mb-3">
+                      <p className="font-semibold text-gray-900">{session.user?.name}</p>
+                      <p className="text-xs text-gray-500">{session.user?.email}</p>
+                    </div>
+
+                    {(session.user as any).role === "admin" && (
+                      <Link href="/admin">
+                        <Button
+                          variant="ghost"
+                          className="w-full justify-start text-gray-700 hover:text-orange-600 hover:bg-orange-50 mb-1"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          <LayoutDashboard className="w-4 h-4 mr-2" /> Admin Dashboard
+                        </Button>
+                      </Link>
+                    )}
+
+                    <Link href="/profile">
+                      <Button
+                        variant="ghost"
+                        className="w-full justify-start text-gray-700 hover:text-orange-600 hover:bg-orange-50 mb-1"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <User className="w-4 h-4 mr-2" /> Profile
+                      </Button>
+                    </Link>
+
+                    <Button
+                      variant="ghost"
+                      className="w-full text-red-600 hover:bg-red-50 justify-start"
+                      onClick={() => signOut({ callbackUrl: "/" })}
+                    >
+                      <LogOut className="w-4 h-4 mr-2" /> Sign Out
+                    </Button>
+                  </div>
                 ) : (
                   <Link href="/login">
                     <Button variant="ghost" className="w-full mt-2 text-gray-600 hover:bg-orange-50 justify-start">

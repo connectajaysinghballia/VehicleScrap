@@ -34,6 +34,15 @@ const B2BRegistrationSchema = new Schema(
                 "Email is invalid",
             ],
         },
+        userId: {
+            type: String,
+            required: false, // Optional for backward compatibility, but valid for new ones
+        },
+        status: {
+            type: String,
+            enum: ['pending', 'rejected', 'approved'],
+            default: 'pending'
+        }
     },
     {
         timestamps: true,

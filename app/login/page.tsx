@@ -16,6 +16,10 @@ export default function LoginPage() {
     const [password, setPassword] = useState("")
     const [isLoading, setIsLoading] = useState(false)
 
+    // B2B State
+    const [b2bUserId, setB2BUserId] = useState("")
+    const [b2bPassword, setB2BPassword] = useState("")
+
     const handleAuth = async (e: React.FormEvent) => {
         e.preventDefault()
         setIsLoading(true)
@@ -51,6 +55,30 @@ export default function LoginPage() {
             } else {
                 // Successful login
                 window.location.href = "/"
+            }
+        } catch (error) {
+            console.error(error)
+            setIsLoading(false)
+            alert("An error occurred. Please try again.")
+        }
+    }
+
+    const handleB2BLogin = async (e: React.FormEvent) => {
+        e.preventDefault()
+        setIsLoading(true)
+
+        try {
+            const result = await signIn("b2b-credentials", {
+                userId: b2bUserId,
+                password: b2bPassword,
+                redirect: false,
+            })
+
+            if (result?.error) {
+                setIsLoading(false)
+                alert("Invalid Partner ID or Password.")
+            } else {
+                window.location.href = "/profile" // Redirect to profile/dashboard
             }
         } catch (error) {
             console.error(error)
@@ -302,7 +330,7 @@ export default function LoginPage() {
                                 transition={{ duration: 0.2 }}
                                 className="space-y-6"
                             >
-                                <form onSubmit={(e) => { e.preventDefault(); alert("B2B Login functionality coming soon!"); }} className="space-y-5">
+                                <form onSubmit={handleB2BLogin} className="space-y-5">
                                     <div className="space-y-1.5">
                                         <label className="text-sm font-semibold text-gray-700 ml-1">User ID</label>
                                         <div className="relative group transition-all">
@@ -312,6 +340,8 @@ export default function LoginPage() {
                                             <input
                                                 type="text"
                                                 required
+                                                value={b2bUserId}
+                                                onChange={(e) => setB2BUserId(e.target.value)}
                                                 placeholder="Enter Partner ID"
                                                 className="block w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all duration-200"
                                             />
@@ -327,6 +357,8 @@ export default function LoginPage() {
                                             <input
                                                 type="password"
                                                 required
+                                                value={b2bPassword}
+                                                onChange={(e) => setB2BPassword(e.target.value)}
                                                 placeholder="••••••••"
                                                 className="block w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all duration-200"
                                             />
@@ -335,10 +367,17 @@ export default function LoginPage() {
 
                                     <button
                                         type="submit"
+                                        disabled={isLoading}
                                         className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-xl shadow-blue-600/20 transform transition-all active:scale-[0.98] flex items-center justify-center gap-2"
                                     >
-                                        Partner Sign In
-                                        <ArrowRight className="w-5 h-5" />
+                                        {isLoading ? (
+                                            <Loader2 className="w-5 h-5 animate-spin" />
+                                        ) : (
+                                            <>
+                                                Partner Sign In
+                                                <ArrowRight className="w-5 h-5" />
+                                            </>
+                                        )}
                                     </button>
                                 </form>
 

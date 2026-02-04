@@ -1,287 +1,287 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { ChevronRight, Target, Eye, Users, Award, Lightbulb, Heart } from "lucide-react"
-import Navbar from "@/components/Navbar"
-import Footer from "@/components/Footer"
+import { motion, useScroll, useTransform } from "framer-motion"
+import {
+  Target,
+  Users,
+  Lightbulb,
+  TrendingUp,
+  Award,
+  Globe,
+  ArrowRight,
+  CheckCircle2
+} from "lucide-react"
+import Link from "next/link"
+import FAQSection from "@/components/FAQSection"
 
-gsap.registerPlugin(ScrollTrigger)
+
 
 export default function AboutPage() {
-  const [activeTab, setActiveTab] = useState("mission")
+  const [mounted, setMounted] = useState(false)
+  const { scrollYProgress } = useScroll()
+  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0])
+  const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.9])
 
-  const missionData = {
-    title: "Our Mission",
-    description:
-      "Riveyra Infotech is a web development company aims at providing the best services regarding the website and software development. We provide comprehensive and integrated IT services that includes software development, Website design and development, Mobile application development, Mobile website development, Search Engine Optimization, Online marketing, Graphics Design as well as development and implementation of high quality business domain applications. Our goal is to provide high quality and cost effective services to the internet and IT outsourcing community and business who wish to maximize their reach by harnessing the unlimited power of information technology.",
-    statementTitle: "Mission Statement",
-    points: [
-      "Be compassionate and transparent with our clients.",
-      "Understanding and interpreting the requirements and desires of various business disciplines.",
-      "To provide customizable web development, software development, and a variety of other services at a cutting-edge pricing while paving the road for socially responsible enterprises.",
-      "To provide our clients with the most compelling and creative solutions possible.",
-      "Creating and promoting brands via the use of Social Media Strategies.",
-    ],
-    image: "images/aboutus/mission.jpg",
+  const scrollToMore = () => {
+    const element = document.getElementById("learn-more")
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" })
+    }
   }
-
-  const visionData = {
-    title: "Our Vision",
-    description:
-      "Riveyra Infotech is a web development company aims at providing the best services regarding the website and software development. We provide comprehensive and integrated IT services that includes software development, Website design and development, Mobile application development, Mobile website development, Search Engine Optimization, Online marketing, Graphics Design as well as development and implementation of high quality business domain applications. Our goal is to provide high quality and cost effective services to the internet and IT outsourcing community and business who wish to maximize their reach by harnessing the unlimited power of information technology.",
-    statementTitle: "Vision Statement",
-    points: [
-      "To deliver creative solutions that continually break new ground.",
-      "Emphasizing on timely project delivery under reasonable quotes.",
-      "To achieve client satisfaction, we guarantee high-quality work, bidirectional communication, and prompt customer service.",
-      "To reach out to our clients and assist them in growing their online businesses.",
-    ],
-    image: "images/aboutus/vision.jpg",
-  }
-
-  const currentData = activeTab === "mission" ? missionData : visionData
-
-  const companyValues = [
-    { icon: Target, title: "Innovation", description: "Cutting-edge solutions" },
-    { icon: Users, title: "Teamwork", description: "Collaborative approach" },
-    { icon: Award, title: "Excellence", description: "Quality delivery" },
-    { icon: Heart, title: "Integrity", description: "Transparent practices" },
-    { icon: Lightbulb, title: "Creativity", description: "Unique solutions" },
-    { icon: Eye, title: "Vision", description: "Future-focused" },
-  ]
 
   useEffect(() => {
-    // Hero section animations
-    gsap.fromTo(".hero-title", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1, delay: 0.3, ease: "power3.out" })
-
-    gsap.fromTo(
-      ".hero-breadcrumb",
-      { opacity: 0, x: -30 },
-      { opacity: 1, x: 0, duration: 0.8, delay: 0.5, ease: "power2.out" },
-    )
-
-    // Company description animation
-    gsap.fromTo(
-      ".company-description",
-      { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 1, delay: 0.7, ease: "power2.out" },
-    )
-
-    // Values grid animation
-    gsap.fromTo(
-      ".value-card",
-      { opacity: 0, scale: 0.8, y: 30 },
-      {
-        opacity: 1,
-        scale: 1,
-        y: 0,
-        duration: 0.6,
-        stagger: 0.1,
-        delay: 1,
-        ease: "back.out(1.7)",
-      },
-    )
-
-    // Tab buttons animation
-    gsap.fromTo(
-      ".tab-button",
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.8, delay: 1.2, stagger: 0.1, ease: "power2.out" },
-    )
-
-    // Floating animation for hero image
-    gsap.to(".hero-image", {
-      y: -10,
-      duration: 3,
-      ease: "power2.inOut",
-      yoyo: true,
-      repeat: -1,
-    })
+    setMounted(true)
   }, [])
 
+  if (!mounted) return null
+
+  const stats = [
+    { label: "Years Experience", value: "10+" },
+    { label: "Happy Clients", value: "500+" },
+    { label: "Projects Done", value: "1.2k+" },
+    { label: "Team Members", value: "50+" },
+  ]
+
+  const features = [
+    {
+      icon: Target,
+      title: "Our Mission",
+      description: "To revolutionize the scraping industry with transparent, efficient, and eco-friendly solutions.",
+    },
+    {
+      icon: Lightbulb,
+      title: "Our Vision",
+      description: "Becoming the global standard for sustainable vehicle recycling and material recovery.",
+    },
+    {
+      icon: TrendingUp,
+      title: "Our Growth",
+      description: "Consistently expanding our network to serve more regions and businesses every year.",
+    },
+  ]
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black">
-      
+    <div className="min-h-screen bg-white text-gray-900 font-sans selection:bg-orange-100 selection:text-orange-900 overflow-x-hidden">
+
+      {/* Scroll Progress Bar */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-1 bg-orange-500 origin-left z-50"
+        style={{ scaleX: scrollYProgress }}
+      />
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 relative overflow-hidden">
-        {/* Background Effects */}
-        <div className="absolute inset-0">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-r from-emerald-500/10 to-green-500/10 rounded-full blur-3xl animate-pulse"></div>
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+        {/* Background Gradients */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-orange-50 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
+          <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-blue-50 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
+          <div className="absolute -bottom-32 left-20 w-[600px] h-[600px] bg-orange-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
         </div>
 
-        <div className="container mx-auto px-6 relative z-10">
-          {/* Breadcrumb */}
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-20">
           <motion.div
-            className="hero-breadcrumb flex items-center space-x-2 text-gray-400 mb-8"
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
+            style={{ opacity, scale }}
+            className="text-center max-w-4xl mx-auto"
           >
-            <span className="hover:text-green-400 transition-colors cursor-pointer">Home</span>
-            <ChevronRight className="w-4 h-4" />
-            <span className="text-green-400">About Company</span>
-          </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-50 border border-orange-100 text-orange-600 font-medium text-sm mb-8"
+            >
+              <Globe className="w-4 h-4" />
+              <span>Global Leaders in Vehicle Scrapping</span>
+            </motion.div>
 
-          {/* Hero Title */}
-          <motion.div
-            className="hero-title text-center mb-16"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.3 }}
-          >
-            <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-              Discover the Future of{" "}
-              <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
-                IT Solutions
-              </span>{" "}
-              with Riveyra Infotech.
-            </h1>
-          </motion.div>
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-5xl md:text-7xl font-bold tracking-tight text-gray-900 mb-8"
+            >
+              Driving the Future of <br className="hidden md:block" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-500">
+                Sustainable Recycling
+              </span>
+            </motion.h1>
 
-          {/* Company Description */}
-          <motion.div
-            className="company-description max-w-4xl mx-auto mb-20"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.7 }}
-          >
-            <div className="bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-lg rounded-2xl p-8 border border-green-500/20">
-              <h2 className="text-3xl font-bold text-green-400 mb-6">About Company</h2>
-              <p className="text-gray-300 text-lg leading-relaxed">
-                Riveyra Infotech is a software development company that has been successfully present on the software
-                development market for over 4 years and since that time has grown to become a well-regarded player in
-                this industry and has proven to be a reliable, efficient and trustworthy service provider to the
-                businesses from all over the World. The company has established recognizing the potential of the
-                increasing market of the companies, that are or would be looking to make their business processes more
-                efficient by automating them through the use of advanced software solutions and/or to act in response to
-                the current market forces that dictate the necessity of online presence in order to stay abreast with
-                competition.
-              </p>
-            </div>
-          </motion.div>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="text-xl md:text-2xl text-gray-500 leading-relaxed mb-12 max-w-2xl mx-auto"
+            >
+              We transform end-of-life vehicles into valuable resources, powering a greener tomorrow through innovation and integrity.
+            </motion.p>
 
-          {/* Company Values Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-20">
-            {companyValues.map((value, index) => (
-              <motion.div
-                key={value.title}
-                className="value-card bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-lg rounded-xl p-6 border border-green-500/20 text-center hover:border-green-400/40 transition-all duration-300 group"
-                whileHover={{ scale: 1.05, y: -5 }}
-                initial={{ opacity: 0, scale: 0.8, y: 30 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 1 + index * 0.1 }}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="flex flex-col sm:flex-row gap-4 justify-center"
+            >
+              <Link href="/contact" className="px-8 py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-full font-semibold transition-all shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2 hover:scale-105 active:scale-95">
+                Get Started
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <button
+                onClick={scrollToMore}
+                className="px-8 py-4 bg-white hover:bg-gray-50 text-gray-900 border border-gray-200 rounded-full font-semibold transition-all hover:scale-105 active:scale-95"
               >
-                <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <value.icon className="w-6 h-6 text-black" />
-                </div>
-                <h3 className="text-white font-semibold mb-2">{value.title}</h3>
-                <p className="text-gray-400 text-sm">{value.description}</p>
+                Learn More
+              </button>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section id="learn-more" className="py-20 bg-gray-50 border-y border-gray-100">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+            {stats.map((stat, index) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="text-center"
+              >
+                <div className="text-4xl md:text-5xl font-bold text-orange-500 mb-2">{stat.value}</div>
+                <div className="text-sm md:text-base text-gray-500 font-medium uppercase tracking-wide">{stat.label}</div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Mission/Vision Toggle Section */}
-      <section className="py-20 relative">
-        <div className="container mx-auto px-6">
-          {/* Toggle Buttons */}
-          <div className="flex justify-center mb-16">
-            <div className="bg-gray-900/50 backdrop-blur-lg rounded-full p-2 border border-green-500/20">
-              <button
-                className={`tab-button px-8 py-3 rounded-full font-semibold transition-all duration-300 ${
-                  activeTab === "mission"
-                    ? "bg-gradient-to-r from-green-500 to-emerald-500 text-black shadow-lg shadow-green-500/25"
-                    : "text-gray-300 hover:text-white"
-                }`}
-                onClick={() => setActiveTab("mission")}
-              >
-                Our Mission
-              </button>
-              <button
-                className={`tab-button px-8 py-3 rounded-full font-semibold transition-all duration-300 ${
-                  activeTab === "vision"
-                    ? "bg-gradient-to-r from-green-500 to-emerald-500 text-black shadow-lg shadow-green-500/25"
-                    : "text-gray-300 hover:text-white"
-                }`}
-                onClick={() => setActiveTab("vision")}
-              >
-                Our Vision
-              </button>
-            </div>
-          </div>
+      {/* Intro/Story Section */}
+      <section className="py-24 md:py-32">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
 
-          {/* Content Section */}
-          <AnimatePresence mode="wait">
             <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
-              className="bg-gradient-to-br from-gray-900/30 to-black/30 backdrop-blur-lg rounded-3xl border border-green-500/20 overflow-hidden"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="relative"
             >
-              <div className="grid lg:grid-cols-2 gap-0">
-                {/* Content Side */}
-                <div className="p-12 lg:p-16">
-                  <h2 className="text-4xl font-bold text-green-400 mb-8">{currentData.title}</h2>
-                  <p className="text-gray-300 text-lg leading-relaxed mb-12">{currentData.description}</p>
-
-                  <h3 className="text-2xl font-bold text-green-400 mb-8">{currentData.statementTitle}</h3>
-                  <div className="space-y-4">
-                    {currentData.points.map((point, index) => (
-                      <motion.div
-                        key={index}
-                        className="flex items-start space-x-4"
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.1, duration: 0.5 }}
-                      >
-                        <div className="w-2 h-2 bg-gradient-to-r from-green-400 to-emerald-400 rounded-full mt-3 flex-shrink-0"></div>
-                        <p className="text-gray-300 leading-relaxed">{point}</p>
-                      </motion.div>
-                    ))}
+              <div className="absolute inset-0 bg-orange-200 rounded-3xl transform rotate-3 scale-105 opacity-20"></div>
+              <img
+                src="https://images.unsplash.com/photo-1552960562-daf630e9278b?q=80&w=2666&auto=format&fit=crop"
+                alt="Team Meeting"
+                className="relative rounded-3xl shadow-2xl w-full object-cover h-[500px]"
+              />
+              <div className="absolute -bottom-10 -right-10 bg-white p-6 rounded-2xl shadow-xl border border-gray-100 max-w-xs hidden md:block">
+                <div className="flex items-center gap-4 mb-3">
+                  <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+                    <Award className="w-6 h-6 text-orange-600" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-gray-900">Certified</div>
+                    <div className="text-xs text-gray-500">Industry Standard</div>
                   </div>
                 </div>
-
-                {/* Image Side */}
-                <div className="relative p-8 lg:p-12 flex items-center justify-center">
-                  <motion.div
-                    className="hero-image relative"
-                    animate={{ y: [-10, 10, -10] }}
-                    transition={{ duration: 6, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-                  >
-                    <img
-                      src={currentData.image || "/placeholder.svg"}
-                      alt={currentData.title}
-                      className="w-full h-auto rounded-2xl shadow-2xl shadow-green-500/20"
-                    />
-
-                    {/* Floating decorative elements */}
-                    <motion.div
-                      className="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-r from-green-400 to-emerald-400 rounded-full opacity-60"
-                      animate={{ scale: [1, 1.2, 1], rotate: [0, 180, 360] }}
-                      transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY }}
-                    />
-                    <motion.div
-                      className="absolute -bottom-4 -left-4 w-6 h-6 bg-gradient-to-r from-emerald-400 to-green-400 rounded-full opacity-40"
-                      animate={{ scale: [1.2, 1, 1.2], rotate: [360, 180, 0] }}
-                      transition={{ duration: 5, repeat: Number.POSITIVE_INFINITY }}
-                    />
-                  </motion.div>
-                </div>
+                <p className="text-sm text-gray-600">Recognized for excellence in sustainable practices since 2014.</p>
               </div>
             </motion.div>
-          </AnimatePresence>
+
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+                Pioneering the Modern <br />
+                <span className="text-orange-500">Scrapping Ecosystem</span>
+              </h2>
+              <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+                Founded with a simple yet ambitious goal: to clean up our cities while recovering valuable materials. What started as a small local operation has grown into a leader in the vehicle recycling industry.
+              </p>
+              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+                We believe in a future where nothing goes to waste. Our advanced facilities and expert team ensure that every vehicle is processed with the highest environmental standards.
+              </p>
+
+              <ul className="space-y-4">
+                {["Eco-friendly Processing", "Instant Fair Quotes", "Hassle-free Documentation", "Pan-India Network"].map((item, idx) => (
+                  <motion.li
+                    key={idx}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.1 * idx }}
+                    className="flex items-center gap-3 text-gray-700 font-medium"
+                  >
+                    <CheckCircle2 className="w-5 h-5 text-orange-500" />
+                    {item}
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
+
+          </div>
         </div>
       </section>
 
-     
+      {/* Values/Features */}
+      <section className="py-24 bg-gray-900 text-white rounded-t-[3rem] overflow-hidden relative">
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-20 pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-orange-500 rounded-full blur-[120px]"></div>
+        </div>
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6">Our Core Values</h2>
+            <p className="text-orange-100/70 text-lg">Principles that drive our every action and decision.</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {features.map((feature, index) => (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -10 }}
+                className="bg-white/10 backdrop-blur-lg border border-white/10 p-8 rounded-3xl"
+              >
+                <div className="w-16 h-16 bg-orange-500/20 rounded-2xl flex items-center justify-center mb-6">
+                  <feature.icon className="w-8 h-8 text-orange-400" />
+                </div>
+                <h3 className="text-xl font-bold mb-4">{feature.title}</h3>
+                <p className="text-gray-300 leading-relaxed">
+                  {feature.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-24">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="bg-orange-50 rounded-3xl p-12 md:p-20 text-center border border-orange-100"
+          >
+            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">Ready to Scrape Your Vehicle?</h2>
+            <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">Get the best price for your old car today. Instant quote, free pickup, and full documentation support.</p>
+            <button className="px-10 py-5 bg-orange-600 hover:bg-orange-700 text-white text-lg font-semibold rounded-full shadow-xl shadow-orange-500/20 transition-all hover:scale-105 active:scale-95">
+              Check Price Now
+            </button>
+          </motion.div>
+        </div>
+      </section>
+
+      <FAQSection />
     </div>
   )
 }

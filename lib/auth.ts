@@ -48,6 +48,45 @@ export const authOptions: NextAuthOptions = {
                 }
             },
         }),
+        CredentialsProvider({
+            id: "b2b-credentials",
+            name: "Partner Login",
+            credentials: {
+                userId: { label: "User ID", type: "text" },
+                password: { label: "Password", type: "password" },
+            },
+            async authorize(credentials) {
+                if (!credentials?.userId || !credentials?.password) {
+                    return null;
+                }
+
+                await connectToDatabase();
+
+                // Mongoose might not be loaded with B2BPartner model if we don't import it?
+                // Ensure dynamic import or simple require if needed, but standard import top-level usually works if Next.js bundles it.
+                // However, circular deps can be an issue. Let's rely on global connection.
+                const B2BPartner = (await import("@/models/B2BPartner")).default;
+
+                const partner = await B2BPartner.findOne({ userId: credentials.userId });
+
+                if (!partner) {
+                    return null;
+                }
+
+                // Check password (Plain text for now as per legacy implementation, should be hashed later)
+                // If the stored password doesn't match
+                if (partner.password !== credentials.password) {
+                    return null;
+                }
+
+                return {
+                    id: partner._id.toString(),
+                    name: partner.businessName,
+                    email: partner.email,
+                    role: "partner", // specialized role
+                }
+            },
+        }),
     ],
     callbacks: {
         async signIn({ user, account, profile }) {

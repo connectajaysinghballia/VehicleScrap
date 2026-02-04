@@ -133,7 +133,7 @@ export default function Footer() {
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-semibold text-gray-900">Visit Us</p>
-                  <p className="text-gray-600 text-sm">123 Recycling Hub, Industrial Area, Noida, UP - 201301</p>
+                  <p className="text-gray-600 text-sm">133/306, Transport Nagar, T. P. Nagar, Kanpur – 208023, Uttar Pradesh, India</p>
                 </div>
               </li>
               <li className="flex items-center gap-4 group cursor-default">
@@ -142,7 +142,9 @@ export default function Footer() {
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-semibold text-gray-900">Call Us</p>
-                  <p className="text-gray-600 text-sm font-medium">+91 80090 60158</p>
+                  <p className="text-gray-600 text-sm font-medium">
+                    +91 90053 33587 <br /> +91 94154 80154
+                  </p>
                 </div>
               </li>
               <li className="flex items-center gap-4 group cursor-default">
@@ -151,7 +153,7 @@ export default function Footer() {
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-semibold text-gray-900">Email Us</p>
-                  <p className="text-gray-600 text-sm">support@autoscrap.com</p>
+                  <p className="text-gray-600 text-sm break-all">service.desk@novalytixtechservices.com</p>
                 </div>
               </li>
             </ul>

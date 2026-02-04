@@ -6,6 +6,15 @@ import { Building2, MapPin, Phone, Mail, User, CheckCircle, ArrowRight, ArrowLef
 import Link from "next/link"
 import confetti from "canvas-confetti"
 import { useToast } from "@/components/ui/use-toast"
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
@@ -17,32 +26,14 @@ export default function PartnerRegistrationPage() {
     const router = useRouter()
     const { toast } = useToast()
 
+    // State for auth modal
+    const [showAuthModal, setShowAuthModal] = useState(false)
+
     useEffect(() => {
         if (status === "unauthenticated") {
-            toast({
-                title: "Login Required",
-                description: "Please login first to fill the B2B registration form.",
-                variant: "destructive",
-            })
-            // Small delay to ensure toast is visible before redirect
-            const timeout = setTimeout(() => {
-                router.push("/login?callbackUrl=/partner-register")
-            }, 1500)
-            return () => clearTimeout(timeout)
+            setShowAuthModal(true)
         }
-    }, [status, router, toast])
-
-    if (status === "loading") {
-        return (
-            <div className="min-h-screen flex items-center justify-center bg-gray-50">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
-            </div>
-        )
-    }
-
-    if (status === "unauthenticated") {
-        return null // Don't render anything while redirecting
-    }
+    }, [status])
 
     // Form State
     const [formData, setFormData] = useState({
@@ -54,6 +45,14 @@ export default function PartnerRegistrationPage() {
         contactNumber: "",
         email: ""
     })
+
+    if (status === "loading") {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-50">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
+            </div>
+        )
+    }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target
@@ -72,7 +71,10 @@ export default function PartnerRegistrationPage() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({
+                    ...formData,
+                    userId: session?.user ? (session.user as any).id : undefined
+                }),
             })
 
             const data = await res.json()
@@ -100,6 +102,23 @@ export default function PartnerRegistrationPage() {
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 font-sans">
+            <AlertDialog open={showAuthModal}>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Login Required</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            You must be logged in to register as a B2B partner. Please login or sign up to continue.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogAction
+                            onClick={() => router.push("/login?callbackUrl=/partner-register")}
+                        >
+                            Go to Login Page
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <Link href="/login" className="flex items-center justify-center text-gray-500 hover:text-gray-900 mb-6 transition-colors">
                     <ArrowLeft className="w-4 h-4 mr-2" /> Back to Login
