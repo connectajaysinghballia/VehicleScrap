@@ -37,7 +37,7 @@ export default function EKYCPage() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 py-6 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
+        <div className="min-h-screen bg-gray-50 pt-24 pb-12 px-0 md:px-6 lg:px-8 flex items-start justify-center">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}

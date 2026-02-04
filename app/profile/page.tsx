@@ -6,6 +6,7 @@ import Valuation from "@/models/Valuation"
 import B2BRegistration from "@/models/B2BRegistration"
 import B2BPartner from "@/models/B2BPartner"
 import { User, Package, Clock, Calendar, CheckCircle, Car, Building2, AlertCircle } from "lucide-react"
+import Link from "next/link"
 
 export const dynamic = "force-dynamic"
 
@@ -149,12 +150,12 @@ export default async function ProfilePage() {
                                     <p className="text-red-700 mt-1 mb-4">
                                         Your application for <strong>{registration.name}</strong> submitted on {new Date(registration.createdAt).toLocaleDateString()} was not approved.
                                     </p>
-                                    <a
+                                    <Link
                                         href="/partner-register"
                                         className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-red-700 bg-red-100 hover:bg-red-200 transition-colors"
                                     >
                                         Apply Again
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         ) : (
@@ -180,12 +181,12 @@ export default async function ProfilePage() {
                             <p className="text-gray-500 max-w-md mx-auto mt-2 mb-6">
                                 Join our network of certified scrap dealers and unlock exclusive benefits for your business.
                             </p>
-                            <a
+                            <Link
                                 href="/partner-register"
                                 className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-xl text-white bg-blue-600 hover:bg-blue-700 transition-colors shadow-sm"
                             >
                                 Apply for B2B Registration
-                            </a>
+                            </Link>
                         </div>
                     )}
                 </div>
@@ -201,9 +202,9 @@ export default async function ProfilePage() {
                         <div className="bg-white rounded-xl p-8 text-center border border-dashed border-gray-300">
                             <Package className="w-12 h-12 text-gray-300 mx-auto mb-3" />
                             <p className="text-gray-500">You haven't submitted any valuation requests yet.</p>
-                            <a href="/" className="inline-block mt-4 text-orange-600 font-semibold hover:underline">
+                            <Link href="/" className="inline-block mt-4 text-orange-600 font-semibold hover:underline">
                                 Get a Quote
-                            </a>
+                            </Link>
                         </div>
                     ) : (
                         <div className="grid gap-4">

@@ -82,14 +82,7 @@ export default function HeroSection() {
             </motion.div>
 
             {/* Subheading */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-lg lg:text-xl text-gray-800 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0"
-            >
-              Get the best price for your old vehicle with our hassle-free, government-authorized scrapping service. Instant quotes, free pickup, and full documentation support.
-            </motion.p>
+
 
             {/* CTA Buttons */}
             <motion.div

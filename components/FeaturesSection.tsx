@@ -96,7 +96,7 @@ export default function FeaturesSection() {
                 <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-colors duration-300 ${colorClass.bg} ${colorClass.hoverBg}`}>
                   <IconComponent className={`w-7 h-7 ${colorClass.text}`} />
                 </div>
-                <h3 className={`text-xl font-bold text-gray-900 mb-3 transition-colors group-hover:${colorClass.text.replace('text-', 'text-')}`}>
+                <h3 className={`text-xl font-bold text-gray-900 mb-3 transition-colors group-hover:${colorClass.text}`}>
                   {feature.title}
                 </h3>
                 <p className="text-gray-600 leading-relaxed">

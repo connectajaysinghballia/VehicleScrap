@@ -4,6 +4,7 @@ import React from "react"
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { CheckCircle, Zap, TrendingUp } from "lucide-react"
+import AuthGuard from "./AuthGuard"
 
 interface ExchangeVehicleFormProps {
   onClose: () => void
@@ -91,6 +92,7 @@ export default function ExchangeVehicleForm({ onClose }: ExchangeVehicleFormProp
 
   return (
     <div className="p-8">
+      <AuthGuard />
       {/* Form Only - Benefits removed as they are in parent */}
       <motion.form
         onSubmit={handleSubmit}

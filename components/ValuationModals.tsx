@@ -81,48 +81,46 @@ export default function ValuationModals({ formData, valuationId, onClose }: Valu
                             <X className="w-5 h-5 text-gray-500" />
                         </button>
 
-                        <div className="bg-gradient-to-r from-orange-500 to-orange-600 p-8 text-center text-white relative overflow-hidden">
+                        <div className="bg-gradient-to-r from-orange-500 to-orange-600 p-4 md:p-8 text-center text-white relative overflow-hidden">
                             <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
-                            <h2 className="text-3xl font-bold mb-2">Build Your Quote</h2>
-                            <p className="opacity-90">Based on your {formData.vehicleType} details</p>
+                            <h2 className="text-xl md:text-3xl font-bold mb-1 md:mb-2">Build Your Quote</h2>
+                            <p className="opacity-90 text-xs md:text-base">Based on your {formData.vehicleType} details</p>
 
-                            <div className="mt-8 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 inline-block min-w-[300px]">
-                                <p className="text-sm font-medium opacity-80 uppercase tracking-widest mb-1">Estimated Valuation</p>
-                                <div className="text-5xl font-black tracking-tight text-white drop-shadow-sm">
+                            <div className="mt-4 md:mt-8 bg-white/10 backdrop-blur-md rounded-xl md:rounded-2xl p-3 md:p-6 border border-white/20 inline-block w-full max-w-[250px] md:max-w-sm mx-auto">
+                                <p className="text-[10px] md:text-sm font-medium opacity-80 uppercase tracking-widest mb-1">Estimated Valuation</p>
+                                <div className="text-2xl md:text-5xl font-black tracking-tight text-white drop-shadow-sm break-words">
                                     ₹{estimatedValue}
                                 </div>
                             </div>
                         </div>
 
-                        <div className="p-8 bg-white">
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                        <div className="p-4 md:p-8 bg-white">
+                            <div className="grid grid-cols-3 gap-2 md:gap-4 mb-4 md:mb-8">
                                 {[
                                     { icon: Shield, title: "Certificate of Deposit", desc: "Secure investment options" },
                                     { icon: Sparkles, title: "25% Tax Rebate", desc: "Save big on new purchases" },
                                     { icon: Award, title: "Registration Waiver", desc: "Complete fee exemption" }
                                 ].map((item, i) => (
-                                    <div key={i} className="bg-blue-50 border border-blue-100 rounded-xl p-4 text-center hover:bg-blue-100 transition-colors">
-                                        <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center mx-auto mb-3 shadow-sm text-blue-600">
-                                            <item.icon className="w-5 h-5" />
+                                    <div key={i} className="bg-blue-50 border border-blue-100 rounded-lg md:rounded-xl p-2 md:p-4 text-center hover:bg-blue-100 transition-colors flex flex-col items-center justify-center">
+                                        <div className="w-8 h-8 md:w-10 md:h-10 bg-white rounded-full flex items-center justify-center mb-1 md:mb-3 shadow-sm text-blue-600">
+                                            <item.icon className="w-4 h-4 md:w-5 md:h-5" />
                                         </div>
-                                        <h3 className="font-bold text-gray-900 text-sm mb-1">{item.title}</h3>
-                                        <p className="text-xs text-gray-500">{item.desc}</p>
+                                        <h3 className="font-bold text-gray-900 text-[10px] md:text-sm leading-tight mb-0 md:mb-1">{item.title}</h3>
+                                        <p className="hidden md:block text-xs text-gray-500">{item.desc}</p>
                                     </div>
                                 ))}
                             </div>
 
-                            <div className="flex items-center justify-between gap-4 p-4 bg-orange-50 border-l-4 border-orange-500 rounded-lg shadow-sm mb-8 relative overflow-hidden">
-                                <div className="absolute top-0 right-0 p-2 opacity-5">
+                            <div className="flex flex-row items-center gap-3 p-3 md:p-4 bg-orange-50 border-l-4 border-orange-500 rounded-lg shadow-sm mb-4 md:mb-8 relative overflow-hidden text-left">
+                                <div className="absolute top-0 right-0 p-2 opacity-5 pointer-events-none hidden md:block">
                                     <Smartphone className="w-24 h-24 text-orange-600" />
                                 </div>
-                                <div className="flex items-center gap-4 relative z-10">
-                                    <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md animate-pulse">
-                                        <Smartphone className="w-6 h-6 text-orange-600" />
-                                    </div>
-                                    <div>
-                                        <p className="font-extrabold text-gray-900 text-lg leading-tight">Our CC will contact you soon</p>
-                                        <p className="text-sm font-bold text-orange-700">Collection Center support available 24/7</p>
-                                    </div>
+                                <div className="w-10 h-10 md:w-12 md:h-12 bg-white rounded-full flex items-center justify-center shadow-md animate-pulse shrink-0">
+                                    <Smartphone className="w-5 h-5 md:w-6 md:h-6 text-orange-600" />
+                                </div>
+                                <div>
+                                    <p className="font-extrabold text-gray-900 text-sm md:text-lg leading-tight">Our CC will contact you soon</p>
+                                    <p className="text-xs md:text-sm font-bold text-orange-700">Support available 24/7</p>
                                 </div>
                             </div>
                             <button
@@ -132,9 +130,9 @@ export default function ValuationModals({ formData, valuationId, onClose }: Valu
                                     if (valuationId) localStorage.setItem("kycValuationId", valuationId)
                                     router.push("/ekyc")
                                 }}
-                                className="w-full bg-gray-900 hover:bg-black text-white font-bold py-4 rounded-xl shadow-lg transform transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+                                className="w-full bg-gray-900 hover:bg-black text-white font-bold py-3 md:py-4 rounded-xl shadow-lg transform transition-all active:scale-[0.98] flex items-center justify-center gap-2 text-sm md:text-base"
                             >
-                                <Sparkles className="w-5 h-5 text-yellow-400" />
+                                <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-yellow-400" />
                                 Final Step eKYC
                             </button>
                         </div>
@@ -257,10 +255,10 @@ export default function ValuationModals({ formData, valuationId, onClose }: Valu
                             </p>
                         </div>
 
-                        <a href="/" className="block w-full bg-gray-900 hover:bg-black text-white font-bold py-4 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2">
+                        <Link href="/" className="block w-full bg-gray-900 hover:bg-black text-white font-bold py-4 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2">
                             <Home className="w-5 h-5" />
                             Return to Home
-                        </a>
+                        </Link>
                     </motion.div>
                 )}
 

@@ -6,6 +6,7 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Car, Bike, Truck, MessageCircle, CheckCircle, Phone, MapPin, FileText, User, Zap, Sparkles } from "lucide-react"
 import ValuationModals from "./ValuationModals"
+import AuthGuard from "./AuthGuard"
 
 const vehicleData = {
   Car: ["Maruti Suzuki", "Hyundai", "Tata", "Honda", "Toyota", "Mahindra", "Kia", "Skoda"],
@@ -144,6 +145,7 @@ export default function QuoteForm() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white py-12 px-4 relative overflow-hidden">
+      <AuthGuard />
       {/* Background effects */}
       <div className="absolute top-20 left-10 w-72 h-72 bg-orange-500/10 rounded-full blur-3xl"></div>
       <div className="absolute bottom-20 right-10 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl"></div>

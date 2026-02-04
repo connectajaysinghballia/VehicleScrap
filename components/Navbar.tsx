@@ -450,7 +450,11 @@ export default function Navbar() {
                   </div>
                 ) : (
                   <Link href="/login">
-                    <Button variant="ghost" className="w-full mt-2 text-gray-600 hover:bg-orange-50 justify-start">
+                    <Button
+                      variant="ghost"
+                      className="w-full mt-2 text-gray-600 hover:bg-orange-50 justify-start"
+                      onClick={() => setIsOpen(false)}
+                    >
                       <User className="w-4 h-4 mr-2" /> Login
                     </Button>
                   </Link>

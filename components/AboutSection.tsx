@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, Variants } from "framer-motion"
 import { Calendar, Users, CheckCircle, MapPin } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -13,7 +13,7 @@ export default function AboutSection() {
   ]
 
   // Text animation variants
-  const textVariants = {
+  const textVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
@@ -25,7 +25,7 @@ export default function AboutSection() {
     },
   }
 
-  const wordVariants = {
+  const wordVariants: Variants = {
     hidden: { opacity: 0, y: 10 },
     visible: (i: number) => ({
       opacity: 1,
@@ -154,14 +154,14 @@ export default function AboutSection() {
               whileTap={{ scale: 0.98 }}
             >
               <a
-  href="https://youtu.be/lXt6ua6vig8?si=R8y6zH_JNrtManrM"
-  target="_blank"
-  rel="noopener noreferrer"
->
-  <Button className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-black px-8 py-3 rounded-lg font-semibold transition-all duration-300">
-    Watch Our Introduction
-  </Button>
-</a>
+                href="https://youtu.be/lXt6ua6vig8?si=R8y6zH_JNrtManrM"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-black px-8 py-3 rounded-lg font-semibold transition-all duration-300">
+                  Watch Our Introduction
+                </Button>
+              </a>
 
             </motion.div>
           </motion.div>

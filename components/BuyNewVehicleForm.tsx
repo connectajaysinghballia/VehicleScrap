@@ -5,6 +5,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { CheckCircle, Gift, DollarSign, Zap, ArrowRight } from "lucide-react"
+import AuthGuard from "./AuthGuard"
 
 interface BuyNewVehicleFormProps {
   onClose: () => void
@@ -104,6 +105,7 @@ export default function BuyNewVehicleForm({ onClose }: BuyNewVehicleFormProps) {
 
   return (
     <div className="p-8">
+      <AuthGuard />
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

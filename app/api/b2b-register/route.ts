@@ -76,3 +76,38 @@ export async function GET() {
         )
     }
 }
+
+export async function DELETE(req: Request) {
+    try {
+        await connectToDatabase()
+        const { searchParams } = new URL(req.url)
+        const id = searchParams.get("id")
+
+        if (!id) {
+            return NextResponse.json(
+                { message: "Registration ID is required" },
+                { status: 400 }
+            )
+        }
+
+        const deletedRegistration = await B2BRegistration.findByIdAndDelete(id)
+
+        if (!deletedRegistration) {
+            return NextResponse.json(
+                { message: "Registration not found" },
+                { status: 404 }
+            )
+        }
+
+        return NextResponse.json(
+            { message: "Registration deleted successfully" },
+            { status: 200 }
+        )
+    } catch (error: any) {
+        console.error("B2B Deletion Error:", error)
+        return NextResponse.json(
+            { message: error.message || "Internal Server Error" },
+            { status: 500 }
+        )
+    }
+}

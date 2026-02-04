@@ -274,7 +274,7 @@ export default function EKYCForm({
         transition={{ type: "spring", duration: 0.6, bounce: 0.3 }}
         className={
           isPage
-            ? "bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl w-full border border-white/20 relative"
+            ? "bg-white/95 backdrop-blur-xl rounded-none md:rounded-2xl shadow-2xl w-full border-y md:border border-white/20 relative overflow-hidden"
             : "bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl max-w-4xl w-full border border-white/20 my-8 max-h-[80vh] overflow-y-auto relative"
         }
       >
@@ -283,21 +283,21 @@ export default function EKYCForm({
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
         {/* Header */}
-        <div className="sticky top-0 flex items-center justify-between p-4 md:p-6 bg-white/80 backdrop-blur-md border-b border-gray-100 z-10">
-          <div className="flex items-center gap-3 md:gap-4">
+        <div className="sticky top-0 flex items-center justify-between p-3 md:p-6 bg-white/80 backdrop-blur-md border-b border-gray-100 z-10">
+          <div className="flex items-center gap-2 md:gap-4">
             <motion.button
               onClick={onBack}
-              className="p-2 md:p-2.5 bg-gray-50 hover:bg-gray-100 rounded-full text-gray-600 transition-all border border-gray-200"
+              className="p-1.5 md:p-2.5 bg-gray-50 hover:bg-gray-100 rounded-full text-gray-600 transition-all border border-gray-200"
               whileHover={{ scale: 1.1, rotate: -10 }}
               whileTap={{ scale: 0.95 }}
             >
               <ArrowLeft className="w-4 h-4 md:w-5 md:h-5" />
             </motion.button>
             <div>
-              <h2 className="text-xl md:text-2xl font-black bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+              <h2 className="text-lg md:text-2xl font-black bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
                 Complete Verification
               </h2>
-              <p className="text-xs md:text-sm text-gray-500 font-medium">Step 2 of 2: eKYC & Documentation</p>
+              <p className="text-[10px] md:text-sm text-gray-500 font-medium">Step 2 of 2: eKYC & Documentation</p>
             </div>
           </div>
         </div>
@@ -322,7 +322,7 @@ export default function EKYCForm({
                       value={eKYCData.firstName}
                       onChange={(e) => setEKYCData({ ...eKYCData, firstName: e.target.value })}
                       placeholder="As per Aadhaar"
-                      className="w-full pl-12 pr-4 py-2.5 rounded-lg bg-white border-2 border-gray-100 text-gray-900 placeholder-gray-400 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all font-medium outline-none text-sm"
+                      className="w-full pl-10 md:pl-12 pr-3 md:pr-4 py-2 md:py-2.5 rounded-lg bg-white border-2 border-gray-100 text-gray-900 placeholder-gray-400 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all font-medium outline-none text-xs md:text-sm"
                     />
                   </div>
                 </div>
@@ -391,34 +391,34 @@ export default function EKYCForm({
 
             {/* Document Uploads Section */}
             <div>
-              <h3 className="text-base md:text-lg font-bold text-gray-800 mb-3 md:mb-4 flex items-center gap-2">
-                <span className="w-1 h-5 md:h-6 bg-green-500 rounded-full"></span>
+              <h3 className="text-sm md:text-lg font-bold text-gray-800 mb-2 md:mb-4 flex items-center gap-2">
+                <span className="w-1 h-4 md:h-6 bg-green-500 rounded-full"></span>
                 Document Uploads
               </h3>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-3 gap-2 md:gap-6">
                 {[
-                  { label: "Aadhaar Card", type: "PDF", key: "aadharFile", icon: FileText, color: "orange" },
-                  { label: "RC Document", type: "PDF", key: "rcFile", icon: FileText, color: "blue" },
-                  { label: "Car Photo", type: "PNG/JPG", key: "carPhoto", icon: ImageIcon, color: "green" }
+                  { label: "Aadhaar", type: "PDF", key: "aadharFile", icon: FileText, color: "orange" },
+                  { label: "RC Doc", type: "PDF", key: "rcFile", icon: FileText, color: "blue" },
+                  { label: "Photo", type: "IMG", key: "carPhoto", icon: ImageIcon, color: "green" }
                 ].map((item, idx) => (
                   <div key={idx} className="group relative">
-                    <label className="text-xs font-bold text-gray-500 mb-2 block uppercase tracking-wider">{item.label} ({item.type})*</label>
-                    <div className={`border-2 border-dashed border-gray-200 rounded-2xl p-4 md:p-6 flex flex-col items-center justify-center bg-gray-50/50 hover:bg-${item.color}-50/50 hover:border-${item.color}-300 transition-all cursor-pointer relative overflow-hidden`}>
-                      <div className={`w-10 h-10 md:w-12 md:h-12 bg-white rounded-full flex items-center justify-center shadow-sm mb-2 md:mb-3 group-hover:scale-110 transition-transform duration-300`}>
-                        <item.icon className={`w-5 h-5 md:w-6 md:h-6 text-${item.color}-500`} />
+                    <label className="text-[10px] md:text-xs font-bold text-gray-500 mb-1 md:mb-2 block uppercase tracking-wider truncate">{item.label}</label>
+                    <div className={`border-2 border-dashed border-gray-200 rounded-xl md:rounded-2xl p-2 md:p-6 flex flex-col items-center justify-center bg-gray-50/50 hover:bg-${item.color}-50/50 hover:border-${item.color}-300 transition-all cursor-pointer relative overflow-hidden h-20 md:h-auto`}>
+                      <div className={`w-8 h-8 md:w-12 md:h-12 bg-white rounded-full flex items-center justify-center shadow-sm mb-1 md:mb-3 group-hover:scale-110 transition-transform duration-300`}>
+                        <item.icon className={`w-4 h-4 md:w-6 md:h-6 text-${item.color}-500`} />
                       </div>
-                      <p className="text-sm font-semibold text-gray-700 text-center">{eKYCData[item.key as keyof eKYCFormData] ? "File Selected" : "Click to Upload"}</p>
-                      <p className="text-xs text-gray-400 mt-1">{item.type} only</p>
+                      <p className="text-[9px] md:text-sm font-semibold text-gray-700 text-center leading-tight">{eKYCData[item.key as keyof eKYCFormData] ? "Selected" : "Upload"}</p>
+                      <p className="text-[8px] md:text-xs text-gray-400 mt-0.5 md:mt-1 hidden md:block">{item.type} only</p>
                       <input
                         type="file"
-                        accept={item.type === "PDF" ? ".pdf" : "image/png, image/jpeg, image/jpg"}
+                        accept={item.type === "PDF" || item.type === "DOC" ? ".pdf" : "image/png, image/jpeg, image/jpg"}
                         onChange={(e) => setEKYCData({ ...eKYCData, [item.key]: e.target.files ? e.target.files[0] : null })}
                         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                       />
                       {eKYCData[item.key as keyof eKYCFormData] && (
-                        <div className="absolute top-2 right-2">
-                          <CheckCircle className="w-5 h-5 text-green-500 fill-white" />
+                        <div className="absolute top-1 right-1 md:top-2 md:right-2">
+                          <CheckCircle className="w-3 h-3 md:w-5 md:h-5 text-green-500 fill-white" />
                         </div>
                       )}
                     </div>
@@ -428,14 +428,14 @@ export default function EKYCForm({
             </div>
 
             {/* T&C Checkbox */}
-            <div className="flex items-start gap-3 md:gap-4 p-3 md:p-4 bg-orange-50 rounded-xl border border-orange-100">
+            <div className="flex items-start gap-2 md:gap-4 p-2 md:p-4 bg-orange-50 rounded-lg md:rounded-xl border border-orange-100">
               <div className="relative flex items-center mt-0.5">
                 <input
                   type="checkbox"
                   id="tc"
                   checked={eKYCData.agreeTC}
                   onChange={(e) => setEKYCData({ ...eKYCData, agreeTC: e.target.checked })}
-                  className="peer h-5 w-5 cursor-pointer appearance-none rounded-md border-2 border-orange-300 transition-all checked:bg-orange-500 checked:border-orange-500"
+                  className="peer h-4 w-4 md:h-5 md:w-5 cursor-pointer appearance-none rounded md:rounded-md border-2 border-orange-300 transition-all checked:bg-orange-500 checked:border-orange-500"
                 />
                 <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100 pointer-events-none">
                   <CheckCircle className="w-3.5 h-3.5 text-white" />

@@ -84,20 +84,18 @@ export default function B2BPartnersPage() {
     // Handlers
     const handleDelete = async (id: string) => {
         try {
-            const res = await fetch(`/api/b2b-register`, {
-                method: "PATCH",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id, status: "rejected" })
+            const res = await fetch(`/api/b2b-register?id=${id}`, {
+                method: "DELETE",
             })
 
             if (res.ok) {
                 setRegistrations(prev => prev.filter(reg => reg._id !== id))
                 toast({
                     title: "Request Rejected",
-                    description: "The B2B registration request has been marked as rejected.",
+                    description: "The B2B registration request has been permanently deleted.",
                 })
             } else {
-                throw new Error("Failed to update status")
+                throw new Error("Failed to delete request")
             }
         } catch (error) {
             toast({
