@@ -1,15 +1,48 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Building2, MapPin, Phone, Mail, User, CheckCircle, ArrowRight, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import confetti from "canvas-confetti"
 import { useToast } from "@/components/ui/use-toast"
 
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
+
 export default function PartnerRegistrationPage() {
+    const { data: session, status } = useSession()
     const [isSubmitted, setIsSubmitted] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const router = useRouter()
+    const { toast } = useToast()
+
+    useEffect(() => {
+        if (status === "unauthenticated") {
+            toast({
+                title: "Login Required",
+                description: "Please login first to fill the B2B registration form.",
+                variant: "destructive",
+            })
+            // Small delay to ensure toast is visible before redirect
+            const timeout = setTimeout(() => {
+                router.push("/login?callbackUrl=/partner-register")
+            }, 1500)
+            return () => clearTimeout(timeout)
+        }
+    }, [status, router, toast])
+
+    if (status === "loading") {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-50">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
+            </div>
+        )
+    }
+
+    if (status === "unauthenticated") {
+        return null // Don't render anything while redirecting
+    }
 
     // Form State
     const [formData, setFormData] = useState({
@@ -27,7 +60,7 @@ export default function PartnerRegistrationPage() {
         setFormData(prev => ({ ...prev, [name]: value }))
     }
 
-    const { toast } = useToast()
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()

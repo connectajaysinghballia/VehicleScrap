@@ -7,10 +7,6 @@ import Link from "next/link"
 
 export const dynamic = "force-dynamic"
 
-
-import B2BRegistration from "@/models/B2BRegistration"
-import connectToDatabase from "@/lib/db"
-
 export default async function AdminPage() {
     const session = await getServerSession(authOptions)
 
@@ -18,9 +14,6 @@ export default async function AdminPage() {
     if (!session || (session.user as any).role !== "admin") {
         redirect("/")
     }
-
-    await connectToDatabase()
-    const b2bCount = await B2BRegistration.countDocuments()
 
     return (
         <div className="min-h-screen bg-gray-50 pt-24 pb-12 px-4 sm:px-6 lg:px-8 font-sans">
@@ -49,12 +42,7 @@ export default async function AdminPage() {
                         </div>
                     </Link>
 
-                    <Link href="/admin/partners" className="group bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center gap-4 relative overflow-hidden">
-                        {b2bCount > 0 && (
-                            <div className="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center animate-pulse">
-                                {b2bCount}
-                            </div>
-                        )}
+                    <Link href="/admin/partners" className="group bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center gap-4">
                         <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
                             <Users className="w-6 h-6" />
                         </div>
