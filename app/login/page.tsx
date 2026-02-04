@@ -50,7 +50,7 @@ export default function LoginPage() {
                 alert("Invalid credentials. Please check your email and password.")
             } else {
                 // Successful login
-                window.location.href = "/dashboard"
+                window.location.href = "/"
             }
         } catch (error) {
             console.error(error)
@@ -81,7 +81,14 @@ export default function LoginPage() {
                     <div className="absolute bottom-[-10%] left-[-10%] w-[400px] h-[400px] rounded-full bg-orange-200 blur-3xl opacity-40"></div>
                 </div>
 
-                {/* Logo Removed */}
+
+                {/* Logo */}
+                <div className="relative z-10 pt-8 pl-8">
+                    <div className="flex items-center gap-3">
+                        <img src="/logo.png" alt="Logo" className="w-12 h-12" />
+                        <span className="text-2xl font-extrabold text-gray-900">AutoScrap<span className="text-orange-600">.</span></span>
+                    </div>
+                </div>
 
                 {/* Illustration Image */}
                 <div className="relative z-10 flex-1 flex items-center justify-center py-8">
@@ -295,28 +302,64 @@ export default function LoginPage() {
                                 transition={{ duration: 0.2 }}
                                 className="space-y-6"
                             >
-                                <div className="bg-blue-50 border border-blue-100 rounded-2xl p-6 text-center space-y-4">
-                                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto">
-                                        <Building2 className="w-8 h-8 text-blue-600" />
+                                <form onSubmit={(e) => { e.preventDefault(); alert("B2B Login functionality coming soon!"); }} className="space-y-5">
+                                    <div className="space-y-1.5">
+                                        <label className="text-sm font-semibold text-gray-700 ml-1">User ID</label>
+                                        <div className="relative group transition-all">
+                                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                                <User className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
+                                            </div>
+                                            <input
+                                                type="text"
+                                                required
+                                                placeholder="Enter Partner ID"
+                                                className="block w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all duration-200"
+                                            />
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h3 className="text-lg font-bold text-gray-900">B2B Partner Portal</h3>
-                                        <p className="text-sm text-gray-600 mt-1">
-                                            Exclusive access for registered corporate partners and scrap dealers.
-                                        </p>
-                                    </div>
-                                    <div className="pt-2">
 
+                                    <div className="space-y-1.5">
+                                        <label className="text-sm font-semibold text-gray-700 ml-1">Password</label>
+                                        <div className="relative group transition-all">
+                                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                                <Lock className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
+                                            </div>
+                                            <input
+                                                type="password"
+                                                required
+                                                placeholder="••••••••"
+                                                className="block w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all duration-200"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <button
+                                        type="submit"
+                                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-xl shadow-blue-600/20 transform transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+                                    >
+                                        Partner Sign In
+                                        <ArrowRight className="w-5 h-5" />
+                                    </button>
+                                </form>
+
+                                <div className="relative py-2">
+                                    <div className="absolute inset-0 flex items-center">
+                                        <div className="w-full border-t border-gray-200"></div>
+                                    </div>
+                                    <div className="relative flex justify-center text-sm">
+                                        <span className="px-4 bg-white text-gray-500 font-medium">New Partner?</span>
                                     </div>
                                 </div>
-                                <div className="text-center">
-                                    <p className="text-sm text-gray-500">
-                                        Want to become a partner?
-                                        <Link href="/contact" className="font-bold text-blue-600 hover:text-blue-700 ml-1">
-                                            Contact Sales
-                                        </Link>
-                                    </p>
-                                </div>
+
+                                <Link href="/partner-register" className="block">
+                                    <button
+                                        type="button"
+                                        className="w-full bg-white border-2 border-blue-600 text-blue-700 font-bold py-3.5 rounded-xl hover:bg-blue-50 transition-all duration-200 flex items-center justify-center gap-2"
+                                    >
+                                        <Building2 className="w-5 h-5" />
+                                        Be Our Partner
+                                    </button>
+                                </Link>
                             </motion.div>
                         )}
                     </AnimatePresence>

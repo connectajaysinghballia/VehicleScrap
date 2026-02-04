@@ -6,9 +6,10 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
-import ChatWidget from "@/components/ChatWidget"
+
 import AuthProvider from "@/components/AuthProvider"
 import LoginPopup from "@/components/LoginPopup"
+import WhatsAppFloatingButton from "@/components/WhatsAppFloatingButton"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -97,8 +98,9 @@ export default function RootLayout({
                 {children}
               </main>
               <Footer />
-              <ChatWidget />
+
               <LoginPopup />
+              <WhatsAppFloatingButton />
             </div>
             <Toaster />
           </AuthProvider>

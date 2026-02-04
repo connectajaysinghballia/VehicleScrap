@@ -47,12 +47,7 @@ export default function Navbar() {
       { scale: 1, rotation: 0, opacity: 1, duration: 0.7, delay: 0.4, ease: "back.out(1.7)" },
     )
 
-    // Logo text animation
-    gsap.fromTo(
-      ".logo-text",
-      { opacity: 0, x: -20 },
-      { opacity: 1, x: 0, duration: 0.5, delay: 0.6, ease: "power3.out" },
-    )
+
 
     // Faster nav items stagger animation
     gsap.fromTo(
@@ -176,17 +171,11 @@ export default function Navbar() {
               <Image
                 src="/logo.png"
                 alt="ScrapCenter India Logo"
-                width={40}
-                height={40}
-                className="w-8 h-8 sm:w-10 sm:h-10"
+                width={200}
+                height={80}
+                className="h-16 w-auto sm:h-20"
               />
             </motion.div>
-            <div className="hidden sm:flex flex-col logo-text">
-              <span className="text-sm md:text-base font-bold">
-                <span className="text-gray-900">ScrapCenter</span>
-                <span className="text-orange-500">india</span>
-              </span>
-            </div>
           </div>
 
           {/* Desktop Navigation */}
@@ -282,7 +271,7 @@ export default function Navbar() {
                   </div>
                   {(session.user as any).role === "admin" && (
                     <Link
-                      href="/admin-dashboard"
+                      href="/admin"
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600"
                     >
                       Admin Dashboard

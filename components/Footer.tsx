@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import { Car, Truck, Bike, Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 import { useEffect, useState } from "react"
 
 export default function Footer() {
@@ -51,9 +52,9 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Brand Column */}
           <div className="space-y-6">
-            <h2 className="text-4xl font-extrabold text-orange-600 tracking-tight">
-              AutoScrap<span className="text-sky-600">.</span>
-            </h2>
+            <div className="mb-6 -ml-6">
+              <Image src="/logo.png" alt="AutoScrap Logo" width={200} height={80} className="h-20 w-auto" />
+            </div>
             <p className="text-gray-600 leading-relaxed font-medium">
               Your trusted partner for responsible vehicle recycling. We turn your old vehicles into cash while protecting the environment.
             </p>
@@ -141,7 +142,7 @@ export default function Footer() {
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-semibold text-gray-900">Call Us</p>
-                  <p className="text-gray-600 text-sm font-medium">+91 98765 43210</p>
+                  <p className="text-gray-600 text-sm font-medium">+91 80090 60158</p>
                 </div>
               </li>
               <li className="flex items-center gap-4 group cursor-default">

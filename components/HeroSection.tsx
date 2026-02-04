@@ -51,7 +51,7 @@ export default function HeroSection() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: "url('https://i.pinimg.com/736x/89/20/ed/8920eddc6e24fe5abb1f0dd9def1c8de.jpg')"
+            backgroundImage: "url('https://manvillerecycling.com/wp-content/uploads/2021/01/How-scrap-metal-recycling-reduces-environmental-pollution-1080x675.jpg')"
           }}
         />
 
@@ -158,11 +158,10 @@ export default function HeroSection() {
                 Let's use a nice static car cutout or illustration.
              */}
             <div className="relative z-10 w-full max-w-lg">
-              <div className="absolute inset-0 bg-orange-500/20 blur-[100px] rounded-full"></div>
               <img
-                src="https://i.pinimg.com/736x/89/20/ed/8920eddc6e24fe5abb1f0dd9def1c8de.jpg"
-                alt="Vehicle Scrap"
-                className="rounded-3xl shadow-2xl border-4 border-white/50 object-cover w-full h-auto transform hover:scale-[1.02] transition-transform duration-500"
+                src="/hero-process.png"
+                alt="Vehicle Scrap Process"
+                className="w-full h-auto transform hover:scale-[1.02] transition-transform duration-500"
               />
             </div>
           </motion.div>

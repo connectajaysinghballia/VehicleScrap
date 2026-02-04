@@ -72,7 +72,7 @@ export default function ChatWidget() {
                 <Phone className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="text-xs text-gray-500 uppercase tracking-wide">Phone</p>
-                  <p className="text-white text-sm font-medium">+91 98765 43210</p>
+                  <p className="text-white text-sm font-medium">+91 80090 60158</p>
                 </div>
               </div>
 
