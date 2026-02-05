@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Navbar from "@/components/Navbar"
-import Footer from "@/components/Footer"
+
 import ExchangeVehicleForm from "@/components/ExchangeVehicleForm"
 import { motion } from "framer-motion"
 import { TrendingUp, Zap, Shield, Award } from "lucide-react"
@@ -110,7 +110,7 @@ export default function ExchangeVehiclePage() {
         </div>
       </section>
 
-      <Footer />
+
     </div>
   )
 }

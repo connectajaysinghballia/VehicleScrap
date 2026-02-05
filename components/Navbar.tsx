@@ -278,12 +278,16 @@ export default function Navbar() {
                       Admin Dashboard
                     </Link>
                   )}
-                  <Link href="/partner-register" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                    Be our partner
-                  </Link>
-                  <Link href="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                    Profile
-                  </Link>
+                  {(session.user as any).role !== "admin" && (
+                    <>
+                      <Link href="/partner-register" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        Be our partner
+                      </Link>
+                      <Link href="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        Profile
+                      </Link>
+                    </>
+                  )}
                   <button
                     onClick={() => signOut({ callbackUrl: "/" })}
                     className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -434,15 +438,17 @@ export default function Navbar() {
                       </Link>
                     )}
 
-                    <Link href="/profile">
-                      <Button
-                        variant="ghost"
-                        className="w-full justify-start text-gray-700 hover:text-orange-600 hover:bg-orange-50 mb-1"
-                        onClick={() => setIsOpen(false)}
-                      >
-                        <User className="w-4 h-4 mr-2" /> Profile
-                      </Button>
-                    </Link>
+                    {(session.user as any).role !== "admin" && (
+                      <Link href="/profile">
+                        <Button
+                          variant="ghost"
+                          className="w-full justify-start text-gray-700 hover:text-orange-600 hover:bg-orange-50 mb-1"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          <User className="w-4 h-4 mr-2" /> Profile
+                        </Button>
+                      </Link>
+                    )}
 
                     <Button
                       variant="ghost"
