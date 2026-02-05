@@ -101,7 +101,6 @@ export default function PartnerRegistrationPage() {
     }
 
     return (
-    return (
         <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 font-sans relative overflow-hidden">
             {/* Background Gradients */}
             <div className="absolute inset-0 pointer-events-none">
