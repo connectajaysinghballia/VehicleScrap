@@ -2,7 +2,6 @@ import { NextResponse } from "next/server"
 import connectToDatabase from "@/lib/db"
 import B2BPartner from "@/models/B2BPartner"
 import B2BRegistration from "@/models/B2BRegistration"
-import { sendB2BApprovalEmail } from "@/lib/email"
 
 export async function POST(req: Request) {
     try {
@@ -46,15 +45,6 @@ export async function POST(req: Request) {
         // If created successfully, and we have a registrationId, delete the original request
         if (registrationId) {
             await B2BRegistration.findByIdAndDelete(registrationId)
-        }
-
-        // Send automated approval email
-        if (email) {
-            console.log(`Sending approval email to ${email}...`);
-            // We don't await this to prevent blocking the response, or we can await if critical
-            // Given the user flow, awaiting is safer to ensure it's sent before they navigate away or just log it.
-            // Let's await to be sure.
-            await sendB2BApprovalEmail(email, businessName, userId, password);
         }
 
         return NextResponse.json(
