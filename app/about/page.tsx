@@ -171,9 +171,9 @@ export default function AboutPage() {
             >
               <div className="absolute inset-0 bg-orange-200 rounded-3xl transform rotate-3 scale-105 opacity-20"></div>
               <img
-                src="https://images.unsplash.com/photo-1552960562-daf630e9278b?q=80&w=2666&auto=format&fit=crop"
+                src="/about-team.png"
                 alt="Team Meeting"
-                className="relative rounded-3xl shadow-2xl w-full object-cover h-[500px]"
+                className="relative rounded-3xl shadow-2xl w-full h-auto"
               />
               <div className="absolute -bottom-10 -right-10 bg-white p-6 rounded-2xl shadow-xl border border-gray-100 max-w-xs hidden md:block">
                 <div className="flex items-center gap-4 mb-3">
@@ -221,6 +221,13 @@ export default function AboutPage() {
                   </motion.li>
                 ))}
               </ul>
+
+              <p className="text-lg text-gray-600 mt-8 leading-relaxed">
+                Our commitment extends beyond just processing vehicles. We are actively building a circular economy where every part of a vehicle finds a new purpose. From recovering rare earth metals to recycling steel and plastic, our advanced separation technologies ensure maximum material recovery rates.
+              </p>
+              <p className="text-lg text-gray-600 mt-4 leading-relaxed">
+                We also prioritize transparency and compliance. As an authorized scrapping facility, we work closely with RTOs and government bodies to streamline the deregistration process, ensuring that our customers receive their Certificate of Deposit (CD) promptly and seamlessly.
+              </p>
             </motion.div>
 
           </div>

@@ -139,6 +139,20 @@ export default function HeroSection() {
               </AnimatePresence>
             </div>
 
+            {/* CTA Button */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex justify-center lg:justify-start"
+            >
+              <Link href="/quote">
+                <Button className="px-10 py-7 text-xl font-bold text-white bg-gradient-to-r from-orange-600 to-red-600 rounded-2xl shadow-xl shadow-orange-500/30 hover:shadow-orange-500/50 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 border border-white/20">
+                  <span className="drop-shadow-sm">Get Free Quote</span> <ArrowRight className="ml-3 w-6 h-6 animate-pulse" />
+                </Button>
+              </Link>
+            </motion.div>
+
             {/* Exclusive Benefits - Glassmorphism Cards */}
             <motion.div
               initial={{ opacity: 0 }}

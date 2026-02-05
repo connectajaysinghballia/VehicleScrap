@@ -188,7 +188,6 @@ export default function Navbar() {
                 >
                   {item.name}
                   {item.hasDropdown && <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />}
-                  <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-orange-400 to-sky-400 group-hover:w-full transition-all duration-200"></div>
                 </button>
 
                 {/* Services Dropdown Menu */}
@@ -200,13 +199,14 @@ export default function Navbar() {
                     className="absolute top-full mt-2 left-0 bg-white/95 backdrop-blur-lg border border-orange-200 rounded-lg shadow-xl overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 min-w-[200px]"
                   >
                     {servicesDropdown.map((dropdownItem) => (
-                      <button
+                      <Link
                         key={dropdownItem.name}
-                        onClick={() => handleNavClick(dropdownItem.href)}
+                        href={dropdownItem.href}
+                        onClick={() => setIsOpen(false)}
                         className="block w-full px-4 py-3 text-gray-600 hover:text-orange-600 hover:bg-orange-50 transition-all duration-200 text-left font-medium whitespace-nowrap"
                       >
                         {dropdownItem.name}
-                      </button>
+                      </Link>
                     ))}
                   </motion.div>
                 )}
@@ -220,13 +220,14 @@ export default function Navbar() {
                     className="absolute top-full mt-2 left-0 bg-white/95 backdrop-blur-lg border border-orange-200 rounded-lg shadow-xl overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 min-w-[200px]"
                   >
                     {resourcesDropdown.map((dropdownItem) => (
-                      <button
+                      <Link
                         key={dropdownItem.name}
-                        onClick={() => handleNavClick(dropdownItem.href)}
+                        href={dropdownItem.href}
+                        onClick={() => setIsOpen(false)}
                         className="block w-full px-4 py-3 text-gray-600 hover:text-orange-600 hover:bg-orange-50 transition-all duration-200 text-left font-medium whitespace-nowrap"
                       >
                         {dropdownItem.name}
-                      </button>
+                      </Link>
                     ))}
                   </motion.div>
                 )}
@@ -360,20 +361,20 @@ export default function Navbar() {
                       animate={{ opacity: 1, height: "auto" }}
                       exit={{ opacity: 0, height: 0 }}
                       transition={{ duration: 0.2 }}
-                      className="pl-4 bg-gray-800/30 border-l-2 border-green-500/30"
+                      className="mt-2 bg-gray-900 border border-gray-800 rounded-xl overflow-hidden shadow-inner"
                     >
                       {servicesDropdown.map((dropdownItem) => (
-                        <button
+                        <Link
                           key={dropdownItem.name}
+                          href={dropdownItem.href}
                           onClick={() => {
-                            handleNavClick(dropdownItem.href)
                             setIsOpen(false)
                             setIsServicesOpen(false)
                           }}
-                          className="block w-full text-left px-4 py-3 text-gray-400 hover:text-white hover:bg-green-500/10 transition-all duration-200 rounded text-sm"
+                          className="block w-full text-left px-5 py-3 text-orange-400 font-medium hover:text-white hover:bg-white/10 transition-all duration-200 text-sm border-b border-gray-800 last:border-0"
                         >
                           {dropdownItem.name}
-                        </button>
+                        </Link>
                       ))}
                     </motion.div>
                   )}
@@ -385,20 +386,20 @@ export default function Navbar() {
                       animate={{ opacity: 1, height: "auto" }}
                       exit={{ opacity: 0, height: 0 }}
                       transition={{ duration: 0.2 }}
-                      className="pl-4 bg-gray-800/30 border-l-2 border-green-500/30"
+                      className="mt-2 bg-gray-900 border border-gray-800 rounded-xl overflow-hidden shadow-inner"
                     >
                       {resourcesDropdown.map((dropdownItem) => (
-                        <button
+                        <Link
                           key={dropdownItem.name}
+                          href={dropdownItem.href}
                           onClick={() => {
-                            handleNavClick(dropdownItem.href)
                             setIsOpen(false)
                             setIsResourcesOpen(false)
                           }}
-                          className="block w-full text-left px-4 py-3 text-gray-400 hover:text-white hover:bg-green-500/10 transition-all duration-200 rounded text-sm"
+                          className="block w-full text-left px-5 py-3 text-orange-400 font-medium hover:text-white hover:bg-white/10 transition-all duration-200 text-sm border-b border-gray-800 last:border-0"
                         >
                           {dropdownItem.name}
-                        </button>
+                        </Link>
                       ))}
                     </motion.div>
                   )}

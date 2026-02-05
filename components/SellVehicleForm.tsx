@@ -26,7 +26,7 @@ interface FormData {
   name?: string
   phone?: string
   pincode?: string
-  insuranceFile?: File
+  insuranceName?: string
 }
 
 export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
@@ -45,6 +45,7 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
     name: "",
     phone: "",
     pincode: "",
+    insuranceName: "",
   })
   const [showSuccess, setShowSuccess] = useState(false)
   const [showEKYC, setShowEKYC] = useState(false)
@@ -82,25 +83,7 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
     }))
   }
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (file) {
-      if (file.size > 2 * 1024 * 1024) {
-        alert("File size should not exceed 2MB")
-        e.target.value = "" // Reset input
-        return
-      }
-      if (file.type !== "application/pdf") {
-        alert("Please upload a PDF file")
-        e.target.value = "" // Reset input
-        return
-      }
-      setFormData((prev) => ({
-        ...prev,
-        insuranceFile: file,
-      }))
-    }
-  }
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -122,10 +105,7 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
       return
     }
 
-    if (!formData.insuranceFile) {
-      alert("Please upload Car Insurance PDF")
-      return
-    }
+
 
     if (requiredFields.every((field) => field !== "")) {
       console.log("Form submitted:", formData)
@@ -363,24 +343,19 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
             </>
           )}
 
-          {/* Car Insurance Upload */}
+
+
+          {/* Insurance Name - Optional */}
           <div>
-            <label className="text-sm font-bold text-orange-600 mb-2 block uppercase tracking-wider">Car Insurance (PDF)*</label>
-            <div className="flex items-center justify-center w-full">
-              <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-orange-300 rounded-lg cursor-pointer bg-orange-50 hover:bg-orange-100 transition-colors">
-                <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                  <svg className="w-8 h-8 mb-4 text-orange-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
-                  </svg>
-                  <p className="mb-2 text-sm text-gray-500"><span className="font-semibold">Click to upload</span> or drag and drop</p>
-                  <p className="text-xs text-gray-500">PDF (MAX. 2MB)</p>
-                </div>
-                <input type="file" className="hidden" accept=".pdf" onChange={handleFileChange} required />
-              </label>
-            </div>
-            {formData.insuranceFile && (
-              <p className="mt-2 text-sm text-green-600 font-medium">Selected: {formData.insuranceFile.name}</p>
-            )}
+            <label className="text-sm font-bold text-orange-600 mb-2 block uppercase tracking-wider">Name of Insurance (Optional)</label>
+            <input
+              type="text"
+              name="insuranceName"
+              value={formData.insuranceName}
+              onChange={handleChange}
+              placeholder="e.g., General Insurance"
+              className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 outline-none transition-all"
+            />
           </div>
 
           {/* Submit Button */}
