@@ -7,6 +7,7 @@ import HeroSection from "@/components/HeroSection"
 import ServicesSection from "@/components/ServicesSection"
 import FeaturesSection from "@/components/FeaturesSection"
 import FAQSection from "@/components/FAQSection"
+import ReviewSection from "@/components/ReviewSection"
 import WelcomePopup from "@/components/WelcomePopup"
 
 
@@ -59,6 +60,7 @@ export default function Home() {
           <ServicesSection />
           <FeaturesSection />
           <FAQSection />
+          <ReviewSection />
         </>
       )}
     </div>

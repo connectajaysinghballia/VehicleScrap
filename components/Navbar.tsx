@@ -277,6 +277,9 @@ export default function Navbar() {
                       Admin Dashboard
                     </Link>
                   )}
+                  <Link href="/partner-register" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                    Be our partner
+                  </Link>
                   <Link href="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                     Profile
                   </Link>

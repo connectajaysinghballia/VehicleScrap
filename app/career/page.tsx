@@ -228,7 +228,7 @@ export default function CareerPage() {
               >
                 Career and Culture at{" "}
                 <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
-                  Riveyra Infotech
+                  ScrapCenter India
                 </span>
               </motion.h1>
 
@@ -450,7 +450,7 @@ export default function CareerPage() {
         </div>
       </section>
 
-    
+
     </div>
   )
 }
