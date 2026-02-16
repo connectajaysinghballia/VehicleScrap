@@ -96,8 +96,22 @@ export default function BuyNewVehicleForm({ onClose }: BuyNewVehicleFormProps) {
     ]
 
     if (requiredFields.every((field) => field !== "")) {
-      console.log("Buy new vehicle form submitted:", formData)
-      setShowSuccess(true)
+      fetch("/api/buy-vehicle", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      })
+        .then((res) => {
+          if (res.ok) {
+            setShowSuccess(true)
+          } else {
+            res.json().then(data => alert(data.message || "Failed to submit request"))
+          }
+        })
+        .catch((err) => {
+          console.error(err)
+          alert("Something went wrong. Please try again.")
+        })
     } else {
       alert("Please fill in all required fields.")
     }

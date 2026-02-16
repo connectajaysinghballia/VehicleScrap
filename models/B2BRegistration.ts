@@ -46,7 +46,7 @@ const B2BRegistrationSchema = new Schema(
     },
     {
         timestamps: true,
-        collection: 'B2Bdb' // Explicitly naming the collection as requested
+        collection: 'b2b_registrations'
     }
 )
 

@@ -108,11 +108,27 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
 
 
     if (requiredFields.every((field) => field !== "")) {
-      console.log("Form submitted:", formData)
-      // Calculate random valuation (in real app, this would be based on vehicle details)
+      // Calculate random valuation
       const randomValuation = Math.floor(Math.random() * (500000 - 50000) + 50000)
       setValuation(randomValuation)
-      setShowIntermediateModal(true)
+
+      // Submit to API
+      fetch("/api/sell-vehicle", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      })
+        .then((res) => {
+          if (res.ok) {
+            setShowIntermediateModal(true)
+          } else {
+            res.json().then(data => alert(data.message || "Failed to submit request"))
+          }
+        })
+        .catch((err) => {
+          console.error(err)
+          alert("Something went wrong. Please try again.")
+        })
     } else {
       alert("Please fill in all required fields.")
     }

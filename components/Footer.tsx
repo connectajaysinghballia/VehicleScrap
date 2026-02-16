@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Car, Truck, Bike, Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react"
+import { Car, Truck, Bike, Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin, ArrowUp } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { useEffect, useState } from "react"
@@ -23,7 +23,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="relative bg-gradient-to-b from-white to-sky-50 text-gray-800 overflow-hidden pt-20 pb-10 border-t border-orange-100">
+    <footer className="relative bg-white text-gray-800 overflow-hidden pt-20 border-t border-emerald-100">
       {/* Raining Icons Background */}
       <div className="absolute inset-0 pointer-events-none opacity-10 overflow-hidden">
         {rainIcons.map((item) => (
@@ -40,7 +40,7 @@ export default function Footer() {
               delay: item.delay,
               ease: "linear",
             }}
-            className="absolute text-gray-800"
+            className="absolute text-emerald-800"
             style={{ left: item.left }}
           >
             <item.Icon size={item.size} strokeWidth={1.5} />
@@ -59,16 +59,16 @@ export default function Footer() {
               Your trusted partner for responsible vehicle recycling. We turn your old vehicles into cash while protecting the environment.
             </p>
             <div className="flex gap-4">
-              <Link href="#" className="w-12 h-12 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center hover:bg-orange-600 hover:text-white hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+              <Link href="#" className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center hover:bg-emerald-600 hover:text-white hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                 <Facebook className="w-5 h-5" />
               </Link>
-              <Link href="#" className="w-12 h-12 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center hover:bg-sky-600 hover:text-white hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+              <Link href="#" className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center hover:bg-emerald-600 hover:text-white hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                 <Twitter className="w-5 h-5" />
               </Link>
-              <Link href="#" className="w-12 h-12 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center hover:bg-pink-600 hover:text-white hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+              <Link href="#" className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center hover:bg-emerald-600 hover:text-white hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                 <Instagram className="w-5 h-5" />
               </Link>
-              <Link href="#" className="w-12 h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center hover:bg-blue-700 hover:text-white hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+              <Link href="#" className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center hover:bg-emerald-600 hover:text-white hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                 <Linkedin className="w-5 h-5" />
               </Link>
             </div>
@@ -78,7 +78,7 @@ export default function Footer() {
           <div>
             <h3 className="text-xl font-bold mb-8 text-gray-900 relative inline-block">
               Services
-              <span className="absolute -bottom-2 left-0 w-12 h-1 bg-orange-500 rounded-full"></span>
+              <span className="absolute -bottom-2 left-0 w-12 h-1 bg-emerald-600 rounded-full"></span>
             </h3>
             <ul className="space-y-4">
               {[
@@ -88,8 +88,8 @@ export default function Footer() {
                 { label: "Instant Valuation", href: "/quote" }
               ].map((link, idx) => (
                 <li key={idx}>
-                  <Link href={link.href} className="text-gray-600 font-medium hover:text-orange-600 transition-all flex items-center gap-2 group w-fit">
-                    <span className="w-2 h-2 rounded-full bg-orange-200 group-hover:bg-orange-600 group-hover:scale-125 transition-all duration-300" />
+                  <Link href={link.href} className="text-gray-600 font-medium hover:text-emerald-600 transition-all flex items-center gap-2 group w-fit">
+                    <span className="w-2 h-2 rounded-full bg-emerald-200 group-hover:bg-emerald-600 group-hover:scale-125 transition-all duration-300" />
                     <span className="group-hover:translate-x-1 transition-transform duration-300">{link.label}</span>
                   </Link>
                 </li>
@@ -101,7 +101,7 @@ export default function Footer() {
           <div>
             <h3 className="text-xl font-bold mb-8 text-gray-900 relative inline-block">
               Company
-              <span className="absolute -bottom-2 left-0 w-12 h-1 bg-sky-500 rounded-full"></span>
+              <span className="absolute -bottom-2 left-0 w-12 h-1 bg-emerald-600 rounded-full"></span>
             </h3>
             <ul className="space-y-4">
               {[
@@ -111,8 +111,8 @@ export default function Footer() {
                 { label: "Terms & Conditions", href: "/terms" }
               ].map((link, idx) => (
                 <li key={idx}>
-                  <Link href={link.href} className="text-gray-600 font-medium hover:text-sky-600 transition-all flex items-center gap-2 group w-fit">
-                    <span className="w-2 h-2 rounded-full bg-sky-200 group-hover:bg-sky-600 group-hover:scale-125 transition-all duration-300" />
+                  <Link href={link.href} className="text-gray-600 font-medium hover:text-emerald-600 transition-all flex items-center gap-2 group w-fit">
+                    <span className="w-2 h-2 rounded-full bg-emerald-200 group-hover:bg-emerald-600 group-hover:scale-125 transition-all duration-300" />
                     <span className="group-hover:translate-x-1 transition-transform duration-300">{link.label}</span>
                   </Link>
                 </li>
@@ -124,12 +124,12 @@ export default function Footer() {
           <div>
             <h3 className="text-xl font-bold mb-8 text-gray-900 relative inline-block">
               Contact Us
-              <span className="absolute -bottom-2 left-0 w-12 h-1 bg-orange-500 rounded-full"></span>
+              <span className="absolute -bottom-2 left-0 w-12 h-1 bg-emerald-600 rounded-full"></span>
             </h3>
             <ul className="space-y-6">
               <li className="flex items-start gap-4 group cursor-default">
-                <div className="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center shrink-0 group-hover:bg-orange-500 transition-colors duration-300">
-                  <MapPin className="w-5 h-5 text-orange-600 group-hover:text-white transition-colors" />
+                <div className="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center shrink-0 group-hover:bg-emerald-600 transition-colors duration-300">
+                  <MapPin className="w-5 h-5 text-emerald-600 group-hover:text-white transition-colors" />
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-semibold text-gray-900">Visit Us</p>
@@ -137,8 +137,8 @@ export default function Footer() {
                 </div>
               </li>
               <li className="flex items-center gap-4 group cursor-default">
-                <div className="w-10 h-10 rounded-lg bg-sky-100 flex items-center justify-center shrink-0 group-hover:bg-sky-500 transition-colors duration-300">
-                  <Phone className="w-5 h-5 text-sky-600 group-hover:text-white transition-colors" />
+                <div className="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center shrink-0 group-hover:bg-emerald-600 transition-colors duration-300">
+                  <Phone className="w-5 h-5 text-emerald-600 group-hover:text-white transition-colors" />
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-semibold text-gray-900">Call Us</p>
@@ -148,8 +148,8 @@ export default function Footer() {
                 </div>
               </li>
               <li className="flex items-center gap-4 group cursor-default">
-                <div className="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center shrink-0 group-hover:bg-orange-500 transition-colors duration-300">
-                  <Mail className="w-5 h-5 text-orange-600 group-hover:text-white transition-colors" />
+                <div className="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center shrink-0 group-hover:bg-emerald-600 transition-colors duration-300">
+                  <Mail className="w-5 h-5 text-emerald-600 group-hover:text-white transition-colors" />
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-semibold text-gray-900">Email Us</p>
@@ -160,13 +160,24 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-500 text-sm font-medium">
+      </div>
+
+      {/* Move to Top Strip */}
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        className="w-full bg-slate-900 hover:bg-slate-800 text-white py-4 font-bold uppercase tracking-wider text-sm flex items-center justify-center gap-2 transition-all duration-300 relative z-20 border-b border-slate-800"
+      >
+        Move to Top <ArrowUp className="w-4 h-4 animate-bounce" />
+      </button>
+
+      {/* Bottom Bar */}
+      <div className="w-full bg-slate-950 relative z-10">
+        <div className="container mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-white text-sm font-medium">
             © {new Date().getFullYear()} AutoScrap. All rights reserved.
           </p>
-          <p className="text-gray-500 text-sm font-medium flex items-center gap-1">
-            Made with <span className="text-red-500 animate-pulse">♥</span> in India
+          <p className="text-white text-sm font-medium flex items-center gap-1">
+            Made with <span className="text-emerald-500 animate-pulse">♥</span> in India
           </p>
         </div>
       </div>

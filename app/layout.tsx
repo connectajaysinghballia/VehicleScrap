@@ -4,12 +4,8 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
-import Navbar from "@/components/Navbar"
-import Footer from "@/components/Footer"
-
 import AuthProvider from "@/components/AuthProvider"
-import LoginPopup from "@/components/LoginPopup"
-import WhatsAppFloatingButton from "@/components/WhatsAppFloatingButton"
+import AdminAwareLayout from "@/components/AdminAwareLayout"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -92,16 +88,9 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} disableTransitionOnChange>
           <AuthProvider>
-            <div className="min-h-screen bg-background text-foreground">
-              <Navbar />
-              <main className="relative">
-                {children}
-              </main>
-              <Footer />
-
-              <LoginPopup />
-              <WhatsAppFloatingButton />
-            </div>
+            <AdminAwareLayout>
+              {children}
+            </AdminAwareLayout>
             <Toaster />
           </AuthProvider>
         </ThemeProvider>

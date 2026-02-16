@@ -1,69 +1,74 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { Shield, Zap, Truck, BadgeCheck, Leaf, Coins } from "lucide-react"
-
-
+import { motion, AnimatePresence, LayoutGroup } from "framer-motion"
+import { Shield, Zap, Truck, BadgeCheck, Leaf, Coins, ChevronDown, ArrowRight } from "lucide-react"
+import { useState } from "react"
 
 export default function FeaturesSection() {
+  const [expandedId, setExpandedId] = useState<number | null>(null)
+
   const features = [
     {
+      id: 1,
       icon: Shield,
-      title: "100% Secure Transaction",
-      description: "Your data and payments are protected with enterprise-grade security.",
-      color: "blue",
+      title: "100% Secure",
+      summary: "Enterprise-grade security.",
+      description: "Advanced encryption and secure payment gateways ensure your data and financial transactions are protected.",
     },
     {
+      id: 2,
       icon: Zap,
       title: "Instant Payment",
-      description: "Get paid instantly via bank transfer or UPI upon vehicle pickup.",
-      color: "green",
+      summary: "Paid instantly via bank/UPI.",
+      description: "Experience the fastest payment processing. Money is transferred directly to your bank account instantly.",
     },
     {
+      id: 3,
       icon: Truck,
-      title: "Free Doorstep Pickup",
-      description: "We pick up your vehicle from your location at no extra cost.",
-      color: "sky",
+      title: "Free Pickup",
+      summary: "Doorstep pickup at no cost.",
+      description: "We come to your registered address with a tow truck to pick up the vehicle, completely free of charge.",
     },
     {
+      id: 4,
       icon: BadgeCheck,
-      title: "RTO Form Handling",
-      description: "We handle all necessary RTO paperwork and documentation for you.",
-      color: "indigo",
+      title: "RTO Handling",
+      summary: "We handle all paperwork.",
+      description: "We take care of all RTO formalities, de-registration, and documentation required to legally scrap your vehicle.",
     },
     {
+      id: 5,
       icon: Leaf,
-      title: "Eco-Friendly Recycling",
-      description: "Your vehicle is recycled in an environmentally responsible manner.",
-      color: "emerald",
+      title: "Eco-Friendly",
+      summary: "Responsible scrapping.",
+      description: "We follow strict environmental guidelines. Hazardous fluids are drained safely and parts are recycled.",
     },
     {
+      id: 6,
       icon: Coins,
-      title: "Best Market Price",
-      description: "Get the highest scrap value for your vehicle with our algorithms.",
-      color: "cyan",
+      title: "Best Price",
+      summary: "Highest value guaranteed.",
+      description: "Our AI pricing algorithm analyzes real-time market data to offer you the most competitive price.",
     },
   ]
 
-  const getColorClasses = (color: string) => {
-    const colors: { [key: string]: { bg: string; text: string; border: string; hoverBg: string; shadow: string } } = {
-      blue: { bg: "bg-blue-50", text: "text-blue-600", border: "group-hover:border-blue-400 dark:group-hover:border-blue-400", hoverBg: "group-hover:bg-blue-100", shadow: "hover:shadow-blue-500/30" },
-      green: { bg: "bg-green-50", text: "text-green-600", border: "group-hover:border-green-400 dark:group-hover:border-green-400", hoverBg: "group-hover:bg-green-100", shadow: "hover:shadow-green-500/30" },
-      sky: { bg: "bg-sky-50", text: "text-sky-600", border: "group-hover:border-sky-400 dark:group-hover:border-sky-400", hoverBg: "group-hover:bg-sky-100", shadow: "hover:shadow-sky-500/30" },
-      indigo: { bg: "bg-indigo-50", text: "text-indigo-600", border: "group-hover:border-indigo-400 dark:group-hover:border-indigo-400", hoverBg: "group-hover:bg-indigo-100", shadow: "hover:shadow-indigo-500/30" },
-      emerald: { bg: "bg-emerald-50", text: "text-emerald-600", border: "group-hover:border-emerald-400 dark:group-hover:border-emerald-400", hoverBg: "group-hover:bg-emerald-100", shadow: "hover:shadow-emerald-500/30" },
-      cyan: { bg: "bg-cyan-50", text: "text-cyan-600", border: "group-hover:border-cyan-400 dark:group-hover:border-cyan-400", hoverBg: "group-hover:bg-cyan-100", shadow: "hover:shadow-cyan-500/30" },
-    }
-    return colors[color] || colors.blue
-  }
-
   return (
-    <section className="py-24 relative overflow-hidden" style={{ backgroundColor: "#d8cfd0" }}>
-      {/* Background Decorative Elements */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-blue-50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 opacity-60"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-50 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 opacity-60"></div>
+    <section
+      className="py-24 relative overflow-hidden text-gray-900"
+      style={{
+        backgroundColor: "#f8fafc", // Off-white (Slate-50)
+        backgroundImage: `
+          linear-gradient(-90deg, transparent calc(5em - 3px), rgba(220, 38, 38, 0.05) calc(5em - 3px + 1px), rgba(220, 38, 38, 0.05) 5em),
+          linear-gradient(0deg, transparent calc(5em - 3px), rgba(220, 38, 38, 0.05) calc(5em - 3px + 1px), rgba(220, 38, 38, 0.05) 5em)
+        `,
+        backgroundSize: "5em 5em",
+      }}
+    >
+      {/* Background Texture/Pattern */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white/80 pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 relative z-10">
+        {/* Centered Heading */}
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 30 }}
@@ -71,49 +76,141 @@ export default function FeaturesSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: "easeOut" }}
         >
-          <motion.span
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="text-blue-700 font-extrabold uppercase tracking-widest mb-3 block text-sm"
-          >
-            Why Choose Us
-          </motion.span>
-          <h2 className="text-4xl md:text-6xl font-black text-gray-900 mb-6 drop-shadow-sm">
-            Premium Service Features
+          <span className="text-red-600 font-bold uppercase tracking-[0.2em] mb-3 block text-sm">
+            Why Choose AutoScrap
+          </span>
+          <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-6 tracking-tight leading-tight">
+            Premium <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-600">Features</span>
           </h2>
-          <p className="text-gray-700 max-w-2xl mx-auto text-xl font-medium">
-            Experience a hassle-free car scrapping process with our top-notch services designed for your convenience.
+          <p className="text-gray-600 max-w-2xl mx-auto text-lg font-light leading-relaxed">
+            Experience a hassle-free car scrapping process with our exclusive services designed for your absolute convenience and trust.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature, index) => {
-            const IconComponent = feature.icon
-            const colorClass = getColorClasses(feature.color)
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start">
 
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1, type: "spring", stiffness: 50 }}
-                whileHover={{ y: -15, scale: 1.05 }}
-                className={`bg-white/90 backdrop-blur-sm p-8 rounded-3xl shadow-lg border-2 border-transparent transition-all duration-300 group ${colorClass.border} hover:shadow-2xl ${colorClass.shadow} relative z-0 hover:z-10`}
-              >
-                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 ${colorClass.bg} ${colorClass.hoverBg}`}>
-                  <IconComponent className={`w-8 h-8 ${colorClass.text} transition-all duration-300`} />
-                </div>
-                <h3 className={`text-2xl font-bold text-gray-900 mb-3 transition-colors group-hover:${colorClass.text}`}>
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed font-medium">
-                  {feature.description}
-                </p>
-              </motion.div>
-            )
-          })}
+          {/* Left Column: Image */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="relative lg:col-span-2"
+          >
+            <div className="relative rounded-3xl overflow-hidden">
+              <img
+                src="/frontpage/features.png"
+                alt="AutoScrap Features"
+                className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700"
+              />
+            </div>
+
+            {/* Decorative Elements around image */}
+            <div className="absolute -z-10 top-10 -left-10 w-24 h-24 bg-red-500/20 rounded-full blur-2xl animate-pulse"></div>
+            <div className="absolute -z-10 -bottom-10 -right-10 w-32 h-32 bg-orange-500/20 rounded-full blur-2xl animate-pulse delay-700"></div>
+          </motion.div>
+
+
+          {/* Right Column: Cards */}
+          <div className="lg:col-span-3">
+            <LayoutGroup>
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+                {features.map((feature, index) => {
+                  const isExpanded = expandedId === feature.id
+                  const IconComponent = feature.icon
+
+                  return (
+                    <motion.div
+                      key={feature.id}
+                      layout
+                      initial={{ rotateY: 90, opacity: 0 }}
+                      whileInView={{ rotateY: 0, opacity: 1 }}
+                      viewport={{ once: false, amount: 0.3 }}
+                      transition={{
+                        layout: { duration: 0.3, type: "spring" },
+                        duration: 0.5,
+                        delay: index * 0.1,
+                        type: "spring",
+                        stiffness: 30,
+                        damping: 15,
+                        mass: 1.2
+                      }}
+                      onClick={() => setExpandedId(isExpanded ? null : feature.id)}
+                      className={`relative group cursor-pointer perspective-1000 ${isExpanded ? 'col-span-2 lg:col-span-3 z-20' : 'col-span-1 z-10'}`}
+                      style={{ width: '100%', maxWidth: isExpanded ? '100%' : '240px' }}
+                    >
+                      {/* 
+                                NEON GLOW CARD IMPLEMENTATION 
+                                Adapted from user snippet to Tailwind
+                            */}
+                      <div className={`
+                                relative bg-[#1a1a1a] rounded-xl flex flex-col justify-end p-5 gap-3 text-white
+                                transition-all duration-300
+                                ${isExpanded ? 'min-h-[260px]' : 'h-[200px]'}
+                            `}>
+                        {/* Glowing Border/Backdrop (Before) */}
+                        <div className={`
+                                    absolute inset-0 -left-[3px] m-auto w-[calc(100%+6px)] h-[calc(100%+6px)] rounded-[14px]
+                                    bg-gradient-to-br from-[#ff0f7b] to-[#f89b29]
+                                    -z-10 pointer-events-none transition-all duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)]
+                                    ${isExpanded ? 'rotate-0 opacity-100' : 'group-hover:rotate-[-3deg] group-hover:scale-x-[1.03] group-hover:scale-y-[1.03]'}
+                                    opacity-0 group-hover:opacity-100
+                                `}></div>
+
+                        {/* Always visible dim border for non-hover state */}
+                        <div className="absolute inset-0 rounded-xl border border-white/10 group-hover:border-transparent transition-colors duration-300 pointer-events-none"></div>
+
+                        {/* Blurred Glow (After) */}
+                        <div className={`
+                                    absolute inset-0 -z-20 transform scale-[0.90] blur-[15px]
+                                    bg-gradient-to-br from-[#ff0f7b] to-[#f89b29]
+                                    opacity-0 group-hover:opacity-100 transition-opacity duration-300
+                                `}></div>
+
+
+                        {/* Content */}
+                        <div className="flex flex-col h-full relative z-10">
+                          <div className="mb-auto pt-1">
+                            <div className="p-2.5 bg-white/5 w-fit rounded-lg mb-3 text-orange-400 group-hover:text-white group-hover:bg-white/10 transition-colors">
+                              <IconComponent size={24} />
+                            </div>
+                          </div>
+
+                          <motion.h3 layout className="text-lg font-bold capitalize mb-1">
+                            {feature.title}
+                          </motion.h3>
+
+                          <motion.p layout className="text-xs text-gray-400 mb-1 font-medium line-clamp-2">
+                            {feature.summary}
+                          </motion.p>
+
+                          <AnimatePresence>
+                            {isExpanded && (
+                              <motion.div
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: "auto" }}
+                                exit={{ opacity: 0, height: 0 }}
+                                className="text-white text-base leading-relaxed border-t border-white/20 pt-4 mt-4 font-normal"
+                              >
+                                {feature.description}
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+
+                          {!isExpanded && (
+                            <div className="mt-2 text-[10px] font-bold text-orange-400 group-hover:text-white transition-colors flex items-center gap-1">
+                              Read More <ArrowRight size={12} />
+                            </div>
+                          )}
+
+                        </div>
+                      </div>
+                    </motion.div>
+                  )
+                })}
+              </div>
+            </LayoutGroup>
+          </div>
         </div>
       </div>
     </section>

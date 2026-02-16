@@ -1,10 +1,11 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { MessageCircle } from "lucide-react"
+import { useSession } from "next-auth/react"
 
 export default function WhatsAppFloatingButton() {
+    const { data: session } = useSession()
     const phoneNumber = "919005333587"
     const whatsappUrl = `https://wa.me/${phoneNumber}`
 
@@ -18,6 +19,8 @@ export default function WhatsAppFloatingButton() {
 
         return () => clearTimeout(timer)
     }, [])
+
+    if (!session) return null
 
     return (
         <AnimatePresence>

@@ -59,6 +59,7 @@ const ValuationSchema = new Schema(
     },
     {
         timestamps: true,
+        collection: 'valuations'
     }
 )
 

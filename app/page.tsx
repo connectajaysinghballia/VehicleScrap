@@ -6,8 +6,10 @@ import { AnimatePresence, motion } from "framer-motion"
 import HeroSection from "@/components/HeroSection"
 import ServicesSection from "@/components/ServicesSection"
 import FeaturesSection from "@/components/FeaturesSection"
+import ValuationCTA from "@/components/ValuationCTA"
 import FAQSection from "@/components/FAQSection"
 import ReviewSection from "@/components/ReviewSection"
+import GrowWithUs from "@/components/GrowWithUs"
 import WelcomePopup from "@/components/WelcomePopup"
 
 
@@ -58,9 +60,11 @@ export default function Home() {
           <WelcomePopup />
           <HeroSection />
           <ServicesSection />
+          <ValuationCTA />
           <FeaturesSection />
-          <FAQSection />
           <ReviewSection />
+          <GrowWithUs />
+          <FAQSection variant="green" />
         </>
       )}
     </div>

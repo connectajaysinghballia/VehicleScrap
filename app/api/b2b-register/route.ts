@@ -53,9 +53,39 @@ export async function POST(req: Request) {
     }
 }
 
-export async function GET() {
+export async function GET(req: Request) {
     try {
         await connectToDatabase()
+        const { searchParams } = new URL(req.url)
+        const userId = searchParams.get("userId")
+
+        if (userId) {
+            // First check if they are already a partner (Approved)
+            const B2BPartner = (await import("@/models/B2BPartner")).default
+            const partner = await B2BPartner.findOne({ originalUserId: userId })
+
+            if (partner) {
+                return NextResponse.json(
+                    {
+                        message: "Partner fetched successfully",
+                        data: {
+                            ...partner.toObject(),
+                            status: "approved", // Explicitly set status for UI
+                            name: partner.businessName
+                        }
+                    },
+                    { status: 200 }
+                )
+            }
+
+            // If not partner, check for pending registration
+            const registration = await B2BRegistration.findOne({ userId }).sort({ createdAt: -1 })
+            return NextResponse.json(
+                { message: "Registration fetched successfully", data: registration },
+                { status: 200 }
+            )
+        }
+
         const registrations = await B2BRegistration.find().sort({ createdAt: -1 })
 
         // Cache-control headers to prevent caching issues in admin panel

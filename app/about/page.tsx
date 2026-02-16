@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
+import { motion, useScroll, useTransform, useSpring } from "framer-motion"
 import {
   Target,
   Users,
@@ -10,7 +10,12 @@ import {
   Award,
   Globe,
   ArrowRight,
-  CheckCircle2
+  CheckCircle2,
+  Banknote,
+  Recycle,
+  Car,
+  Truck,
+  Bike
 } from "lucide-react"
 import Link from "next/link"
 import FAQSection from "@/components/FAQSection"
@@ -22,6 +27,20 @@ export default function AboutPage() {
   const { scrollYProgress } = useScroll()
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0])
   const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.9])
+
+  // State for falling icons animation in CTA
+  const [ctaIcons, setCtaIcons] = useState<{ id: number; Icon: any; left: string; delay: number; duration: number; size: number }[]>([]);
+
+  useEffect(() => {
+    setCtaIcons(Array.from({ length: 15 }).map((_, i) => ({
+      id: i,
+      Icon: i % 3 === 0 ? Car : i % 3 === 1 ? Truck : Bike,
+      left: `${Math.random() * 100}%`,
+      delay: Math.random() * 5,
+      duration: 5 + Math.random() * 5, // Faster than footer for more energy
+      size: 40 + Math.random() * 30,
+    })));
+  }, []);
 
   const scrollToMore = () => {
     const element = document.getElementById("learn-more")
@@ -37,11 +56,70 @@ export default function AboutPage() {
   if (!mounted) return null
 
   const stats = [
-    { label: "Years Experience", value: "10+" },
-    { label: "Happy Clients", value: "500+" },
-    { label: "Projects Done", value: "1.2k+" },
-    { label: "Team Members", value: "50+" },
+    { label: "Years Experience", value: 10, suffix: "+" },
+    { label: "Happy Clients", value: 500, suffix: "+" },
+    { label: "Projects Done", value: 1.2, suffix: "k+" }, // decimal for 1.2k
+    { label: "Team Members", value: 50, suffix: "+" },
   ]
+
+  const Counter = ({ value, suffix, decimals = 0 }: { value: number, suffix: string, decimals?: number }) => {
+    const { scrollYProgress } = useScroll() // Just to hook into framer motion context if needed, but essentially we want InView
+    const [count, setCount] = useState(0)
+
+    useEffect(() => {
+      // Simple counter effect
+      let start = 0;
+      const end = value;
+      const duration = 2000;
+      const increment = end / (duration / 16); // 60fps
+
+      const timer = setInterval(() => {
+        start += increment;
+        if (start >= end) {
+          setCount(end);
+          clearInterval(timer);
+        } else {
+          setCount(start);
+        }
+      }, 16);
+
+      return () => clearInterval(timer);
+    }, [value]);
+
+    // Using framer-motion for smooth counting would be better
+    // Let's use a simpler approach compatible with the existing imports.
+    return (
+      <span>
+        {count.toFixed(decimals)}
+        {suffix}
+      </span>
+    )
+  }
+
+  // Re-implementing Counter properly using framer-motion useSpring for smoothness
+  function NumberCounter({ value, suffix, decimals = 0 }: { value: number, suffix: string, decimals?: number }) {
+    const { scrollYProgress } = useScroll(); // Dummy usage
+    const spring = useSpring(0, { bounce: 0, duration: 2000 });
+    const opacity = useTransform(spring, [0, value], [0.5, 1]); // Subtle opacity effect
+    const [displayValue, setDisplayValue] = useState(0);
+
+    useEffect(() => {
+      spring.set(value);
+    }, [spring, value]);
+
+    useEffect(() => {
+      return spring.on("change", (latest) => {
+        setDisplayValue(latest);
+      });
+    }, [spring]);
+
+    return (
+      <motion.span style={{ opacity }}>
+        {displayValue.toFixed(decimals)}
+        {suffix}
+      </motion.span>
+    )
+  }
 
   const features = [
     {
@@ -59,236 +137,458 @@ export default function AboutPage() {
       title: "Our Growth",
       description: "Consistently expanding our network to serve more regions and businesses every year.",
     },
+    {
+      icon: Globe, // Added extra feature for balance
+      title: "Global Reach",
+      description: "Connecting markets and resources across borders for a seamless recycling ecosystem.",
+    },
   ]
 
+  // Use only first 3 for grid if needed, or adjust grid to 4. Keeping 3 as per original design or updating to 4?
+  // Original had 3. Let's stick to 3 or make it a grid of 2x2. The original code had 3.
+  // I will keep the original 3 features to avoid layout issues, but update styles.
+  const displayFeatures = features.slice(0, 3);
+
+
   return (
-    <div className="min-h-screen bg-white text-gray-900 font-sans selection:bg-orange-100 selection:text-orange-900 overflow-x-hidden">
+    <div className="min-h-screen bg-slate-950 text-white font-sans selection:bg-emerald-500/30 selection:text-emerald-200 overflow-x-hidden">
 
       {/* Scroll Progress Bar */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-orange-500 origin-left z-50"
+        className="fixed top-0 left-0 right-0 h-1 bg-emerald-500 origin-left z-50"
         style={{ scaleX: scrollYProgress }}
       />
 
-      {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-        {/* Background Gradients */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-orange-50 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
-          <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-blue-50 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
-          <div className="absolute -bottom-32 left-20 w-[600px] h-[600px] bg-orange-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
-        </div>
+      <div className="flex flex-col min-h-screen">
+        {/* Hero Section */}
+        <section className="relative flex-grow flex items-center justify-center overflow-hidden pb-10">
+          {/* Background Image & Overlay */}
+          <div className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-slate-950/90 z-10"></div> {/* Enhanced Gradient Overlay */}
+            <img
+              src="/about/aboutmain.png"
+              alt="About Background"
+              className="w-full h-full object-cover"
+            />
+          </div>
 
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-20">
-          <motion.div
-            style={{ opacity, scale }}
-            className="text-center max-w-4xl mx-auto"
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-50 border border-orange-100 text-orange-600 font-medium text-sm mb-8"
-            >
-              <Globe className="w-4 h-4" />
-              <span>Global Leaders in Vehicle Scrapping</span>
-            </motion.div>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-5xl md:text-7xl font-bold tracking-tight text-gray-900 mb-8"
-            >
-              Driving the Future of <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-500">
-                Sustainable Recycling
-              </span>
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-xl md:text-2xl text-gray-500 leading-relaxed mb-12 max-w-2xl mx-auto"
-            >
-              We transform end-of-life vehicles into valuable resources, powering a greener tomorrow through innovation and integrity.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center"
-            >
-              <Link href="/contact" className="px-8 py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-full font-semibold transition-all shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2 hover:scale-105 active:scale-95">
-                Get Started
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-              <button
-                onClick={scrollToMore}
-                className="px-8 py-4 bg-white hover:bg-gray-50 text-gray-900 border border-gray-200 rounded-full font-semibold transition-all hover:scale-105 active:scale-95"
-              >
-                Learn More
-              </button>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section id="learn-more" className="py-20 bg-gray-50 border-y border-gray-100">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
-            {stats.map((stat, index) => (
+          {/* Floating Particles */}
+          <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden">
+            {[...Array(20)].map((_, i) => (
               <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="text-center"
-              >
-                <div className="text-4xl md:text-5xl font-bold text-orange-500 mb-2">{stat.value}</div>
-                <div className="text-sm md:text-base text-gray-500 font-medium uppercase tracking-wide">{stat.label}</div>
-              </motion.div>
+                key={i}
+                className="absolute bg-emerald-400/30 rounded-full"
+                initial={{
+                  x: Math.random() * 100 + "vw",
+                  y: Math.random() * 100 + "vh",
+                  scale: Math.random() * 0.5 + 0.5,
+                  opacity: Math.random() * 0.5 + 0.2
+                }}
+                animate={{
+                  y: [null, Math.random() * -100],
+                  opacity: [null, 0]
+                }}
+                transition={{
+                  duration: Math.random() * 10 + 10,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+                style={{
+                  width: Math.random() * 4 + 2 + "px",
+                  height: Math.random() * 4 + 2 + "px",
+                }}
+              />
             ))}
           </div>
-        </div>
-      </section>
+
+          {/* Background Gradients - Reduced opacity for blend */}
+          <div className="absolute inset-0 pointer-events-none z-10">
+            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-emerald-900/20 rounded-full mix-blend-screen filter blur-3xl opacity-20 animate-blob"></div>
+            <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-blue-900/20 rounded-full mix-blend-screen filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+            <div className="absolute -bottom-32 left-20 w-[600px] h-[600px] bg-emerald-900/20 rounded-full mix-blend-screen filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+          </div>
+
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20 pt-20">
+            <motion.div
+              style={{ opacity, scale }}
+              className="text-center max-w-4xl mx-auto"
+            >
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/50 border border-slate-700 text-emerald-400 font-medium text-sm mb-8 backdrop-blur-sm"
+              >
+                <Globe className="w-4 h-4" />
+                <span>Global Leaders in Vehicle Scrapping</span>
+              </motion.div>
+
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+                className="text-5xl md:text-7xl font-bold tracking-tight text-white mb-8"
+              >
+                Driving the Future of <br className="hidden md:block" />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-400 bg-[length:200%_auto] animate-shimmer">
+                  Sustainable Recycling
+                </span>
+              </motion.h1>
+
+              <motion.p
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+                className="text-xl md:text-2xl text-slate-300 leading-relaxed mb-12 max-w-2xl mx-auto"
+              >
+                We transform end-of-life vehicles into valuable resources, powering a greener tomorrow through innovation and integrity.
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.7, ease: "easeOut" }}
+                className="flex flex-col sm:flex-row gap-4 justify-center"
+              >
+                <Link href="/contact" className="px-10 py-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full font-bold text-lg transition-all shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2 hover:scale-105 active:scale-95">
+                  Get Free Valuation
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+              </motion.div>
+            </motion.div>
+          </div>
+
+
+        </section>
+
+        {/* Stats Section */}
+        <section id="learn-more" className="py-10 bg-white border-y border-gray-100 mt-auto">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+              {stats.map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="text-center"
+                >
+                  <div className="text-4xl md:text-5xl font-bold text-emerald-600 mb-2 flex justify-center items-center">
+                    <NumberCounter value={stat.value} suffix={stat.suffix} decimals={stat.label.includes("Projects") ? 1 : 0} />
+                  </div>
+                  <div className="text-sm md:text-base text-gray-600 font-medium uppercase tracking-wide">{stat.label}</div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </div>
 
       {/* Intro/Story Section */}
-      <section className="py-24 md:py-32">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+      {/* Intro/Story Section */}
+      {/* Intro/Story Section */}
+      <section className="py-20 md:py-32 relative overflow-hidden bg-[#020617] text-white">
+        {/* Decorative Background Elements - Green Shine Effect */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[100px] -z-10 translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[100px] -z-10 -translate-x-1/2 translate-y-1/2 animate-pulse delay-700"></div>
 
+        {/* Texture Overlay */}
+        <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20 mix-blend-overlay pointer-events-none"></div>
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 md:gap-20 items-center">
+
+            {/* Left Content: Image */}
             <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="relative"
+              initial={{ opacity: 0, x: -50, rotateY: 90 }}
+              whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
+              viewport={{ amount: 0.5 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="relative perspective-1000 order-2 lg:order-1"
             >
-              <div className="absolute inset-0 bg-orange-200 rounded-3xl transform rotate-3 scale-105 opacity-20"></div>
-              <img
-                src="/about-team.png"
-                alt="Team Meeting"
-                className="relative rounded-3xl shadow-2xl w-full h-auto"
-              />
-              <div className="absolute -bottom-10 -right-10 bg-white p-6 rounded-2xl shadow-xl border border-gray-100 max-w-xs hidden md:block">
+              {/* Image Container with Glow */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/20 to-transparent rounded-3xl transform rotate-3 scale-105 blur-lg"></div>
+              <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-emerald-900/20 group">
+                <div className="absolute inset-0 bg-emerald-500/10 mix-blend-overlay group-hover:bg-transparent transition-all duration-500"></div>
+                <img
+                  src="/about-team.png"
+                  alt="Team Meeting"
+                  className="w-full h-auto object-cover transform transition-transform duration-700 hover:scale-105"
+                />
+              </div>
+
+              {/* Start Certification Badge */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.5 }}
+                className="absolute -bottom-6 -right-6 md:-bottom-10 md:-right-10 bg-black/90 p-5 rounded-2xl shadow-2xl border border-white/10 max-w-[280px] hidden sm:block"
+              >
                 <div className="flex items-center gap-4 mb-3">
-                  <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
-                    <Award className="w-6 h-6 text-orange-600" />
+                  <div className="w-10 h-10 bg-emerald-500/20 rounded-full flex items-center justify-center shrink-0">
+                    <Award className="w-5 h-5 text-emerald-400" />
                   </div>
                   <div>
-                    <div className="font-bold text-gray-900">Certified</div>
-                    <div className="text-xs text-gray-500">Industry Standard</div>
+                    <div className="font-bold text-white leading-tight">Govt. Authorized</div>
+                    <div className="text-xs text-emerald-400/80">RVSF Facility</div>
                   </div>
                 </div>
-                <p className="text-sm text-gray-600">Recognized for excellence in sustainable practices since 2014.</p>
-              </div>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Fully compliant with Vehicle Scrappage Policy 2021. Certificate of Deposit (CD) issued instantly.
+                </p>
+              </motion.div>
             </motion.div>
 
+            {/* Right Content: Text & Features */}
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ amount: 0.2 }}
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: { staggerChildren: 0.15 }
+                }
+              }}
+              className="relative order-1 lg:order-2"
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
-                Pioneering the Modern <br />
-                <span className="text-orange-500">Scrapping Ecosystem</span>
-              </h2>
-              <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                Founded with a simple yet ambitious goal: to clean up our cities while recovering valuable materials. What started as a small local operation has grown into a leader in the vehicle recycling industry.
-              </p>
-              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                We believe in a future where nothing goes to waste. Our advanced facilities and expert team ensure that every vehicle is processed with the highest environmental standards.
-              </p>
+              <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-900/30 border border-emerald-500/30 text-emerald-400 text-xs font-semibold mb-6 tracking-wide uppercase">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                Our Mission
+              </motion.div>
 
-              <ul className="space-y-4">
-                {["Eco-friendly Processing", "Instant Fair Quotes", "Hassle-free Documentation", "Pan-India Network"].map((item, idx) => (
-                  <motion.li
-                    key={idx}
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.1 * idx }}
-                    className="flex items-center gap-3 text-gray-700 font-medium"
-                  >
-                    <CheckCircle2 className="w-5 h-5 text-orange-500" />
-                    {item}
-                  </motion.li>
-                ))}
-              </ul>
+              <motion.h2
+                variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+                className="text-3xl md:text-5xl lg:text-5xl font-bold text-white mb-6 leading-tight tracking-tight"
+              >
+                Refining the <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-emerald-200 to-cyan-400">Scrapping Experience</span>
+              </motion.h2>
 
-              <p className="text-lg text-gray-600 mt-8 leading-relaxed">
-                Our commitment extends beyond just processing vehicles. We are actively building a circular economy where every part of a vehicle finds a new purpose. From recovering rare earth metals to recycling steel and plastic, our advanced separation technologies ensure maximum material recovery rates.
-              </p>
-              <p className="text-lg text-gray-600 mt-4 leading-relaxed">
-                We also prioritize transparency and compliance. As an authorized scrapping facility, we work closely with RTOs and government bodies to streamline the deregistration process, ensuring that our customers receive their Certificate of Deposit (CD) promptly and seamlessly.
-              </p>
+              <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="space-y-6 text-lg text-slate-400 leading-relaxed mb-10">
+                <p>
+                  We’re not just a scrapyard; we’re a technology-driven recycling hub. We transform the complex, unorganized process of vehicle scrapping into a seamless, transparent, and rewarding experience for every car owner.
+                </p>
+                <p>
+                  Sustainability drives our innovation. By integrating smart logistics and eco-friendly dismantling processes, we ensure maximum material recovery while minimizing environmental impact. Our goal is to create a circular economy where every end-of-life vehicle contributes to a greener future.
+                </p>
+              </motion.div>
+
+              {/* Feature Grid */}
+              <motion.div
+                variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+                className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+              >
+                {/* Feature 1 */}
+                <div className="group p-4 bg-white/5 border border-white/5 rounded-xl hover:bg-white/10 hover:border-emerald-500/30 transition-all duration-300">
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-white font-semibold mb-1 text-sm">Legal Assurance</h4>
+                      <p className="text-slate-500 text-xs leading-relaxed">Guaranteed de-registration and legal immunity.</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Feature 2 */}
+                <div className="group p-4 bg-white/5 border border-white/5 rounded-xl hover:bg-white/10 hover:border-emerald-500/30 transition-all duration-300">
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                      <Banknote className="w-4 h-4 text-emerald-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-white font-semibold mb-1 text-sm">Best Value</h4>
+                      <p className="text-slate-500 text-xs leading-relaxed">Algorithmic pricing based on metal index.</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Feature 3 */}
+                <div className="group p-4 bg-white/5 border border-white/5 rounded-xl hover:bg-white/10 hover:border-emerald-500/30 transition-all duration-300">
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                      <Recycle className="w-4 h-4 text-emerald-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-white font-semibold mb-1 text-sm">0% Waste Policy</h4>
+                      <p className="text-slate-500 text-xs leading-relaxed">Every component is recycled or reused.</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Feature 4 */}
+                <div className="group p-4 bg-white/5 border border-white/5 rounded-xl hover:bg-white/10 hover:border-emerald-500/30 transition-all duration-300">
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                      <TrendingUp className="w-4 h-4 text-emerald-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-white font-semibold mb-1 text-sm">Tax Benefits</h4>
+                      <p className="text-slate-500 text-xs leading-relaxed">Get road tax rebates on your next vehicle.</p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
             </motion.div>
 
           </div>
         </div>
+
+        {/* CSS Animation for Gradient */}
+        <style jsx>{`
+          @keyframes gradient-move {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+          }
+          .animate-gradient-move {
+            animation: gradient-move 15s ease infinite;
+          }
+           .perspective-1000 {
+            perspective: 1000px;
+          }
+        `}</style>
       </section>
 
       {/* Values/Features */}
-      <section className="py-24 bg-gray-900 text-white rounded-t-[3rem] overflow-hidden relative">
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-20 pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-orange-500 rounded-full blur-[120px]"></div>
+      <section className="py-24 bg-white relative overflow-hidden border-t border-slate-100">
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-30 pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-emerald-50 rounded-full blur-[120px]"></div>
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">Our Core Values</h2>
-            <p className="text-orange-100/70 text-lg">Principles that drive our every action and decision.</p>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 border border-emerald-200 text-emerald-700 text-xs font-bold mb-4 tracking-wide uppercase">
+              <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+              Ethos
+            </div>
+            <h2 className="text-3xl md:text-5xl font-bold mb-6 text-slate-900">
+              Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-cyan-600">Core Values</span>
+            </h2>
+            <p className="text-slate-600 text-lg">Principles that drive our every action and decision.</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
+            {[
+              {
+                title: "Our Mission",
+                description: "To revolutionize the scraping industry with transparent, efficient, and eco-friendly solutions.",
+                icon: Target
+              },
+              {
+                title: "Our Vision",
+                description: "Becoming the global standard for sustainable vehicle recycling and material recovery.",
+                icon: Globe
+              },
+              {
+                title: "Our Growth",
+                description: "Consistently expanding our network to serve more regions and businesses every year.",
+                icon: TrendingUp
+              }
+            ].map((feature, index) => (
               <motion.div
                 key={feature.title}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -10 }}
-                className="bg-white/10 backdrop-blur-lg border border-white/10 p-8 rounded-3xl"
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
+                whileHover={{ y: -10, scale: 1.02 }}
+                className="group relative bg-[#020617] border border-slate-800 p-8 rounded-3xl shadow-lg shadow-black/50 hover:shadow-2xl hover:shadow-emerald-500/10 transition-all duration-500 overflow-hidden"
               >
-                <div className="w-16 h-16 bg-orange-500/20 rounded-2xl flex items-center justify-center mb-6">
-                  <feature.icon className="w-8 h-8 text-orange-400" />
+                {/* Gradient Border Hover Effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+
+                <div className="relative z-10">
+                  <div className="w-16 h-16 bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-emerald-500 group-hover:rotate-6 transition-all duration-300">
+                    <feature.icon className="w-8 h-8 text-emerald-500 group-hover:text-white transition-colors duration-300" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-4 text-white group-hover:text-emerald-400 transition-colors">{feature.title}</h3>
+                  <p className="text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">
+                    {feature.description}
+                  </p>
                 </div>
-                <h3 className="text-xl font-bold mb-4">{feature.title}</h3>
-                <p className="text-gray-300 leading-relaxed">
-                  {feature.description}
-                </p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      {/* CTA Section - Free Valuation */}
+      <section className="py-12 bg-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('/noise.png')] opacity-10 mix-blend-overlay pointer-events-none"></div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px] -translate-y-1/2 pointer-events-none"></div>
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="bg-orange-50 rounded-3xl p-12 md:p-20 text-center border border-orange-100"
+            initial={{ opacity: 0, y: 50, scale: 0.9, filter: "blur(10px)" }}
+            whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
+            className="bg-gradient-to-br from-slate-900 via-slate-900 to-black rounded-[2.5rem] p-8 md:p-12 border border-slate-800 relative overflow-hidden shadow-2xl max-w-6xl mx-auto md:flex md:items-center md:justify-between md:gap-12"
           >
-            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">Ready to Scrape Your Vehicle?</h2>
-            <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">Get the best price for your old car today. Instant quote, free pickup, and full documentation support.</p>
-            <button className="px-10 py-5 bg-orange-600 hover:bg-orange-700 text-white text-lg font-semibold rounded-full shadow-xl shadow-orange-500/20 transition-all hover:scale-105 active:scale-95">
-              Check Price Now
-            </button>
+            {/* Falling Icons Background */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden">
+              {ctaIcons.map((item) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ y: -100, x: item.left, opacity: 0 }}
+                  animate={{
+                    y: ["-20%", "120%"], // Fall through the entire card
+                    opacity: [0, 0.4, 0] // Increased visibility
+                  }}
+                  transition={{
+                    duration: item.duration,
+                    repeat: Number.POSITIVE_INFINITY,
+                    delay: item.delay,
+                    ease: "linear",
+                  }}
+                  className="absolute text-white"
+                  style={{ left: item.left }}
+                >
+                  <item.Icon size={item.size} strokeWidth={1.5} />
+                </motion.div>
+              ))}
+            </div>
+            {/* Left Content */}
+            <div className="flex-1 text-center md:text-left mb-8 md:mb-0 relative z-10">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-bold mb-6 tracking-wide uppercase text-xs">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                Free Service
+              </div>
+
+              <h2 className="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight">
+                Get Free <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Valuation</span>
+                <br /> Of Your Car
+              </h2>
+
+              <p className="text-lg text-slate-400 max-w-2xl leading-relaxed mx-auto md:mx-0">
+                Instantly check the current market scrap value of your vehicle with our AI-powered tool.
+              </p>
+            </div>
+
+            {/* Right Action */}
+            <div className="md:shrink-0 text-center relative z-10">
+              <button className="group relative inline-flex items-center justify-center px-8 py-3.5 text-base font-bold text-white transition-all duration-300 bg-emerald-600 rounded-full hover:bg-emerald-700 hover:scale-105 active:scale-95 shadow-lg shadow-emerald-600/20 overflow-hidden">
+                <span className="relative z-10 flex items-center gap-2">
+                  Check For Free
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </button>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      <FAQSection />
+      <FAQSection variant="green" />
     </div>
   )
 }

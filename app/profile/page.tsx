@@ -119,77 +119,7 @@ export default async function ProfilePage() {
                     </div>
                 </div>
 
-                {/* B2B Status Section */}
-                <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-                    <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2 mb-6">
-                        <Building2 className="w-5 h-5 text-blue-600" />
-                        Partner Status
-                    </h2>
 
-                    {partner ? (
-                        <div className="bg-green-50 border border-green-100 rounded-xl p-6 flex flex-col sm:flex-row items-center gap-6">
-                            <div className="h-16 w-16 bg-green-100 rounded-full flex items-center justify-center shrink-0">
-                                <CheckCircle className="h-8 w-8 text-green-600" />
-                            </div>
-                            <div className="text-center sm:text-left">
-                                <h3 className="text-lg font-bold text-green-900">You are a Verified Partner!</h3>
-                                <p className="text-green-700 mt-1">
-                                    Your business <strong>{partner.businessName}</strong> is registered.
-                                    Partner ID: <span className="font-mono bg-green-200 px-2 py-0.5 rounded text-sm">{partner.userId}</span>
-                                </p>
-                            </div>
-                        </div>
-                    ) : registration ? (
-                        registration.status === "rejected" ? (
-                            <div className="bg-red-50 border border-red-100 rounded-xl p-6 flex flex-col sm:flex-row items-center gap-6">
-                                <div className="h-16 w-16 bg-red-100 rounded-full flex items-center justify-center shrink-0">
-                                    <AlertCircle className="h-8 w-8 text-red-600" />
-                                </div>
-                                <div className="text-center sm:text-left w-full">
-                                    <h3 className="text-lg font-bold text-red-900">Application Rejected</h3>
-                                    <p className="text-red-700 mt-1 mb-4">
-                                        Your application for <strong>{registration.name}</strong> submitted on {new Date(registration.createdAt).toLocaleDateString()} was not approved.
-                                    </p>
-                                    <Link
-                                        href="/partner-register"
-                                        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-red-700 bg-red-100 hover:bg-red-200 transition-colors"
-                                    >
-                                        Apply Again
-                                    </Link>
-                                </div>
-                            </div>
-                        ) : (
-                            <div className="bg-yellow-50 border border-yellow-100 rounded-xl p-6 flex flex-col sm:flex-row items-center gap-6">
-                                <div className="h-16 w-16 bg-yellow-100 rounded-full flex items-center justify-center shrink-0">
-                                    <Clock className="h-8 w-8 text-yellow-600" />
-                                </div>
-                                <div className="text-center sm:text-left">
-                                    <h3 className="text-lg font-bold text-yellow-900">Application Under Review</h3>
-                                    <p className="text-yellow-700 mt-1">
-                                        Your application for <strong>{registration.name}</strong> was submitted on {new Date(registration.createdAt).toLocaleDateString()}.
-                                        Our team is reviewing your details.
-                                    </p>
-                                </div>
-                            </div>
-                        )
-                    ) : (
-                        <div className="text-center py-6">
-                            <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <Building2 className="w-8 h-8 text-blue-500" />
-                            </div>
-                            <h3 className="text-lg font-bold text-gray-900">Become a B2B Partner</h3>
-                            <p className="text-gray-500 max-w-md mx-auto mt-2 mb-6">
-                                Join our network of certified scrap dealers and unlock exclusive benefits for your business.
-                            </p>
-                            <Link
-                                href="/partner-register"
-                                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-xl text-white bg-blue-600 hover:bg-blue-700 transition-colors shadow-sm"
-                            >
-                                Apply for B2B Registration
-                            </Link>
-                        </div>
-                    )}
-                </div>
 
                 {/* History */}
                 <div className="space-y-6">

@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link" // Import Link for navigation
 import Image from "next/image"
 import { useSession, signOut } from "next-auth/react"
+import { useRouter } from "next/navigation"
 gsap.registerPlugin(ScrollTrigger)
 
 export default function Navbar() {
@@ -16,6 +17,7 @@ export default function Navbar() {
   const [isResourcesOpen, setIsResourcesOpen] = useState(false)
   const [isServicesOpen, setIsServicesOpen] = useState(false)
   const { data: session } = useSession()
+  const router = useRouter()
 
   const navItems = [
     { name: "Home", href: "/", hasDropdown: false },
@@ -34,6 +36,7 @@ export default function Navbar() {
   const resourcesDropdown = [
     { name: "Blogs", href: "/blogs" },
     { name: "Guides", href: "/guide" },
+    { name: "Homex", href: "/homex" },
   ]
 
   useEffect(() => {
@@ -137,7 +140,7 @@ export default function Navbar() {
     setIsOpen(false)
 
     if (href === "/") {
-      window.location.href = "/"
+      router.push("/")
     } else if (href.startsWith("#")) {
       if (window.location.pathname === "/") {
         const element = document.querySelector(href)
@@ -145,17 +148,17 @@ export default function Navbar() {
           element.scrollIntoView({ behavior: "smooth" })
         }
       } else {
-        window.location.href = "/" + href
+        router.push("/" + href)
       }
     } else {
-      window.location.href = href
+      router.push(href)
     }
   }
 
   return (
     <nav
       className={`navbar fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-        ? "bg-white/90 backdrop-blur-xl border-b border-orange-500/20 shadow-lg shadow-orange-500/5"
+        ? "bg-white/90 backdrop-blur-xl border-b border-emerald-600/20 shadow-lg shadow-emerald-600/5"
         : "bg-black/5 backdrop-blur-sm"
         }`}
     >
@@ -183,7 +186,7 @@ export default function Navbar() {
             {navItems.map((item) => (
               <div key={item.name} className="relative group">
                 <button
-                  className="nav-item relative text-gray-600 hover:text-orange-600 transition-colors duration-200 font-medium flex items-center gap-1"
+                  className="nav-item relative text-gray-600 hover:text-emerald-700 transition-colors duration-200 font-medium flex items-center gap-1"
                   onClick={() => !item.hasDropdown && handleNavClick(item.href)}
                 >
                   {item.name}
@@ -196,14 +199,14 @@ export default function Navbar() {
                     initial={{ opacity: 0, y: -10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="absolute top-full mt-2 left-0 bg-white/95 backdrop-blur-lg border border-orange-200 rounded-lg shadow-xl overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 min-w-[200px]"
+                    className="absolute top-full mt-2 left-0 bg-white/95 backdrop-blur-lg border border-emerald-200 rounded-lg shadow-xl overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 min-w-[200px]"
                   >
                     {servicesDropdown.map((dropdownItem) => (
                       <Link
                         key={dropdownItem.name}
                         href={dropdownItem.href}
                         onClick={() => setIsOpen(false)}
-                        className="block w-full px-4 py-3 text-gray-600 hover:text-orange-600 hover:bg-orange-50 transition-all duration-200 text-left font-medium whitespace-nowrap"
+                        className="block w-full px-4 py-3 text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 transition-all duration-200 text-left font-medium whitespace-nowrap"
                       >
                         {dropdownItem.name}
                       </Link>
@@ -217,14 +220,14 @@ export default function Navbar() {
                     initial={{ opacity: 0, y: -10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="absolute top-full mt-2 left-0 bg-white/95 backdrop-blur-lg border border-orange-200 rounded-lg shadow-xl overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 min-w-[200px]"
+                    className="absolute top-full mt-2 left-0 bg-white/95 backdrop-blur-lg border border-emerald-200 rounded-lg shadow-xl overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 min-w-[200px]"
                   >
                     {resourcesDropdown.map((dropdownItem) => (
                       <Link
                         key={dropdownItem.name}
                         href={dropdownItem.href}
                         onClick={() => setIsOpen(false)}
-                        className="block w-full px-4 py-3 text-gray-600 hover:text-orange-600 hover:bg-orange-50 transition-all duration-200 text-left font-medium whitespace-nowrap"
+                        className="block w-full px-4 py-3 text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 transition-all duration-200 text-left font-medium whitespace-nowrap"
                       >
                         {dropdownItem.name}
                       </Link>
@@ -241,8 +244,8 @@ export default function Navbar() {
               whileTap={{ scale: 0.95 }}
             >
               <Link href="/quote" passHref>
-                <Button className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-8 py-2 rounded-lg font-semibold shadow-lg shadow-orange-500/25 relative overflow-hidden group">
-                  <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+                <Button className="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white px-8 py-2 rounded-lg font-semibold shadow-lg shadow-emerald-600/25 relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-emerald-700 to-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
                   <motion.span
                     className="relative z-10 flex items-center"
                     animate={{ scale: [1, 1.1, 1] }}
@@ -258,9 +261,9 @@ export default function Navbar() {
             {/* Login/User Button */}
             {session ? (
               <div className="relative group">
-                <button className="flex items-center gap-2 text-gray-600 hover:text-orange-600 font-medium">
-                  <div className="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center border border-orange-200">
-                    <span className="text-orange-600 font-bold text-sm">{(session.user?.name || "U")[0]}</span>
+                <button className="flex items-center gap-2 text-gray-600 hover:text-emerald-700 font-medium">
+                  <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center border border-emerald-200">
+                    <span className="text-emerald-700 font-bold text-sm">{(session.user?.name || "U")[0]}</span>
                   </div>
                   <ChevronDown className="w-4 h-4" />
                 </button>
@@ -273,16 +276,18 @@ export default function Navbar() {
                   {(session.user as any).role === "admin" && (
                     <Link
                       href="/admin"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-700"
                     >
                       Admin Dashboard
                     </Link>
                   )}
                   {(session.user as any).role !== "admin" && (
                     <>
-                      <Link href="/partner-register" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                        Be our partner
-                      </Link>
+                      {(session.user as any).role !== "partner" && (
+                        <Link href="/partner-register" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                          Be our partner
+                        </Link>
+                      )}
                       <Link href="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                         Profile
                       </Link>
@@ -298,7 +303,7 @@ export default function Navbar() {
               </div>
             ) : (
               <Link href="/login">
-                <Button variant="ghost" className="text-gray-600 hover:text-orange-600 hover:bg-orange-50 font-medium">
+                <Button variant="ghost" className="text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 font-medium">
                   Login
                 </Button>
               </Link>
@@ -307,7 +312,7 @@ export default function Navbar() {
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden text-gray-700 hover:text-orange-500 transition-colors z-50"
+            className="lg:hidden text-gray-700 hover:text-emerald-600 transition-colors z-50"
             onClick={() => setIsOpen(!isOpen)}
           >
             <motion.div animate={{ rotate: isOpen ? 90 : 0 }} transition={{ duration: 0.3 }}>
@@ -326,11 +331,11 @@ export default function Navbar() {
             transition={{ duration: 0.3 }}
             className="lg:hidden overflow-hidden absolute top-full left-0 right-0"
           >
-            <div className="py-4 bg-white/95 backdrop-blur-lg border border-orange-500/20 max-h-[80vh] overflow-y-auto mx-2 my-2 rounded-lg shadow-xl">
+            <div className="py-4 bg-white/95 backdrop-blur-lg border border-emerald-600/20 max-h-[80vh] overflow-y-auto mx-2 my-2 rounded-lg shadow-xl">
               {navItems.map((item) => (
                 <div key={item.name}>
                   <button
-                    className="block w-full text-left px-4 py-3 text-gray-700 hover:text-orange-600 hover:bg-orange-50 transition-all duration-200 rounded-lg flex items-center justify-between"
+                    className="block w-full text-left px-4 py-3 text-gray-700 hover:text-emerald-700 hover:bg-emerald-50 transition-all duration-200 rounded-lg flex items-center justify-between"
                     onClick={() => {
                       if (item.hasDropdown) {
                         if (item.name === "Services") {
@@ -375,7 +380,7 @@ export default function Navbar() {
                             setIsOpen(false)
                             setIsServicesOpen(false)
                           }}
-                          className="block w-full text-left px-5 py-3 text-orange-400 font-medium hover:text-white hover:bg-white/10 transition-all duration-200 text-sm border-b border-gray-800 last:border-0"
+                          className="block w-full text-left px-5 py-3 text-emerald-400 font-medium hover:text-white hover:bg-white/10 transition-all duration-200 text-sm border-b border-gray-800 last:border-0"
                         >
                           {dropdownItem.name}
                         </Link>
@@ -400,7 +405,7 @@ export default function Navbar() {
                             setIsOpen(false)
                             setIsResourcesOpen(false)
                           }}
-                          className="block w-full text-left px-5 py-3 text-orange-400 font-medium hover:text-white hover:bg-white/10 transition-all duration-200 text-sm border-b border-gray-800 last:border-0"
+                          className="block w-full text-left px-5 py-3 text-emerald-400 font-medium hover:text-white hover:bg-white/10 transition-all duration-200 text-sm border-b border-gray-800 last:border-0"
                         >
                           {dropdownItem.name}
                         </Link>
@@ -412,7 +417,7 @@ export default function Navbar() {
               <div className="px-2 pt-2">
                 <Link href="/quote" passHref>
                   <Button
-                    className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-black py-3 rounded-lg font-semibold shadow-lg shadow-green-500/25"
+                    className="w-full bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white py-3 rounded-lg font-semibold shadow-lg shadow-emerald-600/25"
                     onClick={() => setIsOpen(false)}
                   >
                     <Phone className="w-4 h-4 mr-2" />
@@ -430,7 +435,7 @@ export default function Navbar() {
                       <Link href="/admin">
                         <Button
                           variant="ghost"
-                          className="w-full justify-start text-gray-700 hover:text-orange-600 hover:bg-orange-50 mb-1"
+                          className="w-full justify-start text-gray-700 hover:text-emerald-700 hover:bg-emerald-50 mb-1"
                           onClick={() => setIsOpen(false)}
                         >
                           <LayoutDashboard className="w-4 h-4 mr-2" /> Admin Dashboard
@@ -442,7 +447,7 @@ export default function Navbar() {
                       <Link href="/profile">
                         <Button
                           variant="ghost"
-                          className="w-full justify-start text-gray-700 hover:text-orange-600 hover:bg-orange-50 mb-1"
+                          className="w-full justify-start text-gray-700 hover:text-emerald-700 hover:bg-emerald-50 mb-1"
                           onClick={() => setIsOpen(false)}
                         >
                           <User className="w-4 h-4 mr-2" /> Profile
@@ -452,7 +457,7 @@ export default function Navbar() {
 
                     <Button
                       variant="ghost"
-                      className="w-full text-red-600 hover:bg-red-50 justify-start"
+                      className="w-full text-emerald-700 hover:bg-emerald-50 justify-start"
                       onClick={() => signOut({ callbackUrl: "/" })}
                     >
                       <LogOut className="w-4 h-4 mr-2" /> Sign Out
@@ -462,7 +467,7 @@ export default function Navbar() {
                   <Link href="/login">
                     <Button
                       variant="ghost"
-                      className="w-full mt-2 text-gray-600 hover:bg-orange-50 justify-start"
+                      className="w-full mt-2 text-gray-600 hover:bg-emerald-50 justify-start"
                       onClick={() => setIsOpen(false)}
                     >
                       <User className="w-4 h-4 mr-2" /> Login
@@ -475,7 +480,7 @@ export default function Navbar() {
         )}
       </AnimatePresence>
       {/* Animated border */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-orange-500/30 to-transparent"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-600/30 to-transparent"></div>
     </nav >
   )
 }

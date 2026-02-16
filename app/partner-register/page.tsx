@@ -16,7 +16,7 @@ import {
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 
-import { useSession } from "next-auth/react"
+import { useSession, signOut } from "next-auth/react"
 import { useRouter } from "next/navigation"
 
 export default function PartnerRegistrationPage() {
@@ -45,6 +45,35 @@ export default function PartnerRegistrationPage() {
         contactNumber: "",
         email: ""
     })
+
+    const [existingApplication, setExistingApplication] = useState<any>(null)
+    const [isCheckingStatus, setIsCheckingStatus] = useState(true)
+
+    useEffect(() => {
+        const checkStatus = async () => {
+            if (session?.user) {
+                try {
+                    const res = await fetch(`/api/b2b-register?userId=${(session.user as any).id}`)
+                    const data = await res.json()
+                    if (data.data) {
+                        setExistingApplication(data.data)
+                    }
+                } catch (error) {
+                    console.error("Error fetching status:", error)
+                } finally {
+                    setIsCheckingStatus(false)
+                }
+            } else {
+                setIsCheckingStatus(false)
+            }
+        }
+
+        if (status === "authenticated") {
+            checkStatus()
+        } else if (status === "unauthenticated") {
+            setIsCheckingStatus(false)
+        }
+    }, [session, status])
 
     if (status === "loading") {
         return (
@@ -148,7 +177,68 @@ export default function PartnerRegistrationPage() {
                 <div className="bg-white/80 backdrop-blur-xl py-10 px-6 shadow-2xl shadow-gray-200/50 sm:rounded-3xl sm:px-12 border border-white/50">
 
                     <AnimatePresence mode="wait">
-                        {!isSubmitted ? (
+                        {isCheckingStatus ? (
+                            <div className="flex justify-center items-center py-12">
+                                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-orange-600"></div>
+                            </div>
+                        ) : existingApplication ? (
+                            <motion.div
+                                key="status"
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                className="text-center py-8"
+                            >
+                                {existingApplication.status === "approved" ? (
+                                    <>
+                                        <div className="mx-auto flex items-center justify-center h-24 w-24 rounded-full bg-green-50 mb-6">
+                                            <CheckCircle className="h-12 w-12 text-green-600" />
+                                        </div>
+                                        <h3 className="text-3xl font-bold text-gray-900 mb-2">Congratulations!</h3>
+                                        <p className="text-gray-600 mb-8 max-w-lg mx-auto text-lg">
+                                            We have approved you as our partner. You can now login to your B2B account properly.
+                                        </p>
+
+                                        <div className="bg-gray-50 rounded-xl p-6 mb-8 max-w-md mx-auto border border-gray-200 text-left">
+                                            <h4 className="font-bold text-gray-900 mb-4 border-b pb-2">Your Credentials</h4>
+                                            <div className="space-y-3">
+                                                <div>
+                                                    <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold">User ID</p>
+                                                    <p className="font-mono text-lg font-bold text-gray-800 break-all">{existingApplication.userId}</p>
+                                                </div>
+                                                <div>
+                                                    <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold">Password</p>
+                                                    <p className="font-mono text-lg font-bold text-gray-800">{existingApplication.password || "Use your email password"}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <button
+                                            onClick={() => {
+                                                signOut({ callbackUrl: "/login" })
+                                            }}
+                                            className="inline-flex items-center px-8 py-4 border border-transparent text-base font-bold rounded-xl text-white bg-green-600 hover:bg-green-700 transition-colors shadow-lg shadow-green-600/20"
+                                        >
+                                            Log Out & Login as Partner
+                                        </button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div className="mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-yellow-50 mb-6">
+                                            <CheckCircle className="h-10 w-10 text-yellow-600" />
+                                        </div>
+                                        <h3 className="text-2xl font-bold text-gray-900 mb-2">Application Under Review</h3>
+                                        <p className="text-gray-600 mb-8 max-w-sm mx-auto">
+                                            Your application for <span className="font-semibold text-gray-900">{existingApplication.name}</span> was submitted on {new Date(existingApplication.createdAt).toLocaleDateString()}. Our team is reviewing your details.
+                                        </p>
+                                        <Link href="/">
+                                            <button className="inline-flex items-center px-6 py-3 border border-transparent text-base font-bold rounded-xl text-orange-700 bg-orange-50 hover:bg-orange-100 transition-colors">
+                                                Back to Home <ArrowRight className="ml-2 h-5 w-5" />
+                                            </button>
+                                        </Link>
+                                    </>
+                                )}
+                            </motion.div>
+                        ) : !isSubmitted ? (
                             <motion.form
                                 key="form"
                                 initial={{ opacity: 0, y: 10 }}
