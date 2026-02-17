@@ -2,9 +2,8 @@
 
 import { useState } from "react"
 import Navbar from "@/components/Navbar"
-
 import ExchangeVehicleForm from "@/components/ExchangeVehicleForm"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { TrendingUp, Zap, Shield, Award } from "lucide-react"
 
 export default function ExchangeVehiclePage() {
@@ -32,12 +31,40 @@ export default function ExchangeVehiclePage() {
   ]
 
   return (
-    <div className="bg-white min-h-screen text-gray-900">
+    <div className="bg-[#020617] min-h-screen text-white selection:bg-emerald-500/30">
       <Navbar />
 
       {/* Hero Section */}
       <section className="pt-32 pb-12 px-4 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-orange-50 via-transparent to-transparent pointer-events-none"></div>
+        {/* Animated Background Blobs */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+          <motion.div
+            animate={{
+              scale: [1, 1.2, 1],
+              x: [0, 50, 0],
+              y: [0, 30, 0],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            className="absolute -top-1/4 -left-1/4 w-1/2 h-1/2 bg-emerald-500/10 blur-[120px] rounded-full"
+          />
+          <motion.div
+            animate={{
+              scale: [1.2, 1, 1.2],
+              x: [0, -40, 0],
+              y: [0, 50, 0],
+            }}
+            transition={{
+              duration: 25,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            className="absolute -bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-blue-500/10 blur-[120px] rounded-full"
+          />
+        </div>
 
         <div className="container mx-auto max-w-4xl relative z-10">
           <motion.div
@@ -46,49 +73,64 @@ export default function ExchangeVehiclePage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-balance text-gray-900">
-              Exchange Your <span className="text-orange-600">Vehicle</span>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2 }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm font-medium mb-6 backdrop-blur-sm"
+            >
+              <Zap className="w-4 h-4" />
+              <span>Instant Valuation & Easy Upgrades</span>
+            </motion.div>
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-balance text-white leading-[1.1]">
+              Exchange Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-blue-500">Vehicle</span>
             </h1>
-            <p className="text-xl text-gray-600 text-balance">
-              Trade in your old vehicle and get the best value. Upgrade to your dream car with our exchange program.
+            <p className="text-xl text-gray-400 text-balance max-w-2xl mx-auto leading-relaxed">
+              Trade in your old vehicle for the best market value and upgrade to your dream ride seamlessly with our premium exchange program.
             </p>
           </motion.div>
         </div>
       </section>
 
       {/* Split Layout Section */}
-      <section className="py-12 px-4 bg-gray-50">
-        <div className="container mx-auto max-w-6xl">
-          <div className="grid lg:grid-cols-2 gap-8 items-start">
+      <section className="py-20 px-4 relative">
+        <div className="container mx-auto max-w-7xl">
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
             {/* Benefits Left Side */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              className="space-y-8"
+              viewport={{ once: true }}
+              className="space-y-10"
             >
-              <div>
-                <h2 className="text-3xl font-bold mb-4 text-gray-900">Why Choose Exchange?</h2>
-                <p className="text-gray-600 text-lg">Hassle-free exchange process with transparent pricing</p>
+              <div className="space-y-4">
+                <h2 className="text-4xl font-bold text-white tracking-tight">Why Choose Our <span className="text-emerald-400">Exchange?</span></h2>
+                <div className="w-20 h-1 bg-gradient-to-r from-emerald-500 to-blue-500 rounded-full"></div>
+                <p className="text-gray-400 text-lg leading-relaxed">Experience a hassle-free exchange process with complete transparency and top-tier support.</p>
               </div>
-              <div className="space-y-6">
+
+              <div className="grid sm:grid-cols-1 gap-6">
                 {benefits.map((benefit, index) => {
                   const Icon = benefit.icon
                   return (
                     <motion.div
                       key={index}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1, duration: 0.5 }}
-                      className="flex gap-6 p-6 rounded-xl border border-orange-200 bg-white hover:border-orange-400 hover:shadow-md transition-all"
-                      whileHover={{ x: 8, y: -2 }}
+                      viewport={{ once: true }}
+                      className="group relative"
                     >
-                      <div className="w-16 h-16 bg-gradient-to-br from-orange-500/20 to-orange-600/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <Icon className="w-8 h-8 text-orange-600" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-bold text-gray-900 text-lg mb-1">{benefit.title}</h3>
-                        <p className="text-gray-600">{benefit.description}</p>
+                      <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-blue-500/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      <div className="relative flex gap-6 p-8 rounded-2xl border border-white/5 bg-white/[0.03] backdrop-blur-md hover:border-emerald-500/30 transition-all duration-300">
+                        <div className="w-14 h-14 bg-gradient-to-br from-emerald-500/20 to-blue-500/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                          <Icon className="w-7 h-7 text-emerald-400" />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-bold text-white text-xl mb-2">{benefit.title}</h3>
+                          <p className="text-gray-400 leading-relaxed">{benefit.description}</p>
+                        </div>
                       </div>
                     </motion.div>
                   )
@@ -98,19 +140,27 @@ export default function ExchangeVehiclePage() {
 
             {/* Form Right Side */}
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="bg-white border border-gray-100 rounded-2xl p-8 lg:p-10 overflow-hidden shadow-xl"
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="relative group lg:sticky lg:top-32"
             >
-              {/* Directly embed the form instead of conditional rendering */}
-              <ExchangeVehicleForm onClose={() => { }} />
+              <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500 to-blue-500 rounded-[2rem] blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+              <div className="relative bg-[#0a0f1e]/80 backdrop-blur-xl border border-white/10 rounded-[2rem] p-8 lg:p-12 shadow-2xl overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 blur-3xl pointer-events-none"></div>
+                <div className="relative z-10">
+                  <div className="mb-8 text-center lg:text-left">
+                    <h3 className="text-2xl font-bold text-white mb-2">Exchange Details</h3>
+                    <p className="text-gray-500 text-sm">Tell us about your vehicle to get started</p>
+                  </div>
+                  <ExchangeVehicleForm onClose={() => { }} />
+                </div>
+              </div>
             </motion.div>
           </div>
         </div>
       </section>
-
-
     </div>
   )
 }

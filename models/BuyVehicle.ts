@@ -2,6 +2,10 @@ import mongoose, { Schema, model, models } from "mongoose"
 
 const BuyVehicleSchema = new Schema(
     {
+        userId: {
+            type: String,
+            required: false,
+        },
         vehicleBrand: { type: String, required: true },
         customBrand: { type: String },
         vehicleModel: { type: String, required: true },
@@ -11,9 +15,13 @@ const BuyVehicleSchema = new Schema(
         customerName: { type: String, required: true },
         customerEmail: { type: String, required: true },
         customerPhone: { type: String, required: true },
+        state: { type: String },
+        city: { type: String },
+        customCity: { type: String },
+        pincode: { type: String },
         status: {
             type: String,
-            enum: ['pending', 'contacted', 'completed', 'rejected'],
+            enum: ['pending', 'contacted', 'completed', 'rejected', 'approved'],
             default: 'pending'
         }
     },

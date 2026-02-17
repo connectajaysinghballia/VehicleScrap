@@ -5,10 +5,12 @@ import { signIn } from "next-auth/react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Mail, Lock, ArrowRight, Loader2, Sparkles, Building2, User } from "lucide-react"
 import Link from "next/link"
+import { useToast } from "@/components/ui/use-toast"
 
 export default function LoginPage() {
     const [activeTab, setActiveTab] = useState<"standard" | "b2b">("standard")
     const [isLogin, setIsLogin] = useState(true)
+    const { toast } = useToast()
 
     // Standard (User/Admin) State
     const [name, setName] = useState("")
@@ -35,11 +37,18 @@ export default function LoginPage() {
 
                 if (!res.ok) {
                     const data = await res.json()
-                    alert(data.message || "Registration failed")
+                    toast({
+                        title: "Registration Failed",
+                        description: data.message || "Something went wrong. Please try again.",
+                        variant: "destructive"
+                    })
                     setIsLoading(false)
                     return
                 }
-                // If registration successful, proceed to login automatically
+                toast({
+                    title: "Account Created",
+                    description: "You've successfully registered. Signing you in...",
+                })
             }
 
             // Login Flow
@@ -51,15 +60,27 @@ export default function LoginPage() {
 
             if (result?.error) {
                 setIsLoading(false)
-                alert("Invalid credentials. Please check your email and password.")
+                toast({
+                    title: "Login Failed",
+                    description: "Invalid credentials. Please check your email and password.",
+                    variant: "destructive"
+                })
             } else {
                 // Successful login
+                toast({
+                    title: "Success",
+                    description: "Welcome back!",
+                })
                 window.location.href = "/"
             }
         } catch (error) {
             console.error(error)
             setIsLoading(false)
-            alert("An error occurred. Please try again.")
+            toast({
+                title: "Error",
+                description: "An unexpected error occurred. Please try again.",
+                variant: "destructive"
+            })
         }
     }
 
@@ -76,9 +97,17 @@ export default function LoginPage() {
 
             if (result?.error) {
                 setIsLoading(false)
-                alert("Invalid Partner ID or Password.")
+                toast({
+                    title: "B2B Login Failed",
+                    description: "Invalid Partner ID or Password. Please check your credentials.",
+                    variant: "destructive"
+                })
             } else {
-                window.location.href = "/profile" // Redirect to profile/dashboard
+                toast({
+                    title: "Welcome Partner",
+                    description: "Redirecting to your marketplace...",
+                })
+                window.location.href = "/b2b" // Redirect to dedicated B2B marketplace
             }
         } catch (error) {
             console.error(error)

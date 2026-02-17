@@ -29,6 +29,9 @@ interface VehicleFormData {
   // Common
   name?: string
   phone?: string
+  state?: string
+  city?: string
+  customCity?: string
   pincode?: string
   agreeTC?: boolean
 }

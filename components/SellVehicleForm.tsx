@@ -7,6 +7,9 @@ import { motion, AnimatePresence } from "framer-motion"
 import { CheckCircle, Zap, Leaf } from "lucide-react"
 import EKYCForm from "./eKYCForm"
 import { useRouter } from "next/navigation"
+import { indiaData, states } from "@/lib/india-data"
+import { useToast } from "@/components/ui/use-toast"
+import { Loader2 } from "lucide-react"
 
 interface SellVehicleFormProps {
   onClose: () => void
@@ -25,6 +28,9 @@ interface FormData {
   loanBank?: string
   name?: string
   phone?: string
+  state?: string
+  city?: string
+  customCity?: string
   pincode?: string
   insuranceName?: string
 }
@@ -44,6 +50,9 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
     loanBank: "",
     name: "",
     phone: "",
+    state: "",
+    city: "",
+    customCity: "",
     pincode: "",
     insuranceName: "",
   })
@@ -51,6 +60,8 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
   const [showEKYC, setShowEKYC] = useState(false)
   const [showIntermediateModal, setShowIntermediateModal] = useState(false)
   const [valuation, setValuation] = useState(0)
+  const [loading, setLoading] = useState(false)
+  const { toast } = useToast()
 
   const benefits = [
     {
@@ -98,10 +109,17 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
       formData.registrationYear,
       formData.fuelType,
       formData.pendingLoan,
+      formData.state,
+      formData.city === "other" ? formData.customCity : formData.city,
+      formData.pincode,
     ]
 
     if (formData.pendingLoan === "yes" && (!formData.loanAmount || !formData.loanBank)) {
-      alert("Please fill in loan details")
+      toast({
+        variant: "destructive",
+        title: "Missing Details",
+        description: "Please fill in loan details",
+      })
       return
     }
 
@@ -111,6 +129,7 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
       // Calculate random valuation
       const randomValuation = Math.floor(Math.random() * (500000 - 50000) + 50000)
       setValuation(randomValuation)
+      setLoading(true)
 
       // Submit to API
       fetch("/api/sell-vehicle", {
@@ -122,15 +141,32 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
           if (res.ok) {
             setShowIntermediateModal(true)
           } else {
-            res.json().then(data => alert(data.message || "Failed to submit request"))
+            res.json().then(data => {
+              toast({
+                variant: "destructive",
+                title: "Submission Failed",
+                description: data.message || "Failed to submit request",
+              })
+            })
           }
         })
         .catch((err) => {
           console.error(err)
-          alert("Something went wrong. Please try again.")
+          toast({
+            variant: "destructive",
+            title: "Error",
+            description: "Something went wrong. Please try again.",
+          })
+        })
+        .finally(() => {
+          setLoading(false)
         })
     } else {
-      alert("Please fill in all required fields.")
+      toast({
+        variant: "destructive",
+        title: "Incomplete Form",
+        description: "Please fill in all required fields.",
+      })
     }
   }
 
@@ -361,6 +397,79 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
 
 
 
+          {/* Location Details */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* State */}
+            <div>
+              <label className="text-sm font-bold text-orange-600 mb-2 block uppercase tracking-wider">State*</label>
+              <select
+                name="state"
+                value={formData.state}
+                onChange={(e) => {
+                  const newState = e.target.value;
+                  setFormData(prev => ({ ...prev, state: newState, city: "" }));
+                }}
+                className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 outline-none transition-all"
+                required
+              >
+                <option value="">Select State</option>
+                {states.map((state) => (
+                  <option key={state} value={state}>{state}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* City */}
+            <div>
+              <label className="text-sm font-bold text-orange-600 mb-2 block uppercase tracking-wider">City*</label>
+              <select
+                name="city"
+                value={formData.city}
+                onChange={handleChange}
+                disabled={!formData.state}
+                className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 outline-none transition-all disabled:opacity-50"
+                required
+              >
+                <option value="">Select City</option>
+                <option value="other">Other</option>
+                {formData.state && indiaData[formData.state as string]?.map((city) => (
+                  <option key={city} value={city}>{city}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {/* Custom City - Conditional */}
+          {formData.city === "other" && (
+            <div>
+              <label className="text-sm font-bold text-orange-600 mb-2 block uppercase tracking-wider">Type Your City Name*</label>
+              <input
+                type="text"
+                name="customCity"
+                value={formData.customCity}
+                onChange={handleChange}
+                placeholder="Enter city name"
+                className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 outline-none transition-all"
+                required={formData.city === "other"}
+              />
+            </div>
+          )}
+
+          {/* Pincode */}
+          <div>
+            <label className="text-sm font-bold text-orange-600 mb-2 block uppercase tracking-wider">Pincode*</label>
+            <input
+              type="text"
+              name="pincode"
+              value={formData.pincode}
+              onChange={handleChange}
+              placeholder="6-digit pincode"
+              maxLength={6}
+              className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 outline-none transition-all"
+              required
+            />
+          </div>
+
           {/* Insurance Name - Optional */}
           <div>
             <label className="text-sm font-bold text-orange-600 mb-2 block uppercase tracking-wider">Name of Insurance (Optional)</label>
@@ -377,11 +486,13 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
           {/* Submit Button */}
           <motion.button
             type="submit"
-            className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold py-3 rounded-lg shadow-lg shadow-orange-500/25 transition-all duration-300 mt-6"
-            whileHover={{ scale: 1.02, boxShadow: "0 20px 40px rgba(249, 115, 22, 0.4)" }}
-            whileTap={{ scale: 0.98 }}
+            disabled={loading}
+            className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold py-3 rounded-lg shadow-lg shadow-orange-500/25 transition-all duration-300 mt-6 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            whileHover={!loading ? { scale: 1.02, boxShadow: "0 20px 40px rgba(249, 115, 22, 0.4)" } : {}}
+            whileTap={!loading ? { scale: 0.98 } : {}}
           >
-            Get Valuation
+            {loading && <Loader2 className="w-5 h-5 animate-spin" />}
+            {loading ? "Processing..." : "Get Valuation"}
           </motion.button>
         </form>
       </motion.div>
@@ -402,7 +513,6 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
             >
               <div className="flex justify-center mb-6">
                 <div className="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center animate-pulse">
-                  {/* Using CheckCircle here or maybe something else? Using checkcircle for now as implicit success of form submit */}
                   <CheckCircle className="w-10 h-10 text-orange-600" />
                 </div>
               </div>

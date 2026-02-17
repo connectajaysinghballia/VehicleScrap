@@ -1,10 +1,13 @@
 
+
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import connectToDatabase from "@/lib/db"
 import SellVehicle from "@/models/SellVehicle"
 import { ShoppingCart, Calendar, CheckCircle, Clock } from "lucide-react"
+import Link from "next/link"
+
 
 export const dynamic = "force-dynamic"
 
@@ -17,7 +20,7 @@ export default async function SellValuationsPage() {
 
     await connectToDatabase()
     // Explicitly casting to any to avoid TS errors with lean() or older mongoose types if strict
-    const requests = await SellVehicle.find({}).sort({ createdAt: -1 })
+    const requests = await SellVehicle.find({ status: { $ne: "approved" } }).sort({ createdAt: -1 })
 
     function getStatusBadge(status: string) {
         switch (status) {
@@ -57,12 +60,13 @@ export default async function SellValuationsPage() {
                                 <th className="px-6 py-4 whitespace-nowrap">Registration</th>
                                 <th className="px-6 py-4 whitespace-nowrap">Loan Status</th>
                                 <th className="px-6 py-4 whitespace-nowrap">Status</th>
+                                <th className="px-6 py-4 whitespace-nowrap text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100">
                             {requests.length === 0 ? (
                                 <tr>
-                                    <td colSpan={6} className="px-6 py-8 text-center text-gray-500">
+                                    <td colSpan={7} className="px-6 py-8 text-center text-gray-500">
                                         No sell requests found.
                                     </td>
                                 </tr>
@@ -99,6 +103,11 @@ export default async function SellValuationsPage() {
                                         </td>
                                         <td className="px-6 py-4">
                                             {getStatusBadge(req.status)}
+                                        </td>
+                                        <td className="px-6 py-4 text-right">
+                                            <Link href={`/admin/valuations/sell/${req._id}`} className="text-blue-600 hover:text-blue-800 font-medium text-xs">
+                                                View
+                                            </Link>
                                         </td>
                                     </tr>
                                 ))

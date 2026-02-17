@@ -17,7 +17,7 @@ export default async function QuoteValuationsPage() {
     }
 
     await connectToDatabase()
-    const valuations = await Valuation.find({}).sort({ createdAt: -1 })
+    const valuations = await Valuation.find({ status: { $ne: "approved" } }).sort({ createdAt: -1 })
 
     function getStatusBadge(status: string) {
         switch (status) {
@@ -104,9 +104,9 @@ export default async function QuoteValuationsPage() {
                                             {getStatusBadge(val.status)}
                                         </td>
                                         <td className="px-6 py-4 text-right">
-                                            <button className="text-blue-600 hover:text-blue-800 font-medium text-xs">
+                                            <Link href={`/admin/valuations/quote/${val._id}`} className="text-blue-600 hover:text-blue-800 font-medium text-xs">
                                                 View
-                                            </button>
+                                            </Link>
                                         </td>
                                     </tr>
                                 ))

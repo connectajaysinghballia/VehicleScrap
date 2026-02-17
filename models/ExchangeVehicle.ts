@@ -2,6 +2,10 @@ import mongoose, { Schema, model, models } from "mongoose"
 
 const ExchangeVehicleSchema = new Schema(
     {
+        userId: {
+            type: String,
+            required: false,
+        },
         oldVehicleRegistration: { type: String, required: true },
         oldVehicleBrand: { type: String, required: true },
         oldVehicleModel: { type: String, required: true },
@@ -11,9 +15,13 @@ const ExchangeVehicleSchema = new Schema(
         newVehicleModel: { type: String },
         customerName: { type: String, required: true },
         customerPhone: { type: String, required: true },
+        state: { type: String },
+        city: { type: String },
+        customCity: { type: String },
+        pincode: { type: String },
         status: {
             type: String,
-            enum: ['pending', 'contacted', 'completed', 'rejected'],
+            enum: ['pending', 'contacted', 'completed', 'rejected', 'approved'],
             default: 'pending'
         }
     },

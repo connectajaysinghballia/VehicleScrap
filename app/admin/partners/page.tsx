@@ -125,7 +125,7 @@ export default function B2BPartnersPage() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 pt-24 pb-12 px-4 sm:px-6 lg:px-8 font-sans">
+        <div className="space-y-8 max-w-7xl mx-auto">
             <AlertDialog open={!!deletingId} onOpenChange={() => setDeletingId(null)}>
                 <AlertDialogContent>
                     <AlertDialogHeader>
@@ -146,182 +146,178 @@ export default function B2BPartnersPage() {
                 </AlertDialogContent>
             </AlertDialog>
 
-            <div className="max-w-7xl mx-auto space-y-8">
-
-                {/* Header */}
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                    <div>
-                        <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-3">
-                            <User className="w-8 h-8 text-blue-600" />
-                            B2B Partners Management
-                        </h1>
-                        <p className="text-gray-500 mt-2">Manage your verified partners and review new applications.</p>
-                    </div>
+            {/* Header */}
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-3">
+                        <User className="w-8 h-8 text-blue-600" />
+                        B2B Partners Management
+                    </h1>
+                    <p className="text-gray-500 mt-2">Manage your verified partners and review new applications.</p>
                 </div>
-
-                {/* Tabs */}
-                <div className="flex space-x-1 rounded-xl bg-blue-900/5 p-1 mb-8 w-fit">
-                    <button
-                        onClick={() => setActiveTab("requests")}
-                        className={`w-full rounded-lg py-2.5 px-6 text-sm font-medium leading-5 transition-all
-                            ${activeTab === "requests"
-                                ? "bg-white text-blue-700 shadow"
-                                : "text-blue-600 hover:bg-white/[0.12] hover:text-blue-800"
-                            }`}
-                    >
-                        Requests Submitted
-                    </button>
-                    <button
-                        onClick={() => setActiveTab("partners")}
-                        className={`w-full rounded-lg py-2.5 px-6 text-sm font-medium leading-5 transition-all
-                            ${activeTab === "partners"
-                                ? "bg-white text-blue-700 shadow"
-                                : "text-blue-600 hover:bg-white/[0.12] hover:text-blue-800"
-                            }`}
-                    >
-                        Our Partners
-                    </button>
-                </div>
-
-                {/* Content */}
-                {activeTab === "requests" && (
-                    <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3 }}
-                    >
-                        {isLoading ? (
-                            <div className="flex justify-center py-12">
-                                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
-                            </div>
-                        ) : registrations.length === 0 ? (
-                            <div className="text-center py-12 bg-white rounded-xl shadow-sm border border-gray-100">
-                                <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                                <h3 className="text-lg font-medium text-gray-900">No requests found</h3>
-                                <p className="text-gray-500">New partner applications will appear here.</p>
-                            </div>
-                        ) : (
-                            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                                {registrations.map((reg) => (
-                                    <div key={reg._id} className="bg-white overflow-hidden shadow rounded-xl border border-gray-100 hover:shadow-md transition-shadow">
-                                        <div className="px-4 py-5 sm:p-6">
-                                            <div className="flex items-center justify-between mb-4">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="h-10 w-10 bg-blue-100 rounded-full flex items-center justify-center">
-                                                        <User className="h-5 w-5 text-blue-600" />
-                                                    </div>
-                                                    <div>
-                                                        <h3 className="text-lg font-bold text-gray-900">{reg.name}</h3>
-                                                        <p className="text-xs text-gray-500">{new Date(reg.createdAt).toLocaleDateString()}</p>
-                                                    </div>
-                                                </div>
-                                                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                                                    Pending
-                                                </span>
-                                            </div>
-
-                                            <div className="space-y-3">
-                                                <div className="flex items-start gap-3 text-gray-600">
-                                                    <MapPin className="h-4 w-4 mt-1 shrink-0" />
-                                                    <p className="text-sm">{reg.address}, {reg.city}, {reg.state} - {reg.pincode}</p>
-                                                </div>
-                                                <div className="flex items-center gap-3 text-gray-600">
-                                                    <Phone className="h-4 w-4 shrink-0" />
-                                                    <p className="text-sm">{reg.contactNumber}</p>
-                                                </div>
-                                                <div className="flex items-center gap-3 text-gray-600">
-                                                    <Mail className="h-4 w-4 shrink-0" />
-                                                    <p className="text-sm">{reg.email}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="bg-gray-50 px-4 py-4 sm:px-6 flex justify-end gap-2 border-t border-gray-100">
-                                            <button
-                                                onClick={() => setDeletingId(reg._id)}
-                                                className="text-sm text-red-600 hover:text-red-900 font-medium px-3 py-1 bg-red-50 rounded-lg hover:bg-red-100 transition-colors"
-                                            >
-                                                Reject
-                                            </button>
-                                            <button
-                                                onClick={() => handleApprove(reg)}
-                                                className="text-sm bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-sm"
-                                            >
-                                                Approve
-                                            </button>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-                    </motion.div>
-                )}
-
-                {activeTab === "partners" && (
-                    <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3 }}
-                    >
-                        {isLoading ? (
-                            <div className="flex justify-center py-12">
-                                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-600"></div>
-                            </div>
-                        ) : partners.length === 0 ? (
-                            <div className="text-center py-16 bg-white rounded-xl shadow-sm border border-gray-100">
-                                <CheckCircle className="h-16 w-16 text-green-100 text-green-500 mx-auto mb-4" />
-                                <h3 className="text-xl font-bold text-gray-900">No Active Partners</h3>
-                                <p className="text-gray-500 mt-2 max-w-md mx-auto">There are no approved partners yet.</p>
-                            </div>
-                        ) : (
-                            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                                {partners.map((partner) => (
-                                    <div key={partner._id} className="bg-white overflow-hidden shadow rounded-xl border border-gray-100 hover:shadow-md transition-shadow">
-                                        <div className="px-4 py-5 sm:p-6">
-                                            <div className="flex items-center justify-between mb-4">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="h-10 w-10 bg-green-100 rounded-full flex items-center justify-center">
-                                                        <Shield className="h-5 w-5 text-green-600" />
-                                                    </div>
-                                                    <div>
-                                                        <h3 className="text-lg font-bold text-gray-900">{partner.businessName}</h3>
-                                                        <p className="text-xs text-gray-500">ID: {partner.userId}</p>
-                                                    </div>
-                                                </div>
-                                                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                                    Active
-                                                </span>
-                                            </div>
-
-                                            <div className="space-y-3">
-                                                <div className="flex items-start gap-3 text-gray-600">
-                                                    <MapPin className="h-4 w-4 mt-1 shrink-0" />
-                                                    <p className="text-sm">{partner.address}, {partner.city}, {partner.state} - {partner.pincode}</p>
-                                                </div>
-                                                <div className="flex items-center gap-3 text-gray-600">
-                                                    <Phone className="h-4 w-4 shrink-0" />
-                                                    <p className="text-sm">{partner.contactNumber}</p>
-                                                </div>
-                                                <div className="flex items-center gap-3 text-gray-600">
-                                                    <Mail className="h-4 w-4 shrink-0" />
-                                                    <p className="text-sm">{partner.email}</p>
-                                                </div>
-                                                <div className="flex items-center gap-3 text-gray-600">
-                                                    <Clock className="h-4 w-4 shrink-0" />
-                                                    <p className="text-sm">Joined: {new Date(partner.createdAt).toLocaleDateString()}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="bg-gray-50 px-4 py-3 sm:px-6 flex justify-end items-center gap-3 border-t border-gray-100">
-                                            <span className="text-xs text-gray-400 font-mono">{partner._id}</span>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-                    </motion.div>
-                )}
-
             </div>
+
+            {/* Tabs */}
+            <div className="flex space-x-1 rounded-xl bg-blue-900/5 p-1 mb-8 w-fit">
+                <button
+                    onClick={() => setActiveTab("requests")}
+                    className={`w-full rounded-lg py-2.5 px-6 text-sm font-medium leading-5 transition-all
+                        ${activeTab === "requests"
+                            ? "bg-white text-blue-700 shadow"
+                            : "text-blue-600 hover:bg-white/[0.12] hover:text-blue-800"
+                        }`}
+                >
+                    Requests Submitted
+                </button>
+                <button
+                    onClick={() => setActiveTab("partners")}
+                    className={`w-full rounded-lg py-2.5 px-6 text-sm font-medium leading-5 transition-all
+                        ${activeTab === "partners"
+                            ? "bg-white text-blue-700 shadow"
+                            : "text-blue-600 hover:bg-white/[0.12] hover:text-blue-800"
+                        }`}
+                >
+                    Our Partners
+                </button>
+            </div>
+
+            {/* Content */}
+            {activeTab === "requests" && (
+                <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                >
+                    {isLoading ? (
+                        <div className="flex justify-center py-12">
+                            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
+                        </div>
+                    ) : registrations.length === 0 ? (
+                        <div className="text-center py-12 bg-white rounded-xl shadow-sm border border-gray-100">
+                            <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                            <h3 className="text-lg font-medium text-gray-900">No requests found</h3>
+                            <p className="text-gray-500">New partner applications will appear here.</p>
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                            {registrations.map((reg) => (
+                                <div key={reg._id} className="bg-white overflow-hidden shadow rounded-xl border border-gray-100 hover:shadow-md transition-shadow">
+                                    <div className="px-4 py-5 sm:p-6">
+                                        <div className="flex items-center justify-between mb-4">
+                                            <div className="flex items-center gap-3">
+                                                <div className="h-10 w-10 bg-blue-100 rounded-full flex items-center justify-center">
+                                                    <User className="h-5 w-5 text-blue-600" />
+                                                </div>
+                                                <div>
+                                                    <h3 className="text-lg font-bold text-gray-900">{reg.name}</h3>
+                                                    <p className="text-xs text-gray-500">{new Date(reg.createdAt).toLocaleDateString()}</p>
+                                                </div>
+                                            </div>
+                                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                                Pending
+                                            </span>
+                                        </div>
+
+                                        <div className="space-y-3">
+                                            <div className="flex items-start gap-3 text-gray-600">
+                                                <MapPin className="h-4 w-4 mt-1 shrink-0" />
+                                                <p className="text-sm">{reg.address}, {reg.city}, {reg.state} - {reg.pincode}</p>
+                                            </div>
+                                            <div className="flex items-center gap-3 text-gray-600">
+                                                <Phone className="h-4 w-4 shrink-0" />
+                                                <p className="text-sm">{reg.contactNumber}</p>
+                                            </div>
+                                            <div className="flex items-center gap-3 text-gray-600">
+                                                <Mail className="h-4 w-4 shrink-0" />
+                                                <p className="text-sm">{reg.email}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="bg-gray-50 px-4 py-4 sm:px-6 flex justify-end gap-2 border-t border-gray-100">
+                                        <button
+                                            onClick={() => setDeletingId(reg._id)}
+                                            className="text-sm text-red-600 hover:text-red-900 font-medium px-3 py-1 bg-red-50 rounded-lg hover:bg-red-100 transition-colors"
+                                        >
+                                            Reject
+                                        </button>
+                                        <button
+                                            onClick={() => handleApprove(reg)}
+                                            className="text-sm bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-sm"
+                                        >
+                                            Approve
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </motion.div>
+            )}
+
+            {activeTab === "partners" && (
+                <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                >
+                    {isLoading ? (
+                        <div className="flex justify-center py-12">
+                            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-600"></div>
+                        </div>
+                    ) : partners.length === 0 ? (
+                        <div className="text-center py-16 bg-white rounded-xl shadow-sm border border-gray-100">
+                            <CheckCircle className="h-16 w-16 text-green-100 text-green-500 mx-auto mb-4" />
+                            <h3 className="text-xl font-bold text-gray-900">No Active Partners</h3>
+                            <p className="text-gray-500 mt-2 max-w-md mx-auto">There are no approved partners yet.</p>
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                            {partners.map((partner) => (
+                                <div key={partner._id} className="bg-white overflow-hidden shadow rounded-xl border border-gray-100 hover:shadow-md transition-shadow">
+                                    <div className="px-4 py-5 sm:p-6">
+                                        <div className="flex items-center justify-between mb-4">
+                                            <div className="flex items-center gap-3">
+                                                <div className="h-10 w-10 bg-green-100 rounded-full flex items-center justify-center">
+                                                    <Shield className="h-5 w-5 text-green-600" />
+                                                </div>
+                                                <div>
+                                                    <h3 className="text-lg font-bold text-gray-900">{partner.businessName}</h3>
+                                                    <p className="text-xs text-gray-500">ID: {partner.userId}</p>
+                                                </div>
+                                            </div>
+                                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                Active
+                                            </span>
+                                        </div>
+
+                                        <div className="space-y-3">
+                                            <div className="flex items-start gap-3 text-gray-600">
+                                                <MapPin className="h-4 w-4 mt-1 shrink-0" />
+                                                <p className="text-sm">{partner.address}, {partner.city}, {partner.state} - {partner.pincode}</p>
+                                            </div>
+                                            <div className="flex items-center gap-3 text-gray-600">
+                                                <Phone className="h-4 w-4 shrink-0" />
+                                                <p className="text-sm">{partner.contactNumber}</p>
+                                            </div>
+                                            <div className="flex items-center gap-3 text-gray-600">
+                                                <Mail className="h-4 w-4 shrink-0" />
+                                                <p className="text-sm">{partner.email}</p>
+                                            </div>
+                                            <div className="flex items-center gap-3 text-gray-600">
+                                                <Clock className="h-4 w-4 shrink-0" />
+                                                <p className="text-sm">Joined: {new Date(partner.createdAt).toLocaleDateString()}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="bg-gray-50 px-4 py-3 sm:px-6 flex justify-end items-center gap-3 border-t border-gray-100">
+                                        <span className="text-xs text-gray-400 font-mono">{partner._id}</span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </motion.div>
+            )}
         </div>
     )
 }

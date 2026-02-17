@@ -3,9 +3,8 @@ import mongoose, { Schema, model, models } from "mongoose"
 const ValuationSchema = new Schema(
     {
         userId: {
-            type: Schema.Types.ObjectId,
-            ref: "User",
-            required: false, // Can be anonymous or stored and linked later
+            type: String, // Store as string for better NextAuth compatibility
+            required: false,
         },
         vehicleType: {
             type: String,
@@ -40,7 +39,7 @@ const ValuationSchema = new Schema(
         },
         status: {
             type: String,
-            enum: ["pending", "reviewed", "completed"],
+            enum: ["pending", "reviewed", "completed", "approved"],
             default: "pending",
         },
         // eKYC Data
