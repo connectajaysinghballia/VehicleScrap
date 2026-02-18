@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { Button } from "@/components/ui/button"
-import { Menu, X, Phone, ChevronDown, Sparkles, User, LogOut, LayoutDashboard } from "lucide-react"
+import { Menu, X, Phone, ChevronDown, Sparkles, User, LogOut, LayoutDashboard, Car, RefreshCw, ShoppingCart, BookOpen, FileText, Home, ArrowRight } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link" // Import Link for navigation
 import Image from "next/image"
@@ -28,15 +28,14 @@ export default function Navbar() {
   ]
 
   const servicesDropdown = [
-    { name: "Sell Old Vehicle", href: "/services/sell-vehicle" },
-    { name: "Exchange Vehicle", href: "/services/exchange-vehicle" },
-    { name: "Buy New Vehicle", href: "/services/buy-vehicle" },
+    { name: "Sell Old Vehicle", href: "/services/sell-vehicle", icon: Car, description: "Get the best price for your old vehicle" },
+    { name: "Exchange Vehicle", href: "/services/exchange-vehicle", icon: RefreshCw, description: "Exchange your old vehicle for a new one" },
+    { name: "Buy New Vehicle", href: "/services/buy-vehicle", icon: ShoppingCart, description: "Explore our range of quality vehicles" },
   ]
 
   const resourcesDropdown = [
-    { name: "Blogs", href: "/blogs" },
-    { name: "Guides", href: "/guide" },
-    { name: "Homex", href: "/homex" },
+    { name: "Blogs", href: "/blogs", icon: BookOpen, description: "Latest industry news and updates" },
+    { name: "Guides", href: "/guide", icon: FileText, description: "Step-by-step guides for vehicle scrapping" },
   ]
 
   useEffect(() => {
@@ -159,7 +158,7 @@ export default function Navbar() {
     <nav
       className={`navbar fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
         ? "bg-white/90 backdrop-blur-xl border-b border-emerald-600/20 shadow-lg shadow-emerald-600/5"
-        : "bg-black/5 backdrop-blur-sm"
+        : "bg-white backdrop-blur-md shadow-sm"
         }`}
     >
       <div className="container mx-auto px-6">
@@ -189,7 +188,10 @@ export default function Navbar() {
                   className="nav-item relative text-gray-600 hover:text-emerald-700 transition-colors duration-200 font-medium flex items-center gap-1"
                   onClick={() => !item.hasDropdown && handleNavClick(item.href)}
                 >
-                  {item.name}
+                  <span className="relative">
+                    {item.name}
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#0a192f] transition-all duration-300 group-hover:w-full"></span>
+                  </span>
                   {item.hasDropdown && <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />}
                 </button>
 
@@ -199,16 +201,26 @@ export default function Navbar() {
                     initial={{ opacity: 0, y: -10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="absolute top-full mt-2 left-0 bg-white/95 backdrop-blur-lg border border-emerald-200 rounded-lg shadow-xl overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 min-w-[200px]"
+                    className="absolute top-full mt-2 left-0 bg-white/95 backdrop-blur-lg border border-emerald-100 rounded-xl shadow-xl overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 min-w-[320px] p-2"
                   >
                     {servicesDropdown.map((dropdownItem) => (
                       <Link
                         key={dropdownItem.name}
                         href={dropdownItem.href}
                         onClick={() => setIsOpen(false)}
-                        className="block w-full px-4 py-3 text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 transition-all duration-200 text-left font-medium whitespace-nowrap"
+                        className="flex items-start gap-4 p-3 rounded-lg hover:bg-[#0a192f]/5 transition-colors duration-200 group/item"
                       >
-                        {dropdownItem.name}
+                        <div className="p-2 bg-[#0a192f]/5 rounded-lg text-[#0a192f] group-hover/item:bg-[#0a192f] group-hover/item:text-white transition-colors duration-200">
+                          <dropdownItem.icon className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="font-semibold text-[#0a192f] group-hover/item:text-emerald-700 transition-colors relative inline-block">
+                            {dropdownItem.name}
+                          </div>
+                          <p className="text-xs text-gray-500 mt-0.5 line-clamp-1">
+                            {dropdownItem.description}
+                          </p>
+                        </div>
                       </Link>
                     ))}
                   </motion.div>
@@ -220,16 +232,26 @@ export default function Navbar() {
                     initial={{ opacity: 0, y: -10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="absolute top-full mt-2 left-0 bg-white/95 backdrop-blur-lg border border-emerald-200 rounded-lg shadow-xl overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 min-w-[200px]"
+                    className="absolute top-full mt-2 left-0 bg-white/95 backdrop-blur-lg border border-emerald-100 rounded-xl shadow-xl overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 min-w-[320px] p-2"
                   >
                     {resourcesDropdown.map((dropdownItem) => (
                       <Link
                         key={dropdownItem.name}
                         href={dropdownItem.href}
                         onClick={() => setIsOpen(false)}
-                        className="block w-full px-4 py-3 text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 transition-all duration-200 text-left font-medium whitespace-nowrap"
+                        className="flex items-start gap-4 p-3 rounded-lg hover:bg-[#0a192f]/5 transition-colors duration-200 group/item"
                       >
-                        {dropdownItem.name}
+                        <div className="p-2 bg-[#0a192f]/5 rounded-lg text-[#0a192f] group-hover/item:bg-[#0a192f] group-hover/item:text-white transition-colors duration-200">
+                          <dropdownItem.icon className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="font-semibold text-[#0a192f] group-hover/item:text-emerald-700 transition-colors relative inline-block">
+                            {dropdownItem.name}
+                          </div>
+                          <p className="text-xs text-gray-500 mt-0.5 line-clamp-1">
+                            {dropdownItem.description}
+                          </p>
+                        </div>
                       </Link>
                     ))}
                   </motion.div>
@@ -244,18 +266,14 @@ export default function Navbar() {
               whileTap={{ scale: 0.95 }}
             >
               <Link href="/quote" passHref>
-                <Button className="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white px-8 py-2 rounded-lg font-semibold shadow-lg shadow-emerald-600/25 relative overflow-hidden group">
-                  <div className="absolute inset-0 bg-gradient-to-r from-emerald-700 to-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
-                  <motion.span
-                    className="relative z-10 flex items-center"
-                    animate={{ scale: [1, 1.1, 1] }}
-                    transition={{ duration: 0.6, repeat: Number.POSITIVE_INFINITY }}
-                  >
+                <Button className="relative overflow-hidden bg-[#0a192f] hover:bg-emerald-600 text-white px-8 py-6 rounded-full font-bold shadow-lg shadow-emerald-900/20 transition-all duration-300 group">
+                  <span className="relative z-10 flex items-center gap-2">
                     Get Free Quote
-                  </motion.span>
+                    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></div>
                 </Button>
               </Link>
-
             </motion.div>
 
             {/* Login/User Button */}
@@ -370,7 +388,7 @@ export default function Navbar() {
                       animate={{ opacity: 1, height: "auto" }}
                       exit={{ opacity: 0, height: 0 }}
                       transition={{ duration: 0.2 }}
-                      className="mt-2 bg-gray-900 border border-gray-800 rounded-xl overflow-hidden shadow-inner"
+                      className="mt-2 bg-gray-50 border border-gray-100 rounded-xl overflow-hidden shadow-inner mx-4"
                     >
                       {servicesDropdown.map((dropdownItem) => (
                         <Link
@@ -380,8 +398,9 @@ export default function Navbar() {
                             setIsOpen(false)
                             setIsServicesOpen(false)
                           }}
-                          className="block w-full text-left px-5 py-3 text-emerald-400 font-medium hover:text-white hover:bg-white/10 transition-all duration-200 text-sm border-b border-gray-800 last:border-0"
+                          className="flex items-center gap-3 w-full text-left px-5 py-3 text-gray-600 font-medium hover:text-emerald-700 hover:bg-emerald-50 transition-all duration-200 text-sm border-b border-gray-100 last:border-0"
                         >
+                          <dropdownItem.icon className="w-4 h-4" />
                           {dropdownItem.name}
                         </Link>
                       ))}
@@ -395,7 +414,7 @@ export default function Navbar() {
                       animate={{ opacity: 1, height: "auto" }}
                       exit={{ opacity: 0, height: 0 }}
                       transition={{ duration: 0.2 }}
-                      className="mt-2 bg-gray-900 border border-gray-800 rounded-xl overflow-hidden shadow-inner"
+                      className="mt-2 bg-gray-50 border border-gray-100 rounded-xl overflow-hidden shadow-inner mx-4"
                     >
                       {resourcesDropdown.map((dropdownItem) => (
                         <Link
@@ -405,8 +424,9 @@ export default function Navbar() {
                             setIsOpen(false)
                             setIsResourcesOpen(false)
                           }}
-                          className="block w-full text-left px-5 py-3 text-emerald-400 font-medium hover:text-white hover:bg-white/10 transition-all duration-200 text-sm border-b border-gray-800 last:border-0"
+                          className="flex items-center gap-3 w-full text-left px-5 py-3 text-gray-600 font-medium hover:text-emerald-700 hover:bg-emerald-50 transition-all duration-200 text-sm border-b border-gray-100 last:border-0"
                         >
+                          <dropdownItem.icon className="w-4 h-4" />
                           {dropdownItem.name}
                         </Link>
                       ))}
@@ -417,11 +437,13 @@ export default function Navbar() {
               <div className="px-2 pt-2">
                 <Link href="/quote" passHref>
                   <Button
-                    className="w-full bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white py-3 rounded-lg font-semibold shadow-lg shadow-emerald-600/25"
+                    className="w-full bg-[#0a192f] hover:bg-emerald-600 text-white py-3 rounded-lg font-semibold shadow-lg shadow-emerald-900/25 transition-all duration-300 group"
                     onClick={() => setIsOpen(false)}
                   >
-                    <Phone className="w-4 h-4 mr-2" />
-                    Get Free Quote
+                    <span className="flex items-center justify-center gap-2">
+                      Get Free Quote
+                      <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    </span>
                   </Button>
                 </Link>
                 {session ? (

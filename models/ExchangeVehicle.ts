@@ -23,7 +23,20 @@ const ExchangeVehicleSchema = new Schema(
             type: String,
             enum: ['pending', 'contacted', 'completed', 'rejected', 'approved'],
             default: 'pending'
-        }
+        },
+        // eKYC Data
+        firstName: { type: String },
+        dob: { type: String },
+        aadharPhone: { type: String },
+        aadharNumber: { type: String },
+        aadharFile: { type: String }, // URL or Path
+        rcFile: { type: String }, // URL or Path
+        carPhoto: { type: String }, // URL or Path
+        ekycStatus: {
+            type: String,
+            enum: ["pending", "verified", "rejected"],
+            default: "pending",
+        },
     },
     {
         timestamps: true,

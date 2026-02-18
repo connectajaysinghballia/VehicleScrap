@@ -19,6 +19,7 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import FAQSection from "@/components/FAQSection"
+import GrowWithUs from "@/components/GrowWithUs"
 
 
 
@@ -250,7 +251,7 @@ export default function AboutPage() {
                 transition={{ duration: 0.8, delay: 0.7, ease: "easeOut" }}
                 className="flex flex-col sm:flex-row gap-4 justify-center"
               >
-                <Link href="/contact" className="px-10 py-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full font-bold text-lg transition-all shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2 hover:scale-105 active:scale-95">
+                <Link href="/quote" className="px-10 py-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full font-bold text-lg transition-all shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2 hover:scale-105 active:scale-95">
                   Get Free Valuation
                   <ArrowRight className="w-5 h-5" />
                 </Link>
@@ -458,13 +459,13 @@ export default function AboutPage() {
       </section>
 
       {/* Values/Features */}
-      <section className="py-24 bg-white relative overflow-hidden border-t border-slate-100">
+      <section className="py-16 bg-white relative overflow-hidden border-t border-slate-100">
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-30 pointer-events-none">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-emerald-50 rounded-full blur-[120px]"></div>
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="text-center max-w-3xl mx-auto mb-10">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 border border-emerald-200 text-emerald-700 text-xs font-bold mb-4 tracking-wide uppercase">
               <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
               Ethos
@@ -500,17 +501,17 @@ export default function AboutPage() {
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
                 whileHover={{ y: -10, scale: 1.02 }}
-                className="group relative bg-[#020617] border border-slate-800 p-8 rounded-3xl shadow-lg shadow-black/50 hover:shadow-2xl hover:shadow-emerald-500/10 transition-all duration-500 overflow-hidden"
+                className="group relative bg-[#020617] border border-slate-800 p-8 rounded-3xl shadow-lg shadow-black/50 hover:bg-white hover:shadow-2xl hover:shadow-emerald-500/10 transition-all duration-500 overflow-hidden"
               >
-                {/* Gradient Border Hover Effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                {/* Gradient Border Hover Effect - Adjusted for white bg */}
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
 
                 <div className="relative z-10">
                   <div className="w-16 h-16 bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-emerald-500 group-hover:rotate-6 transition-all duration-300">
                     <feature.icon className="w-8 h-8 text-emerald-500 group-hover:text-white transition-colors duration-300" />
                   </div>
-                  <h3 className="text-xl font-bold mb-4 text-white group-hover:text-emerald-400 transition-colors">{feature.title}</h3>
-                  <p className="text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">
+                  <h3 className="text-xl font-bold mb-4 text-white group-hover:text-slate-900 transition-colors">{feature.title}</h3>
+                  <p className="text-slate-400 leading-relaxed group-hover:text-slate-600 transition-colors">
                     {feature.description}
                   </p>
                 </div>
@@ -565,7 +566,7 @@ export default function AboutPage() {
               </div>
 
               <h2 className="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight">
-                Get Free <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Valuation</span>
+                Get <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Free</span> Valuation
                 <br /> Of Your Car
               </h2>
 
@@ -589,6 +590,7 @@ export default function AboutPage() {
       </section>
 
       <FAQSection variant="green" />
+      <GrowWithUs variant="green" />
     </div>
   )
 }

@@ -29,6 +29,8 @@ interface FormData {
 }
 
 export default function ExchangeVehicleForm({ onClose }: ExchangeVehicleFormProps) {
+    const inputClasses = "w-full bg-white border border-gray-200 rounded-xl px-4 py-3 min-h-[50px] text-gray-900 placeholder-gray-400 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all text-[15px] font-medium appearance-none"
+    const labelClasses = "text-xs font-bold text-gray-700 uppercase tracking-wider mb-1 block"
     const [formData, setFormData] = useState<FormData>({
         oldVehicleRegistration: "",
         oldVehicleBrand: "",
@@ -83,8 +85,14 @@ export default function ExchangeVehicleForm({ onClose }: ExchangeVehicleFormProp
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
             })
-                .then((res) => {
+                .then(async (res) => {
                     if (res.ok) {
+                        const data = await res.json()
+                        // Store data for eKYC
+                        localStorage.setItem("kycFormData", JSON.stringify(formData))
+                        if (data.data && data.data._id) {
+                            localStorage.setItem("kycValuationId", data.data._id)
+                        }
                         setShowIntermediateModal(true)
                     } else {
                         res.json().then(data => {
@@ -116,8 +124,6 @@ export default function ExchangeVehicleForm({ onClose }: ExchangeVehicleFormProp
         }
     }
 
-    const inputClasses = "w-full px-5 py-4 rounded-xl bg-white/[0.03] border border-white/10 text-white placeholder-gray-500 focus:border-emerald-500/50 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all duration-300"
-    const labelClasses = "text-xs font-bold text-emerald-400/80 mb-2 block uppercase tracking-widest pl-1"
 
     return (
         <div className="relative">
@@ -151,11 +157,11 @@ export default function ExchangeVehicleForm({ onClose }: ExchangeVehicleFormProp
                                 className={inputClasses}
                                 required
                             >
-                                <option value="" className="bg-[#0a0f1e]">Select Brand</option>
+                                <option value="">Select Brand</option>
                                 {brands.map((brand) => (
-                                    <option key={brand} value={brand} className="bg-[#0a0f1e]">{brand}</option>
+                                    <option key={brand} value={brand}>{brand}</option>
                                 ))}
-                                <option value="other" className="bg-[#0a0f1e]">Other</option>
+                                <option value="other">Other</option>
                             </select>
                         </div>
                     </div>
@@ -182,9 +188,9 @@ export default function ExchangeVehicleForm({ onClose }: ExchangeVehicleFormProp
                                 className={inputClasses}
                                 required
                             >
-                                <option value="" className="bg-[#0a0f1e]">Select Year</option>
+                                <option value="">Select Year</option>
                                 {years.map((year) => (
-                                    <option key={year} value={year} className="bg-[#0a0f1e]">{year}</option>
+                                    <option key={year} value={year}>{year}</option>
                                 ))}
                             </select>
                         </div>
@@ -197,9 +203,9 @@ export default function ExchangeVehicleForm({ onClose }: ExchangeVehicleFormProp
                                 className={inputClasses}
                                 required
                             >
-                                <option value="" className="bg-[#0a0f1e]">Fuel Type</option>
+                                <option value="">Fuel Type</option>
                                 {fuelTypes.map((fuel) => (
-                                    <option key={fuel} value={fuel} className="bg-[#0a0f1e]">{fuel}</option>
+                                    <option key={fuel} value={fuel}>{fuel}</option>
                                 ))}
                             </select>
                         </div>
@@ -207,9 +213,9 @@ export default function ExchangeVehicleForm({ onClose }: ExchangeVehicleFormProp
                 </div>
 
                 {/* Section header: Upgrade Preference */}
-                <div className="space-y-4 border-t border-white/5 pt-8">
-                    <div className="flex items-center gap-2 text-white">
-                        <ChevronRight className="w-5 h-5 text-emerald-400" />
+                <div className="space-y-4 border-t border-gray-200 pt-8">
+                    <div className="flex items-center gap-2 text-gray-900">
+                        <ChevronRight className="w-5 h-5 text-emerald-600" />
                         <h4 className="font-bold">Upgrade Preference</h4>
                     </div>
 
@@ -223,11 +229,11 @@ export default function ExchangeVehicleForm({ onClose }: ExchangeVehicleFormProp
                                 className={inputClasses}
                                 required
                             >
-                                <option value="" className="bg-[#0a0f1e]">Select Brand</option>
+                                <option value="">Select Brand</option>
                                 {brands.map((brand) => (
-                                    <option key={brand} value={brand} className="bg-[#0a0f1e]">{brand}</option>
+                                    <option key={brand} value={brand}>{brand}</option>
                                 ))}
-                                <option value="other" className="bg-[#0a0f1e]">Other</option>
+                                <option value="other">Other</option>
                             </select>
                         </div>
                         <div className="space-y-1">
@@ -245,9 +251,9 @@ export default function ExchangeVehicleForm({ onClose }: ExchangeVehicleFormProp
                 </div>
 
                 {/* Section header: Personal & Location */}
-                <div className="space-y-4 border-t border-white/5 pt-8">
-                    <div className="flex items-center gap-2 text-white">
-                        <User className="w-5 h-5 text-emerald-400" />
+                <div className="space-y-4 border-t border-gray-200 pt-8">
+                    <div className="flex items-center gap-2 text-gray-900">
+                        <User className="w-5 h-5 text-emerald-600" />
                         <h4 className="font-bold">Your Details</h4>
                     </div>
 
@@ -267,7 +273,7 @@ export default function ExchangeVehicleForm({ onClose }: ExchangeVehicleFormProp
                         <div className="space-y-1">
                             <label className={labelClasses}>Phone Number*</label>
                             <div className="relative">
-                                <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-400/40" />
+                                <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                                 <input
                                     type="tel"
                                     name="customerPhone"
@@ -294,16 +300,16 @@ export default function ExchangeVehicleForm({ onClose }: ExchangeVehicleFormProp
                                 className={inputClasses}
                                 required
                             >
-                                <option value="" className="bg-[#0a0f1e]">Select State</option>
+                                <option value="">Select State</option>
                                 {states.map((state) => (
-                                    <option key={state} value={state} className="bg-[#0a0f1e]">{state}</option>
+                                    <option key={state} value={state}>{state}</option>
                                 ))}
                             </select>
                         </div>
                         <div className="space-y-1">
                             <label className={labelClasses}>City*</label>
                             <div className="relative">
-                                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-400/40" />
+                                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                                 <select
                                     name="city"
                                     value={formData.city}
@@ -312,10 +318,10 @@ export default function ExchangeVehicleForm({ onClose }: ExchangeVehicleFormProp
                                     className={`${inputClasses} pl-12 disabled:opacity-30`}
                                     required
                                 >
-                                    <option value="" className="bg-[#0a0f1e]">Select City</option>
-                                    <option value="other" className="bg-[#0a0f1e]">Other</option>
+                                    <option value="">Select City</option>
+                                    <option value="other">Other</option>
                                     {formData.state && indiaData[formData.state as string]?.map((city) => (
-                                        <option key={city} value={city} className="bg-[#0a0f1e]">{city}</option>
+                                        <option key={city} value={city}>{city}</option>
                                     ))}
                                 </select>
                             </div>
@@ -381,9 +387,9 @@ export default function ExchangeVehicleForm({ onClose }: ExchangeVehicleFormProp
                         <motion.div
                             initial={{ scale: 0.9, y: 20, opacity: 0 }}
                             animate={{ scale: 1, y: 0, opacity: 1 }}
-                            className="bg-[#0a0f1e] rounded-[2.5rem] shadow-2xl max-w-md w-full border border-white/10 p-10 relative overflow-hidden"
+                            className="bg-white rounded-[2.5rem] shadow-2xl max-w-md w-full border border-gray-200 p-10 relative overflow-hidden"
                         >
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 blur-3xl pointer-events-none"></div>
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 blur-3xl pointer-events-none"></div>
 
                             <div className="flex justify-center mb-8">
                                 <div className="w-24 h-24 bg-emerald-500/10 rounded-full flex items-center justify-center border border-emerald-500/20 relative">
@@ -392,21 +398,23 @@ export default function ExchangeVehicleForm({ onClose }: ExchangeVehicleFormProp
                                 </div>
                             </div>
 
-                            <h2 className="text-3xl font-bold text-center text-white mb-3">Request Submitted!</h2>
+                            <h2 className="text-3xl font-bold text-center text-gray-900 mb-3">Request Submitted!</h2>
                             <div className="text-center mb-10">
-                                <p className="font-semibold text-emerald-400 text-lg mb-2">Our team will call you shortly</p>
+                                <p className="font-semibold text-emerald-600 text-lg mb-2">Our team will call you shortly</p>
                                 <p className="text-sm text-gray-500">Please complete the final eKYC step to finalize your exchange valuation.</p>
                             </div>
 
                             <button
                                 onClick={() => {
                                     setShowIntermediateModal(false)
-                                    setShowEKYC(true)
+                                    // Redirect to specific eKYC page
+                                    // setShowEKYC(true) // Removed inline modal
+                                    window.location.href = "/ekyc/exchange-vehicle"
                                 }}
-                                className="w-full bg-white text-black font-bold py-4 rounded-2xl shadow-xl flex items-center justify-center gap-2 hover:bg-emerald-400 transition-colors duration-300 group"
+                                className="w-full bg-gray-900 text-white font-bold py-4 rounded-2xl shadow-xl flex items-center justify-center gap-2 hover:bg-gray-800 transition-colors duration-300 group"
                             >
                                 <span>Complete eKYC</span>
-                                <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform text-black" />
+                                <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform text-white" />
                             </button>
                         </motion.div>
                     </motion.div>

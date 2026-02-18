@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { ShoppingCart, Car, User, MapPin, Calendar, ChevronLeft, CheckCircle, Trash2, Phone, Hash, DollarSign, Building2 } from "lucide-react"
+import { ShoppingCart, Car, User, MapPin, Calendar, ChevronLeft, CheckCircle, Trash2, Phone, Hash, DollarSign, Building2, MessageCircle } from "lucide-react"
 import Link from "next/link"
 import { useToast } from "@/hooks/use-toast"
 
@@ -299,21 +299,32 @@ export default function SellDetailPage({ params }: { params: { id: string } }) {
                     </div>
                 </div>
 
-                {/* Timestamps */}
+                {/* WhatsApp Logs */}
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 lg:col-span-2">
                     <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                        <Calendar className="w-5 h-5 text-green-600" />
-                        Timeline
+                        <MessageCircle className="w-5 h-5 text-green-600" />
+                        WhatsApp Logs
                     </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="flex justify-between py-2 border-b border-gray-100">
-                            <span className="text-gray-500 font-medium">Created:</span>
-                            <span className="text-gray-900 font-semibold">{new Date(request.createdAt).toLocaleString()}</span>
+                    <div className="flex flex-col items-center justify-center py-6 text-center space-y-4">
+                        <div className="p-4 bg-green-50 rounded-full">
+                            <MessageCircle className="w-8 h-8 text-green-600" />
                         </div>
-                        <div className="flex justify-between py-2 border-b border-gray-100">
-                            <span className="text-gray-500 font-medium">Last Updated:</span>
-                            <span className="text-gray-900 font-semibold">{new Date(request.updatedAt).toLocaleString()}</span>
+                        <div>
+                            <h3 className="font-semibold text-gray-900">Connect via WhatsApp</h3>
+                            <p className="text-sm text-gray-500 max-w-[250px] mx-auto mt-1">
+                                Click below to open a direct WhatsApp chat with the client
+                            </p>
                         </div>
+                        <a
+                            href={`https://wa.me/${request.phone?.replace(/\D/g, '')}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="relative inline-flex items-center gap-3 bg-gradient-to-r from-[#25D366] to-[#128C7E] hover:from-[#128C7E] hover:to-[#075E54] text-white px-8 py-4 rounded-full font-bold text-lg transition-all shadow-lg hover:shadow-emerald-500/30 hover:-translate-y-1 group"
+                        >
+                            <div className="absolute inset-0 rounded-full border border-white/20 group-hover:border-white/40 transition-colors"></div>
+                            <MessageCircle className="w-6 h-6" />
+                            <span>Chat on WhatsApp</span>
+                        </a>
                     </div>
                 </div>
             </div>

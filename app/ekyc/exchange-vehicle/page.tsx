@@ -3,29 +3,25 @@
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import EKYCForm from "@/components/eKYCForm"
-import { motion } from "framer-motion"
 
-export default function EKYCPage() {
+export default function ExchangeVehicleEKYCPage() {
     const router = useRouter()
     const [formData, setFormData] = useState<any>(null)
-    const [valuation, setValuation] = useState(0)
-
+    const [valuation, setValuation] = useState(0) // Exchange might not have a valuation number the same way, but let's keep consistency
     const [valuationId, setValuationId] = useState<string | null>(null)
-    const [source, setSource] = useState<string | null>(null)
 
     useEffect(() => {
-        // Retrieve data stored from ValuationModals
+        // Retrieve data stored from ExchangeVehicleForm (we need to update it to store this)
         const storedData = localStorage.getItem("kycFormData")
         const storedValuation = localStorage.getItem("kycValuation")
         const storedValuationId = localStorage.getItem("kycValuationId")
-        const storedSource = localStorage.getItem("kycSource")
 
         try {
             if (storedData) {
                 setFormData(JSON.parse(storedData))
             }
-        } catch (error) {
-            console.error("Failed to parse form data", error)
+        } catch (e) {
+            console.error("Error parsing stored data", e)
         }
 
         if (storedValuation) {
@@ -35,36 +31,37 @@ export default function EKYCPage() {
         if (storedValuationId) {
             setValuationId(storedValuationId)
         }
-
-        if (storedSource) {
-            setSource(storedSource)
-        }
     }, [])
 
     if (!formData) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50">
-                <p className="text-gray-500">Loading...</p>
+                <div className="text-center">
+                    <h2 className="text-2xl font-bold text-gray-800 mb-2">No Exchange Data Found</h2>
+                    <p className="text-gray-600 mb-6">Please submit an exchange request first.</p>
+                    <button
+                        onClick={() => router.push("/services/exchange-vehicle")}
+                        className="px-6 py-2 bg-[#0a192f] text-white rounded-lg hover:bg-[#112240] transition-colors"
+                    >
+                        Go to Exchange Vehicle
+                    </button>
+                </div>
             </div>
         )
     }
 
     return (
-        <div className="min-h-screen bg-slate-50 pt-24 pb-12 px-0 md:px-6 lg:px-8 flex items-start justify-center">
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="w-full max-w-5xl"
-            >
+        <div className="bg-gray-50 min-h-screen">
+            <div className="max-w-4xl mx-auto pt-24 pb-12 px-4">
                 <EKYCForm
                     formData={formData}
                     valuation={valuation}
                     valuationId={valuationId}
-                    source={source}
+                    source="exchange-vehicle"
                     onBack={() => router.back()}
-                    isPage={true} // New prop to signal page mode styling
+                    isPage={true}
                 />
-            </motion.div>
+            </div>
         </div>
     )
 }

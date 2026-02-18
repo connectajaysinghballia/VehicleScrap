@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { gsap } from "gsap"
 
 import { motion } from "framer-motion"
-import { CheckCircle2, Recycle, ShoppingCart, Car, Repeat } from "lucide-react"
+import { CheckCircle2, Recycle, ShoppingCart, Car, Repeat, BookOpen, ChevronRight } from "lucide-react"
 import Link from "next/link"
 
 export default function GuidePage() {
@@ -114,7 +114,6 @@ export default function GuidePage() {
         },
     ]
 
-    // Auto-advance highlight
     // Auto-advance highlight with GSAP Timeline
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -135,37 +134,43 @@ export default function GuidePage() {
     }, [])
 
     return (
-        <div className="min-h-screen bg-gray-50/50 font-sans text-gray-900 selection:bg-orange-100 selection:text-orange-900">
+        <div className="min-h-screen bg-[#0a192f] font-sans text-slate-100 selection:bg-emerald-500/30 selection:text-emerald-400">
 
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20 relative">
+                {/* Background Decor */}
+                <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+                    <div className="absolute top-[10%] left-[10%] w-[400px] h-[400px] bg-emerald-500/10 rounded-full blur-[100px]"></div>
+                    <div className="absolute bottom-[10%] right-[10%] w-[300px] h-[300px] bg-blue-500/10 rounded-full blur-[80px]"></div>
+                </div>
 
-                <div className="text-center max-w-3xl mx-auto mb-16">
+                <div className="text-center max-w-3xl mx-auto mb-20 relative z-10">
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="inline-block px-4 py-1.5 rounded-full bg-orange-100 text-orange-600 font-semibold text-sm mb-6"
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-emerald-400 font-semibold text-sm mb-6 backdrop-blur-sm"
                     >
-                        User Guides
+                        <BookOpen className="w-4 h-4" />
+                        <span>User Guides</span>
                     </motion.div>
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="text-4xl md:text-6xl font-bold mb-6 text-gray-900"
+                        className="text-4xl md:text-6xl font-bold mb-6 text-white tracking-tight"
                     >
-                        How It <span className="text-orange-600">Works</span>
+                        How It <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Works</span>
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="text-xl text-gray-500 leading-relaxed"
+                        className="text-xl text-slate-300 leading-relaxed max-w-2xl mx-auto"
                     >
                         Detailed step-by-step guides for all our services. We make every process simple, transparent, and efficient.
                     </motion.p>
                 </div>
 
-                <div className="grid gap-20">
+                <div className="grid gap-20 relative z-10">
                     {sections.map((section, sectionIdx) => (
                         <motion.div
                             key={section.id}
@@ -176,19 +181,22 @@ export default function GuidePage() {
                             transition={{ duration: 0.6 }}
                             className="scroll-mt-32"
                         >
-                            <div className="bg-white rounded-[2.5rem] p-6 md:p-10 shadow-xl shadow-orange-900/5 border border-orange-100 relative overflow-hidden">
+                            <div className="bg-white/5 backdrop-blur-sm rounded-[2.5rem] p-6 md:p-10 border border-white/10 relative overflow-hidden group hover:bg-white/[0.07] transition-all duration-500">
                                 {/* Background decoration */}
-                                <div className="absolute top-0 right-0 w-64 h-64 bg-orange-50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 opacity-50"></div>
+                                <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 opacity-30 group-hover:opacity-50 transition-opacity duration-700"></div>
 
                                 <div className="flex flex-col md:flex-row items-start md:items-center gap-6 mb-12 relative z-10">
-                                    <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center shadow-lg shadow-orange-500/20 text-white shrink-0">
+                                    <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-500/20 text-[#0a192f] shrink-0">
                                         <section.icon className="w-8 h-8" />
                                     </div>
                                     <div>
-                                        <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+                                        <h2 className="text-2xl md:text-3xl font-bold text-white mb-1">
                                             {section.title}
                                         </h2>
-                                        <p className="text-gray-500 mt-2">Follow these simple steps</p>
+                                        <p className="text-slate-400 flex items-center gap-2">
+                                            Follow these simple steps
+                                            <ChevronRight className="w-4 h-4 text-emerald-500 animate-pulse" />
+                                        </p>
                                     </div>
                                 </div>
 
@@ -203,34 +211,34 @@ export default function GuidePage() {
                                                 animate={{
                                                     scale: isActive ? 1.05 : 1,
                                                     y: isActive ? -5 : 0,
-                                                    opacity: (activeSection === sectionIdx) ? (isActive ? 1 : 0.7) : 1
+                                                    opacity: (activeSection === sectionIdx) ? (isActive ? 1 : 0.6) : 1
                                                 }}
-                                                className={`relative p-6 rounded-2xl border transition-all duration-500 ${isActive
-                                                    ? "bg-orange-50 border-orange-200 shadow-md ring-1 ring-orange-200"
-                                                    : "bg-gray-50 border-gray-100 hover:bg-white hover:shadow-sm"
+                                                className={`relative p-6 rounded-2xl border transition-all duration-500 h-full flex flex-col ${isActive
+                                                    ? "bg-emerald-500/10 border-emerald-500/50 shadow-lg shadow-emerald-500/10 ring-1 ring-emerald-500/20"
+                                                    : "bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/10"
                                                     }`}
                                             >
                                                 {/* Step Number Badge */}
-                                                <div className={`absolute -top-3 -left-3 w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold shadow-sm transition-colors duration-300 ${isActive || isCompleted ? "bg-orange-600 text-white" : "bg-white text-gray-400 border border-gray-200"
+                                                <div className={`absolute -top-3 -left-3 w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold shadow-sm transition-colors duration-300 ${isActive || isCompleted ? "bg-emerald-500 text-[#0a192f]" : "bg-[#0a192f] text-slate-500 border border-white/10"
                                                     }`}>
                                                     {isCompleted ? <CheckCircle2 className="w-4 h-4" /> : stepIdx + 1}
                                                 </div>
 
-                                                <h3 className={`text-lg font-bold mb-3 transition-colors ${isActive ? "text-orange-700" : "text-gray-900"}`}>
+                                                <h3 className={`text-lg font-bold mb-3 transition-colors ${isActive ? "text-emerald-400" : "text-white"}`}>
                                                     {step.title}
                                                 </h3>
-                                                <p className="text-gray-600 text-sm leading-relaxed">
+                                                <p className="text-slate-400 text-sm leading-relaxed flex-grow">
                                                     {step.description}
                                                 </p>
 
                                                 {/* Progress Bar for active step */}
                                                 {isActive && (
-                                                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-orange-100 rounded-b-2xl overflow-hidden">
+                                                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-emerald-900/50 rounded-b-2xl overflow-hidden mt-4">
                                                         <motion.div
                                                             initial={{ width: "0%" }}
                                                             animate={{ width: "100%" }}
                                                             transition={{ duration: 3, ease: "linear" }}
-                                                            className="h-full bg-orange-500"
+                                                            className="h-full bg-emerald-500"
                                                         />
                                                     </div>
                                                 )}

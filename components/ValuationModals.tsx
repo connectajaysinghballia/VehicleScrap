@@ -77,17 +77,21 @@ export default function ValuationModals({ formData, valuationId, onClose }: Valu
                         className="w-full max-w-2xl bg-white rounded-3xl shadow-2xl overflow-hidden relative"
                     >
                         {/* Close Button */}
-                        <button onClick={onClose} className="absolute top-4 right-4 p-2 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors z-10">
-                            <X className="w-5 h-5 text-gray-500" />
+                        <button onClick={onClose} className="absolute top-4 right-4 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors z-10 text-white backdrop-blur-sm">
+                            <X className="w-5 h-5" />
                         </button>
 
-                        <div className="bg-gradient-to-r from-orange-500 to-orange-600 p-4 md:p-8 text-center text-white relative overflow-hidden">
+                        <div className="bg-[#0a192f] p-4 md:p-8 text-center text-white relative overflow-hidden">
+                            {/* Background Effects */}
                             <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
-                            <h2 className="text-xl md:text-3xl font-bold mb-1 md:mb-2">Build Your Quote</h2>
-                            <p className="opacity-90 text-xs md:text-base">Based on your {formData.vehicleType} details</p>
+                            <div className="absolute -top-24 -right-24 w-48 h-48 bg-emerald-500/20 rounded-full blur-3xl"></div>
+                            <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-blue-500/20 rounded-full blur-3xl"></div>
 
-                            <div className="mt-4 md:mt-8 bg-white/10 backdrop-blur-md rounded-xl md:rounded-2xl p-3 md:p-6 border border-white/20 inline-block w-full max-w-[250px] md:max-w-sm mx-auto">
-                                <p className="text-[10px] md:text-sm font-medium opacity-80 uppercase tracking-widest mb-1">Estimated Valuation</p>
+                            <h2 className="text-xl md:text-3xl font-bold mb-1 md:mb-2 relative z-10">Build Your Quote</h2>
+                            <p className="opacity-90 text-xs md:text-base text-emerald-100 relative z-10">Based on your {formData.vehicleType} details</p>
+
+                            <div className="mt-4 md:mt-8 bg-white/5 backdrop-blur-md rounded-xl md:rounded-2xl p-3 md:p-6 border border-emerald-500/30 inline-block w-full max-w-[250px] md:max-w-sm mx-auto relative z-10">
+                                <p className="text-[10px] md:text-sm font-medium text-emerald-400 uppercase tracking-widest mb-1">Estimated Valuation</p>
                                 <div className="text-2xl md:text-5xl font-black tracking-tight text-white drop-shadow-sm break-words">
                                     ₹{estimatedValue}
                                 </div>
@@ -101,26 +105,26 @@ export default function ValuationModals({ formData, valuationId, onClose }: Valu
                                     { icon: Sparkles, title: "25% Tax Rebate", desc: "Save big on new purchases" },
                                     { icon: Award, title: "Registration Waiver", desc: "Complete fee exemption" }
                                 ].map((item, i) => (
-                                    <div key={i} className="bg-blue-50 border border-blue-100 rounded-lg md:rounded-xl p-2 md:p-4 text-center hover:bg-blue-100 transition-colors flex flex-col items-center justify-center">
-                                        <div className="w-8 h-8 md:w-10 md:h-10 bg-white rounded-full flex items-center justify-center mb-1 md:mb-3 shadow-sm text-blue-600">
-                                            <item.icon className="w-4 h-4 md:w-5 md:h-5" />
+                                    <div key={i} className="bg-gray-50 border border-gray-100 rounded-lg md:rounded-xl p-2 md:p-4 text-center hover:bg-emerald-50 hover:border-emerald-200 transition-all duration-300 flex flex-col items-center justify-center group">
+                                        <div className="w-8 h-8 md:w-10 md:h-10 bg-white rounded-full flex items-center justify-center mb-1 md:mb-3 shadow-sm group-hover:scale-110 transition-transform duration-300">
+                                            <item.icon className="w-4 h-4 md:w-5 md:h-5 text-emerald-600" />
                                         </div>
-                                        <h3 className="font-bold text-gray-900 text-[10px] md:text-sm leading-tight mb-0 md:mb-1">{item.title}</h3>
-                                        <p className="hidden md:block text-xs text-gray-500">{item.desc}</p>
+                                        <h3 className="font-bold text-[#0a192f] text-[10px] md:text-sm leading-tight mb-0 md:mb-1">{item.title}</h3>
+                                        <p className="hidden md:block text-xs text-gray-500 group-hover:text-emerald-700/70 transition-colors">{item.desc}</p>
                                     </div>
                                 ))}
                             </div>
 
-                            <div className="flex flex-row items-center gap-3 p-3 md:p-4 bg-orange-50 border-l-4 border-orange-500 rounded-lg shadow-sm mb-4 md:mb-8 relative overflow-hidden text-left">
-                                <div className="absolute top-0 right-0 p-2 opacity-5 pointer-events-none hidden md:block">
-                                    <Smartphone className="w-24 h-24 text-orange-600" />
+                            <div className="flex flex-row items-center gap-3 p-3 md:p-4 bg-emerald-50 border-l-4 border-emerald-500 rounded-lg shadow-sm mb-4 md:mb-8 relative overflow-hidden text-left">
+                                <div className="absolute top-0 right-0 p-2 opacity-10 pointer-events-none hidden md:block">
+                                    <Smartphone className="w-24 h-24 text-emerald-800" />
                                 </div>
                                 <div className="w-10 h-10 md:w-12 md:h-12 bg-white rounded-full flex items-center justify-center shadow-md animate-pulse shrink-0">
-                                    <Smartphone className="w-5 h-5 md:w-6 md:h-6 text-orange-600" />
+                                    <Smartphone className="w-5 h-5 md:w-6 md:h-6 text-emerald-600" />
                                 </div>
                                 <div>
-                                    <p className="font-extrabold text-gray-900 text-sm md:text-lg leading-tight">Our CC will contact you soon</p>
-                                    <p className="text-xs md:text-sm font-bold text-orange-700">Support available 24/7</p>
+                                    <p className="font-extrabold text-[#0a192f] text-sm md:text-lg leading-tight">Our CC will contact you soon</p>
+                                    <p className="text-xs md:text-sm font-bold text-emerald-700">Support available 24/7</p>
                                 </div>
                             </div>
                             <button
@@ -128,11 +132,11 @@ export default function ValuationModals({ formData, valuationId, onClose }: Valu
                                     localStorage.setItem("kycFormData", JSON.stringify(formData))
                                     localStorage.setItem("kycValuation", estimatedValue.replace(/,/g, ""))
                                     if (valuationId) localStorage.setItem("kycValuationId", valuationId)
-                                    router.push("/ekyc")
+                                    router.push("/ekyc/get-quote")
                                 }}
-                                className="w-full bg-gray-900 hover:bg-black text-white font-bold py-3 md:py-4 rounded-xl shadow-lg transform transition-all active:scale-[0.98] flex items-center justify-center gap-2 text-sm md:text-base"
+                                className="w-full bg-[#0a192f] hover:bg-emerald-600 text-white font-bold py-3 md:py-4 rounded-xl shadow-lg hover:shadow-emerald-500/30 transform transition-all duration-300 active:scale-[0.98] flex items-center justify-center gap-2 text-sm md:text-base"
                             >
-                                <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-yellow-400" />
+                                <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-emerald-400 group-hover:text-white" />
                                 Final Step eKYC
                             </button>
                         </div>
@@ -148,80 +152,85 @@ export default function ValuationModals({ formData, valuationId, onClose }: Valu
                         exit={{ opacity: 0, x: -20 }}
                         className="w-full max-w-lg bg-white rounded-3xl shadow-2xl overflow-hidden p-8"
                     >
+                        <div className="absolute top-4 right-4">
+                            <button onClick={() => setStep(1)} className="p-2 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors">
+                                <X className="w-5 h-5 text-gray-500" />
+                            </button>
+                        </div>
                         <div className="text-center mb-8">
-                            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <FileText className="w-8 h-8 text-green-600" />
+                            <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <FileText className="w-8 h-8 text-emerald-600" />
                             </div>
-                            <h2 className="text-2xl font-bold text-gray-900">Complete eKYC</h2>
+                            <h2 className="text-2xl font-bold text-[#0a192f]">Complete eKYC</h2>
                             <p className="text-gray-500">Verify your identity to claim benefits</p>
                         </div>
 
                         <div className="space-y-4">
                             <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-1">Full Name</label>
-                                <input type="text" defaultValue={formData.name} className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-green-500 outline-none" placeholder="As per Aadhaar" />
+                                <label className="block text-sm font-semibold text-[#0a192f] mb-1">Full Name</label>
+                                <input type="text" defaultValue={formData.name} className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-emerald-500 outline-none transition-colors" placeholder="As per Aadhaar" />
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-1">Date of Birth</label>
-                                    <input type="date" className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-green-500 outline-none" />
+                                    <label className="block text-sm font-semibold text-[#0a192f] mb-1">Date of Birth</label>
+                                    <input type="date" className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-emerald-500 outline-none transition-colors" />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-1">Aadhaar Number</label>
-                                    <input type="text" maxLength={12} className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-green-500 outline-none" placeholder="XXXX XXXX XXXX" />
+                                    <label className="block text-sm font-semibold text-[#0a192f] mb-1">Aadhaar Number</label>
+                                    <input type="text" maxLength={12} className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-emerald-500 outline-none transition-colors" placeholder="XXXX XXXX XXXX" />
                                 </div>
                             </div>
 
                             {/* File Uploads */}
                             <div className="space-y-4 pt-2">
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-1">Upload Aadhaar Card (PDF)</label>
+                                    <label className="block text-sm font-semibold text-[#0a192f] mb-1">Upload Aadhaar Card (PDF)</label>
                                     <input
                                         type="file"
                                         accept=".pdf"
-                                        className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-green-500 outline-none text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
+                                        className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-emerald-500 outline-none text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 transition-colors"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-1">Upload RC (PDF)</label>
+                                    <label className="block text-sm font-semibold text-[#0a192f] mb-1">Upload RC (PDF)</label>
                                     <input
                                         type="file"
                                         accept=".pdf"
-                                        className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-green-500 outline-none text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
+                                        className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-emerald-500 outline-none text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 transition-colors"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-1">Upload Car Photo (PNG/JPG)</label>
+                                    <label className="block text-sm font-semibold text-[#0a192f] mb-1">Upload Car Photo (PNG/JPG)</label>
                                     <input
                                         type="file"
                                         accept="image/png, image/jpeg, image/jpg"
-                                        className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-green-500 outline-none text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
+                                        className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-emerald-500 outline-none text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 transition-colors"
                                     />
                                 </div>
                             </div>
 
 
                             <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-1">Aadhaar Registered Mobile</label>
+                                <label className="block text-sm font-semibold text-[#0a192f] mb-1">Aadhaar Registered Mobile</label>
                                 <div className="flex gap-2">
                                     <input
                                         type="tel"
                                         defaultValue={formData.phone}
-                                        className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-green-500 outline-none"
+                                        className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-emerald-500 outline-none transition-colors"
                                         placeholder="9876543210"
                                     />
                                 </div>
                             </div>
 
                             <div className="flex items-center gap-2 mt-4">
-                                <input type="checkbox" className="w-4 h-4 text-green-600 rounded" defaultChecked />
+                                <input type="checkbox" className="w-4 h-4 text-emerald-600 rounded focus:ring-emerald-500" defaultChecked />
                                 <span className="text-xs text-gray-500">I agree to eKYC terms & conditions</span>
                             </div>
 
                             <button
                                 onClick={handleCompleteKYC}
                                 disabled={isSubmitting}
-                                className="w-full mt-6 bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2"
+                                className="w-full mt-6 bg-[#0a192f] hover:bg-emerald-600 text-white font-bold py-4 rounded-xl shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
                             >
                                 {isSubmitting ? "Verifying..." : "Submit & Complete eKYC"}
                             </button>
@@ -237,25 +246,30 @@ export default function ValuationModals({ formData, valuationId, onClose }: Valu
                         animate={{ opacity: 1, scale: 1 }}
                         className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-8 text-center relative overflow-hidden"
                     >
-                        <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-green-400 to-green-600"></div>
-
-                        <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <CheckCircle className="w-12 h-12 text-green-600" />
+                        <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-emerald-400 to-emerald-600"></div>
+                        <div className="absolute top-4 right-4">
+                            <button onClick={onClose} className="p-2 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors">
+                                <X className="w-5 h-5 text-gray-500" />
+                            </button>
                         </div>
 
-                        <h2 className="text-3xl font-bold text-gray-900 mb-2">Success!</h2>
+                        <div className="w-24 h-24 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <CheckCircle className="w-12 h-12 text-emerald-600" />
+                        </div>
+
+                        <h2 className="text-3xl font-bold text-[#0a192f] mb-2">Success!</h2>
                         <p className="text-gray-600 mb-6">
                             Your valuation request and eKYC have been submitted successfully.
                         </p>
 
-                        <div className="bg-orange-50 border border-orange-100 rounded-xl p-4 mb-8">
-                            <p className="font-medium text-gray-900 mb-1">What's Next?</p>
+                        <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-4 mb-8">
+                            <p className="font-medium text-[#0a192f] mb-1">What's Next?</p>
                             <p className="text-sm text-gray-600">
-                                Our Collection Center (CC) executive will contact you within <span className="font-bold text-orange-600">24 hours</span> regarding pickup.
+                                Our Collection Center (CC) executive will contact you within <span className="font-bold text-emerald-600">24 hours</span> regarding pickup.
                             </p>
                         </div>
 
-                        <Link href="/" className="block w-full bg-gray-900 hover:bg-black text-white font-bold py-4 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2">
+                        <Link href="/" className="block w-full bg-[#0a192f] hover:bg-black text-white font-bold py-4 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2">
                             <Home className="w-5 h-5" />
                             Return to Home
                         </Link>

@@ -23,9 +23,17 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="relative bg-white text-gray-800 overflow-hidden pt-20 border-t border-emerald-100">
+    <footer className="relative bg-white text-gray-800 overflow-hidden border-t border-emerald-100">
+      {/* Move to Top Strip */}
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        className="w-full bg-slate-900 hover:bg-slate-800 text-white py-4 font-bold uppercase tracking-wider text-sm flex items-center justify-center gap-2 transition-all duration-300 relative z-30 border-b border-slate-800"
+      >
+        Move to Top <ArrowUp className="w-4 h-4 animate-bounce" />
+      </button>
+
       {/* Raining Icons Background */}
-      <div className="absolute inset-0 pointer-events-none opacity-10 overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none opacity-10 overflow-hidden mt-12">
         {rainIcons.map((item) => (
           <motion.div
             key={item.id}
@@ -48,7 +56,7 @@ export default function Footer() {
         ))}
       </div>
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-6 relative z-10 pt-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Brand Column */}
           <div className="space-y-6">
@@ -161,14 +169,6 @@ export default function Footer() {
         </div>
 
       </div>
-
-      {/* Move to Top Strip */}
-      <button
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className="w-full bg-slate-900 hover:bg-slate-800 text-white py-4 font-bold uppercase tracking-wider text-sm flex items-center justify-center gap-2 transition-all duration-300 relative z-20 border-b border-slate-800"
-      >
-        Move to Top <ArrowUp className="w-4 h-4 animate-bounce" />
-      </button>
 
       {/* Bottom Bar */}
       <div className="w-full bg-slate-950 relative z-10">
