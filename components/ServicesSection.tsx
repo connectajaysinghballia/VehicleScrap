@@ -37,21 +37,21 @@ export default function ServicesSection() {
   }
 
   return (
-    <section id="services" className="bg-[#FFFDF5] py-8 md:py-12 relative overflow-hidden" ref={containerRef}>
-      {/* Background decorative elements - Red Theme */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-red-500/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-red-500/5 rounded-full blur-3xl translate-x-1/3 translate-y-1/3"></div>
+    <section id="services" className="bg-white py-8 md:py-12 relative overflow-hidden" ref={containerRef}>
+      {/* Background decorative elements - Green/Navy Theme */}
+      <div className="absolute top-0 left-0 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-900/5 rounded-full blur-3xl translate-x-1/3 translate-y-1/3"></div>
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         {/* Header */}
         <div className="text-center mb-16">
           <motion.h2
-            className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4"
+            className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-4"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6 }}
           >
-            Explore <span className="bg-gradient-to-r from-red-600 to-red-800 bg-clip-text text-transparent">Services</span>
+            Explore <span className="bg-gradient-to-r from-emerald-600 to-teal-800 bg-clip-text text-transparent">Services</span>
           </motion.h2>
           <motion.p
             className="text-gray-600 text-lg md:text-xl max-w-3xl mx-auto"

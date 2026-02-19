@@ -56,7 +56,31 @@ export default function ContactPage() {
   const [errors, setErrors] = useState<FormErrors>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
-  const [focusedField, setFocusedField] = useState<string | null>(null)
+
+  // Animation Variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  }
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring" as const,
+        stiffness: 100,
+        damping: 15
+      }
+    }
+  }
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {}
@@ -77,7 +101,6 @@ export default function ContactPage() {
     }
 
     // Phone validation
-    // Allowing wider range of formats or just basic check
     if (!formData.phone.trim()) {
       newErrors.phone = "Phone number is required"
     }
@@ -113,9 +136,19 @@ export default function ContactPage() {
 
     setIsSubmitting(true)
 
-    // Simulate API call
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000))
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to submit form")
+      }
+
       setIsSubmitted(true)
       setFormData({
         name: "",
@@ -126,6 +159,7 @@ export default function ContactPage() {
       })
     } catch (error) {
       console.error("Error submitting form:", error)
+      // You might want to set a global error state here to show a toast/alert
     } finally {
       setIsSubmitting(false)
     }
@@ -141,27 +175,27 @@ export default function ContactPage() {
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="text-center w-full max-w-lg"
           >
-            <div className="bg-white border border-gray-100 rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-orange-400 via-blue-400 to-green-400"></div>
+            <div className="bg-white border border-slate-100 rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400"></div>
 
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.2, type: "spring" }}
-                className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6"
+                className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-6"
               >
-                <CheckCircle className="w-10 h-10 text-green-500" />
+                <CheckCircle className="w-10 h-10 text-emerald-500" />
               </motion.div>
 
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">Message Sent!</h2>
+              <h2 className="text-3xl font-bold text-slate-900 mb-4">Message Sent!</h2>
 
-              <p className="text-gray-600 mb-8 text-lg">
+              <p className="text-slate-600 mb-8 text-lg">
                 Thank you for reaching out. We will get back to you shortly.
               </p>
 
               <Button
                 onClick={() => setIsSubmitted(false)}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition-all shadow-lg hover:shadow-blue-500/30"
+                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-xl transition-all shadow-lg hover:shadow-emerald-500/30"
               >
                 <Send className="w-4 h-4 mr-2" />
                 Send Another Message
@@ -174,183 +208,223 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] font-sans text-gray-900 selection:bg-orange-100 selection:text-orange-900 flex flex-col">
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-emerald-100 selection:text-emerald-900 flex flex-col">
       {/* Navbar Placeholder */}
       <div className="h-20"></div>
 
       {/* Decorative Background Elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-orange-100/40 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2"></div>
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-100/40 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2"></div>
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-emerald-100/40 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2"></div>
+        <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-blue-100/40 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2"></div>
       </div>
 
-      <div className="flex-grow flex items-center justify-center p-4 sm:p-6 lg:p-8 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="bg-white rounded-[30px] shadow-2xl overflow-hidden flex flex-col lg:flex-row w-full max-w-6xl min-h-[600px]"
-        >
-          {/* Left Panel: Image */}
-          <div className="lg:w-1/2 bg-[#FFF8F0] relative flex items-center justify-center p-8 overflow-hidden">
-            {/* blob decoration behind image */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-orange-200/20 rounded-full blur-3xl"></div>
+      <div className="flex-grow flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8 relative z-10 space-y-8">
 
-            {/* The Image */}
-            <img
-              src="/contact-image.png"
-              alt="Customer Support"
-              className="relative z-10 w-full h-auto max-w-[500px] object-contain drop-shadow-xl transform hover:scale-105 transition-transform duration-500"
-              onError={(e) => {
-                e.currentTarget.style.display = 'none';
-                e.currentTarget.parentElement?.classList.add('bg-orange-100');
-              }}
-            />
-            <div className="absolute bottom-8 left-0 w-full text-center px-6">
-              <p className="text-orange-800/60 font-medium text-sm">We're here to help!</p>
+        <div className="text-center max-w-2xl mx-auto mb-4">
+          <motion.h1
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight mb-4"
+          >
+            Let's Start a <span className="text-emerald-600">Conversation</span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-lg text-slate-600"
+          >
+            Have a question or need assistance? We're here to help you every step of the way.
+          </motion.p>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="bg-white rounded-[32px] shadow-2xl shadow-slate-200/50 overflow-hidden flex flex-col lg:flex-row w-full max-w-6xl border border-slate-100"
+        >
+          {/* Left Panel: Contact Info */}
+          <div className="lg:w-2/5 bg-slate-900 relative p-10 text-white flex flex-col justify-between overflow-hidden">
+            {/* Background pattern */}
+            <div className="absolute inset-0 opacity-10">
+              <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <path d="M0 100 C 20 0 50 0 100 100 Z" fill="currentColor" />
+              </svg>
+            </div>
+            <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+
+            <div className="relative z-10">
+              <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
+              <p className="text-slate-300 mb-10 text-sm leading-relaxed">
+                Fill out the form and our team will get back to you within 24 hours.
+              </p>
+
+              <div className="space-y-6">
+                <a href="tel:+919005333587" className="flex items-start gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors group">
+                  <div className="w-10 h-10 bg-emerald-500/10 rounded-full flex items-center justify-center group-hover:bg-emerald-500/20 transition-colors">
+                    <Phone className="w-5 h-5 text-emerald-400 py-0.5" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Phone</p>
+                    <p className="text-white font-medium">+91 90053 33587</p>
+                  </div>
+                </a>
+
+                <a href="mailto:service.desk@.com" className="flex items-start gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors group">
+                  <div className="w-10 h-10 bg-emerald-500/10 rounded-full flex items-center justify-center group-hover:bg-emerald-500/20 transition-colors">
+                    <Mail className="w-5 h-5 text-emerald-400 py-0.5" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Email</p>
+                    <p className="text-white font-medium">service.desk@.com</p>
+                  </div>
+                </a>
+
+                <div className="flex items-start gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors group">
+                  <div className="w-10 h-10 bg-emerald-500/10 rounded-full flex items-center justify-center group-hover:bg-emerald-500/20 transition-colors">
+                    <MapPin className="w-5 h-5 text-emerald-400 py-0.5" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Office</p>
+                    <p className="text-white font-medium">Transport Nagar, Kanpur,<br />Uttar Pradesh 208023</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative z-10 mt-12 flex gap-4">
+              {/* Social placeholders or extra info could go here */}
+              <div className="text-xs text-slate-500">
+                &copy; 2024 AutoScrap. All rights reserved.
+              </div>
             </div>
           </div>
 
-          {/* Right Panel: Form + Small Info */}
-          <div className="lg:w-1/2 bg-white p-8 sm:p-12 flex flex-col justify-center relative">
-
-            <div className="mb-8 text-center sm:text-left">
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">Get in Touch</h2>
-              <p className="text-gray-500">How can we help you today?</p>
-            </div>
-
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-gray-700 uppercase tracking-wide ml-1">Full Name</label>
+          {/* Right Panel: Form */}
+          <div className="lg:w-3/5 bg-white p-8 sm:p-12 lg:p-14">
+            <motion.form
+              onSubmit={handleSubmit}
+              className="space-y-6"
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <motion.div variants={itemVariants} className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700 ml-1">Full Name</label>
                   <Input
-                    className={`h-11 bg-gray-50 border-gray-200 focus:bg-white transition-all rounded-xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 ${errors.name ? "border-red-500 bg-red-50" : ""}`}
+                    className={`h-12 bg-slate-50 border-slate-200 focus:bg-white transition-all rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-base ${errors.name ? "border-red-500 bg-red-50" : ""}`}
                     placeholder="John Doe"
                     value={formData.name}
                     onChange={(e) => handleInputChange("name", e.target.value)}
                   />
                   {errors.name && <p className="text-xs text-red-500 flex items-center gap-1 mt-1"><AlertCircle className="w-3 h-3" /> {errors.name}</p>}
-                </div>
+                </motion.div>
 
-                <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-gray-700 uppercase tracking-wide ml-1">Phone</label>
+                <motion.div variants={itemVariants} className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700 ml-1">Phone Number</label>
                   <Input
-                    className={`h-11 bg-gray-50 border-gray-200 focus:bg-white transition-all rounded-xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 ${errors.phone ? "border-red-500 bg-red-50" : ""}`}
-                    placeholder="+91"
+                    className={`h-12 bg-slate-50 border-slate-200 focus:bg-white transition-all rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-base ${errors.phone ? "border-red-500 bg-red-50" : ""}`}
+                    placeholder="+91 98765 43210"
                     value={formData.phone}
                     onChange={(e) => handleInputChange("phone", e.target.value)}
                   />
                   {errors.phone && <p className="text-xs text-red-500 flex items-center gap-1 mt-1"><AlertCircle className="w-3 h-3" /> {errors.phone}</p>}
-                </div>
+                </motion.div>
               </div>
 
-              <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-gray-700 uppercase tracking-wide ml-1">Email</label>
+              <motion.div variants={itemVariants} className="space-y-2">
+                <label className="text-sm font-semibold text-slate-700 ml-1">Email Address</label>
                 <Input
-                  className={`h-11 bg-gray-50 border-gray-200 focus:bg-white transition-all rounded-xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 ${errors.email ? "border-red-500 bg-red-50" : ""}`}
+                  className={`h-12 bg-slate-50 border-slate-200 focus:bg-white transition-all rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-base ${errors.email ? "border-red-500 bg-red-50" : ""}`}
                   placeholder="john@example.com"
                   value={formData.email}
                   onChange={(e) => handleInputChange("email", e.target.value)}
                 />
                 {errors.email && <p className="text-xs text-red-500 flex items-center gap-1 mt-1"><AlertCircle className="w-3 h-3" /> {errors.email}</p>}
-              </div>
+              </motion.div>
 
-              <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-gray-700 uppercase tracking-wide ml-1">Subject</label>
+              <motion.div variants={itemVariants} className="space-y-2">
+                <label className="text-sm font-semibold text-slate-700 ml-1">Subject</label>
                 <Input
-                  className={`h-11 bg-gray-50 border-gray-200 focus:bg-white transition-all rounded-xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 ${errors.subject ? "border-red-500 bg-red-50" : ""}`}
-                  placeholder="Inquiry..."
+                  className={`h-12 bg-slate-50 border-slate-200 focus:bg-white transition-all rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-base ${errors.subject ? "border-red-500 bg-red-50" : ""}`}
+                  placeholder="How can we help?"
                   value={formData.subject}
                   onChange={(e) => handleInputChange("subject", e.target.value)}
                 />
                 {errors.subject && <p className="text-xs text-red-500 flex items-center gap-1 mt-1"><AlertCircle className="w-3 h-3" /> {errors.subject}</p>}
-              </div>
+              </motion.div>
 
-              <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-gray-700 uppercase tracking-wide ml-1">Message</label>
+              <motion.div variants={itemVariants} className="space-y-2">
+                <label className="text-sm font-semibold text-slate-700 ml-1">Message</label>
                 <Textarea
-                  className={`min-h-[100px] bg-gray-50 border-gray-200 focus:bg-white transition-all rounded-xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 resize-none ${errors.message ? "border-red-500 bg-red-50" : ""}`}
-                  placeholder="How can we help you?"
+                  className={`min-h-[120px] bg-slate-50 border-slate-200 focus:bg-white transition-all rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-base resize-none ${errors.message ? "border-red-500 bg-red-50" : ""}`}
+                  placeholder="Tell us about your requirements..."
                   value={formData.message}
                   onChange={(e) => handleInputChange("message", e.target.value)}
                 />
                 {errors.message && <p className="text-xs text-red-500 flex items-center gap-1 mt-1"><AlertCircle className="w-3 h-3" /> {errors.message}</p>}
-              </div>
+              </motion.div>
 
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full h-11 bg-gray-900 hover:bg-black text-white font-bold rounded-xl shadow-lg transform hover:-translate-y-0.5 transition-all text-sm"
-              >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                    Sending...
-                  </>
-                ) : (
-                  <>
-                    Send Message <Send className="w-4 h-4 ml-2" />
-                  </>
-                )}
-              </Button>
-            </form>
+              <motion.div variants={itemVariants} className="pt-2">
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full h-12 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl shadow-lg shadow-slate-900/20 transform hover:-translate-y-0.5 transition-all text-base"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin mr-2" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      Send Message <Send className="w-5 h-5 ml-2" />
+                    </>
+                  )}
+                </Button>
+              </motion.div>
+            </motion.form>
+          </div>
+        </motion.div>
 
-            {/* Small Contact Info Section */}
-            <div className="mt-8 pt-6 border-t border-gray-100">
-              <div className="grid grid-cols-3 gap-2">
-                <div className="flex flex-col items-center text-center p-2 rounded-lg hover:bg-gray-50 transition-colors">
-                  <div className="w-8 h-8 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mb-2">
-                    <Phone className="w-4 h-4" />
-                  </div>
-                  <p className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Call</p>
-                  <p className="text-xs font-semibold text-gray-800 mt-0.5">+91 90053 33587</p>
+        {/* Separate Map Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          className="w-full max-w-6xl rounded-[30px] overflow-hidden shadow-xl border border-slate-200 bg-white"
+        >
+          <div className="w-full h-[400px] relative">
+            <iframe
+              title="Google Map Location"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14285.632231362098!2d80.34440263690623!3d26.435773289053995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399c475069279503%3A0xc392de483015694a!2sTransport%20Nagar%2C%20Kanpur%2C%20Uttar%20Pradesh%20208023!5e0!3m2!1sen!2sin!4v1709650000000!5m2!1sen!2sin"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="grayscale-[20%] hover:grayscale-0 transition-all duration-500"
+            ></iframe>
+            {/* Floating Location Card */}
+            <div className="absolute top-6 right-6 bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-slate-100 max-w-xs hidden sm:block">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center">
+                  <MapPin className="w-4 h-4" />
                 </div>
-
-                <div className="flex flex-col items-center text-center p-2 rounded-lg hover:bg-gray-50 transition-colors">
-                  <div className="w-8 h-8 bg-green-50 text-green-600 rounded-full flex items-center justify-center mb-2">
-                    <Mail className="w-4 h-4" />
-                  </div>
-                  <p className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Email</p>
-                  <p className="text-xs font-semibold text-gray-800 mt-0.5 truncate w-full px-2">service.desk@...</p>
+                <div>
+                  <p className="text-xs font-bold text-slate-500 uppercase">Headquarters</p>
+                  <p className="text-sm font-bold text-slate-900">Kanpur, Uttar Pradesh</p>
                 </div>
-
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <div className="flex flex-col items-center text-center p-2 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer group">
-                      <div className="w-8 h-8 bg-orange-50 text-orange-600 rounded-full flex items-center justify-center mb-2 group-hover:bg-orange-100 transition-colors">
-                        <MapPin className="w-4 h-4" />
-                      </div>
-                      <p className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Visit</p>
-                      <p className="text-xs font-semibold text-gray-800 mt-0.5 flex items-center justify-center gap-1">
-                        Map <ExternalLink className="w-2.5 h-2.5 opacity-50" />
-                      </p>
-                    </div>
-                  </DialogTrigger>
-                  <DialogContent className="max-w-[90vw] w-[800px] max-h-[90vh] p-0 overflow-hidden rounded-2xl">
-                    <DialogHeader className="p-4 sm:p-6 pb-0 absolute top-0 left-0 z-10 bg-white/90 backdrop-blur-sm w-full border-b border-gray-100/50">
-                      <DialogTitle className="text-xl font-bold flex items-center gap-2">
-                        <MapPin className="w-5 h-5 text-orange-600" />
-                        Visit Our Center
-                      </DialogTitle>
-                    </DialogHeader>
-                    <div className="w-full h-[500px]">
-                      <iframe
-                        title="Google Map Location"
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14285.632231362098!2d80.34440263690623!3d26.435773289053995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399c475069279503%3A0xc392de483015694a!2sTransport%20Nagar%2C%20Kanpur%2C%20Uttar%20Pradesh%20208023!5e0!3m2!1sen!2sin!4v1709650000000!5m2!1sen!2sin"
-                        width="100%"
-                        height="100%"
-                        style={{ border: 0 }}
-                        allowFullScreen
-                        loading="lazy"
-                        referrerPolicy="no-referrer-when-downgrade"
-                      ></iframe>
-                    </div>
-                  </DialogContent>
-                </Dialog>
-
               </div>
+              <p className="text-xs text-slate-600 pl-11">
+                Transport Nagar, Kanpur, Uttar Pradesh 208023
+              </p>
             </div>
-
           </div>
         </motion.div>
       </div>

@@ -36,8 +36,7 @@ const CardStack = () => {
             videoSrc: "/videos/step1vi.mp4",
             // Orange Filter (Adjust from Gold/Original)
             videoFilter: "none",
-            videoTransform: "scale(1)",
-            textBgColor: "#e65100" // Orange
+            videoTransform: "scale(1)"
         },
         {
             title: "STEP 2",
@@ -46,8 +45,7 @@ const CardStack = () => {
             videoSrc: "/videos/step2vi.mp4",
             // Blue Filter
             videoFilter: "none",
-            videoTransform: "scale(1.1)", // Zoom in
-            textBgColor: "#0d47a1" // Blue
+            videoTransform: "scale(1.1)" // Zoom in
         },
         {
             title: "STEP 3",
@@ -56,8 +54,7 @@ const CardStack = () => {
             videoSrc: "/videos/step3vi.mp4",
             // Green Filter
             videoFilter: "none",
-            videoTransform: "scale(1.1)", // Zoom in
-            textBgColor: "#1b5e20" // Green
+            videoTransform: "scale(1.1)" // Zoom in
         }
     ]
 
@@ -86,10 +83,7 @@ const CardStack = () => {
                                 }}
                             />
                         </div>
-                        <div
-                            className={styles.textArea}
-                            style={{ backgroundColor: card.textBgColor }}
-                        >
+                        <div className={styles.textArea}>
                             <h3 className={styles.title}>{card.title}</h3>
                             <p className={styles.description}>{card.desc}</p>
                         </div>

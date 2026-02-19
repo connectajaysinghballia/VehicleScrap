@@ -67,18 +67,18 @@ export default function HeroSection() {
             }}
           ></div>
 
-          {/* Floating UI Elements / Tech Markers */}
-          <div className="absolute top-20 left-20 w-16 h-16 border border-orange-400/30 rounded-full animate-[spin_10s_linear_infinite]"></div>
-          <div className="absolute top-20 left-20 w-16 h-16 border-t border-orange-600 rounded-full animate-[spin_15s_linear_infinite]"></div>
+          {/* Floating UI Elements / Tech Markers - Green/Navy Theme */}
+          <div className="absolute top-20 left-20 w-16 h-16 border border-emerald-400/30 rounded-full animate-[spin_10s_linear_infinite]"></div>
+          <div className="absolute top-20 left-20 w-16 h-16 border-t border-emerald-600 rounded-full animate-[spin_15s_linear_infinite]"></div>
 
           <div className="absolute bottom-40 right-20 w-24 h-24 border border-blue-400/20 rounded-full animate-pulse"></div>
           <div className="absolute bottom-40 right-20 w-24 h-24 border-r border-blue-600/40 rounded-full animate-[spin_8s_linear_infinite_reverse]"></div>
 
-          {/* Animated blobs */}
-          <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-blue-400/20 rounded-full blur-[100px] animate-pulse"></div>
-          <div className="absolute bottom-[-10%] left-[20%] w-[400px] h-[400px] bg-green-400/20 rounded-full blur-[100px] animate-pulse delay-150"></div>
-          {/* Right side blob previously in separate div */}
-          <div className="absolute top-[20%] right-[-10%] w-[600px] h-[600px] bg-orange-400/20 rounded-full blur-[100px] animate-pulse delay-75"></div>
+          {/* Animated blobs - Cool Tones */}
+          <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-slate-800/10 rounded-full blur-[100px] animate-pulse"></div>
+          <div className="absolute bottom-[-10%] left-[20%] w-[400px] h-[400px] bg-emerald-400/20 rounded-full blur-[100px] animate-pulse delay-150"></div>
+          {/* Right side blob */}
+          <div className="absolute top-[20%] right-[-10%] w-[600px] h-[600px] bg-teal-400/20 rounded-full blur-[100px] animate-pulse delay-75"></div>
         </div>
       </div>
 
@@ -91,51 +91,39 @@ export default function HeroSection() {
             {/* Carousel Headings - Premium Typography */}
             <div className="h-[120px] lg:h-[180px] relative flex items-center justify-center lg:justify-start">
               <AnimatePresence mode="wait">
-                {currentHeading === 0 && (
-                  <motion.h1
-                    key="heading1"
-                    initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
-                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                    exit={{ opacity: 0, y: -20, filter: "blur(10px)" }}
-                    transition={{ duration: 0.6, ease: "easeOut" }}
-                    className="absolute text-4xl lg:text-6xl font-black text-gray-900 leading-tight tracking-tight drop-shadow-sm"
-                  >
-                    India’s First <span className="relative inline-block px-2">
-                      <span className="absolute inset-0 bg-orange-200/50 -skew-y-2 rounded transform scale-105"></span>
-                      <span className="relative text-orange-700">Digital RVSF</span>
-                    </span> Experience
-                  </motion.h1>
-                )}
-                {currentHeading === 1 && (
-                  <motion.h2
-                    key="heading2"
-                    initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
-                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                    exit={{ opacity: 0, y: -20, filter: "blur(10px)" }}
-                    transition={{ duration: 0.6, ease: "easeOut" }}
-                    className="absolute text-4xl lg:text-6xl font-black text-gray-900 leading-tight tracking-tight drop-shadow-sm"
-                  >
-                    We Scrap It <span className="relative inline-block px-2">
-                      <span className="absolute inset-0 bg-blue-200/50 -skew-y-2 rounded transform scale-105"></span>
-                      <span className="relative text-blue-700">The Right Way</span>
-                    </span>
-                  </motion.h2>
-                )}
-                {currentHeading === 2 && (
-                  <motion.h3
-                    key="heading3"
-                    initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
-                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                    exit={{ opacity: 0, y: -20, filter: "blur(10px)" }}
-                    transition={{ duration: 0.6, ease: "easeOut" }}
-                    className="absolute text-4xl lg:text-6xl font-black text-gray-900 leading-tight tracking-tight drop-shadow-sm"
-                  >
-                    Vehicles Retire <span className="relative inline-block px-2">
-                      <span className="absolute inset-0 bg-green-200/50 -skew-y-2 rounded transform scale-105"></span>
-                      <span className="relative text-green-700">The Legal Way</span>
-                    </span>
-                  </motion.h3>
-                )}
+                <motion.div
+                  key={currentHeading}
+                  initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  exit={{ opacity: 0, y: -20, filter: "blur(10px)" }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className="absolute w-full text-center lg:text-left"
+                >
+                  {currentHeading === 0 && (
+                    <h1 className="text-4xl lg:text-6xl font-black text-slate-900 leading-tight tracking-tight drop-shadow-sm">
+                      India’s First <span className="relative inline-block px-2">
+                        <span className="absolute inset-0 bg-emerald-200/50 -skew-y-2 rounded transform scale-105"></span>
+                        <span className="relative text-emerald-700">Digital RVSF</span>
+                      </span> Experience
+                    </h1>
+                  )}
+                  {currentHeading === 1 && (
+                    <h2 className="text-4xl lg:text-6xl font-black text-slate-900 leading-tight tracking-tight drop-shadow-sm">
+                      We Scrap It <span className="relative inline-block px-2">
+                        <span className="absolute inset-0 bg-slate-200/50 -skew-y-2 rounded transform scale-105"></span>
+                        <span className="relative text-slate-700">The Right Way</span>
+                      </span>
+                    </h2>
+                  )}
+                  {currentHeading === 2 && (
+                    <h3 className="text-4xl lg:text-6xl font-black text-slate-900 leading-tight tracking-tight drop-shadow-sm">
+                      Vehicles Retire <span className="relative inline-block px-2">
+                        <span className="absolute inset-0 bg-teal-200/50 -skew-y-2 rounded transform scale-105"></span>
+                        <span className="relative text-teal-700">The Legal Way</span>
+                      </span>
+                    </h3>
+                  )}
+                </motion.div>
               </AnimatePresence>
             </div>
 
@@ -147,7 +135,7 @@ export default function HeroSection() {
               className="flex justify-center lg:justify-start"
             >
               <Link href="/quote">
-                <Button className="px-10 py-7 text-xl font-bold text-white bg-gradient-to-r from-orange-600 to-red-600 rounded-2xl shadow-xl shadow-orange-500/30 hover:shadow-orange-500/50 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 border border-white/20">
+                <Button className="px-10 py-7 text-xl font-bold text-white bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl shadow-xl shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 border border-white/20">
                   <span className="drop-shadow-sm">Get Free Quote</span> <ArrowRight className="ml-3 w-6 h-6 animate-pulse" />
                 </Button>
               </Link>
@@ -161,18 +149,18 @@ export default function HeroSection() {
               className="pt-8 flex flex-col items-center lg:items-start w-full"
             >
               <div className="flex items-center gap-3 mb-6">
-                <div className="h-[2px] w-12 bg-gradient-to-r from-orange-600 to-transparent"></div>
-                <p className="text-xs font-bold text-orange-600 uppercase tracking-[0.2em] bg-orange-50/80 backdrop-blur px-3 py-1 rounded-full border border-orange-100">
+                <div className="h-[2px] w-12 bg-gradient-to-r from-emerald-600 to-transparent"></div>
+                <p className="text-xs font-bold text-emerald-700 uppercase tracking-[0.2em] bg-emerald-50/80 backdrop-blur px-3 py-1 rounded-full border border-emerald-100">
                   Exclusive Benefits
                 </p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-xl">
                 {[
-                  { text: "Certificate of Deposit", icon: Banknote, color: "text-blue-600", bg: "bg-blue-50", border: "border-blue-200", shadow: "shadow-blue-200/50", glow: "ring-blue-100" },
-                  { text: "25% Road Tax Rebate", icon: Sparkles, color: "text-purple-600", bg: "bg-purple-50", border: "border-purple-200", shadow: "shadow-purple-200/50", glow: "ring-purple-100" },
-                  { text: "Registration Fee Waiver", icon: ShieldCheck, color: "text-orange-600", bg: "bg-orange-50", border: "border-orange-200", shadow: "shadow-orange-200/50", glow: "ring-orange-100" },
-                  { text: "Tax Deduction on EV", icon: Leaf, color: "text-green-600", bg: "bg-green-50", border: "border-green-200", shadow: "shadow-green-200/50", glow: "ring-green-100" }
+                  { text: "Certificate of Deposit", icon: Banknote, color: "text-slate-700", bg: "bg-slate-100", border: "border-slate-200", shadow: "shadow-slate-200/50", glow: "ring-slate-100" },
+                  { text: "25% Road Tax Rebate", icon: Sparkles, color: "text-emerald-700", bg: "bg-emerald-50", border: "border-emerald-200", shadow: "shadow-emerald-200/50", glow: "ring-emerald-100" },
+                  { text: "Registration Fee Waiver", icon: ShieldCheck, color: "text-teal-700", bg: "bg-teal-50", border: "border-teal-200", shadow: "shadow-teal-200/50", glow: "ring-teal-100" },
+                  { text: "Tax Deduction on EV", icon: Leaf, color: "text-green-700", bg: "bg-green-50", border: "border-green-200", shadow: "shadow-green-200/50", glow: "ring-green-100" }
                 ].map((item, index) => {
                   const isActive = index === activeBenefit
                   return (
@@ -195,7 +183,7 @@ export default function HeroSection() {
                       <div className={`p-3 rounded-full ${item.bg} ${isActive ? "scale-110" : "scale-100"} transition-transform duration-500`}>
                         <item.icon className={`w-5 h-5 ${item.color}`} />
                       </div>
-                      <span className={`font-bold text-sm transition-colors duration-500 ${isActive ? "text-gray-900" : "text-gray-700"}`}>{item.text}</span>
+                      <span className={`font-bold text-sm transition-colors duration-500 ${isActive ? "text-slate-900" : "text-slate-600"}`}>{item.text}</span>
                     </motion.div>
                   )
                 })}
@@ -212,8 +200,8 @@ export default function HeroSection() {
           >
             {/* 3 Step Way Dynamic Heading - Centered relative to the column */}
             <div className="relative lg:absolute top-auto lg:top-48 xl:top-4 w-full text-center z-30 mb-8 lg:mb-0">
-              <h3 className="text-xl lg:text-xl xl:text-2xl font-bold text-gray-800 tracking-tight flex flex-col items-center gap-2">
-                <span className="bg-white/80 backdrop-blur px-4 py-1 rounded-full shadow-sm border border-gray-100">
+              <h3 className="text-xl lg:text-xl xl:text-2xl font-bold text-slate-800 tracking-tight flex flex-col items-center gap-2">
+                <span className="bg-white/80 backdrop-blur px-4 py-1 rounded-full shadow-sm border border-slate-100">
                   3 Step Way to
                 </span>
                 <AnimatePresence mode="wait">
@@ -223,7 +211,7 @@ export default function HeroSection() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.3 }}
-                    className="text-2xl lg:text-2xl xl:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600 uppercase"
+                    className="text-2xl lg:text-2xl xl:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600 uppercase"
                   >
                     {dynamicTexts[dynamicTextIndex]}
                   </motion.span>

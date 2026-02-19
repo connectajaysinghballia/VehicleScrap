@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import {
     Building2,
@@ -30,7 +30,7 @@ export default function B2BMarketplace() {
     const [valuations, setValuations] = useState<any[]>([])
     const [filteredValuations, setFilteredValuations] = useState<any[]>([])
     const [isLoading, setIsLoading] = useState(false)
-    const [hasSearched, setHasSearched] = useState(false)
+    const [hasSearched, setHasSearched] = useState(true)
     const [error, setError] = useState<string | null>(null)
     const [selectedRequest, setSelectedRequest] = useState<any | null>(null)
     const [showFilters, setShowFilters] = useState(false)
@@ -42,6 +42,12 @@ export default function B2BMarketplace() {
 
     const { toast } = useToast()
     const router = useRouter()
+
+    useEffect(() => {
+        if (status === "authenticated" && (session?.user as any)?.role === "partner") {
+            fetchOpportunities()
+        }
+    }, [status, session])
 
     const fetchOpportunities = async () => {
         setIsLoading(true)
@@ -148,63 +154,12 @@ export default function B2BMarketplace() {
         <div className="min-h-screen bg-[#F8FAFC] pt-24 pb-12 px-4 sm:px-6 lg:px-8 font-sans">
             <div className="max-w-7xl mx-auto space-y-8">
 
-                {/* Hero Section */}
-                <div className="relative overflow-hidden bg-slate-900 rounded-3xl p-8 md:p-12 text-white shadow-2xl">
-                    <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-blue-500/20 rounded-full blur-3xl -mr-20 -mt-20"></div>
-                    <div className="relative z-10 grid md:grid-cols-2 gap-8 items-center">
-                        <div className="space-y-6">
-                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-300 text-xs font-bold uppercase tracking-wider">
-                                <TrendingUp className="w-3 h-3" />
-                                Partner Marketplace
-                            </div>
-                            <h1 className="text-4xl md:text-5xl font-black tracking-tight leading-tight">
-                                Scale Your Business with <br />
-                                <span className="text-blue-400 font-extrabold italic">Premium Scrap Inventory</span>
-                            </h1>
-                            <p className="text-slate-400 text-lg max-w-md">
-                                Access real-time vehicle scrap opportunities from across India. Verified leads, transparent weights, and instant pickup potential.
-                            </p>
-                            {!hasSearched && (
-                                <button
-                                    onClick={fetchOpportunities}
-                                    disabled={isLoading}
-                                    className="group relative flex items-center gap-3 bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all active:scale-95 shadow-lg shadow-blue-500/25"
-                                >
-                                    {isLoading ? (
-                                        <RefreshCcw className="w-5 h-5 animate-spin" />
-                                    ) : (
-                                        <>
-                                            Explore Opportunities
-                                            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                                        </>
-                                    )}
-                                </button>
-                            )}
-                        </div>
-                        <div className="hidden md:block">
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 space-y-4"
-                            >
-                                <div className="flex items-center justify-between mb-4 border-b border-white/10 pb-4">
-                                    <span className="text-sm font-bold text-blue-300">Live Feed</span>
-                                    <div className="flex gap-2">
-                                        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                                        <div className="w-2 h-2 rounded-full bg-green-500/50"></div>
-                                    </div>
-                                </div>
-                                {[1, 2, 3].map((i) => (
-                                    <div key={i} className="h-4 bg-white/5 rounded-full w-full animate-pulse shadow-inner"></div>
-                                ))}
-                            </motion.div>
-                        </div>
-                    </div>
-                </div>
+                {/* Hero section removed for direct access */}
+                <div className="hidden"></div>
 
                 {/* Content Area */}
                 <AnimatePresence mode="wait">
-                    {hasSearched ? (
+                    {hasSearched && (
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -448,28 +403,6 @@ export default function B2BMarketplace() {
                                 </div>
                             )}
                         </motion.div>
-                    ) : (
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            className="mt-12 text-center"
-                        >
-                            <div className="bg-white rounded-[2rem] p-12 md:p-20 shadow-sm border border-gray-100 relative overflow-hidden">
-                                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-indigo-500"></div>
-                                <Building2 className="w-16 h-16 text-blue-100 mx-auto mb-8" />
-                                <h2 className="text-3xl font-black text-gray-900 mb-4">Welcome to Partner Marketplace</h2>
-                                <p className="text-gray-500 max-w-lg mx-auto text-lg mb-10 leading-relaxed font-medium">
-                                    Select your service area or click the button below to fetch the latest scrap disposal requests available in our ecosystem.
-                                </p>
-                                <button
-                                    onClick={fetchOpportunities}
-                                    className="bg-gray-900 hover:bg-black text-white px-12 py-5 rounded-2xl font-black text-xl transition-all shadow-2xl active:scale-95 flex items-center gap-3 mx-auto"
-                                >
-                                    <Search className="w-6 h-6" />
-                                    Find Loads Nearby
-                                </button>
-                            </div>
-                        </motion.div>
                     )}
                 </AnimatePresence>
 
@@ -559,6 +492,93 @@ export default function B2BMarketplace() {
                                         </div>
                                     </div>
 
+                                    {/* Financial Details (For Sell Requests) */}
+                                    {selectedRequest.type === 'sell' && (
+                                        <div>
+                                            <h3 className="text-xs md:text-sm font-black text-gray-400 uppercase tracking-wider mb-3 md:mb-4">Financial Information</h3>
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+                                                <div className="bg-gray-50 p-3 rounded-lg">
+                                                    <p className="text-xs text-gray-500">Pending Loan</p>
+                                                    <p className="font-bold text-gray-900 text-sm md:text-base">{selectedRequest.pendingLoan}</p>
+                                                </div>
+                                                {selectedRequest.pendingLoan === 'Yes' && (
+                                                    <>
+                                                        <div className="bg-gray-50 p-3 rounded-lg">
+                                                            <p className="text-xs text-gray-500">Loan Amount</p>
+                                                            <p className="font-bold text-gray-900 text-sm md:text-base">{selectedRequest.loanAmount}</p>
+                                                        </div>
+                                                        <div className="bg-gray-50 p-3 rounded-lg">
+                                                            <p className="text-xs text-gray-500">Bank Name</p>
+                                                            <p className="font-bold text-gray-900 text-sm md:text-base">{selectedRequest.loanBank}</p>
+                                                        </div>
+                                                    </>
+                                                )}
+                                                <div className="bg-gray-50 p-3 rounded-lg">
+                                                    <p className="text-xs text-gray-500">Insurance</p>
+                                                    <p className="font-bold text-gray-900 text-sm md:text-base">{selectedRequest.insuranceName || 'N/A'}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {/* Exchange Details (For Exchange Requests) */}
+                                    {selectedRequest.type === 'exchange' && (
+                                        <div>
+                                            <h3 className="text-xs md:text-sm font-black text-gray-400 uppercase tracking-wider mb-3 md:mb-4">Exchange Details</h3>
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                <div className="bg-orange-50 p-4 rounded-xl border border-orange-100">
+                                                    <h4 className="font-bold text-orange-800 text-sm mb-2">Old Vehicle (Selling)</h4>
+                                                    <div className="space-y-1 text-sm">
+                                                        <p><span className="text-gray-500">Brand:</span> <span className="font-semibold">{selectedRequest.oldVehicleBrand}</span></p>
+                                                        <p><span className="text-gray-500">Model:</span> <span className="font-semibold">{selectedRequest.oldVehicleModel}</span></p>
+                                                        <p><span className="text-gray-500">Year:</span> <span className="font-semibold">{selectedRequest.oldVehicleYear}</span></p>
+                                                        <p><span className="text-gray-500">Reg No:</span> <span className="font-semibold">{selectedRequest.oldVehicleRegistration}</span></p>
+                                                    </div>
+                                                </div>
+                                                <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                                                    <h4 className="font-bold text-blue-800 text-sm mb-2">New Vehicle (Buying)</h4>
+                                                    <div className="space-y-1 text-sm">
+                                                        <p><span className="text-gray-500">Brand:</span> <span className="font-semibold">{selectedRequest.newVehicleBrand}</span></p>
+                                                        <p><span className="text-gray-500">Model:</span> <span className="font-semibold">{selectedRequest.newVehicleModel}</span></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {/* KYC Information */}
+                                    {(selectedRequest.firstName || selectedRequest.dob || selectedRequest.aadharNumber) && (
+                                        <div>
+                                            <h3 className="text-xs md:text-sm font-black text-gray-400 uppercase tracking-wider mb-3 md:mb-4">KYC Information</h3>
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 bg-gray-50 p-4 rounded-xl">
+                                                {selectedRequest.firstName && (
+                                                    <div>
+                                                        <p className="text-xs text-gray-500">Legal Name</p>
+                                                        <p className="font-bold text-gray-900 text-sm md:text-base">{selectedRequest.firstName}</p>
+                                                    </div>
+                                                )}
+                                                {selectedRequest.dob && (
+                                                    <div>
+                                                        <p className="text-xs text-gray-500">Date of Birth</p>
+                                                        <p className="font-bold text-gray-900 text-sm md:text-base">{selectedRequest.dob}</p>
+                                                    </div>
+                                                )}
+                                                {selectedRequest.aadharNumber && (
+                                                    <div>
+                                                        <p className="text-xs text-gray-500">Aadhar Number</p>
+                                                        <p className="font-bold text-gray-900 text-sm md:text-base font-mono">{selectedRequest.aadharNumber}</p>
+                                                    </div>
+                                                )}
+                                                {selectedRequest.aadharPhone && (
+                                                    <div>
+                                                        <p className="text-xs text-gray-500">Aadhar Linked Phone</p>
+                                                        <p className="font-bold text-gray-900 text-sm md:text-base">{selectedRequest.aadharPhone}</p>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
+
                                     {/* Location */}
                                     <div>
                                         <h3 className="text-xs md:text-sm font-black text-gray-400 uppercase tracking-wider mb-3 md:mb-4">Location</h3>
@@ -595,8 +615,52 @@ export default function B2BMarketplace() {
                                                     </p>
                                                 </div>
                                             </div>
+                                            {(selectedRequest.email || selectedRequest.customerEmail) && (
+                                                <div className="col-span-1 sm:col-span-2 flex items-start gap-3 bg-gray-50 p-4 rounded-xl">
+                                                    <Calendar className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                                                    <div className="min-w-0">
+                                                        <p className="text-xs text-gray-500">Email</p>
+                                                        <p className="font-bold text-gray-900 text-sm md:text-base break-all">
+                                                            {selectedRequest.email || selectedRequest.customerEmail}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
+
+                                    {/* Documents - Re-verifying structure */}
+                                    {(selectedRequest.rcFile || selectedRequest.aadharFile || selectedRequest.carPhoto) && (
+                                        <div>
+                                            <h3 className="text-xs md:text-sm font-black text-gray-400 uppercase tracking-wider mb-3 md:mb-4">Documents & Photos</h3>
+                                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                                {selectedRequest.rcFile && (
+                                                    <a href={selectedRequest.rcFile} target="_blank" rel="noopener noreferrer" className="block p-3 border border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition-all text-center group">
+                                                        <div className="w-10 h-10 bg-gray-100 text-gray-500 rounded-full flex items-center justify-center mx-auto mb-2 group-hover:bg-blue-200 group-hover:text-blue-700">
+                                                            <Package className="w-5 h-5" />
+                                                        </div>
+                                                        <span className="text-xs font-bold text-gray-700 group-hover:text-blue-700">RC Document</span>
+                                                    </a>
+                                                )}
+                                                {selectedRequest.aadharFile && (
+                                                    <a href={selectedRequest.aadharFile} target="_blank" rel="noopener noreferrer" className="block p-3 border border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition-all text-center group">
+                                                        <div className="w-10 h-10 bg-gray-100 text-gray-500 rounded-full flex items-center justify-center mx-auto mb-2 group-hover:bg-blue-200 group-hover:text-blue-700">
+                                                            <User className="w-5 h-5" />
+                                                        </div>
+                                                        <span className="text-xs font-bold text-gray-700 group-hover:text-blue-700">Aadhar Card</span>
+                                                    </a>
+                                                )}
+                                                {selectedRequest.carPhoto && (
+                                                    <a href={selectedRequest.carPhoto} target="_blank" rel="noopener noreferrer" className="block p-3 border border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition-all text-center group">
+                                                        <div className="w-10 h-10 bg-gray-100 text-gray-500 rounded-full flex items-center justify-center mx-auto mb-2 group-hover:bg-blue-200 group-hover:text-blue-700">
+                                                            <Car className="w-5 h-5" />
+                                                        </div>
+                                                        <span className="text-xs font-bold text-gray-700 group-hover:text-blue-700">Car Photo</span>
+                                                    </a>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
 
                                     {/* Timestamp */}
                                     <div className="pt-4 border-t border-gray-100 text-center">
@@ -621,6 +685,6 @@ export default function B2BMarketplace() {
                     )}
                 </AnimatePresence>
             </div>
-        </div>
+        </div >
     )
 }

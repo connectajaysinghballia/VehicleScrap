@@ -1,24 +1,25 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, use } from "react"
 import { useRouter } from "next/navigation"
 import { FileText, Car, User, MapPin, Calendar, ChevronLeft, CheckCircle, Trash2, Phone, Hash, Weight, Image as ImageIcon, MessageCircle } from "lucide-react"
 import Link from "next/link"
 import { useToast } from "@/hooks/use-toast"
 
-export default function QuoteDetailPage({ params }: { params: { id: string } }) {
+export default function QuoteDetailPage({ params }: { params: Promise<{ id: string }> }) {
     const router = useRouter()
     const { toast } = useToast()
+    const { id } = use(params)
     const [request, setRequest] = useState<any>(null)
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         fetchRequest()
-    }, [params.id])
+    }, [id])
 
     const fetchRequest = async () => {
         try {
-            const res = await fetch(`/api/admin/valuations/quote/${params.id}`)
+            const res = await fetch(`/api/admin/valuations/quote/${id}`)
             if (res.ok) {
                 const data = await res.json()
                 setRequest(data)
@@ -28,7 +29,7 @@ export default function QuoteDetailPage({ params }: { params: { id: string } }) 
                     await fetch("/api/admin/requests/approve", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ id: params.id, type: "quote", status: "reviewed" })
+                        body: JSON.stringify({ id: id, type: "quote", status: "reviewed" })
                     })
                     // Update local state to reflect the change
                     setRequest({ ...data, status: "reviewed" })
@@ -58,7 +59,7 @@ export default function QuoteDetailPage({ params }: { params: { id: string } }) 
             const res = await fetch("/api/admin/requests/approve", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id: params.id, type: "quote" })
+                body: JSON.stringify({ id: id, type: "quote" })
             })
 
             if (res.ok) {
@@ -87,7 +88,7 @@ export default function QuoteDetailPage({ params }: { params: { id: string } }) 
         if (!confirm("Are you sure you want to delete this request? This action cannot be undone.")) return
 
         try {
-            const res = await fetch(`/api/admin/requests/delete?id=${params.id}&type=quote`, {
+            const res = await fetch(`/api/admin/requests/delete?id=${id}&type=quote`, {
                 method: "DELETE"
             })
 
@@ -162,6 +163,15 @@ export default function QuoteDetailPage({ params }: { params: { id: string } }) 
                 </div>
                 <div className="flex items-center gap-3">
                     {getStatusBadge(request.status)}
+                    <a
+                        href={`https://wa.me/${request.contact?.phone?.replace(/\D/g, '')}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors font-medium text-sm flex items-center gap-2 mr-4"
+                    >
+                        <MessageCircle className="w-4 h-4" />
+                        Chat
+                    </a>
                     {request.status !== "approved" && (
                         <button
                             onClick={handleApprove}

@@ -307,7 +307,7 @@ export default function Navbar() {
                         </Link>
                       )}
                       <Link href="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                        Profile
+                        {(session.user as any).role === "partner" ? "Partner Dashboard" : "Profile"}
                       </Link>
                     </>
                   )}
@@ -472,7 +472,7 @@ export default function Navbar() {
                           className="w-full justify-start text-gray-700 hover:text-emerald-700 hover:bg-emerald-50 mb-1"
                           onClick={() => setIsOpen(false)}
                         >
-                          <User className="w-4 h-4 mr-2" /> Profile
+                          <User className="w-4 h-4 mr-2" /> {(session.user as any).role === "partner" ? "Partner Dashboard" : "Profile"}
                         </Button>
                       </Link>
                     )}

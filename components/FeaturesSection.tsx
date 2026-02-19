@@ -54,18 +54,60 @@ export default function FeaturesSection() {
 
   return (
     <section
-      className="py-24 relative overflow-hidden text-gray-900"
+      className="py-24 relative overflow-hidden text-white"
       style={{
-        backgroundColor: "#f8fafc", // Off-white (Slate-50)
+        backgroundColor: "#0f172a", // Navy Blue (Slate-900)
         backgroundImage: `
-          linear-gradient(-90deg, transparent calc(5em - 3px), rgba(220, 38, 38, 0.05) calc(5em - 3px + 1px), rgba(220, 38, 38, 0.05) 5em),
-          linear-gradient(0deg, transparent calc(5em - 3px), rgba(220, 38, 38, 0.05) calc(5em - 3px + 1px), rgba(220, 38, 38, 0.05) 5em)
+          linear-gradient(-90deg, transparent calc(5em - 3px), rgba(16, 185, 129, 0.05) calc(5em - 3px + 1px), rgba(16, 185, 129, 0.05) 5em),
+          linear-gradient(0deg, transparent calc(5em - 3px), rgba(16, 185, 129, 0.05) calc(5em - 3px + 1px), rgba(16, 185, 129, 0.05) 5em)
         `,
         backgroundSize: "5em 5em",
       }}
     >
       {/* Background Texture/Pattern */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white/80 pointer-events-none"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-900/95 to-slate-900 pointer-events-none z-0"></div>
+
+      {/* Animated Floating Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <motion.div
+          animate={{
+            y: [0, -50, 0],
+            rotate: [0, 360],
+            scale: [1, 1.2, 1]
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+          className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{
+            y: [0, 50, 0],
+            rotate: [0, -360],
+            scale: [1, 1.5, 1]
+          }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+          className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-3xl opacity-50"
+        />
+        <motion.div
+          animate={{
+            x: [0, 100, 0],
+            opacity: [0.3, 0.6, 0.3]
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute top-1/2 left-1/2 w-64 h-64 bg-teal-500/10 rounded-full blur-2xl transform -translate-x-1/2 -translate-y-1/2"
+        />
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 relative z-10">
         {/* Centered Heading */}
@@ -76,13 +118,13 @@ export default function FeaturesSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: "easeOut" }}
         >
-          <span className="text-red-600 font-bold uppercase tracking-[0.2em] mb-3 block text-sm">
+          <span className="text-emerald-400 font-bold uppercase tracking-[0.2em] mb-3 block text-sm">
             Why Choose AutoScrap
           </span>
-          <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-6 tracking-tight leading-tight">
-            Premium <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-600">Features</span>
+          <h2 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tight leading-tight">
+            Premium <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">Features</span>
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto text-lg font-light leading-relaxed">
+          <p className="text-slate-400 max-w-2xl mx-auto text-lg font-light leading-relaxed">
             Experience a hassle-free car scrapping process with our exclusive services designed for your absolute convenience and trust.
           </p>
         </motion.div>
@@ -91,23 +133,23 @@ export default function FeaturesSection() {
 
           {/* Left Column: Image */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            initial={{ opacity: 0, scale: 0.8, x: -50 }}
+            whileInView={{ opacity: 1, scale: 1, x: 0 }}
+            viewport={{ once: false, amount: 0.4 }}
+            transition={{ duration: 0.8, ease: [0.2, 0.65, 0.3, 0.9] }}
             className="relative lg:col-span-2"
           >
-            <div className="relative rounded-3xl overflow-hidden">
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-emerald-500/10 border border-slate-700/50">
               <img
-                src="/frontpage/features.png"
+                src="/frontpage/features.jpg"
                 alt="AutoScrap Features"
-                className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700"
+                className="w-full h-[450px] object-cover transform hover:scale-105 transition-transform duration-700"
               />
             </div>
 
             {/* Decorative Elements around image */}
-            <div className="absolute -z-10 top-10 -left-10 w-24 h-24 bg-red-500/20 rounded-full blur-2xl animate-pulse"></div>
-            <div className="absolute -z-10 -bottom-10 -right-10 w-32 h-32 bg-orange-500/20 rounded-full blur-2xl animate-pulse delay-700"></div>
+            <div className="absolute -z-10 top-10 -left-10 w-24 h-24 bg-emerald-500/20 rounded-full blur-2xl animate-pulse"></div>
+            <div className="absolute -z-10 -bottom-10 -right-10 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl animate-pulse delay-700"></div>
           </motion.div>
 
 
@@ -144,26 +186,26 @@ export default function FeaturesSection() {
                                 Adapted from user snippet to Tailwind
                             */}
                       <div className={`
-                                relative bg-[#1a1a1a] rounded-xl flex flex-col justify-end p-5 gap-3 text-white
-                                transition-all duration-300
+                                relative bg-white rounded-xl flex flex-col justify-end p-5 gap-3 text-slate-900
+                                transition-all duration-300 border border-slate-100 shadow-xl
                                 ${isExpanded ? 'min-h-[260px]' : 'h-[200px]'}
                             `}>
                         {/* Glowing Border/Backdrop (Before) */}
                         <div className={`
                                     absolute inset-0 -left-[3px] m-auto w-[calc(100%+6px)] h-[calc(100%+6px)] rounded-[14px]
-                                    bg-gradient-to-br from-[#ff0f7b] to-[#f89b29]
+                                    bg-gradient-to-br from-emerald-400 to-teal-400
                                     -z-10 pointer-events-none transition-all duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)]
                                     ${isExpanded ? 'rotate-0 opacity-100' : 'group-hover:rotate-[-3deg] group-hover:scale-x-[1.03] group-hover:scale-y-[1.03]'}
                                     opacity-0 group-hover:opacity-100
                                 `}></div>
 
                         {/* Always visible dim border for non-hover state */}
-                        <div className="absolute inset-0 rounded-xl border border-white/10 group-hover:border-transparent transition-colors duration-300 pointer-events-none"></div>
+                        <div className="absolute inset-0 rounded-xl border border-slate-100 group-hover:border-transparent transition-colors duration-300 pointer-events-none"></div>
 
                         {/* Blurred Glow (After) */}
                         <div className={`
                                     absolute inset-0 -z-20 transform scale-[0.90] blur-[15px]
-                                    bg-gradient-to-br from-[#ff0f7b] to-[#f89b29]
+                                    bg-gradient-to-br from-emerald-400 to-teal-400
                                     opacity-0 group-hover:opacity-100 transition-opacity duration-300
                                 `}></div>
 
@@ -171,16 +213,16 @@ export default function FeaturesSection() {
                         {/* Content */}
                         <div className="flex flex-col h-full relative z-10">
                           <div className="mb-auto pt-1">
-                            <div className="p-2.5 bg-white/5 w-fit rounded-lg mb-3 text-orange-400 group-hover:text-white group-hover:bg-white/10 transition-colors">
+                            <div className="p-2.5 bg-slate-50 w-fit rounded-lg mb-3 text-emerald-600 group-hover:text-white group-hover:bg-emerald-500 transition-colors border border-slate-100 group-hover:border-emerald-500/30">
                               <IconComponent size={24} />
                             </div>
                           </div>
 
-                          <motion.h3 layout className="text-lg font-bold capitalize mb-1">
+                          <motion.h3 layout className="text-lg font-bold capitalize mb-1 text-slate-900 mb-2">
                             {feature.title}
                           </motion.h3>
 
-                          <motion.p layout className="text-xs text-gray-400 mb-1 font-medium line-clamp-2">
+                          <motion.p layout className="text-xs text-slate-500 mb-1 font-medium line-clamp-2">
                             {feature.summary}
                           </motion.p>
 
@@ -190,7 +232,7 @@ export default function FeaturesSection() {
                                 initial={{ opacity: 0, height: 0 }}
                                 animate={{ opacity: 1, height: "auto" }}
                                 exit={{ opacity: 0, height: 0 }}
-                                className="text-white text-base leading-relaxed border-t border-white/20 pt-4 mt-4 font-normal"
+                                className="text-slate-600 text-base leading-relaxed border-t border-slate-100 pt-4 mt-4 font-normal"
                               >
                                 {feature.description}
                               </motion.div>
@@ -198,7 +240,7 @@ export default function FeaturesSection() {
                           </AnimatePresence>
 
                           {!isExpanded && (
-                            <div className="mt-2 text-[10px] font-bold text-orange-400 group-hover:text-white transition-colors flex items-center gap-1">
+                            <div className="mt-2 text-[10px] font-bold text-emerald-600 group-hover:text-emerald-700 transition-colors flex items-center gap-1">
                               Read More <ArrowRight size={12} />
                             </div>
                           )}

@@ -17,8 +17,14 @@ export default async function AdminPage() {
     }
 
     // Fetch B2B Requests Count
-    await connectToDatabase()
-    const b2bCount = await B2BRegistration.countDocuments()
+    let b2bCount = 0
+    try {
+        await connectToDatabase()
+        b2bCount = await B2BRegistration.countDocuments()
+    } catch (error) {
+        console.error("Error fetching B2B count:", error)
+        // Fallback to 0 is already set
+    }
 
     return (
         <div className="space-y-8 max-w-7xl mx-auto">
@@ -27,7 +33,7 @@ export default async function AdminPage() {
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
                 <div>
                     <h1 className="text-3xl font-black text-gray-900 flex items-center gap-3 tracking-tight">
-                        <Shield className="w-8 h-8 text-red-600" />
+                        <Shield className="w-8 h-8 text-sky-600" />
                         Admin Dashboard
                     </h1>
                     <p className="text-gray-500 mt-2 font-medium">Manage valuation requests and platform overview.</p>
@@ -36,8 +42,8 @@ export default async function AdminPage() {
 
             {/* Quick Actions Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <Link href="/admin/valuations" className="group bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-red-100 hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center gap-4">
-                    <div className="w-14 h-14 bg-red-50 text-red-600 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:bg-red-600 group-hover:text-white transition-all duration-300">
+                <Link href="/admin/valuations" className="group bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-sky-100 hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center gap-4">
+                    <div className="w-14 h-14 bg-sky-50 text-sky-600 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:bg-sky-600 group-hover:text-white transition-all duration-300">
                         <FileText className="w-7 h-7" />
                     </div>
                     <div>
@@ -46,13 +52,13 @@ export default async function AdminPage() {
                     </div>
                 </Link>
 
-                <Link href="/admin/partners" className="relative group bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-red-100 hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center gap-4">
+                <Link href="/admin/partners" className="relative group bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-sky-100 hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center gap-4">
                     {b2bCount > 0 && (
-                        <span className="absolute top-4 right-4 bg-red-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full animate-bounce shadow-md shadow-red-200">
+                        <span className="absolute top-4 right-4 bg-sky-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full animate-bounce shadow-md shadow-sky-200">
                             {b2bCount} New
                         </span>
                     )}
-                    <div className="w-14 h-14 bg-red-50 text-red-600 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:bg-red-600 group-hover:text-white transition-all duration-300">
+                    <div className="w-14 h-14 bg-sky-50 text-sky-600 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:bg-sky-600 group-hover:text-white transition-all duration-300">
                         <Users className="w-7 h-7" />
                     </div>
                     <div>
@@ -61,8 +67,8 @@ export default async function AdminPage() {
                     </div>
                 </Link>
 
-                <Link href="/admin/blogs/upload" className="group bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-red-100 hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center gap-4">
-                    <div className="w-14 h-14 bg-red-50 text-red-600 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:bg-red-600 group-hover:text-white transition-all duration-300">
+                <Link href="/admin/blogs/upload" className="group bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-sky-100 hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center gap-4">
+                    <div className="w-14 h-14 bg-sky-50 text-sky-600 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:bg-sky-600 group-hover:text-white transition-all duration-300">
                         <UploadCloud className="w-7 h-7" />
                     </div>
                     <div>
@@ -71,8 +77,8 @@ export default async function AdminPage() {
                     </div>
                 </Link>
 
-                <Link href="/admin/b2b-generator" className="group bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-red-100 hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center gap-4">
-                    <div className="w-14 h-14 bg-red-50 text-red-600 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:bg-red-600 group-hover:text-white transition-all duration-300">
+                <Link href="/admin/b2b-generator" className="group bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-sky-100 hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center gap-4">
+                    <div className="w-14 h-14 bg-sky-50 text-sky-600 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:bg-sky-600 group-hover:text-white transition-all duration-300">
                         <Key className="w-7 h-7" />
                     </div>
                     <div>

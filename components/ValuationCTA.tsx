@@ -16,14 +16,13 @@ export default function ValuationCTA() {
     }))
 
     return (
-        <section className="py-8 px-4 bg-[#FFFDF5] overflow-hidden">
+        <section className="py-8 px-4 bg-white overflow-hidden">
             <motion.div
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }} // Animation only plays once
                 transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }} // smooth graceful entrance
-                className="relative max-w-6xl mx-auto rounded-[3rem] overflow-hidden shadow-2xl transform-gpu"
-                style={{ backgroundColor: "#E31837" }} // Mahindra Red
+                className="group relative max-w-6xl mx-auto rounded-[3rem] overflow-hidden shadow-2xl transform-gpu bg-slate-900 hover:bg-white transition-colors duration-500"
             >
                 {/* Animated Background: Falling Vehicles */}
                 <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -41,7 +40,7 @@ export default function ValuationCTA() {
                                     ease: "linear",
                                 }}
                                 style={{ left: item.left }}
-                                className="absolute top-0 text-white/20"
+                                className="absolute top-0 text-emerald-500/10 group-hover:text-emerald-900/5 transition-colors duration-500"
                             >
                                 <Icon size={item.size} />
                             </motion.div>
@@ -56,14 +55,14 @@ export default function ValuationCTA() {
                             initial={{ opacity: 0, x: -20 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ delay: 0.4 }}
-                            className="inline-block py-1 px-3 rounded-full bg-white/20 text-white text-xs font-bold uppercase tracking-wider mb-3 backdrop-blur-sm"
+                            className="inline-block py-1 px-3 rounded-full bg-emerald-500/20 group-hover:bg-emerald-100 text-emerald-300 group-hover:text-emerald-700 text-xs font-bold uppercase tracking-wider mb-3 backdrop-blur-sm border border-emerald-500/20 group-hover:border-emerald-200 transition-all duration-500"
                         >
                             Free Service
                         </motion.span>
-                        <h2 className="text-3xl md:text-5xl font-black text-white mb-4 uppercase tracking-tight leading-none">
-                            Get <span className="text-yellow-300">Free</span> Valuation <br /> <span className="text-white/80">Of Your Car</span>
+                        <h2 className="text-3xl md:text-5xl font-black text-white group-hover:text-slate-900 mb-4 uppercase tracking-tight leading-none transition-colors duration-500">
+                            Get <span className="text-emerald-400 group-hover:text-emerald-600 transition-colors duration-500">Free</span> Valuation <br /> <span className="text-slate-300 group-hover:text-slate-600 transition-colors duration-500">Of Your Car</span>
                         </h2>
-                        <p className="text-white/90 text-lg font-medium max-w-md mx-auto md:mx-0">
+                        <p className="text-slate-300 group-hover:text-slate-500 text-lg font-medium max-w-md mx-auto md:mx-0 transition-colors duration-500">
                             Instantly check the current market scrap value of your vehicle with our AI-powered tool.
                         </p>
                     </div>
@@ -71,12 +70,20 @@ export default function ValuationCTA() {
                     <motion.div
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
+                        className="relative"
                     >
-                        <Link href="/services/sell-vehicle" className="group relative inline-flex items-center gap-3 px-8 py-4 bg-white text-[#E31837] rounded-full text-xl font-bold shadow-[0_10px_20px_rgba(0,0,0,0.2)] hover:shadow-[0_15px_30px_rgba(0,0,0,0.3)] transition-all">
-                            <span>Check For Free</span>
-                            <span className="bg-[#E31837]/10 p-1 rounded-full group-hover:bg-[#E31837] group-hover:text-white transition-colors duration-300">
+                        <Link href="/services/sell-vehicle" className="group/btn relative inline-flex items-center gap-3 px-8 py-4 bg-white group-hover:bg-slate-900 text-emerald-700 group-hover:text-white rounded-full text-xl font-bold shadow-[0_10px_20px_rgba(0,0,0,0.2)] hover:shadow-[0_15px_30px_rgba(16,185,129,0.3)] transition-all duration-500 border border-transparent group-hover:border-slate-800 overflow-hidden">
+                            <span className="relative z-10">Check For Free</span>
+                            <span className="bg-emerald-50 group-hover:group-hover/btn:bg-emerald-600 p-1 rounded-full group-hover/btn:bg-slate-800 group-hover/btn:text-white transition-colors duration-300 relative z-10">
                                 <ArrowRight className="w-5 h-5" />
                             </span>
+
+                            {/* Shimmer Effect */}
+                            <motion.div
+                                className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-20deg]"
+                                animate={{ left: ["-100%", "200%"] }}
+                                transition={{ repeat: Infinity, duration: 2, ease: "easeInOut", repeatDelay: 1 }}
+                            />
                         </Link>
                     </motion.div>
                 </div>

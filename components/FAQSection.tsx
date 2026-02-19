@@ -172,7 +172,7 @@ export default function FAQSection({ variant = "red" }: { variant?: "red" | "gre
                     >
                         <div className={`relative rounded-3xl overflow-hidden shadow-2xl shadow-gray-900/20 border-4 border-white`}>
                             <img
-                                src="/frontpage/greenfaq.png"
+                                src="/frontpage/faq.png"
                                 alt="FAQ Illustration"
                                 className="w-full h-auto object-cover"
                             />

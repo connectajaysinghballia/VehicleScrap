@@ -192,36 +192,14 @@ export default function QuoteForm() {
           {/* Background Image */}
           <div className="absolute inset-0 z-0">
             <Image
-              src="/getvaluation/headingbg.jpg"
+              src="/getfreevalbg.png"
               alt="Vehicle Valuation Background"
               fill
               className="object-cover"
+              style={{ objectPosition: "center 35%" }}
               priority
             />
-            <div className="absolute inset-0 bg-[#0a192f]/80 mix-blend-multiply"></div>
-          </div>
-
-          <div className="relative z-10">
-            <div className="flex justify-center gap-6 mb-8 flex-wrap">
-              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-emerald-500/30">
-                <CheckCircle className="w-5 h-5 text-emerald-400" />
-                <span className="text-white font-medium">Maximum value</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-emerald-500/30">
-                <CheckCircle className="w-5 h-5 text-emerald-400" />
-                <span className="text-white font-medium">Free Pickup</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-emerald-500/30">
-                <CheckCircle className="w-5 h-5 text-emerald-400" />
-                <span className="text-white font-medium">Road tax rebate</span>
-              </div>
-            </div>
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">
-              Get an instant <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">valuation</span>
-            </h1>
-            <p className="text-gray-300 max-w-2xl mx-auto text-lg">
-              Check your car's value in seconds with our AI-powered valuation tool.
-            </p>
+            <div className="absolute inset-0 bg-[#0a192f]/10 mix-blend-multiply"></div>
           </div>
         </motion.div>
 

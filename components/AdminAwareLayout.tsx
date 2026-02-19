@@ -16,7 +16,7 @@ export default function AdminAwareLayout({ children }: { children: React.ReactNo
             <main className="relative">
                 {children}
             </main>
-            {!isAdmin && <Footer />}
+            {!isAdmin && pathname !== "/login" && <Footer />}
 
             {!isAdmin && <LoginPopup />}
             {!isAdmin && <WhatsAppFloatingButton />}

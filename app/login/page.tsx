@@ -124,63 +124,27 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="min-h-screen flex items-stretch bg-gray-50 overflow-hidden font-sans pt-20 lg:pt-0">
+        <div className="h-screen flex items-stretch bg-white overflow-hidden font-sans pt-16 lg:pt-20">
             {/* Left Side - Image Background & Branding */}
             <motion.div
                 initial={{ x: -100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
-                className="hidden lg:flex flex-col justify-between w-1/2 relative bg-sky-50 overflow-hidden px-16 py-12"
+                className="hidden lg:flex flex-col justify-between w-1/2 relative overflow-hidden p-6"
             >
-                {/* Background Decoration */}
-                <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
-                    <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-white blur-3xl opacity-60"></div>
-                    <div className="absolute bottom-[-10%] left-[-10%] w-[400px] h-[400px] rounded-full bg-orange-200 blur-3xl opacity-40"></div>
-                </div>
-
-
-                {/* Logo */}
-                <div className="relative z-10 pt-8 pl-8">
-                    <div className="flex items-center gap-3">
-                        <img src="/logo.png" alt="Logo" className="w-12 h-12" />
-                        <span className="text-2xl font-extrabold text-gray-900">AutoScrap<span className="text-orange-600">.</span></span>
-                    </div>
-                </div>
-
                 {/* Illustration Image */}
-                <div className="relative z-10 flex-1 flex items-center justify-center py-8">
+                <div className="relative z-10 w-full h-full flex items-center justify-center">
                     <motion.div
-                        initial={{ scale: 0.9, opacity: 0 }}
+                        initial={{ scale: 1.1, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         transition={{ delay: 0.2, duration: 0.8 }}
-                        className="relative w-full max-w-lg aspect-[4/3]"
+                        className="relative w-[98%] h-[95%] bg-white rounded-3xl overflow-hidden flex items-center justify-center p-2"
                     >
                         <img
-                            src="/login-illustration.png"
-                            alt="Vehicle Scrapping Illustration"
-                            className="w-full h-full object-contain drop-shadow-xl"
+                            src="/login.jpeg"
+                            alt="Login Visual"
+                            className="w-full h-full object-contain rounded-2xl"
                         />
-                    </motion.div>
-                </div>
-
-                {/* Main Text */}
-                <div className="relative z-10 space-y-6 max-w-lg">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.3 }}
-                    >
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/60 backdrop-blur-md border border-orange-200 text-orange-700 text-sm font-medium mb-6">
-                            <Sparkles className="w-4 h-4 text-orange-600" />
-                            <span>#1 Trusted Scrap Service</span>
-                        </div>
-                        <h1 className="text-4xl font-bold text-gray-900 leading-tight mb-4">
-                            Turn Your Old Car Into <br />
-                            <span className="text-orange-600">Instant Cash</span>
-                        </h1>
-                        <p className="text-lg text-gray-600 leading-relaxed max-w-md">
-                            Join thousands of satisfied customers. Instant valuation, free pickup, and guaranteed payment.
-                        </p>
                     </motion.div>
                 </div>
             </motion.div>
@@ -190,9 +154,9 @@ export default function LoginPage() {
                 initial={{ x: 100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
-                className="w-full lg:w-1/2 flex items-center lg:items-start justify-center px-6 sm:px-12 lg:px-20 relative bg-white lg:pt-24"
+                className="w-full lg:w-1/2 flex items-center justify-center px-6 sm:px-12 lg:px-20 relative bg-white"
             >
-                <div className="w-full max-w-md space-y-5">
+                <div className="w-full max-w-md space-y-6">
                     {/* Header */}
                     <div className="text-center lg:text-left space-y-2">
                         <h2 className="text-4xl font-bold text-gray-900 tracking-tight">
@@ -206,7 +170,7 @@ export default function LoginPage() {
                     </div>
 
                     {/* Custom Tabs */}
-                    <div className="flex p-1 bg-gray-100 rounded-xl">
+                    <div className="flex p-1.5 bg-gray-100 rounded-xl">
                         <button
                             onClick={() => setActiveTab("standard")}
                             className={`flex-1 flex items-center justify-center gap-2 py-3 text-sm font-bold rounded-lg transition-all duration-300 ${activeTab === "standard"
@@ -215,7 +179,7 @@ export default function LoginPage() {
                                 }`}
                         >
                             <User className="w-4 h-4" />
-                            User / Admin
+                            User
                         </button>
                         <button
                             onClick={() => setActiveTab("b2b")}
@@ -237,7 +201,7 @@ export default function LoginPage() {
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
                                 transition={{ duration: 0.2 }}
-                                className="space-y-6"
+                                className="space-y-5"
                             >
                                 {/* Standard Auth Form */}
                                 <form onSubmit={handleAuth} className="space-y-5">
@@ -254,7 +218,7 @@ export default function LoginPage() {
                                                     value={name}
                                                     onChange={(e) => setName(e.target.value)}
                                                     placeholder="John Doe"
-                                                    className="block w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all duration-200"
+                                                    className="block w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl text-base text-gray-900 placeholder-gray-400 focus:bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all duration-200"
                                                 />
                                             </div>
                                         </div>
@@ -272,7 +236,7 @@ export default function LoginPage() {
                                                 value={email}
                                                 onChange={(e) => setEmail(e.target.value)}
                                                 placeholder="name@example.com"
-                                                className="block w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all duration-200"
+                                                className="block w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl text-base text-gray-900 placeholder-gray-400 focus:bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all duration-200"
                                             />
                                         </div>
                                     </div>
@@ -280,7 +244,6 @@ export default function LoginPage() {
                                     <div className="space-y-1.5">
                                         <div className="flex justify-between items-center ml-1">
                                             <label className="text-sm font-semibold text-gray-700">Password</label>
-                                            {isLogin && <a href="#" className="text-xs font-semibold text-orange-600 hover:text-orange-700">Forgot?</a>}
                                         </div>
                                         <div className="relative group transition-all">
                                             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -292,7 +255,7 @@ export default function LoginPage() {
                                                 value={password}
                                                 onChange={(e) => setPassword(e.target.value)}
                                                 placeholder="••••••••"
-                                                className="block w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all duration-200"
+                                                className="block w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl text-base text-gray-900 placeholder-gray-400 focus:bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all duration-200"
                                             />
                                         </div>
                                     </div>
@@ -300,7 +263,7 @@ export default function LoginPage() {
                                     <button
                                         type="submit"
                                         disabled={isLoading}
-                                        className="w-full bg-gray-900 hover:bg-black text-white font-bold py-4 rounded-xl shadow-xl shadow-gray-900/10 transform transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+                                        className="w-full bg-gray-900 hover:bg-black text-white font-bold py-3.5 rounded-xl shadow-xl shadow-gray-900/10 transform transition-all active:scale-[0.98] flex items-center justify-center gap-2 text-base"
                                     >
                                         {isLoading ? (
                                             <Loader2 className="w-5 h-5 animate-spin" />
@@ -320,7 +283,7 @@ export default function LoginPage() {
                                                 <div className="w-full border-t border-gray-200"></div>
                                             </div>
                                             <div className="relative flex justify-center text-sm">
-                                                <span className="px-4 bg-white text-gray-500 font-medium">Or continue with</span>
+                                                <span className="px-4 bg-white text-gray-500 font-medium">Or</span>
                                             </div>
                                         </div>
 
@@ -331,9 +294,9 @@ export default function LoginPage() {
                                             <img
                                                 src="https://www.svgrepo.com/show/475656/google-color.svg"
                                                 alt="Google"
-                                                className="w-6 h-6 group-hover:scale-110 transition-transform"
+                                                className="w-5 h-5 group-hover:scale-110 transition-transform"
                                             />
-                                            <span>Google Account</span>
+                                            <span className="text-sm">Continue with Google</span>
                                         </button>
                                     </>
                                 )}
@@ -341,7 +304,7 @@ export default function LoginPage() {
 
 
                                 <p className="text-center text-sm text-gray-500 mt-6">
-                                    {isLogin ? "New to EcoScrap?" : "Already have an account?"}
+                                    {isLogin ? "New to ScrapCenter?" : "Already have an account?"}
                                     <button
                                         onClick={() => setIsLogin(!isLogin)}
                                         className="font-bold text-gray-900 hover:text-orange-600 ml-1 transition-colors"
@@ -372,7 +335,7 @@ export default function LoginPage() {
                                                 value={b2bUserId}
                                                 onChange={(e) => setB2BUserId(e.target.value)}
                                                 placeholder="Enter Partner ID"
-                                                className="block w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all duration-200"
+                                                className="block w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl text-base text-gray-900 placeholder-gray-400 focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all duration-200"
                                             />
                                         </div>
                                     </div>
@@ -389,7 +352,7 @@ export default function LoginPage() {
                                                 value={b2bPassword}
                                                 onChange={(e) => setB2BPassword(e.target.value)}
                                                 placeholder="••••••••"
-                                                className="block w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all duration-200"
+                                                className="block w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl text-base text-gray-900 placeholder-gray-400 focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all duration-200"
                                             />
                                         </div>
                                     </div>
@@ -397,7 +360,7 @@ export default function LoginPage() {
                                     <button
                                         type="submit"
                                         disabled={isLoading}
-                                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-xl shadow-blue-600/20 transform transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+                                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl shadow-xl shadow-blue-600/20 transform transition-all active:scale-[0.98] flex items-center justify-center gap-2 text-base"
                                     >
                                         {isLoading ? (
                                             <Loader2 className="w-5 h-5 animate-spin" />
@@ -422,7 +385,7 @@ export default function LoginPage() {
                                 <Link href="/partner-register" className="block">
                                     <button
                                         type="button"
-                                        className="w-full bg-white border-2 border-blue-600 text-blue-700 font-bold py-3.5 rounded-xl hover:bg-blue-50 transition-all duration-200 flex items-center justify-center gap-2"
+                                        className="w-full bg-white border-2 border-blue-600 text-blue-700 font-bold py-3.5 rounded-xl hover:bg-blue-50 transition-all duration-200 flex items-center justify-center gap-2 text-sm"
                                     >
                                         <Building2 className="w-5 h-5" />
                                         Be Our Partner
