@@ -133,107 +133,179 @@ export default function EKYCForm({
   }
 
   if (showCollectionCenter) {
+    // Pre-generate random values outside of JSX to avoid re-renders
+    const confettiPieces = Array.from({ length: 60 }, (_, i) => ({
+      id: i,
+      color: ["#10b981", "#3b82f6", "#f59e0b", "#ef4444", "#8b5cf6", "#ec4899", "#06b6d4", "#ffffff"][i % 8],
+      x: (Math.random() - 0.5) * 120, // vw spread
+      y: -(30 + Math.random() * 80), // vh upward
+      rotate: Math.random() * 720,
+      delay: Math.random() * 0.8,
+      duration: 1.8 + Math.random() * 1.2,
+      size: 6 + Math.random() * 8,
+      shape: i % 3, // 0=circle, 1=rect, 2=star
+    }))
+
     return (
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-hidden"
+        className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-hidden"
       >
-        {/* Firecracker animations */}
-        {[...Array(15)].map((_, i) => (
+        {/* Confetti burst from center */}
+        {confettiPieces.map((piece) => (
           <motion.div
-            key={i}
-            className="absolute w-2 h-2 bg-emerald-400 rounded-full"
-            initial={{
-              x: 0,
-              y: 0,
-              opacity: 1,
-            }}
-            animate={{
-              x: (Math.random() - 0.5) * 400,
-              y: (Math.random() - 0.5) * 400,
-              opacity: 0,
-            }}
-            transition={{
-              duration: 1.5,
-              delay: Math.random() * 0.5,
-              repeat: Number.POSITIVE_INFINITY,
-              repeatDelay: 2,
-            }}
-          />
-        ))}
-
-        {/* Additional firecracker particles with different colors */}
-        {[...Array(15)].map((_, i) => (
-          <motion.div
-            key={`fire-${i}`}
-            className="absolute w-1.5 h-1.5 rounded-full"
+            key={piece.id}
+            className="absolute pointer-events-none"
             style={{
-              backgroundColor: [
-                "#10b981", // emerald-500
-                "#3b82f6", // blue-500
-                "#ffffff", // white
-                "#059669", // emerald-600
-                "#0E192D", // navy
-              ][i % 5],
+              width: piece.size,
+              height: piece.shape === 1 ? piece.size * 0.4 : piece.size,
+              backgroundColor: piece.color,
+              borderRadius: piece.shape === 0 ? "50%" : piece.shape === 1 ? "2px" : "0%",
+              left: "50%",
+              top: "50%",
             }}
-            initial={{
-              x: 0,
-              y: 0,
-              opacity: 1,
-            }}
+            initial={{ x: 0, y: 0, opacity: 1, rotate: 0, scale: 1 }}
             animate={{
-              x: (Math.random() - 0.5) * 500,
-              y: (Math.random() - 0.5) * 500,
-              opacity: 0,
+              x: `${piece.x}vw`,
+              y: `${piece.y}vh`,
+              opacity: [1, 1, 0],
+              rotate: piece.rotate,
+              scale: [1, 1.2, 0.5],
             }}
             transition={{
-              duration: 2,
-              delay: Math.random() * 0.3,
-              repeat: Number.POSITIVE_INFINITY,
-              repeatDelay: 2.5,
+              duration: piece.duration,
+              delay: piece.delay,
+              ease: "easeOut",
+              repeat: Infinity,
+              repeatDelay: 1.5,
             }}
           />
         ))}
 
-        <motion.div
-          initial={{ scale: 0.8, y: 20 }}
-          animate={{ scale: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="bg-white rounded-2xl shadow-2xl max-w-md w-full border border-emerald-200 p-8 relative z-10"
-        >
+        {/* Floating emoji */}
+        {["🎉", "🎊", "✨", "🏆", "🎈", "⭐"].map((emoji, i) => (
           <motion.div
-            className="flex justify-center mb-6"
-            animate={{ scale: [1, 1.3, 1], rotate: [0, 10, -10, 0] }}
-            transition={{ duration: 0.8, repeat: Number.POSITIVE_INFINITY, repeatDelay: 2 }}
-          >
-            <CheckCircle className="w-24 h-24 text-emerald-500" />
-          </motion.div>
-
-          <h2 className="text-3xl font-bold text-center text-[#0E192D] mb-4 bg-gradient-to-r from-[#0E192D] to-emerald-600 bg-clip-text text-transparent">
-            Success! 🎉
-          </h2>
-
-          <p className="text-center text-gray-800 text-lg font-bold mb-2">
-            eKYC Done & Process Completed Successfully!
-          </p>
-
-          <p className="text-center text-gray-600 mb-8 text-sm">
-            Your request has been submitted. Our team will contact you shortly for the next steps.
-          </p>
-
-          <motion.button
-            onClick={() => {
-              setShowCollectionCenter(false)
-              window.location.href = "/"
+            key={`emoji-${i}`}
+            className="absolute text-2xl md:text-3xl pointer-events-none select-none"
+            style={{ left: `${10 + i * 15}%`, bottom: "-5%" }}
+            animate={{
+              y: [0, -window.innerHeight * 1.2],
+              x: [0, (i % 2 === 0 ? 1 : -1) * (20 + Math.random() * 30)],
+              opacity: [0, 1, 1, 0],
+              rotate: [0, (i % 2 === 0 ? 30 : -30)],
             }}
-            className="w-full px-6 py-4 bg-[#0E192D] hover:bg-emerald-600 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-emerald-500/20"
-            whileHover={{ scale: 1.02, y: -2 }}
-            whileTap={{ scale: 0.98 }}
+            transition={{
+              duration: 3 + i * 0.4,
+              delay: i * 0.3,
+              repeat: Infinity,
+              repeatDelay: 0.5,
+              ease: "easeOut",
+            }}
           >
-            Back to Home
-          </motion.button>
+            {emoji}
+          </motion.div>
+        ))}
+
+        {/* Main card */}
+        <motion.div
+          initial={{ scale: 0.5, y: 60, opacity: 0 }}
+          animate={{ scale: 1, y: 0, opacity: 1 }}
+          transition={{ type: "spring", duration: 0.7, bounce: 0.4, delay: 0.1 }}
+          className="bg-[#0E192D] rounded-3xl shadow-2xl max-w-md w-full border border-emerald-500/30 p-8 relative z-10 overflow-hidden"
+        >
+          {/* Glowing background blob */}
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-emerald-500/20 rounded-full blur-3xl" />
+            <div className="absolute bottom-0 right-0 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl" />
+          </div>
+
+          {/* Content */}
+          <div className="relative z-10 text-center">
+            {/* Animated checkmark */}
+            <motion.div
+              className="flex justify-center mb-6"
+              initial={{ scale: 0, rotate: -180 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ type: "spring", duration: 0.8, bounce: 0.5, delay: 0.2 }}
+            >
+              <div className="relative">
+                <motion.div
+                  className="w-24 h-24 rounded-full bg-emerald-500/20 flex items-center justify-center border-2 border-emerald-500/40"
+                  animate={{ scale: [1, 1.1, 1], boxShadow: ["0 0 0 0 rgba(16,185,129,0.4)", "0 0 0 20px rgba(16,185,129,0)", "0 0 0 0 rgba(16,185,129,0)"] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  <CheckCircle className="w-12 h-12 text-emerald-400" />
+                </motion.div>
+              </div>
+            </motion.div>
+
+            {/* Title */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              <h2 className="text-4xl font-black text-white mb-1">
+                You&apos;re All Set! <span className="text-2xl">🎉</span>
+              </h2>
+              <div className="h-1 w-16 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full mx-auto my-3" />
+            </motion.div>
+
+            <motion.p
+              className="text-emerald-400 font-bold text-lg mb-2"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+            >
+              eKYC Completed Successfully!
+            </motion.p>
+
+            <motion.p
+              className="text-gray-400 text-sm mb-8 leading-relaxed"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+            >
+              Your identity has been verified. Our team will reach out to you shortly to complete the process.
+            </motion.p>
+
+            {/* Stats row */}
+            <motion.div
+              className="grid grid-cols-3 gap-3 mb-8"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7 }}
+            >
+              {[
+                { label: "Verified", icon: "✅", color: "text-emerald-400" },
+                { label: "Submitted", icon: "📤", color: "text-blue-400" },
+                { label: "Processing", icon: "⚡", color: "text-yellow-400" },
+              ].map((item, i) => (
+                <div key={i} className="bg-slate-800/60 rounded-xl p-3 border border-slate-700/50">
+                  <div className="text-2xl mb-1">{item.icon}</div>
+                  <div className={`text-xs font-bold ${item.color}`}>{item.label}</div>
+                </div>
+              ))}
+            </motion.div>
+
+            {/* CTA Button */}
+            <motion.button
+              onClick={() => {
+                setShowCollectionCenter(false)
+                window.location.href = "/"
+              }}
+              className="w-full px-6 py-4 bg-emerald-500 hover:bg-emerald-400 text-white font-black rounded-2xl transition-all shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:-translate-y-0.5 text-lg"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8 }}
+            >
+              Back to Home 🏠
+            </motion.button>
+          </div>
         </motion.div>
       </motion.div>
     )

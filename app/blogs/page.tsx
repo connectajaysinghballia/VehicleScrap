@@ -4,7 +4,6 @@ import { motion } from "framer-motion"
 import { Calendar, User, ArrowRight, Tag, BookOpen, Clock, ChevronRight, Search } from "lucide-react"
 import Link from "next/link"
 import Navbar from "@/components/Navbar"
-import Footer from "@/components/Footer"
 import Image from "next/image"
 
 export default function BlogsPage() {
@@ -205,7 +204,6 @@ export default function BlogsPage() {
                 </div>
             </section>
 
-            <Footer />
         </div>
     )
 }

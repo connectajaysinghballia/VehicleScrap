@@ -61,7 +61,7 @@ export default function GetQuoteEKYCPage() {
 
     return (
         <div className="bg-gray-50 min-h-screen">
-            <div className="max-w-4xl mx-auto pt-24 pb-12 px-4">
+            <div className="max-w-4xl mx-auto pt-36 pb-12 px-4">
                 <EKYCForm
                     formData={formData}
                     valuation={valuation}

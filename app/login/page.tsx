@@ -1,16 +1,25 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { signIn } from "next-auth/react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Mail, Lock, ArrowRight, Loader2, Sparkles, Building2, User } from "lucide-react"
 import Link from "next/link"
 import { useToast } from "@/components/ui/use-toast"
+import { useSearchParams } from "next/navigation"
 
 export default function LoginPage() {
     const [activeTab, setActiveTab] = useState<"standard" | "b2b">("standard")
     const [isLogin, setIsLogin] = useState(true)
     const { toast } = useToast()
+    const searchParams = useSearchParams()
+
+    // Auto-select B2B tab if redirected from partner-register
+    useEffect(() => {
+        if (searchParams.get("tab") === "b2b") {
+            setActiveTab("b2b")
+        }
+    }, [searchParams])
 
     // Standard (User/Admin) State
     const [name, setName] = useState("")

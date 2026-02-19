@@ -190,7 +190,7 @@ export default function Navbar() {
   return (
     <nav
       className={`navbar fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-        ? "bg-[#cccccc] border-b border-emerald-600/20 shadow-lg shadow-emerald-600/5"
+        ? "bg-[#cccccc] shadow-lg shadow-emerald-600/5"
         : "bg-[#cccccc] shadow-sm"
         }`}
     >
@@ -561,7 +561,7 @@ export default function Navbar() {
             <div className="container mx-auto px-6 py-12">
               <div className="grid grid-cols-2 gap-12 max-w-4xl mx-auto">
                 {/* Services Column */}
-                <div className="col-span-1 border-r border-gray-100 pr-12">
+                <div className="col-span-1 pr-12">
                   <div className="flex items-center gap-3 mb-8">
                     <div className="p-2 rounded-lg bg-emerald-100/50 text-emerald-700">
                       <Car className="w-6 h-6" />
@@ -642,8 +642,7 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-      {/* Animated border */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-600/30 to-transparent"></div>
+
     </nav>
   )
 }

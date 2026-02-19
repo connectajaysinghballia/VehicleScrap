@@ -7,7 +7,7 @@ import Image from "next/image"
 
 export default function SellVehiclePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-emerald-50/20 to-white relative overflow-hidden">
+    <div className="min-h-screen bg-slate-950 relative overflow-hidden">
       <Navbar />
 
       {/* Background effects */}
@@ -18,7 +18,7 @@ export default function SellVehiclePage() {
 
         {/* Header Section */}
         <motion.div
-          className="relative rounded-3xl overflow-hidden mb-12 text-center min-h-[350px] flex flex-col justify-center px-4"
+          className="relative rounded-3xl overflow-hidden mb-12 text-center min-h-[350px] flex flex-col justify-center px-4 border border-slate-800"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -32,7 +32,7 @@ export default function SellVehiclePage() {
               className="object-cover"
               priority
             />
-            <div className="absolute inset-0 bg-[#0E192D]/80 mix-blend-multiply"></div>
+            <div className="absolute inset-0 bg-[#0E192D]/90 mix-blend-multiply"></div>
           </div>
 
           <div className="relative z-10">
@@ -40,7 +40,7 @@ export default function SellVehiclePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-lg"
+              className="text-4xl md:text-6xl font-black text-white mb-6 drop-shadow-lg tracking-tight"
             >
               Sell Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Old Vehicle</span>
             </motion.h1>
@@ -48,7 +48,7 @@ export default function SellVehiclePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed"
+              className="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed font-medium"
             >
               Get the best price for your vehicle with EcoScrap India. Fast, secure, and hassle-free process.
             </motion.p>

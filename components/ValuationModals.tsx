@@ -1,10 +1,9 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { X, CheckCircle, Shield, Sparkles, Smartphone, Award, FileText, ArrowRight, Home } from "lucide-react"
-import confetti from "canvas-confetti"
+import { X, CheckCircle, Shield, Sparkles, Smartphone, Award, FileText, Home } from "lucide-react"
 import Link from "next/link"
 
 interface ValuationModalsProps {
@@ -16,55 +15,67 @@ interface ValuationModalsProps {
 export default function ValuationModals({ formData, valuationId, onClose }: ValuationModalsProps) {
     const router = useRouter()
     const [step, setStep] = useState<1 | 2 | 3>(1)
-
     const [isSubmitting, setIsSubmitting] = useState(false)
 
-    // Calculate estimated value (Mock logic: Weight * Rate based on type)
+    // Calculate estimated value
     const ratePerTon = formData.vehicleType === "Car" ? 25000 : formData.vehicleType === "Bike" ? 15000 : 35000
     const weight = parseFloat(formData.vehicleWeight) || 0
     const estimatedValue = (weight * ratePerTon).toLocaleString("en-IN")
 
+    // Pre-generate confetti pieces (stable across renders)
+    const confettiPieces = useMemo(() => Array.from({ length: 60 }, (_, i) => ({
+        id: i,
+        color: ["#10b981", "#3b82f6", "#f59e0b", "#ef4444", "#8b5cf6", "#ec4899", "#06b6d4", "#ffffff"][i % 8],
+        x: (Math.random() - 0.5) * 120,
+        y: -(30 + Math.random() * 80),
+        rotate: Math.random() * 720,
+        delay: Math.random() * 0.8,
+        duration: 1.8 + Math.random() * 1.2,
+        size: 6 + Math.random() * 8,
+        shape: i % 3,
+    })), [])
 
+    const valuationConfetti = useMemo(() => Array.from({ length: 40 }, (_, i) => ({
+        id: i,
+        color: ["#10b981", "#3b82f6", "#f59e0b", "#ffffff", "#06b6d4"][i % 5],
+        x: (Math.random() - 0.5) * 100,
+        y: -(20 + Math.random() * 60),
+        rotate: Math.random() * 540,
+        delay: Math.random() * 0.6,
+        duration: 1.5 + Math.random() * 1,
+        size: 5 + Math.random() * 6,
+        shape: i % 2,
+    })), [])
 
     const handleCompleteKYC = () => {
         setIsSubmitting(true)
-        // Simulate API call
         setTimeout(() => {
             setStep(3)
             setIsSubmitting(false)
-            triggerConfetti()
         }, 1500)
     }
 
-    const triggerConfetti = () => {
-        const duration = 3000
-        const end = Date.now() + duration
-
-        const frame = () => {
-            confetti({
-                particleCount: 5,
-                angle: 60,
-                spread: 55,
-                origin: { x: 0 },
-                colors: ['#f97316', '#3b82f6', '#ffffff']
-            })
-            confetti({
-                particleCount: 5,
-                angle: 120,
-                spread: 55,
-                origin: { x: 1 },
-                colors: ['#f97316', '#3b82f6', '#ffffff']
-            })
-
-            if (Date.now() < end) {
-                requestAnimationFrame(frame)
-            }
-        }
-        frame()
-    }
-
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/60 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/60 backdrop-blur-sm overflow-hidden">
+            {/* Confetti on Step 1 */}
+            {step === 1 && valuationConfetti.map((piece) => (
+                <motion.div
+                    key={`vc-${piece.id}`}
+                    className="absolute pointer-events-none"
+                    style={{
+                        width: piece.size,
+                        height: piece.shape === 1 ? piece.size * 0.4 : piece.size,
+                        backgroundColor: piece.color,
+                        borderRadius: piece.shape === 0 ? "50%" : "2px",
+                        left: "50%",
+                        top: "50%",
+                    }}
+                    initial={{ x: 0, y: 0, opacity: 1, rotate: 0 }}
+                    animate={{ x: `${piece.x}vw`, y: `${piece.y}vh`, opacity: [1, 1, 0], rotate: piece.rotate }}
+                    transition={{ duration: piece.duration, delay: piece.delay, ease: "easeOut", repeat: Infinity, repeatDelay: 3 }}
+                />
+            ))}
+
             <AnimatePresence mode="wait">
 
                 {/* Step 1: Valuation Result */}
@@ -240,40 +251,104 @@ export default function ValuationModals({ formData, valuationId, onClose }: Valu
 
                 {/* Step 3: Success Celebration */}
                 {step === 3 && (
-                    <motion.div
-                        key="step3"
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-8 text-center relative overflow-hidden"
-                    >
-                        <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-emerald-400 to-emerald-600"></div>
-                        <div className="absolute top-4 right-4">
-                            <button onClick={onClose} className="p-2 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors">
-                                <X className="w-5 h-5 text-gray-500" />
-                            </button>
-                        </div>
+                    <>
+                        {/* Full confetti on success */}
+                        {confettiPieces.map((piece) => (
+                            <motion.div
+                                key={`sc-${piece.id}`}
+                                className="absolute pointer-events-none z-50"
+                                style={{
+                                    width: piece.size,
+                                    height: piece.shape === 1 ? piece.size * 0.4 : piece.size,
+                                    backgroundColor: piece.color,
+                                    borderRadius: piece.shape === 0 ? "50%" : "2px",
+                                    left: "50%",
+                                    top: "50%",
+                                }}
+                                initial={{ x: 0, y: 0, opacity: 1, rotate: 0, scale: 1 }}
+                                animate={{ x: `${piece.x}vw`, y: `${piece.y}vh`, opacity: [1, 1, 0], rotate: piece.rotate, scale: [1, 1.2, 0.5] }}
+                                transition={{ duration: piece.duration, delay: piece.delay, ease: "easeOut", repeat: Infinity, repeatDelay: 1.5 }}
+                            />
+                        ))}
+                        {/* Floating emoji */}
+                        {["🎉", "🎊", "✨", "🏆", "🎈", "⭐"].map((emoji, i) => (
+                            <motion.div
+                                key={`emoji-${i}`}
+                                className="absolute text-2xl pointer-events-none select-none z-50"
+                                style={{ left: `${10 + i * 15}%`, bottom: "-5%" }}
+                                animate={{ y: ["-0vh", "-120vh"], opacity: [0, 1, 1, 0], rotate: [0, i % 2 === 0 ? 30 : -30] }}
+                                transition={{ duration: 3 + i * 0.4, delay: i * 0.3, repeat: Infinity, repeatDelay: 0.5, ease: "easeOut" }}
+                            >
+                                {emoji}
+                            </motion.div>
+                        ))}
+                        <motion.div
+                            key="step3"
+                            initial={{ opacity: 0, scale: 0.5, y: 60 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            transition={{ type: "spring", duration: 0.7, bounce: 0.4 }}
+                            className="w-full max-w-md bg-[#0E192D] rounded-3xl shadow-2xl p-8 text-center relative overflow-hidden z-10 border border-emerald-500/30"
+                        >
+                            {/* Glow blobs */}
+                            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none" />
+                            <div className="absolute bottom-0 right-0 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
 
-                        <div className="w-24 h-24 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <CheckCircle className="w-12 h-12 text-emerald-600" />
-                        </div>
+                            <div className="absolute top-4 right-4 z-20">
+                                <button onClick={onClose} className="p-2 bg-slate-800 hover:bg-slate-700 rounded-full transition-colors">
+                                    <X className="w-5 h-5 text-gray-400" />
+                                </button>
+                            </div>
 
-                        <h2 className="text-3xl font-bold text-[#0E192D] mb-2">Success!</h2>
-                        <p className="text-gray-600 mb-6">
-                            Your valuation request and eKYC have been submitted successfully.
-                        </p>
+                            <div className="relative z-10">
+                                <motion.div
+                                    className="flex justify-center mb-6"
+                                    initial={{ scale: 0, rotate: -180 }}
+                                    animate={{ scale: 1, rotate: 0 }}
+                                    transition={{ type: "spring", duration: 0.8, bounce: 0.5, delay: 0.2 }}
+                                >
+                                    <motion.div
+                                        className="w-24 h-24 rounded-full bg-emerald-500/20 flex items-center justify-center border-2 border-emerald-500/40"
+                                        animate={{ scale: [1, 1.1, 1], boxShadow: ["0 0 0 0 rgba(16,185,129,0.4)", "0 0 0 20px rgba(16,185,129,0)", "0 0 0 0 rgba(16,185,129,0)"] }}
+                                        transition={{ duration: 2, repeat: Infinity }}
+                                    >
+                                        <CheckCircle className="w-12 h-12 text-emerald-400" />
+                                    </motion.div>
+                                </motion.div>
 
-                        <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-4 mb-8">
-                            <p className="font-medium text-[#0E192D] mb-1">What's Next?</p>
-                            <p className="text-sm text-gray-600">
-                                Our Collection Center (CC) executive will contact you within <span className="font-bold text-emerald-600">24 hours</span> regarding pickup.
-                            </p>
-                        </div>
+                                <motion.h2 className="text-4xl font-black text-white mb-1" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
+                                    You&apos;re All Set! <span className="text-2xl">🎉</span>
+                                </motion.h2>
+                                <div className="h-1 w-16 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full mx-auto my-3" />
 
-                        <Link href="/" className="block w-full bg-[#0E192D] hover:bg-black text-white font-bold py-4 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2">
-                            <Home className="w-5 h-5" />
-                            Return to Home
-                        </Link>
-                    </motion.div>
+                                <motion.p className="text-emerald-400 font-bold text-lg mb-2" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
+                                    eKYC Completed Successfully!
+                                </motion.p>
+                                <motion.p className="text-gray-400 text-sm mb-6 leading-relaxed" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}>
+                                    Your identity has been verified. Our team will reach out within <span className="text-emerald-400 font-bold">24 hours</span>.
+                                </motion.p>
+
+                                <motion.div className="grid grid-cols-3 gap-3 mb-6" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}>
+                                    {[
+                                        { label: "Verified", icon: "✅", color: "text-emerald-400" },
+                                        { label: "Submitted", icon: "📤", color: "text-blue-400" },
+                                        { label: "Processing", icon: "⚡", color: "text-yellow-400" },
+                                    ].map((item, i) => (
+                                        <div key={i} className="bg-slate-800/60 rounded-xl p-3 border border-slate-700/50">
+                                            <div className="text-2xl mb-1">{item.icon}</div>
+                                            <div className={`text-xs font-bold ${item.color}`}>{item.label}</div>
+                                        </div>
+                                    ))}
+                                </motion.div>
+
+                                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}>
+                                    <Link href="/" className="block w-full bg-emerald-500 hover:bg-emerald-400 text-white font-black py-4 rounded-2xl transition-all shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 text-lg flex items-center justify-center gap-2">
+                                        <Home className="w-5 h-5" />
+                                        Back to Home 🏠
+                                    </Link>
+                                </motion.div>
+                            </div>
+                        </motion.div>
+                    </>
                 )}
 
             </AnimatePresence>

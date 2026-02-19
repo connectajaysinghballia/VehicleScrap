@@ -226,12 +226,12 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
         initial={{ opacity: 0, x: 30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6 }}
-        className="bg-white rounded-3xl shadow-2xl p-8 md:p-10 border border-emerald-100 backdrop-blur-xl relative"
+        className="bg-[#0E192D] rounded-3xl shadow-2xl p-8 md:p-10 border border-slate-800 backdrop-blur-xl relative"
       >
         <form onSubmit={handleSubmit} className="space-y-5">
 
-          <div className="bg-emerald-50/50 p-4 rounded-xl border border-emerald-100 mb-6">
-            <h3 className="text-lg font-bold text-[#0E192D] flex items-center gap-2 mb-4">
+          <div className="bg-emerald-900/10 p-4 rounded-xl border border-emerald-900/20 mb-6">
+            <h3 className="text-lg font-bold text-white flex items-center gap-2 mb-4">
               <Car className="w-5 h-5 text-emerald-600" />
               Vehicle Details
             </h3>
@@ -239,26 +239,26 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Registration Number */}
               <div>
-                <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider">Registration Number*</label>
+                <label className="text-xs font-bold text-gray-400 mb-1.5 block uppercase tracking-wider">Registration Number*</label>
                 <input
                   type="text"
                   name="registrationNumber"
                   value={formData.registrationNumber}
                   onChange={handleChange}
                   placeholder="e.g., MH 02 AB 1234"
-                  className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-[#0E192D] placeholder-gray-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm"
+                  className="w-full px-4 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-white focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm"
                   required
                 />
               </div>
 
               {/* Registration Year */}
               <div>
-                <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider">Year*</label>
+                <label className="text-xs font-bold text-gray-400 mb-1.5 block uppercase tracking-wider">Year*</label>
                 <select
                   name="registrationYear"
                   value={formData.registrationYear}
                   onChange={handleChange}
-                  className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-[#0E192D] focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm"
+                  className="w-full px-4 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-white focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm"
                   required
                 >
                   <option value="">Select year</option>
@@ -274,7 +274,7 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
               {/* Brand */}
               <div>
-                <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider">Brand*</label>
+                <label className="text-xs font-bold text-gray-400 mb-1.5 block uppercase tracking-wider">Brand*</label>
                 <select
                   name="brand"
                   value={formData.brand}
@@ -294,7 +294,7 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
 
               {/* Model */}
               <div>
-                <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider">Model*</label>
+                <label className="text-xs font-bold text-gray-400 mb-1.5 block uppercase tracking-wider">Model*</label>
                 <select
                   name="model"
                   value={formData.model}
@@ -318,7 +318,7 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                 {formData.brand === "other" && (
                   <div>
-                    <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider">Enter Brand*</label>
+                    <label className="text-xs font-bold text-gray-400 mb-1.5 block uppercase tracking-wider">Enter Brand*</label>
                     <input
                       type="text"
                       name="customBrand"
@@ -332,7 +332,7 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
                 )}
                 {formData.model === "other" && (
                   <div>
-                    <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider">Enter Model*</label>
+                    <label className="text-xs font-bold text-gray-400 mb-1.5 block uppercase tracking-wider">Enter Model*</label>
                     <input
                       type="text"
                       name="customModel"
@@ -348,7 +348,7 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
             )}
 
             <div className="mt-4">
-              <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider">Fuel Type*</label>
+              <label className="text-xs font-bold text-gray-400 mb-1.5 block uppercase tracking-wider">Fuel Type*</label>
               <select
                 name="fuelType"
                 value={formData.fuelType}
@@ -366,8 +366,8 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
             </div>
           </div>
 
-          <div className="bg-blue-50/50 p-4 rounded-xl border border-blue-100 mb-6">
-            <h3 className="text-lg font-bold text-[#0E192D] flex items-center gap-2 mb-4">
+          <div className="bg-blue-900/10 p-4 rounded-xl border border-blue-900/20 mb-6">
+            <h3 className="text-lg font-bold text-white flex items-center gap-2 mb-4">
               <MapPin className="w-5 h-5 text-blue-600" />
               Location & Contact
             </h3>
@@ -375,7 +375,7 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
             {/* Contact Details */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div>
-                <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider">Full Name*</label>
+                <label className="text-xs font-bold text-gray-400 mb-1.5 block uppercase tracking-wider">Full Name*</label>
                 <div className="flex items-center border border-gray-200 rounded-lg px-3 py-2.5 bg-white focus-within:border-emerald-500 focus-within:ring-4 focus-within:ring-emerald-500/10 transition-all group">
                   <User className="w-4 h-4 text-gray-400 mr-2 group-focus-within:text-emerald-500 transition-colors" />
                   <input
@@ -384,14 +384,14 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="Enter your name"
-                    className="flex-1 outline-none bg-transparent text-[#0E192D] placeholder-gray-400 font-medium text-sm"
+                    className="flex-1 outline-none bg-transparent text-white placeholder-gray-500 font-medium text-sm"
                     required
                   />
                 </div>
               </div>
               <div>
-                <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider">Phone Number*</label>
-                <div className="flex items-center border border-gray-200 rounded-lg px-3 py-2.5 bg-white focus-within:border-emerald-500 focus-within:ring-4 focus-within:ring-emerald-500/10 transition-all group">
+                <label className="text-xs font-bold text-gray-400 mb-1.5 block uppercase tracking-wider">Phone Number*</label>
+                <div className="flex items-center border border-slate-700 rounded-lg px-3 py-2.5 bg-slate-900 focus-within:border-emerald-500 focus-within:ring-4 focus-within:ring-emerald-500/10 transition-all group">
                   <Phone className="w-4 h-4 text-gray-400 mr-2 group-focus-within:text-emerald-500 transition-colors" />
                   <input
                     type="tel"
@@ -400,7 +400,7 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
                     onChange={handleChange}
                     placeholder="Enter phone number"
                     maxLength={10}
-                    className="flex-1 outline-none bg-transparent text-[#0E192D] placeholder-gray-400 font-medium text-sm"
+                    className="flex-1 outline-none bg-transparent text-white placeholder-gray-500 font-medium text-sm"
                     required
                   />
                 </div>
@@ -411,7 +411,7 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* State */}
               <div>
-                <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider">State*</label>
+                <label className="text-xs font-bold text-gray-400 mb-1.5 block uppercase tracking-wider">State*</label>
                 <select
                   name="state"
                   value={formData.state}
@@ -431,7 +431,7 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
 
               {/* City */}
               <div>
-                <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider">City*</label>
+                <label className="text-xs font-bold text-gray-400 mb-1.5 block uppercase tracking-wider">City*</label>
                 <select
                   name="city"
                   value={formData.city}
@@ -452,7 +452,7 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
             {/* Custom City - Conditional */}
             {formData.city === "other" && (
               <div className="mt-4">
-                <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider">Enter City*</label>
+                <label className="text-xs font-bold text-gray-400 mb-1.5 block uppercase tracking-wider">Enter City*</label>
                 <input
                   type="text"
                   name="customCity"
@@ -466,7 +466,7 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
             )}
 
             <div className="mt-4">
-              <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider">Pincode*</label>
+              <label className="text-xs font-bold text-gray-400 mb-1.5 block uppercase tracking-wider">Pincode*</label>
               <input
                 type="text"
                 name="pincode"
@@ -483,7 +483,7 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
 
           {/* Pending Loan */}
           <div>
-            <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider">Do you have pending loan?*</label>
+            <label className="text-xs font-bold text-gray-400 mb-1.5 block uppercase tracking-wider">Do you have pending loan?*</label>
             <div className="flex gap-4">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
@@ -494,7 +494,7 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
                   onChange={handleChange}
                   className="w-4 h-4 text-emerald-600 focus:ring-emerald-500"
                 />
-                <span className="text-sm font-medium text-gray-700">No</span>
+                <span className="text-sm font-medium text-gray-300">No</span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
@@ -505,36 +505,36 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
                   onChange={handleChange}
                   className="w-4 h-4 text-emerald-600 focus:ring-emerald-500"
                 />
-                <span className="text-sm font-medium text-gray-700">Yes</span>
+                <span className="text-sm font-medium text-gray-300">Yes</span>
               </label>
             </div>
           </div>
 
           {/* Loan Details - Conditional */}
           {formData.pendingLoan === "yes" && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-orange-50 p-4 rounded-lg border border-orange-100">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-orange-900/10 p-4 rounded-lg border border-orange-900/20">
               <div>
-                <label className="text-xs font-bold text-orange-800 mb-1.5 block uppercase tracking-wider">Loan Amount*</label>
+                <label className="text-xs font-bold text-orange-400 mb-1.5 block uppercase tracking-wider">Loan Amount*</label>
                 <input
                   type="text"
                   name="loanAmount"
                   value={formData.loanAmount}
                   onChange={handleChange}
                   placeholder="e.g., 500000"
-                  className="w-full px-4 py-2.5 rounded-lg bg-white border border-orange-200 text-gray-900 placeholder-gray-400 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 outline-none transition-all text-sm"
+                  className="w-full px-4 py-2.5 rounded-lg bg-slate-900 border border-orange-900/40 text-white placeholder-gray-500 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 outline-none transition-all text-sm"
                   required={formData.pendingLoan === "yes"}
                 />
               </div>
 
               <div>
-                <label className="text-xs font-bold text-orange-800 mb-1.5 block uppercase tracking-wider">Bank Name*</label>
+                <label className="text-xs font-bold text-orange-400 mb-1.5 block uppercase tracking-wider">Bank Name*</label>
                 <input
                   type="text"
                   name="loanBank"
                   value={formData.loanBank}
                   onChange={handleChange}
                   placeholder="e.g., HDFC Bank"
-                  className="w-full px-4 py-2.5 rounded-lg bg-white border border-orange-200 text-gray-900 placeholder-gray-400 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 outline-none transition-all text-sm"
+                  className="w-full px-4 py-2.5 rounded-lg bg-slate-900 border border-orange-900/40 text-white placeholder-gray-500 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 outline-none transition-all text-sm"
                   required={formData.pendingLoan === "yes"}
                 />
               </div>
@@ -568,17 +568,17 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
             <motion.div
               initial={{ scale: 0.8, y: 20 }}
               animate={{ scale: 1, y: 0 }}
-              className="bg-white rounded-2xl shadow-2xl max-w-md w-full border border-emerald-200 p-8 relative"
+              className="bg-[#0E192D] rounded-2xl shadow-2xl max-w-md w-full border border-slate-800 p-8 relative"
             >
               <div className="flex justify-center mb-6">
-                <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center animate-pulse">
-                  <CheckCircle className="w-10 h-10 text-emerald-600" />
+                <div className="w-20 h-20 bg-emerald-900/20 rounded-full flex items-center justify-center animate-pulse">
+                  <CheckCircle className="w-10 h-10 text-emerald-500" />
                 </div>
               </div>
-              <h2 className="text-2xl font-bold text-center text-[#0E192D] mb-2">Request Submitted!</h2>
+              <h2 className="text-2xl font-bold text-center text-white mb-2">Request Submitted!</h2>
               <div className="text-center mb-8">
-                <p className="font-bold text-gray-900 text-lg mb-1">Our CC will contact you soon</p>
-                <p className="text-sm text-gray-500">Please complete the final step to process your request.</p>
+                <p className="font-bold text-gray-200 text-lg mb-1">Our CC will contact you soon</p>
+                <p className="text-sm text-gray-400">Please complete the final step to process your request.</p>
               </div>
 
               <button
@@ -591,7 +591,7 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
                   }
                   window.location.href = "/ekyc/sell-vehicle"
                 }}
-                className="w-full bg-[#0E192D] hover:bg-emerald-600 text-white font-bold py-3.5 rounded-lg shadow-lg flex items-center justify-center gap-2 transition-all"
+                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-lg shadow-lg flex items-center justify-center gap-2 transition-all shadow-emerald-600/20"
               >
                 Complete eKYC
               </button>

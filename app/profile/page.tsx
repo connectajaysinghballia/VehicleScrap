@@ -71,16 +71,27 @@ export default async function ProfilePage() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 pt-24 pb-12 px-4 sm:px-6 lg:px-8 font-sans">
-            <div className="max-w-4xl mx-auto space-y-8">
+        <div className="min-h-screen bg-gray-50 dark:bg-slate-950 pt-32 pb-12 px-4 sm:px-6 lg:px-8 font-sans transition-colors duration-300">
+            <div className="max-w-5xl mx-auto space-y-8">
+
+                {/* Header specifically matching Admin Dashboard style */}
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-2">
+                    <div>
+                        <h1 className="text-3xl font-black text-gray-900 dark:text-white flex items-center gap-3 tracking-tight">
+                            <User className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+                            My Profile
+                        </h1>
+                        <p className="text-gray-500 dark:text-gray-400 mt-2 font-medium">Manage your requests and account settings.</p>
+                    </div>
+                </div>
                 {error ? (
-                    <div className="bg-white rounded-2xl p-12 shadow-sm border border-red-100 text-center space-y-6">
-                        <div className="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center text-red-500 mx-auto">
+                    <div className="bg-[#0E192D] rounded-2xl p-12 shadow-md shadow-black/20 border border-red-900/30 text-center space-y-6">
+                        <div className="w-20 h-20 bg-red-900/20 rounded-full flex items-center justify-center text-red-500 mx-auto">
                             <AlertCircle className="w-10 h-10" />
                         </div>
                         <div>
-                            <h1 className="text-2xl font-bold text-gray-900">Oops! Something went wrong</h1>
-                            <p className="text-gray-500 mt-2">We couldn't load your profile information. Please try refreshing the page.</p>
+                            <h1 className="text-2xl font-bold text-white">Oops! Something went wrong</h1>
+                            <p className="text-gray-400 mt-2">We couldn't load your profile information. Please try refreshing the page.</p>
                         </div>
                         <Link
                             href="/profile"
@@ -92,64 +103,68 @@ export default async function ProfilePage() {
                 ) : (
                     <>
 
-                        {/* User Card */}
-                        <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 flex items-center gap-6">
-                            <div className="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center text-orange-600">
+                        {/* User Card - Refined to match Admin Cards */}
+                        <div className="bg-white dark:bg-[#0E192D] rounded-2xl p-8 shadow-sm border border-gray-100 dark:border-slate-800 flex items-center gap-6 transition-all">
+                            <div className="w-20 h-20 bg-orange-50 dark:bg-orange-900/20 rounded-2xl flex items-center justify-center text-orange-600 dark:text-orange-500">
                                 <User className="w-10 h-10" />
                             </div>
                             <div>
-                                <h1 className="text-2xl font-bold text-gray-900">{session.user?.name}</h1>
-                                <p className="text-gray-500">{session.user?.email}</p>
-                                <div className="mt-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                <h1 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight">{session.user?.name}</h1>
+                                <p className="text-gray-500 dark:text-gray-400 font-medium">{session.user?.email}</p>
+                                <div className="mt-3 inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold bg-gray-100 dark:bg-slate-800 text-gray-800 dark:text-gray-300 border border-gray-200 dark:border-slate-700 uppercase tracking-wide">
                                     {allRequests.length} Total Requests
                                 </div>
                             </div>
                         </div>
 
-                        {/* B2B Status Section */}
-                        <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 space-y-4">
+                        {/* B2B Status Section - Refined */}
+                        <div className="bg-white dark:bg-[#0E192D] rounded-2xl p-8 shadow-sm border border-gray-100 dark:border-slate-800 space-y-6 transition-all">
                             <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-3">
-                                    <div className="p-2 bg-blue-50 rounded-lg text-blue-600">
+                                <div className="flex items-center gap-4">
+                                    <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-xl text-blue-600 dark:text-blue-500">
                                         <Building2 className="w-6 h-6" />
                                     </div>
-                                    <h2 className="text-xl font-bold text-gray-900">B2B Partner Status</h2>
+                                    <h2 className="text-xl font-bold text-gray-900 dark:text-white">B2B Partner Status</h2>
                                 </div>
                             </div>
 
                             {partner ? (
-                                <div className="p-4 bg-green-50 rounded-xl border border-green-100 flex items-center justify-between">
-                                    <div className="flex items-center gap-3">
-                                        <CheckCircle className="w-5 h-5 text-green-600" />
+                                <div className="p-4 bg-green-50 dark:bg-green-900/10 rounded-xl border border-green-100 dark:border-green-900/30 flex items-center justify-between">
+                                    <div className="flex items-center gap-4">
+                                        <div className="p-2 bg-white dark:bg-green-900/20 rounded-lg shadow-sm">
+                                            <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-500" />
+                                        </div>
                                         <div>
-                                            <p className="font-bold text-green-900">Verified Partner</p>
-                                            <p className="text-sm text-green-700">{partner.businessName} (ID: {partner.userId})</p>
+                                            <p className="font-bold text-green-900 dark:text-green-400">Verified Partner</p>
+                                            <p className="text-sm text-green-700 dark:text-green-300">{partner.businessName} (ID: {partner.userId})</p>
                                         </div>
                                     </div>
-                                    <Link href="/b2b" className="text-sm font-bold text-green-600 hover:underline">
+                                    <Link href="/b2b" className="text-sm font-bold text-green-600 dark:text-green-500 hover:text-green-700 dark:hover:text-green-400 hover:underline">
                                         Go to Marketplace
                                     </Link>
                                 </div>
                             ) : registration ? (
-                                <div className="p-4 bg-yellow-50 rounded-xl border border-yellow-100 flex items-center justify-between">
-                                    <div className="flex items-center gap-3">
-                                        {registration.status === 'pending' ? (
-                                            <Clock className="w-5 h-5 text-yellow-600" />
-                                        ) : (
-                                            <AlertCircle className="w-5 h-5 text-red-600" />
-                                        )}
+                                <div className="p-4 bg-yellow-50 dark:bg-yellow-900/10 rounded-xl border border-yellow-100 dark:border-yellow-900/30 flex items-center justify-between">
+                                    <div className="flex items-center gap-4">
+                                        <div className="p-2 bg-white dark:bg-yellow-900/20 rounded-lg shadow-sm">
+                                            {registration.status === 'pending' ? (
+                                                <Clock className="w-5 h-5 text-yellow-600 dark:text-yellow-500" />
+                                            ) : (
+                                                <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-500" />
+                                            )}
+                                        </div>
                                         <div>
-                                            <p className="font-bold text-yellow-900 capitalize">Registration {registration.status}</p>
-                                            <p className="text-sm text-yellow-700">We'll notify you once our team reviews your application.</p>
+                                            <p className="font-bold text-yellow-900 dark:text-yellow-400 capitalize">Registration {registration.status}</p>
+                                            <p className="text-sm text-yellow-700 dark:text-yellow-300">We'll notify you once our team reviews your application.</p>
                                         </div>
                                     </div>
                                 </div>
                             ) : (
-                                <div className="p-6 text-center border border-dashed border-gray-200 rounded-xl">
-                                    <p className="text-gray-500 mb-4">Want to become a B2B partner and access our marketplace?</p>
+                                <div className="p-8 text-center border-2 border-dashed border-gray-200 dark:border-slate-800 rounded-xl hover:border-blue-300 dark:hover:border-blue-800 transition-colors">
+                                    <p className="text-gray-500 dark:text-gray-400 mb-6 text-lg">Want to become a B2B partner and access our marketplace?</p>
                                     <Link
                                         href="/b2b-register"
-                                        className="inline-flex items-center px-6 py-2 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+                                        className="inline-flex items-center px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all shadow-lg shadow-blue-600/20 hover:shadow-blue-600/30 hover:-translate-y-0.5"
                                     >
                                         Register Now
                                     </Link>
@@ -159,16 +174,18 @@ export default async function ProfilePage() {
 
                         {/* History */}
                         <div className="space-y-6">
-                            <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-                                <Clock className="w-5 h-5 text-orange-600" />
-                                Request History
-                            </h2>
+                            <div className="flex items-center gap-3 mb-2">
+                                <div className="p-2 bg-orange-50 dark:bg-orange-900/20 rounded-lg text-orange-600 dark:text-orange-500">
+                                    <Clock className="w-6 h-6" />
+                                </div>
+                                <h2 className="text-xl font-bold text-gray-900 dark:text-white">Request History</h2>
+                            </div>
 
                             {allRequests.length === 0 ? (
-                                <div className="bg-white rounded-xl p-8 text-center border border-dashed border-gray-300">
-                                    <Package className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-                                    <p className="text-gray-500">You haven't submitted any requests yet.</p>
-                                    <Link href="/" className="inline-block mt-4 text-orange-600 font-semibold hover:underline">
+                                <div className="bg-[#0E192D] rounded-xl p-8 text-center border border-dashed border-slate-700">
+                                    <Package className="w-12 h-12 text-slate-700 mx-auto mb-3" />
+                                    <p className="text-gray-400">You haven't submitted any requests yet.</p>
+                                    <Link href="/" className="inline-block mt-4 text-orange-500 font-semibold hover:text-orange-400 hover:underline">
                                         Get Started
                                     </Link>
                                 </div>
