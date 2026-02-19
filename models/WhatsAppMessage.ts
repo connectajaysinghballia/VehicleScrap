@@ -37,3 +37,4 @@ const WhatsAppMessageSchema = new Schema(
 const WhatsAppMessage = models.WhatsAppMessage || model("WhatsAppMessage", WhatsAppMessageSchema);
 
 export default WhatsAppMessage;
+

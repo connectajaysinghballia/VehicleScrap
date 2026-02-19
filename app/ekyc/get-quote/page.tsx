@@ -50,7 +50,7 @@ export default function GetQuoteEKYCPage() {
                     <p className="text-gray-600 mb-6">Please start by getting a free quote.</p>
                     <button
                         onClick={() => router.push("/")}
-                        className="px-6 py-2 bg-[#0a192f] text-white rounded-lg hover:bg-[#112240] transition-colors"
+                        className="px-6 py-2 bg-[#0E192D] text-white rounded-lg hover:bg-[#112240] transition-colors"
                     >
                         Get Free Quote
                     </button>
@@ -74,3 +74,4 @@ export default function GetQuoteEKYCPage() {
         </div>
     )
 }
+

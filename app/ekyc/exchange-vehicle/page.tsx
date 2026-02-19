@@ -41,7 +41,7 @@ export default function ExchangeVehicleEKYCPage() {
                     <p className="text-gray-600 mb-6">Please submit an exchange request first.</p>
                     <button
                         onClick={() => router.push("/services/exchange-vehicle")}
-                        className="px-6 py-2 bg-[#0a192f] text-white rounded-lg hover:bg-[#112240] transition-colors"
+                        className="px-6 py-2 bg-[#0E192D] text-white rounded-lg hover:bg-[#112240] transition-colors"
                     >
                         Go to Exchange Vehicle
                     </button>
@@ -65,3 +65,4 @@ export default function ExchangeVehicleEKYCPage() {
         </div>
     )
 }
+

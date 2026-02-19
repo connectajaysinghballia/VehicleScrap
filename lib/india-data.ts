@@ -785,3 +785,4 @@ export const indiaData: Record<string, string[]> = {
 };
 
 export const states = Object.keys(indiaData).sort();
+

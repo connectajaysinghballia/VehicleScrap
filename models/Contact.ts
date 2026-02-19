@@ -38,3 +38,4 @@ const ContactSchema = new Schema(
 const Contact = models.Contact || model("Contact", ContactSchema)
 
 export default Contact
+

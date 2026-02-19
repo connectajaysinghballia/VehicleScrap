@@ -65,3 +65,4 @@ const ValuationSchema = new Schema(
 const Valuation = models.Valuation || model("Valuation", ValuationSchema)
 
 export default Valuation
+

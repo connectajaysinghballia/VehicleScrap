@@ -25,6 +25,7 @@ import GrowWithUs from "@/components/GrowWithUs"
 
 export default function AboutPage() {
   const [mounted, setMounted] = useState(false)
+  const [ctaHovered, setCtaHovered] = useState(false)
   const { scrollYProgress } = useScroll()
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0])
   const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.9])
@@ -218,7 +219,7 @@ export default function AboutPage() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/50 border border-slate-700 text-emerald-400 font-medium text-sm mb-8 backdrop-blur-sm"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#0E192D]/50 border border-slate-700 text-emerald-400 font-medium text-sm mb-8 mt-16 backdrop-blur-sm"
               >
                 <Globe className="w-4 h-4" />
                 <span>Global Leaders in Vehicle Scrapping</span>
@@ -263,9 +264,9 @@ export default function AboutPage() {
         </section>
 
         {/* Stats Section */}
-        <section id="learn-more" className="py-10 bg-white border-y border-gray-100 mt-auto">
+        <section id="learn-more" className="py-6 bg-white border-y border-gray-100 mt-auto">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
               {stats.map((stat, index) => (
                 <motion.div
                   key={stat.label}
@@ -275,10 +276,10 @@ export default function AboutPage() {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="text-center"
                 >
-                  <div className="text-4xl md:text-5xl font-bold text-emerald-600 mb-2 flex justify-center items-center">
+                  <div className="text-3xl md:text-4xl font-bold text-emerald-600 mb-1 flex justify-center items-center">
                     <NumberCounter value={stat.value} suffix={stat.suffix} decimals={stat.label.includes("Projects") ? 1 : 0} />
                   </div>
-                  <div className="text-sm md:text-base text-gray-600 font-medium uppercase tracking-wide">{stat.label}</div>
+                  <div className="text-xs md:text-sm text-gray-600 font-medium uppercase tracking-wide">{stat.label}</div>
                 </motion.div>
               ))}
             </div>
@@ -371,7 +372,7 @@ export default function AboutPage() {
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-emerald-200 to-cyan-400">Scrapping Experience</span>
               </motion.h2>
 
-              <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="space-y-6 text-lg text-slate-400 leading-relaxed mb-10">
+              <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="space-y-6 text-xl text-slate-400 leading-relaxed mb-10">
                 <p>
                   We’re not just a scrapyard; we’re a technology-driven recycling hub. We transform the complex, unorganized process of vehicle scrapping into a seamless, transparent, and rewarding experience for every car owner.
                 </p>
@@ -386,53 +387,53 @@ export default function AboutPage() {
                 className="grid grid-cols-1 sm:grid-cols-2 gap-4"
               >
                 {/* Feature 1 */}
-                <div className="group p-4 bg-white/5 border border-white/5 rounded-xl hover:bg-white/10 hover:border-emerald-500/30 transition-all duration-300">
+                <div className="group p-4 bg-white/5 border border-white/5 rounded-xl hover:bg-white hover:border-emerald-500/30 hover:shadow-lg transition-all duration-300">
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                    <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform group-hover:bg-emerald-100">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 group-hover:text-emerald-600" />
                     </div>
                     <div>
-                      <h4 className="text-white font-semibold mb-1 text-sm">Legal Assurance</h4>
-                      <p className="text-slate-500 text-xs leading-relaxed">Guaranteed de-registration and legal immunity.</p>
+                      <h4 className="text-white font-semibold mb-1 text-base group-hover:text-slate-900">Legal Assurance</h4>
+                      <p className="text-slate-500 text-sm leading-relaxed group-hover:text-slate-600">Guaranteed de-registration and legal immunity.</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Feature 2 */}
-                <div className="group p-4 bg-white/5 border border-white/5 rounded-xl hover:bg-white/10 hover:border-emerald-500/30 transition-all duration-300">
+                <div className="group p-4 bg-white/5 border border-white/5 rounded-xl hover:bg-white hover:border-emerald-500/30 hover:shadow-lg transition-all duration-300">
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                      <Banknote className="w-4 h-4 text-emerald-400" />
+                    <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform group-hover:bg-emerald-100">
+                      <Banknote className="w-4 h-4 text-emerald-400 group-hover:text-emerald-600" />
                     </div>
                     <div>
-                      <h4 className="text-white font-semibold mb-1 text-sm">Best Value</h4>
-                      <p className="text-slate-500 text-xs leading-relaxed">Algorithmic pricing based on metal index.</p>
+                      <h4 className="text-white font-semibold mb-1 text-base group-hover:text-slate-900">Best Value</h4>
+                      <p className="text-slate-500 text-sm leading-relaxed group-hover:text-slate-600">Algorithmic pricing based on metal index.</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Feature 3 */}
-                <div className="group p-4 bg-white/5 border border-white/5 rounded-xl hover:bg-white/10 hover:border-emerald-500/30 transition-all duration-300">
+                <div className="group p-4 bg-white/5 border border-white/5 rounded-xl hover:bg-white hover:border-emerald-500/30 hover:shadow-lg transition-all duration-300">
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                      <Recycle className="w-4 h-4 text-emerald-400" />
+                    <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform group-hover:bg-emerald-100">
+                      <Recycle className="w-4 h-4 text-emerald-400 group-hover:text-emerald-600" />
                     </div>
                     <div>
-                      <h4 className="text-white font-semibold mb-1 text-sm">0% Waste Policy</h4>
-                      <p className="text-slate-500 text-xs leading-relaxed">Every component is recycled or reused.</p>
+                      <h4 className="text-white font-semibold mb-1 text-base group-hover:text-slate-900">0% Waste Policy</h4>
+                      <p className="text-slate-500 text-sm leading-relaxed group-hover:text-slate-600">Every component is recycled or reused.</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Feature 4 */}
-                <div className="group p-4 bg-white/5 border border-white/5 rounded-xl hover:bg-white/10 hover:border-emerald-500/30 transition-all duration-300">
+                <div className="group p-4 bg-white/5 border border-white/5 rounded-xl hover:bg-white hover:border-emerald-500/30 hover:shadow-lg transition-all duration-300">
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                      <TrendingUp className="w-4 h-4 text-emerald-400" />
+                    <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform group-hover:bg-emerald-100">
+                      <TrendingUp className="w-4 h-4 text-emerald-400 group-hover:text-emerald-600" />
                     </div>
                     <div>
-                      <h4 className="text-white font-semibold mb-1 text-sm">Tax Benefits</h4>
-                      <p className="text-slate-500 text-xs leading-relaxed">Get road tax rebates on your next vehicle.</p>
+                      <h4 className="text-white font-semibold mb-1 text-base group-hover:text-slate-900">Tax Benefits</h4>
+                      <p className="text-slate-500 text-sm leading-relaxed group-hover:text-slate-600">Get road tax rebates on your next vehicle.</p>
                     </div>
                   </div>
                 </div>
@@ -522,7 +523,10 @@ export default function AboutPage() {
       </section>
 
       {/* CTA Section - Free Valuation */}
-      <section className="py-12 bg-white relative overflow-hidden">
+      <section
+        className="py-12 relative overflow-hidden transition-colors duration-500"
+        style={{ backgroundColor: ctaHovered ? "#ffffff" : "#0E192D" }}
+      >
         <div className="absolute inset-0 bg-[url('/noise.png')] opacity-10 mix-blend-overlay pointer-events-none"></div>
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px] -translate-y-1/2 pointer-events-none"></div>
 
@@ -532,7 +536,10 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
-            className="bg-gradient-to-br from-slate-900 via-slate-900 to-black rounded-[2.5rem] p-8 md:p-12 border border-slate-800 relative overflow-hidden shadow-2xl max-w-6xl mx-auto md:flex md:items-center md:justify-between md:gap-12"
+            onMouseEnter={() => setCtaHovered(true)}
+            onMouseLeave={() => setCtaHovered(false)}
+            className="rounded-[2.5rem] p-8 md:p-12 border relative overflow-hidden shadow-2xl max-w-6xl mx-auto md:flex md:items-center md:justify-between md:gap-12 transition-colors duration-500"
+            style={{ backgroundColor: ctaHovered ? "#0E192D" : "#ffffff", borderColor: ctaHovered ? "#1e293b" : "#e2e8f0" }}
           >
             {/* Falling Icons Background */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -560,30 +567,32 @@ export default function AboutPage() {
             {/* Left Content */}
             <div className="flex-1 text-center md:text-left mb-8 md:mb-0 relative z-10">
               {/* Badge */}
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-bold mb-6 tracking-wide uppercase text-xs">
+              <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border font-bold mb-6 tracking-wide uppercase text-xs transition-colors duration-500 ${ctaHovered ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400" : "bg-emerald-100 border-emerald-200 text-emerald-700"}`}>
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                 Free Service
               </div>
 
-              <h2 className="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight">
+              <h2 className={`text-3xl md:text-5xl font-bold mb-4 leading-tight transition-colors duration-500 ${ctaHovered ? "text-white" : "text-slate-900"}`}>
                 Get <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Free</span> Valuation
                 <br /> Of Your Car
               </h2>
 
-              <p className="text-lg text-slate-400 max-w-2xl leading-relaxed mx-auto md:mx-0">
+              <p className={`text-lg max-w-2xl leading-relaxed mx-auto md:mx-0 transition-colors duration-500 ${ctaHovered ? "text-slate-400" : "text-slate-600"}`}>
                 Instantly check the current market scrap value of your vehicle with our AI-powered tool.
               </p>
             </div>
 
             {/* Right Action */}
             <div className="md:shrink-0 text-center relative z-10">
-              <button className="group relative inline-flex items-center justify-center px-8 py-3.5 text-base font-bold text-white transition-all duration-300 bg-emerald-600 rounded-full hover:bg-emerald-700 hover:scale-105 active:scale-95 shadow-lg shadow-emerald-600/20 overflow-hidden">
-                <span className="relative z-10 flex items-center gap-2">
-                  Check For Free
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </button>
+              <Link href="/quote">
+                <button className="group relative inline-flex items-center justify-center px-8 py-3.5 text-base font-bold text-white transition-all duration-300 bg-emerald-600 rounded-full hover:bg-emerald-700 hover:scale-105 active:scale-95 shadow-lg shadow-emerald-600/20 overflow-hidden">
+                  <span className="relative z-10 flex items-center gap-2">
+                    Check For Free
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </button>
+              </Link>
             </div>
           </motion.div>
         </div>
@@ -594,3 +603,4 @@ export default function AboutPage() {
     </div>
   )
 }
+

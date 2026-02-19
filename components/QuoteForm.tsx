@@ -199,7 +199,7 @@ export default function QuoteForm() {
               style={{ objectPosition: "center 35%" }}
               priority
             />
-            <div className="absolute inset-0 bg-[#0a192f]/10 mix-blend-multiply"></div>
+            <div className="absolute inset-0 bg-[#0E192D]/10 mix-blend-multiply"></div>
           </div>
         </motion.div>
 
@@ -237,7 +237,7 @@ export default function QuoteForm() {
                       }
                     }
                   }}
-                  className="bg-[#0a192f] border border-emerald-500/20 rounded-2xl p-6 hover:bg-white hover:border-emerald-300 transition-colors duration-500 group shadow-lg origin-top"
+                  className="bg-[#0E192D] border border-emerald-500/20 rounded-2xl p-6 hover:bg-white hover:border-emerald-300 transition-colors duration-500 group shadow-lg origin-top"
                   whileHover={{
                     scale: 1.02,
                     y: -5,
@@ -251,7 +251,7 @@ export default function QuoteForm() {
                   >
                     <IconComponent className="w-7 h-7 text-emerald-400 group-hover:text-emerald-600 transition-colors" />
                   </motion.div>
-                  <h3 className="text-2xl font-bold text-emerald-50 mb-2 group-hover:text-[#0a192f] transition-colors">{benefit.title}</h3>
+                  <h3 className="text-2xl font-bold text-emerald-50 mb-2 group-hover:text-[#0E192D] transition-colors">{benefit.title}</h3>
                   <p className="text-emerald-100/90 leading-relaxed group-hover:text-gray-600 transition-colors">{benefit.description}</p>
                 </motion.div>
               )
@@ -279,7 +279,7 @@ export default function QuoteForm() {
             >
               {/* Vehicle Type Selection */}
               <motion.div variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 50 } } }}>
-                <label className="text-sm font-bold text-[#0a192f] mb-3 block uppercase tracking-wider">Vehicle Type*</label>
+                <label className="text-sm font-bold text-[#0E192D] mb-3 block uppercase tracking-wider">Vehicle Type*</label>
                 <div className="grid grid-cols-2 gap-3">
                   {vehicleOptions.map((option) => {
                     const IconComponent = option.icon
@@ -313,7 +313,7 @@ export default function QuoteForm() {
                   exit={{ opacity: 0, height: 0 }}
                   variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
                 >
-                  <label className="text-sm font-bold text-[#0a192f] mb-2 block uppercase tracking-wider">
+                  <label className="text-sm font-bold text-[#0E192D] mb-2 block uppercase tracking-wider">
                     {formData.vehicleType === "Other" ? "Enter Vehicle Name*" : "Select Make*"}
                   </label>
                   {formData.vehicleType === "Other" ? (
@@ -372,7 +372,7 @@ export default function QuoteForm() {
                   animate={{ opacity: 1, height: "auto" }}
                   variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
                 >
-                  <label className="text-sm font-bold text-[#0a192f] mb-2 block uppercase tracking-wider">
+                  <label className="text-sm font-bold text-[#0E192D] mb-2 block uppercase tracking-wider">
                     {formData.vehicleType === "Other" || formData.brand === "other" ? "Enter Model*" : "Select Model*"}
                   </label>
                   {formData.vehicleType === "Other" || formData.brand === "other" ? (
@@ -431,7 +431,7 @@ export default function QuoteForm() {
                   animate={{ opacity: 1, height: "auto" }}
                   variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
                 >
-                  <label className="text-sm font-bold text-[#0a192f] mb-2 block uppercase tracking-wider">Year*</label>
+                  <label className="text-sm font-bold text-[#0E192D] mb-2 block uppercase tracking-wider">Year*</label>
                   <motion.select
                     value={formData.year}
                     onChange={(e) => setFormData({ ...formData, year: e.target.value })}
@@ -450,7 +450,7 @@ export default function QuoteForm() {
 
               {/* Vehicle Number */}
               <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
-                <label htmlFor="vehicleNumber" className="text-sm font-bold text-[#0a192f] mb-3 block uppercase tracking-wider">
+                <label htmlFor="vehicleNumber" className="text-sm font-bold text-[#0E192D] mb-3 block uppercase tracking-wider">
                   Vehicle Registration Number*
                 </label>
                 <motion.input
@@ -466,7 +466,7 @@ export default function QuoteForm() {
 
               {/* Vehicle Weight */}
               <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
-                <label htmlFor="vehicleWeight" className="text-sm font-bold text-[#0a192f] mb-3 block uppercase tracking-wider">
+                <label htmlFor="vehicleWeight" className="text-sm font-bold text-[#0E192D] mb-3 block uppercase tracking-wider">
                   Vehicle Weight (Tons)*
                 </label>
                 <motion.input
@@ -548,7 +548,7 @@ export default function QuoteForm() {
                 type="submit"
                 disabled={!formData.agreeTC}
                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-                className="w-full bg-[#0a192f] hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl hover:shadow-emerald-500/20 transition-all duration-300 flex items-center justify-center gap-2 text-base relative overflow-hidden group"
+                className="w-full bg-[#0E192D] hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl hover:shadow-emerald-500/20 transition-all duration-300 flex items-center justify-center gap-2 text-base relative overflow-hidden group"
                 whileHover={{ scale: formData.agreeTC ? 1.02 : 1 }}
                 whileTap={{ scale: formData.agreeTC ? 0.98 : 1 }}
               >
@@ -563,3 +563,4 @@ export default function QuoteForm() {
     </div>
   )
 }
+

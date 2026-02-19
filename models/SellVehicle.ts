@@ -51,3 +51,4 @@ const SellVehicleSchema = new Schema(
 const SellVehicle = models.SellVehicle || model("SellVehicle", SellVehicleSchema)
 
 export default SellVehicle
+

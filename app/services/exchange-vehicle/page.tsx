@@ -88,8 +88,8 @@ export default function ExchangeVehiclePage() {
               className="space-y-10"
             >
               <div className="space-y-4">
-                <h2 className="text-4xl font-bold text-[#0a192f] tracking-tight">Why Choose Our <span className="text-emerald-600">Exchange?</span></h2>
-                <div className="w-20 h-1 bg-gradient-to-r from-[#0a192f] to-emerald-600 rounded-full"></div>
+                <h2 className="text-4xl font-bold text-[#0E192D] tracking-tight">Why Choose Our <span className="text-emerald-600">Exchange?</span></h2>
+                <div className="w-20 h-1 bg-gradient-to-r from-[#0E192D] to-emerald-600 rounded-full"></div>
                 <p className="text-emerald-800 text-lg leading-relaxed font-medium">Experience a hassle-free exchange process with complete transparency and top-tier support.</p>
               </div>
 
@@ -106,7 +106,7 @@ export default function ExchangeVehiclePage() {
                       className="group relative"
                     >
                       <div className="absolute inset-0 bg-white rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
-                      <div className="relative flex gap-6 p-8 rounded-2xl border border-gray-700/30 bg-[#0a192f] shadow-lg group-hover:shadow-xl group-hover:border-transparent transition-all duration-300">
+                      <div className="relative flex gap-6 p-8 rounded-2xl border border-gray-700/30 bg-[#0E192D] shadow-lg group-hover:shadow-xl group-hover:border-transparent transition-all duration-300">
                         <div className="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-emerald-50 group-hover:scale-110 transition-all duration-300">
                           <Icon className="w-7 h-7 text-emerald-400 group-hover:text-emerald-600" />
                         </div>
@@ -147,3 +147,4 @@ export default function ExchangeVehiclePage() {
     </div>
   )
 }
+

@@ -84,11 +84,11 @@ function B2BGeneratorContent() {
     return (
         <div className="min-h-screen bg-gray-50 pt-24 pb-12 px-4 sm:px-6 lg:px-8 font-sans">
             <div className="max-w-2xl mx-auto">
-                <Link href="/admin/partners" className="inline-flex items-center text-gray-500 hover:text-gray-900 mb-6 transition-colors">
+                <Link href="/admin/partners" className="inline-flex items-center text-gray-500 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white mb-6 transition-colors">
                     <ArrowLeft className="w-4 h-4 mr-2" /> Back to Partners
                 </Link>
 
-                <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+                <div className="bg-white dark:bg-[#0E192D] rounded-2xl shadow-xl border border-gray-100 dark:border-slate-800 overflow-hidden">
                     <div className="bg-blue-600 px-8 py-6 text-white">
                         <div className="flex items-center gap-4">
                             <div className="h-12 w-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
@@ -104,69 +104,69 @@ function B2BGeneratorContent() {
                     <form onSubmit={handleSubmit} className="p-8 space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="col-span-2">
-                                <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4 border-b pb-2">Partner Details</h3>
+                                <h3 className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-4 border-b dark:border-slate-800 pb-2">Partner Details</h3>
                                 <div className="grid grid-cols-2 gap-4 text-sm">
                                     <div>
-                                        <label className="block text-gray-500 mb-1">Business Name</label>
-                                        <input disabled value={initialData.businessName} className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-gray-700" />
+                                        <label className="block text-gray-500 dark:text-slate-400 mb-1">Business Name</label>
+                                        <input disabled value={initialData.businessName} className="w-full bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg px-3 py-2 text-gray-700 dark:text-slate-300" />
                                     </div>
                                     <div>
-                                        <label className="block text-gray-500 mb-1">Email</label>
-                                        <input disabled value={initialData.email} className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-gray-700" />
+                                        <label className="block text-gray-500 dark:text-slate-400 mb-1">Email</label>
+                                        <input disabled value={initialData.email} className="w-full bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg px-3 py-2 text-gray-700 dark:text-slate-300" />
                                     </div>
                                 </div>
                             </div>
 
                             <div className="col-span-2">
-                                <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4 border-b pb-2">Login Credentials</h3>
+                                <h3 className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-4 border-b dark:border-slate-800 pb-2">Login Credentials</h3>
                             </div>
 
                             <div className="col-span-2">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Partner User ID</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">Partner User ID</label>
                                 <div className="relative">
                                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <User className="h-5 w-5 text-gray-400" />
+                                        <User className="h-5 w-5 text-gray-400 dark:text-slate-500" />
                                     </div>
                                     <input
                                         type="text"
                                         required
                                         value={partnerId}
                                         onChange={(e) => setPartnerId(e.target.value)}
-                                        className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                                        className="block w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-slate-700 rounded-xl focus:ring-blue-500 focus:border-blue-500 outline-none transition-all bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500"
                                         placeholder="Create a unique username"
                                     />
                                 </div>
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">Password</label>
                                 <div className="relative">
                                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <Key className="h-5 w-5 text-gray-400" />
+                                        <Key className="h-5 w-5 text-gray-400 dark:text-slate-500" />
                                     </div>
                                     <input
                                         type="password"
                                         required
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
-                                        className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                                        className="block w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-slate-700 rounded-xl focus:ring-blue-500 focus:border-blue-500 outline-none transition-all bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500"
                                         placeholder="Enter password"
                                     />
                                 </div>
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">Confirm Password</label>
                                 <div className="relative">
                                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <CheckCircle className="h-5 w-5 text-gray-400" />
+                                        <CheckCircle className="h-5 w-5 text-gray-400 dark:text-slate-500" />
                                     </div>
                                     <input
                                         type="password"
                                         required
                                         value={confirmPassword}
                                         onChange={(e) => setConfirmPassword(e.target.value)}
-                                        className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                                        className="block w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-slate-700 rounded-xl focus:ring-blue-500 focus:border-blue-500 outline-none transition-all bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500"
                                         placeholder="Re-enter password"
                                     />
                                 </div>
@@ -196,3 +196,4 @@ export default function B2BGeneratorPage() {
         </Suspense>
     )
 }
+

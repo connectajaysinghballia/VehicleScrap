@@ -146,7 +146,7 @@ export default function BuyNewVehicleForm({ onClose }: BuyNewVehicleFormProps) {
                 transition={{ duration: 0.6 }}
                 className="space-y-6"
             >
-                <div className="bg-[#0a192f] p-6 rounded-2xl border border-emerald-500/20 shadow-xl">
+                <div className="bg-[#0E192D] p-6 rounded-2xl border border-emerald-500/20 shadow-xl">
                     <h3 className="text-2xl font-bold text-white mb-2">Our Benefits</h3>
                     <div className="w-12 h-1 bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full mb-6"></div>
 
@@ -168,7 +168,7 @@ export default function BuyNewVehicleForm({ onClose }: BuyNewVehicleFormProps) {
                                             </div>
                                         </div>
                                         <div>
-                                            <h4 className="text-xl font-bold text-white mb-2 group-hover:text-[#0a192f] transition-colors duration-300">{benefit.title}</h4>
+                                            <h4 className="text-xl font-bold text-white mb-2 group-hover:text-[#0E192D] transition-colors duration-300">{benefit.title}</h4>
                                             <p className="text-slate-300 text-sm leading-relaxed group-hover:text-gray-600 transition-colors duration-300">{benefit.description}</p>
                                         </div>
                                     </div>
@@ -195,7 +195,7 @@ export default function BuyNewVehicleForm({ onClose }: BuyNewVehicleFormProps) {
                 <form onSubmit={handleSubmit} className="space-y-5">
 
                     <div className="bg-emerald-50/50 p-4 rounded-xl border border-emerald-100 mb-6">
-                        <h3 className="text-lg font-bold text-[#0a192f] flex items-center gap-2 mb-4">
+                        <h3 className="text-lg font-bold text-[#0E192D] flex items-center gap-2 mb-4">
                             <Car className="w-5 h-5 text-emerald-600" />
                             Vehicle Preferences
                         </h3>
@@ -203,12 +203,12 @@ export default function BuyNewVehicleForm({ onClose }: BuyNewVehicleFormProps) {
                         {/* Vehicle Preference */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="relative">
-                                <label className="text-xs font-bold text-[#0a192f]/70 mb-1.5 block uppercase tracking-wider">Brand*</label>
+                                <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider">Brand*</label>
                                 <select
                                     name="vehicleBrand"
                                     value={formData.vehicleBrand}
                                     onChange={handleChange}
-                                    className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-[#0a192f] focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm"
+                                    className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-[#0E192D] focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm"
                                     required
                                 >
                                     <option value="">Select Brand</option>
@@ -221,26 +221,26 @@ export default function BuyNewVehicleForm({ onClose }: BuyNewVehicleFormProps) {
 
                             {formData.vehicleBrand === "other" && (
                                 <div>
-                                    <label className="text-xs font-bold text-[#0a192f]/70 mb-1.5 block uppercase tracking-wider">Enter Brand*</label>
+                                    <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider">Enter Brand*</label>
                                     <input
                                         type="text"
                                         name="customBrand"
                                         value={formData.customBrand}
                                         onChange={handleChange}
                                         placeholder="Enter Brand Name"
-                                        className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-[#0a192f] placeholder-gray-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm"
+                                        className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-[#0E192D] placeholder-gray-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm"
                                         required={formData.vehicleBrand === "other"}
                                     />
                                 </div>
                             )}
 
                             <div>
-                                <label className="text-xs font-bold text-[#0a192f]/70 mb-1.5 block uppercase tracking-wider">Model Type*</label>
+                                <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider">Model Type*</label>
                                 <select
                                     name="vehicleModel"
                                     value={formData.vehicleModel}
                                     onChange={handleChange}
-                                    className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-[#0a192f] focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm"
+                                    className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-[#0E192D] focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm"
                                     required
                                 >
                                     <option value="">Select Type</option>
@@ -254,14 +254,14 @@ export default function BuyNewVehicleForm({ onClose }: BuyNewVehicleFormProps) {
 
                             {formData.vehicleModel === "other" && (
                                 <div>
-                                    <label className="text-xs font-bold text-[#0a192f]/70 mb-1.5 block uppercase tracking-wider">Enter Type*</label>
+                                    <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider">Enter Type*</label>
                                     <input
                                         type="text"
                                         name="customModel"
                                         value={formData.customModel}
                                         onChange={handleChange}
                                         placeholder="Enter Model Type"
-                                        className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-[#0a192f] placeholder-gray-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm"
+                                        className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-[#0E192D] placeholder-gray-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm"
                                         required={formData.vehicleModel === "other"}
                                     />
                                 </div>
@@ -270,12 +270,12 @@ export default function BuyNewVehicleForm({ onClose }: BuyNewVehicleFormProps) {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                             <div>
-                                <label className="text-xs font-bold text-[#0a192f]/70 mb-1.5 block uppercase tracking-wider">Budget Range*</label>
+                                <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider">Budget Range*</label>
                                 <select
                                     name="budgetRange"
                                     value={formData.budgetRange}
                                     onChange={handleChange}
-                                    className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-[#0a192f] focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm"
+                                    className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-[#0E192D] focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm"
                                     required
                                 >
                                     <option value="">Select Budget</option>
@@ -285,12 +285,12 @@ export default function BuyNewVehicleForm({ onClose }: BuyNewVehicleFormProps) {
                                 </select>
                             </div>
                             <div>
-                                <label className="text-xs font-bold text-[#0a192f]/70 mb-1.5 block uppercase tracking-wider">Fuel Type*</label>
+                                <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider">Fuel Type*</label>
                                 <select
                                     name="fuelType"
                                     value={formData.fuelType}
                                     onChange={handleChange}
-                                    className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-[#0a192f] focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm"
+                                    className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-[#0E192D] focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm"
                                     required
                                 >
                                     <option value="">Select Fuel</option>
@@ -303,7 +303,7 @@ export default function BuyNewVehicleForm({ onClose }: BuyNewVehicleFormProps) {
                     </div>
 
                     <div className="bg-blue-50/50 p-4 rounded-xl border border-blue-100 mb-6">
-                        <h3 className="text-lg font-bold text-[#0a192f] flex items-center gap-2 mb-4">
+                        <h3 className="text-lg font-bold text-[#0E192D] flex items-center gap-2 mb-4">
                             <User className="w-5 h-5 text-blue-600" />
                             Contact Details
                         </h3>
@@ -311,40 +311,40 @@ export default function BuyNewVehicleForm({ onClose }: BuyNewVehicleFormProps) {
                         {/* Customer Details */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label className="text-xs font-bold text-[#0a192f]/70 mb-1.5 block uppercase tracking-wider">Full Name*</label>
+                                <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider">Full Name*</label>
                                 <input
                                     type="text"
                                     name="customerName"
                                     value={formData.customerName}
                                     onChange={handleChange}
                                     placeholder="Your Name"
-                                    className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-[#0a192f] placeholder-gray-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm"
+                                    className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-[#0E192D] placeholder-gray-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm"
                                     required
                                 />
                             </div>
                             <div>
-                                <label className="text-xs font-bold text-[#0a192f]/70 mb-1.5 block uppercase tracking-wider">Email Address*</label>
+                                <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider">Email Address*</label>
                                 <input
                                     type="email"
                                     name="customerEmail"
                                     value={formData.customerEmail}
                                     onChange={handleChange}
                                     placeholder="name@example.com"
-                                    className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-[#0a192f] placeholder-gray-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm"
+                                    className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-[#0E192D] placeholder-gray-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm"
                                     required
                                 />
                             </div>
                         </div>
 
                         <div className="mt-4">
-                            <label className="text-xs font-bold text-[#0a192f]/70 mb-1.5 block uppercase tracking-wider">Phone Number*</label>
+                            <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider">Phone Number*</label>
                             <input
                                 type="tel"
                                 name="customerPhone"
                                 value={formData.customerPhone}
                                 onChange={handleChange}
                                 placeholder="10-digit mobile number"
-                                className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-[#0a192f] placeholder-gray-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm"
+                                className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-[#0E192D] placeholder-gray-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm"
                                 required
                             />
                         </div>
@@ -352,7 +352,7 @@ export default function BuyNewVehicleForm({ onClose }: BuyNewVehicleFormProps) {
                         {/* Location Details */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                             <div>
-                                <label className="text-xs font-bold text-[#0a192f]/70 mb-1.5 block uppercase tracking-wider">State*</label>
+                                <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider">State*</label>
                                 <select
                                     name="state"
                                     value={formData.state}
@@ -360,7 +360,7 @@ export default function BuyNewVehicleForm({ onClose }: BuyNewVehicleFormProps) {
                                         const newState = e.target.value;
                                         setFormData(prev => ({ ...prev, state: newState, city: "" }));
                                     }}
-                                    className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-[#0a192f] focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm"
+                                    className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-[#0E192D] focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm"
                                     required
                                 >
                                     <option value="">Select State</option>
@@ -370,13 +370,13 @@ export default function BuyNewVehicleForm({ onClose }: BuyNewVehicleFormProps) {
                                 </select>
                             </div>
                             <div className="relative">
-                                <label className="text-xs font-bold text-[#0a192f]/70 mb-1.5 block uppercase tracking-wider">City*</label>
+                                <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider">City*</label>
                                 <select
                                     name="city"
                                     value={formData.city}
                                     onChange={handleChange}
                                     disabled={!formData.state}
-                                    className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-[#0a192f] focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm disabled:opacity-50"
+                                    className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-[#0E192D] focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm disabled:opacity-50"
                                     required
                                 >
                                     <option value="">Select City</option>
@@ -391,21 +391,21 @@ export default function BuyNewVehicleForm({ onClose }: BuyNewVehicleFormProps) {
                         {/* Custom City - Conditional */}
                         {formData.city === "other" && (
                             <div className="mt-4">
-                                <label className="text-xs font-bold text-[#0a192f]/70 mb-1.5 block uppercase tracking-wider">Enter City*</label>
+                                <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider">Enter City*</label>
                                 <input
                                     type="text"
                                     name="customCity"
                                     value={formData.customCity}
                                     onChange={handleChange}
                                     placeholder="Type Your City Name"
-                                    className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-[#0a192f] placeholder-gray-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm"
+                                    className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-[#0E192D] placeholder-gray-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm"
                                     required={formData.city === "other"}
                                 />
                             </div>
                         )}
 
                         <div className="mt-4">
-                            <label className="text-xs font-bold text-[#0a192f]/70 mb-1.5 block uppercase tracking-wider">Pincode*</label>
+                            <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider">Pincode*</label>
                             <input
                                 type="text"
                                 name="pincode"
@@ -413,7 +413,7 @@ export default function BuyNewVehicleForm({ onClose }: BuyNewVehicleFormProps) {
                                 onChange={handleChange}
                                 placeholder="6-digit pincode"
                                 maxLength={6}
-                                className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-[#0a192f] placeholder-gray-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm"
+                                className="w-full px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-[#0E192D] placeholder-gray-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all font-medium text-sm"
                                 required
                             />
                         </div>
@@ -422,7 +422,7 @@ export default function BuyNewVehicleForm({ onClose }: BuyNewVehicleFormProps) {
                     <motion.button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-[#0a192f] hover:bg-emerald-600 text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl hover:shadow-emerald-500/20 transition-all duration-300 mt-6 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-lg relative overflow-hidden group"
+                        className="w-full bg-[#0E192D] hover:bg-emerald-600 text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl hover:shadow-emerald-500/20 transition-all duration-300 mt-6 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-lg relative overflow-hidden group"
                         whileHover={!loading ? { scale: 1.01 } : {}}
                         whileTap={!loading ? { scale: 0.99 } : {}}
                     >
@@ -451,7 +451,7 @@ export default function BuyNewVehicleForm({ onClose }: BuyNewVehicleFormProps) {
                                         <CheckCircle className="w-10 h-10 text-emerald-600" />
                                     </div>
                                 </div>
-                                <h2 className="text-2xl font-bold text-center text-[#0a192f] mb-2">Request Submitted!</h2>
+                                <h2 className="text-2xl font-bold text-center text-[#0E192D] mb-2">Request Submitted!</h2>
                                 <div className="text-center mb-8">
                                     <p className="font-bold text-gray-900 text-lg mb-1">Our team will contact you soon</p>
                                     <p className="text-sm text-gray-500">Thank you for choosing us for your next vehicle purchase.</p>
@@ -462,7 +462,7 @@ export default function BuyNewVehicleForm({ onClose }: BuyNewVehicleFormProps) {
                                         router.push("/")
                                         onClose()
                                     }}
-                                    className="w-full bg-[#0a192f] hover:bg-emerald-600 text-white font-bold py-3.5 rounded-lg shadow-lg flex items-center justify-center gap-2 transition-all"
+                                    className="w-full bg-[#0E192D] hover:bg-emerald-600 text-white font-bold py-3.5 rounded-lg shadow-lg flex items-center justify-center gap-2 transition-all"
                                 >
                                     Done
                                 </button>
@@ -475,3 +475,4 @@ export default function BuyNewVehicleForm({ onClose }: BuyNewVehicleFormProps) {
         </div>
     )
 }
+

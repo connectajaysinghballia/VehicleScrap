@@ -53,3 +53,4 @@ const B2BRegistrationSchema = new Schema(
 const B2BRegistration = models.B2BRegistration || model("B2BRegistration", B2BRegistrationSchema)
 
 export default B2BRegistration
+

@@ -27,7 +27,7 @@ export default function Footer() {
       {/* Move to Top Strip */}
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className="w-full bg-slate-900 hover:bg-slate-800 text-white py-4 font-bold uppercase tracking-wider text-sm flex items-center justify-center gap-2 transition-all duration-300 relative z-30 border-b border-slate-800"
+        className="w-full bg-[#0E192D] hover:bg-slate-800 text-white py-4 font-bold uppercase tracking-wider text-sm flex items-center justify-center gap-2 transition-all duration-300 relative z-30 border-b border-slate-800"
       >
         Move to Top <ArrowUp className="w-4 h-4 animate-bounce" />
       </button>
@@ -184,3 +184,4 @@ export default function Footer() {
     </footer>
   )
 }
+

@@ -9,7 +9,7 @@ export default function TermsPage() {
     return (
         <div className="min-h-screen bg-slate-50 relative overflow-hidden font-sans selection:bg-emerald-500/30 selection:text-emerald-900">
             {/* Background Decor */}
-            <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-[#0a192f] to-slate-50 z-0"></div>
+            <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-[#0E192D] to-slate-50 z-0"></div>
             <div className="absolute top-20 right-20 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none z-0"></div>
 
             <div className="container mx-auto px-4 py-12 relative z-10 pt-32">
@@ -43,7 +43,7 @@ export default function TermsPage() {
 
                         {/* Section 1 */}
                         <section>
-                            <h2 className="flex items-center gap-3 text-2xl font-bold text-[#0a192f] mb-4">
+                            <h2 className="flex items-center gap-3 text-2xl font-bold text-[#0E192D] mb-4">
                                 <span className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600 text-sm font-bold">01</span>
                                 Introduction
                             </h2>
@@ -54,7 +54,7 @@ export default function TermsPage() {
 
                         {/* Section 2 */}
                         <section>
-                            <h2 className="flex items-center gap-3 text-2xl font-bold text-[#0a192f] mb-4">
+                            <h2 className="flex items-center gap-3 text-2xl font-bold text-[#0E192D] mb-4">
                                 <span className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600 text-sm font-bold">02</span>
                                 Vehicle Valuation & Scrapping
                             </h2>
@@ -72,7 +72,7 @@ export default function TermsPage() {
 
                         {/* Section 3 */}
                         <section>
-                            <h2 className="flex items-center gap-3 text-2xl font-bold text-[#0a192f] mb-4">
+                            <h2 className="flex items-center gap-3 text-2xl font-bold text-[#0E192D] mb-4">
                                 <span className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-orange-600 text-sm font-bold">03</span>
                                 Documentation & Compliance
                             </h2>
@@ -83,7 +83,7 @@ export default function TermsPage() {
 
                         {/* Section 4 */}
                         <section>
-                            <h2 className="flex items-center gap-3 text-2xl font-bold text-[#0a192f] mb-4">
+                            <h2 className="flex items-center gap-3 text-2xl font-bold text-[#0E192D] mb-4">
                                 <span className="w-8 h-8 rounded-lg bg-rose-50 flex items-center justify-center text-rose-600 text-sm font-bold">04</span>
                                 Limitation of Liability
                             </h2>
@@ -95,7 +95,7 @@ export default function TermsPage() {
                         <div className="p-6 bg-slate-50 rounded-2xl border border-slate-100 flex gap-4 items-start">
                             <Shield className="w-6 h-6 text-emerald-600 shrink-0 mt-1" />
                             <div>
-                                <h4 className="font-bold text-[#0a192f] mb-1">Privacy Policy</h4>
+                                <h4 className="font-bold text-[#0E192D] mb-1">Privacy Policy</h4>
                                 <p className="text-sm text-slate-500">
                                     Your privacy is important to us. Please review our <Link href="/privacy" className="text-emerald-600 font-semibold hover:underline">Privacy Policy</Link> to understand how we collect and use your information.
                                 </p>
@@ -112,3 +112,4 @@ export default function TermsPage() {
         </div>
     )
 }
+

@@ -47,3 +47,4 @@ const ExchangeVehicleSchema = new Schema(
 const ExchangeVehicle = models.ExchangeVehicle || model("ExchangeVehicle", ExchangeVehicleSchema)
 
 export default ExchangeVehicle
+

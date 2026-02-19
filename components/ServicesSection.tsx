@@ -37,7 +37,7 @@ export default function ServicesSection() {
   }
 
   return (
-    <section id="services" className="bg-white py-8 md:py-12 relative overflow-hidden" ref={containerRef}>
+    <section id="services" className="bg-[#162236] py-8 md:py-12 relative overflow-hidden" ref={containerRef}>
       {/* Background decorative elements - Green/Navy Theme */}
       <div className="absolute top-0 left-0 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-900/5 rounded-full blur-3xl translate-x-1/3 translate-y-1/3"></div>
@@ -46,7 +46,7 @@ export default function ServicesSection() {
         {/* Header */}
         <div className="text-center mb-16">
           <motion.h2
-            className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-4"
+            className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6 }}
@@ -54,7 +54,7 @@ export default function ServicesSection() {
             Explore <span className="bg-gradient-to-r from-emerald-600 to-teal-800 bg-clip-text text-transparent">Services</span>
           </motion.h2>
           <motion.p
-            className="text-gray-600 text-lg md:text-xl max-w-3xl mx-auto"
+            className="text-slate-300 text-lg md:text-xl max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -80,3 +80,4 @@ export default function ServicesSection() {
     </section>
   )
 }
+

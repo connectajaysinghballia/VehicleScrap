@@ -52,7 +52,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    background: #0f172a;
+    background: #0E192D;
     /* Navy Blue (Slate-900) */
     transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -78,7 +78,7 @@
 
 /* Hover Effect: Title becomes Dark Navy */
 .card:hover .title {
-    color: #0f172a;
+    color: #0E192D;
     text-shadow: none;
 }
 

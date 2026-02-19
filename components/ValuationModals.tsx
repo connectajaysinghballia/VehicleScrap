@@ -81,7 +81,7 @@ export default function ValuationModals({ formData, valuationId, onClose }: Valu
                             <X className="w-5 h-5" />
                         </button>
 
-                        <div className="bg-[#0a192f] p-4 md:p-8 text-center text-white relative overflow-hidden">
+                        <div className="bg-[#0E192D] p-4 md:p-8 text-center text-white relative overflow-hidden">
                             {/* Background Effects */}
                             <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
                             <div className="absolute -top-24 -right-24 w-48 h-48 bg-emerald-500/20 rounded-full blur-3xl"></div>
@@ -109,7 +109,7 @@ export default function ValuationModals({ formData, valuationId, onClose }: Valu
                                         <div className="w-8 h-8 md:w-10 md:h-10 bg-white rounded-full flex items-center justify-center mb-1 md:mb-3 shadow-sm group-hover:scale-110 transition-transform duration-300">
                                             <item.icon className="w-4 h-4 md:w-5 md:h-5 text-emerald-600" />
                                         </div>
-                                        <h3 className="font-bold text-[#0a192f] text-[10px] md:text-sm leading-tight mb-0 md:mb-1">{item.title}</h3>
+                                        <h3 className="font-bold text-[#0E192D] text-[10px] md:text-sm leading-tight mb-0 md:mb-1">{item.title}</h3>
                                         <p className="hidden md:block text-xs text-gray-500 group-hover:text-emerald-700/70 transition-colors">{item.desc}</p>
                                     </div>
                                 ))}
@@ -123,7 +123,7 @@ export default function ValuationModals({ formData, valuationId, onClose }: Valu
                                     <Smartphone className="w-5 h-5 md:w-6 md:h-6 text-emerald-600" />
                                 </div>
                                 <div>
-                                    <p className="font-extrabold text-[#0a192f] text-sm md:text-lg leading-tight">Our CC will contact you soon</p>
+                                    <p className="font-extrabold text-[#0E192D] text-sm md:text-lg leading-tight">Our CC will contact you soon</p>
                                     <p className="text-xs md:text-sm font-bold text-emerald-700">Support available 24/7</p>
                                 </div>
                             </div>
@@ -134,7 +134,7 @@ export default function ValuationModals({ formData, valuationId, onClose }: Valu
                                     if (valuationId) localStorage.setItem("kycValuationId", valuationId)
                                     router.push("/ekyc/get-quote")
                                 }}
-                                className="w-full bg-[#0a192f] hover:bg-emerald-600 text-white font-bold py-3 md:py-4 rounded-xl shadow-lg hover:shadow-emerald-500/30 transform transition-all duration-300 active:scale-[0.98] flex items-center justify-center gap-2 text-sm md:text-base"
+                                className="w-full bg-[#0E192D] hover:bg-emerald-600 text-white font-bold py-3 md:py-4 rounded-xl shadow-lg hover:shadow-emerald-500/30 transform transition-all duration-300 active:scale-[0.98] flex items-center justify-center gap-2 text-sm md:text-base"
                             >
                                 <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-emerald-400 group-hover:text-white" />
                                 Final Step eKYC
@@ -161,22 +161,22 @@ export default function ValuationModals({ formData, valuationId, onClose }: Valu
                             <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
                                 <FileText className="w-8 h-8 text-emerald-600" />
                             </div>
-                            <h2 className="text-2xl font-bold text-[#0a192f]">Complete eKYC</h2>
+                            <h2 className="text-2xl font-bold text-[#0E192D]">Complete eKYC</h2>
                             <p className="text-gray-500">Verify your identity to claim benefits</p>
                         </div>
 
                         <div className="space-y-4">
                             <div>
-                                <label className="block text-sm font-semibold text-[#0a192f] mb-1">Full Name</label>
+                                <label className="block text-sm font-semibold text-[#0E192D] mb-1">Full Name</label>
                                 <input type="text" defaultValue={formData.name} className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-emerald-500 outline-none transition-colors" placeholder="As per Aadhaar" />
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm font-semibold text-[#0a192f] mb-1">Date of Birth</label>
+                                    <label className="block text-sm font-semibold text-[#0E192D] mb-1">Date of Birth</label>
                                     <input type="date" className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-emerald-500 outline-none transition-colors" />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-semibold text-[#0a192f] mb-1">Aadhaar Number</label>
+                                    <label className="block text-sm font-semibold text-[#0E192D] mb-1">Aadhaar Number</label>
                                     <input type="text" maxLength={12} className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-emerald-500 outline-none transition-colors" placeholder="XXXX XXXX XXXX" />
                                 </div>
                             </div>
@@ -184,7 +184,7 @@ export default function ValuationModals({ formData, valuationId, onClose }: Valu
                             {/* File Uploads */}
                             <div className="space-y-4 pt-2">
                                 <div>
-                                    <label className="block text-sm font-semibold text-[#0a192f] mb-1">Upload Aadhaar Card (PDF)</label>
+                                    <label className="block text-sm font-semibold text-[#0E192D] mb-1">Upload Aadhaar Card (PDF)</label>
                                     <input
                                         type="file"
                                         accept=".pdf"
@@ -192,7 +192,7 @@ export default function ValuationModals({ formData, valuationId, onClose }: Valu
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-semibold text-[#0a192f] mb-1">Upload RC (PDF)</label>
+                                    <label className="block text-sm font-semibold text-[#0E192D] mb-1">Upload RC (PDF)</label>
                                     <input
                                         type="file"
                                         accept=".pdf"
@@ -200,7 +200,7 @@ export default function ValuationModals({ formData, valuationId, onClose }: Valu
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-semibold text-[#0a192f] mb-1">Upload Car Photo (PNG/JPG)</label>
+                                    <label className="block text-sm font-semibold text-[#0E192D] mb-1">Upload Car Photo (PNG/JPG)</label>
                                     <input
                                         type="file"
                                         accept="image/png, image/jpeg, image/jpg"
@@ -211,7 +211,7 @@ export default function ValuationModals({ formData, valuationId, onClose }: Valu
 
 
                             <div>
-                                <label className="block text-sm font-semibold text-[#0a192f] mb-1">Aadhaar Registered Mobile</label>
+                                <label className="block text-sm font-semibold text-[#0E192D] mb-1">Aadhaar Registered Mobile</label>
                                 <div className="flex gap-2">
                                     <input
                                         type="tel"
@@ -230,7 +230,7 @@ export default function ValuationModals({ formData, valuationId, onClose }: Valu
                             <button
                                 onClick={handleCompleteKYC}
                                 disabled={isSubmitting}
-                                className="w-full mt-6 bg-[#0a192f] hover:bg-emerald-600 text-white font-bold py-4 rounded-xl shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
+                                className="w-full mt-6 bg-[#0E192D] hover:bg-emerald-600 text-white font-bold py-4 rounded-xl shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
                             >
                                 {isSubmitting ? "Verifying..." : "Submit & Complete eKYC"}
                             </button>
@@ -257,19 +257,19 @@ export default function ValuationModals({ formData, valuationId, onClose }: Valu
                             <CheckCircle className="w-12 h-12 text-emerald-600" />
                         </div>
 
-                        <h2 className="text-3xl font-bold text-[#0a192f] mb-2">Success!</h2>
+                        <h2 className="text-3xl font-bold text-[#0E192D] mb-2">Success!</h2>
                         <p className="text-gray-600 mb-6">
                             Your valuation request and eKYC have been submitted successfully.
                         </p>
 
                         <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-4 mb-8">
-                            <p className="font-medium text-[#0a192f] mb-1">What's Next?</p>
+                            <p className="font-medium text-[#0E192D] mb-1">What's Next?</p>
                             <p className="text-sm text-gray-600">
                                 Our Collection Center (CC) executive will contact you within <span className="font-bold text-emerald-600">24 hours</span> regarding pickup.
                             </p>
                         </div>
 
-                        <Link href="/" className="block w-full bg-[#0a192f] hover:bg-black text-white font-bold py-4 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2">
+                        <Link href="/" className="block w-full bg-[#0E192D] hover:bg-black text-white font-bold py-4 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2">
                             <Home className="w-5 h-5" />
                             Return to Home
                         </Link>
@@ -280,3 +280,4 @@ export default function ValuationModals({ formData, valuationId, onClose }: Valu
         </div>
     )
 }
+

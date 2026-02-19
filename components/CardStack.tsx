@@ -1,6 +1,7 @@
 "use client"
 
 import React from 'react'
+import Image from 'next/image'
 import styles from './CardStack.module.css'
 
 const CardStack = () => {
@@ -32,8 +33,8 @@ const CardStack = () => {
         {
             title: "STEP 1",
             desc: "Submit Your Details and Get Your Estimated value",
-            // Local Video
-            videoSrc: "/videos/step1vi.mp4",
+            // Local Image
+            imageSrc: "/frontpage/step1.jpeg",
             // Orange Filter (Adjust from Gold/Original)
             videoFilter: "none",
             videoTransform: "scale(1)"
@@ -41,8 +42,8 @@ const CardStack = () => {
         {
             title: "STEP 2",
             desc: "Get a Call From Our Kabadi Center and Executive will help you in taking decision",
-            // Local Video
-            videoSrc: "/videos/step2vi.mp4",
+            // Local Image
+            imageSrc: "/frontpage/step2.jpeg",
             // Blue Filter
             videoFilter: "none",
             videoTransform: "scale(1.1)" // Zoom in
@@ -50,8 +51,8 @@ const CardStack = () => {
         {
             title: "STEP 3",
             desc: "Get Instant Payment and Explore the benifits",
-            // Local Video
-            videoSrc: "/videos/step3vi.mp4",
+            // Local Image
+            imageSrc: "/frontpage/step3.jpeg",
             // Green Filter
             videoFilter: "none",
             videoTransform: "scale(1.1)" // Zoom in
@@ -70,12 +71,10 @@ const CardStack = () => {
                 >
                     <div className={styles.cardContent}>
                         <div className={styles.imageArea}>
-                            <video
-                                src={card.videoSrc}
-                                autoPlay
-                                loop
-                                muted
-                                playsInline
+                            <Image
+                                src={card.imageSrc}
+                                alt={card.title}
+                                fill
                                 className={styles.videoBg}
                                 style={{
                                     filter: card.videoFilter,
@@ -94,3 +93,4 @@ const CardStack = () => {
     )
 }
 export default CardStack
+

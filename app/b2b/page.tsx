@@ -125,7 +125,7 @@ export default function B2BMarketplace() {
     if (status === "loading") {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-600"></div>
             </div>
         )
     }
@@ -141,7 +141,7 @@ export default function B2BMarketplace() {
                     <p className="text-gray-500">Only verified B2B partners can access the marketplace. Please sign in with your partner credentials.</p>
                     <button
                         onClick={() => router.push("/login")}
-                        className="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition-colors"
+                        className="w-full bg-emerald-600 text-white font-bold py-3 rounded-xl hover:bg-emerald-700 transition-colors"
                     >
                         Go to Partner Login
                     </button>
@@ -151,7 +151,7 @@ export default function B2BMarketplace() {
     }
 
     return (
-        <div className="min-h-screen bg-[#F8FAFC] pt-24 pb-12 px-4 sm:px-6 lg:px-8 font-sans">
+        <div className="min-h-screen bg-gray-50 dark:bg-slate-950 pt-24 pb-12 px-4 sm:px-6 lg:px-8 font-sans transition-colors duration-300">
             <div className="max-w-7xl mx-auto space-y-8">
 
                 {/* Hero section removed for direct access */}
@@ -166,8 +166,8 @@ export default function B2BMarketplace() {
                             className="space-y-6"
                         >
                             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                                <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-                                    <Package className="w-6 h-6 text-blue-600" />
+                                <h2 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                                    <Package className="w-6 h-6 text-emerald-600" />
                                     Marketplace Feed
                                     <span className="ml-2 text-sm font-medium text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">
                                         {filteredValuations.length} of {valuations.length}
@@ -176,14 +176,14 @@ export default function B2BMarketplace() {
                                 <div className="flex gap-3 w-full md:w-auto">
                                     <button
                                         onClick={fetchOpportunities}
-                                        className="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm font-bold text-gray-700 hover:bg-gray-50 transition-colors shadow-sm"
+                                        className="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-white dark:bg-[#0E192D] border border-gray-200 dark:border-slate-800 rounded-xl text-sm font-bold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors shadow-sm"
                                     >
                                         <RefreshCcw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
                                         Refresh
                                     </button>
                                     <button
                                         onClick={() => setShowFilters(!showFilters)}
-                                        className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 border rounded-xl text-sm font-bold transition-colors shadow-sm ${showFilters ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
+                                        className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 border rounded-xl text-sm font-bold transition-colors shadow-sm ${showFilters ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-white dark:bg-[#0E192D] text-gray-700 dark:text-gray-200 border-gray-200 dark:border-slate-800 hover:bg-gray-50 dark:hover:bg-slate-800'
                                             }`}
                                     >
                                         <Filter className="w-4 h-4" />
@@ -199,19 +199,19 @@ export default function B2BMarketplace() {
                                         initial={{ opacity: 0, height: 0 }}
                                         animate={{ opacity: 1, height: "auto" }}
                                         exit={{ opacity: 0, height: 0 }}
-                                        className="bg-white rounded-2xl border-2 border-blue-100 p-6 shadow-lg overflow-hidden"
+                                        className="bg-white dark:bg-[#0E192D] rounded-2xl border-2 border-emerald-100 dark:border-slate-800 p-6 shadow-lg overflow-hidden"
                                     >
-                                        <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                                            <Filter className="w-5 h-5 text-blue-600" />
+                                        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                                            <Filter className="w-5 h-5 text-emerald-600" />
                                             Filter Requests
                                         </h3>
                                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                                             <div>
-                                                <label className="block text-sm font-bold text-gray-700 mb-2">State</label>
+                                                <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">State</label>
                                                 <select
                                                     value={filterState}
                                                     onChange={(e) => setFilterState(e.target.value)}
-                                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
+                                                    className="w-full px-4 py-2 border border-gray-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none bg-white dark:bg-slate-900 dark:text-white"
                                                 >
                                                     <option value="">All States</option>
                                                     <option value="Andhra Pradesh">Andhra Pradesh</option>
@@ -250,36 +250,36 @@ export default function B2BMarketplace() {
                                                 </select>
                                             </div>
                                             <div>
-                                                <label className="block text-sm font-bold text-gray-700 mb-2">City</label>
+                                                <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">City</label>
                                                 <input
                                                     type="text"
                                                     value={filterCity}
                                                     onChange={(e) => setFilterCity(e.target.value)}
                                                     placeholder="e.g., Mumbai"
-                                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                                                    className="w-full px-4 py-2 border border-gray-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none dark:bg-slate-900 dark:text-white"
                                                 />
                                             </div>
                                             <div>
-                                                <label className="block text-sm font-bold text-gray-700 mb-2">Pincode</label>
+                                                <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Pincode</label>
                                                 <input
                                                     type="text"
                                                     value={filterPincode}
                                                     onChange={(e) => setFilterPincode(e.target.value)}
                                                     placeholder="e.g., 400001"
-                                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                                                    className="w-full px-4 py-2 border border-gray-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none dark:bg-slate-900 dark:text-white"
                                                 />
                                             </div>
                                         </div>
                                         <div className="flex gap-3">
                                             <button
                                                 onClick={applyFilters}
-                                                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-6 rounded-lg transition-colors shadow-md"
+                                                className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-6 rounded-lg transition-colors shadow-md"
                                             >
                                                 Apply Filters
                                             </button>
                                             <button
                                                 onClick={clearFilters}
-                                                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2.5 px-6 rounded-lg transition-colors"
+                                                className="flex-1 bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-300 font-bold py-2.5 px-6 rounded-lg transition-colors"
                                             >
                                                 Clear All
                                             </button>
@@ -319,12 +319,12 @@ export default function B2BMarketplace() {
                                     ))}
                                 </div>
                             ) : filteredValuations.length === 0 ? (
-                                <div className="bg-white rounded-3xl p-16 text-center border-2 border-dashed border-gray-200">
-                                    <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                                        <Search className="w-10 h-10 text-gray-300" />
+                                <div className="bg-white dark:bg-[#0E192D] rounded-3xl p-16 text-center border-2 border-dashed border-gray-200 dark:border-slate-800">
+                                    <div className="w-20 h-20 bg-gray-50 dark:bg-slate-900 rounded-full flex items-center justify-center mx-auto mb-6">
+                                        <Search className="w-10 h-10 text-gray-300 dark:text-slate-600" />
                                     </div>
-                                    <h3 className="text-2xl font-bold text-gray-900 mb-2">No matching requests</h3>
-                                    <p className="text-gray-500 max-w-sm mx-auto">
+                                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">No matching requests</h3>
+                                    <p className="text-gray-500 dark:text-gray-400 max-w-sm mx-auto">
                                         {valuations.length > 0 ? "Try adjusting your filters to see more results." : "There are no new scrap requests available right now. Check back soon!"}
                                     </p>
                                 </div>
@@ -334,23 +334,23 @@ export default function B2BMarketplace() {
                                         <motion.div
                                             layout
                                             key={val._id}
-                                            className="group bg-white rounded-2xl p-6 border border-gray-100 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-500/5 transition-all"
+                                            className="group bg-white dark:bg-[#0E192D] rounded-2xl p-6 border border-gray-100 dark:border-slate-800 hover:border-emerald-200 dark:hover:border-emerald-900/50 hover:shadow-xl hover:shadow-emerald-500/5 transition-all"
                                         >
                                             <div className="flex justify-between items-start mb-4">
-                                                <div className="p-3 bg-blue-50 text-blue-600 rounded-xl group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                                                <div className="p-3 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 rounded-xl group-hover:bg-emerald-600 group-hover:text-white transition-colors">
                                                     <Car className="w-6 h-6" />
                                                 </div>
-                                                <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-100 text-emerald-700`}>
+                                                <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400`}>
                                                     Approved
                                                 </span>
                                             </div>
 
                                             {/* Category Badge */}
                                             <div className="mb-4">
-                                                <span className={`inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wide ${val.type === 'valuation' ? 'bg-purple-100 text-purple-700 border border-purple-200' :
-                                                    val.type === 'sell' ? 'bg-orange-100 text-orange-700 border border-orange-200' :
-                                                        val.type === 'exchange' ? 'bg-blue-100 text-blue-700 border border-blue-200' :
-                                                            'bg-green-100 text-green-700 border border-green-200'
+                                                <span className={`inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wide ${val.type === 'valuation' ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 border border-purple-200 dark:border-purple-800/30' :
+                                                    val.type === 'sell' ? 'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 border border-orange-200 dark:border-orange-800/30' :
+                                                        val.type === 'exchange' ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/30' :
+                                                            'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800/30'
                                                     }`}>
                                                     {val.type === 'valuation' ? '📋 Get Free Quote' :
                                                         val.type === 'sell' ? '🏷️ Sell Old Vehicle' :
@@ -359,29 +359,29 @@ export default function B2BMarketplace() {
                                                 </span>
                                             </div>
 
-                                            <h3 className="font-bold text-gray-900 text-xl mb-1 truncate">
+                                            <h3 className="font-bold text-gray-900 dark:text-white text-xl mb-1 truncate">
                                                 {val.brand || val.vehicleBrand || val.oldVehicleBrand} {val.model || val.vehicleModel || val.oldVehicleModel}
                                             </h3>
-                                            <p className="text-sm text-gray-500 font-medium mb-6">
+                                            <p className="text-sm text-gray-500 dark:text-gray-400 font-medium mb-6">
                                                 {val.year || val.oldVehicleYear || val.registrationYear || 'N/A'} • {val.vehicleType || val.fuelType || 'Vehicle'}
                                             </p>
 
-                                            <div className="space-y-3 border-t border-gray-50 pt-4 mb-6">
-                                                <div className="flex items-center gap-3 text-sm text-gray-600">
-                                                    <MapPin className="w-4 h-4 text-blue-400" />
+                                            <div className="space-y-3 border-t border-gray-50 dark:border-slate-800 pt-4 mb-6">
+                                                <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-300">
+                                                    <MapPin className="w-4 h-4 text-emerald-400" />
                                                     <span className="font-medium truncate">
                                                         {val.address?.city || val.city || 'Location'}, {val.address?.pincode || val.pincode || 'N/A'}
                                                     </span>
                                                 </div>
                                                 {val.vehicleWeight && (
-                                                    <div className="flex items-center gap-3 text-sm text-gray-600">
-                                                        <Clock className="w-4 h-4 text-blue-400" />
+                                                    <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-300">
+                                                        <Clock className="w-4 h-4 text-emerald-400" />
                                                         <span className="font-medium">{val.vehicleWeight} Tons Estimated</span>
                                                     </div>
                                                 )}
                                                 {val.budgetRange && (
-                                                    <div className="flex items-center gap-3 text-sm text-gray-600">
-                                                        <Clock className="w-4 h-4 text-blue-400" />
+                                                    <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-300">
+                                                        <Clock className="w-4 h-4 text-emerald-400" />
                                                         <span className="font-medium">Budget: {val.budgetRange}</span>
                                                     </div>
                                                 )}
@@ -393,7 +393,7 @@ export default function B2BMarketplace() {
 
                                             <button
                                                 onClick={() => setSelectedRequest(val)}
-                                                className="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition-all shadow-md shadow-blue-500/10 group-hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                                                className="w-full bg-emerald-600 text-white font-bold py-3 rounded-xl hover:bg-emerald-700 transition-all shadow-md shadow-emerald-500/10 group-hover:-translate-y-0.5 flex items-center justify-center gap-2"
                                             >
                                                 <Eye className="w-5 h-5" />
                                                 View Details
@@ -415,7 +415,7 @@ export default function B2BMarketplace() {
                                 animate={{ opacity: 1, scale: 1, y: 0 }}
                                 exit={{ opacity: 0, scale: 0.9, y: 20 }}
                                 onClick={(e) => e.stopPropagation()}
-                                className="bg-white rounded-2xl md:rounded-3xl shadow-2xl w-full max-w-2xl max-h-[95vh] md:max-h-[90vh] overflow-hidden relative flex flex-col"
+                                className="bg-white dark:bg-[#0E192D] rounded-2xl md:rounded-3xl shadow-2xl w-full max-w-2xl max-h-[95vh] md:max-h-[90vh] overflow-hidden relative flex flex-col"
                             >
                                 {/* Close Button - Sticky */}
                                 <button
@@ -426,11 +426,11 @@ export default function B2BMarketplace() {
                                 </button>
 
                                 {/* Modal Header */}
-                                <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-6 md:p-8 text-white flex-shrink-0">
+                                <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 p-6 md:p-8 text-white flex-shrink-0">
                                     <div className="flex items-center gap-2 mb-3 flex-wrap pr-12">
                                         <span className={`px-2.5 md:px-3 py-1 md:py-1.5 rounded-lg text-[10px] md:text-xs font-bold uppercase tracking-wide ${selectedRequest.type === 'valuation' ? 'bg-purple-500/30 text-white border border-white/30' :
                                             selectedRequest.type === 'sell' ? 'bg-orange-500/30 text-white border border-white/30' :
-                                                selectedRequest.type === 'exchange' ? 'bg-blue-500/30 text-white border border-white/30' :
+                                                selectedRequest.type === 'exchange' ? 'bg-emerald-500/30 text-white border border-white/30' :
                                                     'bg-green-500/30 text-white border border-white/30'
                                             }`}>
                                             {selectedRequest.type === 'valuation' ? '📋 Get Free Quote' :
@@ -442,7 +442,7 @@ export default function B2BMarketplace() {
                                     <h2 className="text-2xl md:text-3xl font-black leading-tight pr-12">
                                         {selectedRequest.brand || selectedRequest.vehicleBrand || selectedRequest.oldVehicleBrand} {selectedRequest.model || selectedRequest.vehicleModel || selectedRequest.oldVehicleModel}
                                     </h2>
-                                    <p className="text-blue-100 mt-2 font-medium text-sm md:text-base">
+                                    <p className="text-emerald-100 mt-2 font-medium text-sm md:text-base">
                                         {selectedRequest.year || selectedRequest.oldVehicleYear || selectedRequest.registrationYear || 'N/A'} • {selectedRequest.vehicleType || selectedRequest.fuelType || 'Vehicle'}
                                     </p>
                                 </div>
@@ -451,41 +451,41 @@ export default function B2BMarketplace() {
                                 <div className="p-4 md:p-8 space-y-5 md:space-y-6 max-h-[60vh] overflow-y-auto">
                                     {/* Vehicle Details */}
                                     <div>
-                                        <h3 className="text-xs md:text-sm font-black text-gray-400 uppercase tracking-wider mb-3 md:mb-4">Vehicle Information</h3>
+                                        <h3 className="text-xs md:text-sm font-black text-gray-400 dark:text-slate-500 uppercase tracking-wider mb-3 md:mb-4">Vehicle Information</h3>
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
                                             {selectedRequest.vehicleNumber && (
-                                                <div className="flex items-start gap-2 md:gap-3 bg-gray-50 p-3 rounded-lg">
-                                                    <Hash className="w-4 h-4 text-blue-500 mt-1 flex-shrink-0" />
+                                                <div className="flex items-start gap-2 md:gap-3 bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg">
+                                                    <Hash className="w-4 h-4 text-emerald-500 mt-1 flex-shrink-0" />
                                                     <div className="min-w-0">
-                                                        <p className="text-xs text-gray-500">Vehicle Number</p>
-                                                        <p className="font-bold text-gray-900 text-sm md:text-base truncate">{selectedRequest.vehicleNumber}</p>
+                                                        <p className="text-xs text-gray-500 dark:text-gray-400">Vehicle Number</p>
+                                                        <p className="font-bold text-gray-900 dark:text-white text-sm md:text-base truncate">{selectedRequest.vehicleNumber}</p>
                                                     </div>
                                                 </div>
                                             )}
                                             {selectedRequest.registrationNumber && (
-                                                <div className="flex items-start gap-2 md:gap-3 bg-gray-50 p-3 rounded-lg">
-                                                    <Hash className="w-4 h-4 text-blue-500 mt-1 flex-shrink-0" />
+                                                <div className="flex items-start gap-2 md:gap-3 bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg">
+                                                    <Hash className="w-4 h-4 text-emerald-500 mt-1 flex-shrink-0" />
                                                     <div className="min-w-0">
-                                                        <p className="text-xs text-gray-500">Registration Number</p>
-                                                        <p className="font-bold text-gray-900 text-sm md:text-base truncate">{selectedRequest.registrationNumber}</p>
+                                                        <p className="text-xs text-gray-500 dark:text-gray-400">Registration Number</p>
+                                                        <p className="font-bold text-gray-900 dark:text-white text-sm md:text-base truncate">{selectedRequest.registrationNumber}</p>
                                                     </div>
                                                 </div>
                                             )}
                                             {selectedRequest.vehicleWeight && (
-                                                <div className="flex items-start gap-2 md:gap-3 bg-gray-50 p-3 rounded-lg">
-                                                    <Car className="w-4 h-4 text-blue-500 mt-1 flex-shrink-0" />
+                                                <div className="flex items-start gap-2 md:gap-3 bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg">
+                                                    <Car className="w-4 h-4 text-emerald-500 mt-1 flex-shrink-0" />
                                                     <div className="min-w-0">
-                                                        <p className="text-xs text-gray-500">Weight</p>
-                                                        <p className="font-bold text-gray-900 text-sm md:text-base">{selectedRequest.vehicleWeight} Tons</p>
+                                                        <p className="text-xs text-gray-500 dark:text-gray-400">Weight</p>
+                                                        <p className="font-bold text-gray-900 dark:text-white text-sm md:text-base">{selectedRequest.vehicleWeight} Tons</p>
                                                     </div>
                                                 </div>
                                             )}
                                             {selectedRequest.budgetRange && (
-                                                <div className="flex items-start gap-2 md:gap-3 bg-gray-50 p-3 rounded-lg">
-                                                    <Car className="w-4 h-4 text-blue-500 mt-1 flex-shrink-0" />
+                                                <div className="flex items-start gap-2 md:gap-3 bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg">
+                                                    <Car className="w-4 h-4 text-emerald-500 mt-1 flex-shrink-0" />
                                                     <div className="min-w-0">
-                                                        <p className="text-xs text-gray-500">Budget Range</p>
-                                                        <p className="font-bold text-gray-900 text-sm md:text-base">{selectedRequest.budgetRange}</p>
+                                                        <p className="text-xs text-gray-500 dark:text-gray-400">Budget Range</p>
+                                                        <p className="font-bold text-gray-900 dark:text-white text-sm md:text-base">{selectedRequest.budgetRange}</p>
                                                     </div>
                                                 </div>
                                             )}
@@ -495,27 +495,27 @@ export default function B2BMarketplace() {
                                     {/* Financial Details (For Sell Requests) */}
                                     {selectedRequest.type === 'sell' && (
                                         <div>
-                                            <h3 className="text-xs md:text-sm font-black text-gray-400 uppercase tracking-wider mb-3 md:mb-4">Financial Information</h3>
+                                            <h3 className="text-xs md:text-sm font-black text-gray-400 dark:text-slate-500 uppercase tracking-wider mb-3 md:mb-4">Financial Information</h3>
                                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
-                                                <div className="bg-gray-50 p-3 rounded-lg">
-                                                    <p className="text-xs text-gray-500">Pending Loan</p>
-                                                    <p className="font-bold text-gray-900 text-sm md:text-base">{selectedRequest.pendingLoan}</p>
+                                                <div className="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg">
+                                                    <p className="text-xs text-gray-500 dark:text-gray-400">Pending Loan</p>
+                                                    <p className="font-bold text-gray-900 dark:text-white text-sm md:text-base">{selectedRequest.pendingLoan}</p>
                                                 </div>
                                                 {selectedRequest.pendingLoan === 'Yes' && (
                                                     <>
-                                                        <div className="bg-gray-50 p-3 rounded-lg">
-                                                            <p className="text-xs text-gray-500">Loan Amount</p>
-                                                            <p className="font-bold text-gray-900 text-sm md:text-base">{selectedRequest.loanAmount}</p>
+                                                        <div className="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg">
+                                                            <p className="text-xs text-gray-500 dark:text-gray-400">Loan Amount</p>
+                                                            <p className="font-bold text-gray-900 dark:text-white text-sm md:text-base">{selectedRequest.loanAmount}</p>
                                                         </div>
-                                                        <div className="bg-gray-50 p-3 rounded-lg">
-                                                            <p className="text-xs text-gray-500">Bank Name</p>
-                                                            <p className="font-bold text-gray-900 text-sm md:text-base">{selectedRequest.loanBank}</p>
+                                                        <div className="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg">
+                                                            <p className="text-xs text-gray-500 dark:text-gray-400">Bank Name</p>
+                                                            <p className="font-bold text-gray-900 dark:text-white text-sm md:text-base">{selectedRequest.loanBank}</p>
                                                         </div>
                                                     </>
                                                 )}
-                                                <div className="bg-gray-50 p-3 rounded-lg">
-                                                    <p className="text-xs text-gray-500">Insurance</p>
-                                                    <p className="font-bold text-gray-900 text-sm md:text-base">{selectedRequest.insuranceName || 'N/A'}</p>
+                                                <div className="bg-gray-50 dark:bg-slate-900/50 p-3 rounded-lg">
+                                                    <p className="text-xs text-gray-500 dark:text-gray-400">Insurance</p>
+                                                    <p className="font-bold text-gray-900 dark:text-white text-sm md:text-base">{selectedRequest.insuranceName || 'N/A'}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -524,22 +524,22 @@ export default function B2BMarketplace() {
                                     {/* Exchange Details (For Exchange Requests) */}
                                     {selectedRequest.type === 'exchange' && (
                                         <div>
-                                            <h3 className="text-xs md:text-sm font-black text-gray-400 uppercase tracking-wider mb-3 md:mb-4">Exchange Details</h3>
+                                            <h3 className="text-xs md:text-sm font-black text-gray-400 dark:text-slate-500 uppercase tracking-wider mb-3 md:mb-4">Exchange Details</h3>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                <div className="bg-orange-50 p-4 rounded-xl border border-orange-100">
-                                                    <h4 className="font-bold text-orange-800 text-sm mb-2">Old Vehicle (Selling)</h4>
+                                                <div className="bg-orange-50 dark:bg-orange-900/20 p-4 rounded-xl border border-orange-100 dark:border-orange-900/40">
+                                                    <h4 className="font-bold text-orange-800 dark:text-orange-400 text-sm mb-2">Old Vehicle (Selling)</h4>
                                                     <div className="space-y-1 text-sm">
-                                                        <p><span className="text-gray-500">Brand:</span> <span className="font-semibold">{selectedRequest.oldVehicleBrand}</span></p>
-                                                        <p><span className="text-gray-500">Model:</span> <span className="font-semibold">{selectedRequest.oldVehicleModel}</span></p>
-                                                        <p><span className="text-gray-500">Year:</span> <span className="font-semibold">{selectedRequest.oldVehicleYear}</span></p>
-                                                        <p><span className="text-gray-500">Reg No:</span> <span className="font-semibold">{selectedRequest.oldVehicleRegistration}</span></p>
+                                                        <p><span className="text-gray-500 dark:text-gray-400">Brand:</span> <span className="font-semibold text-gray-900 dark:text-white">{selectedRequest.oldVehicleBrand}</span></p>
+                                                        <p><span className="text-gray-500 dark:text-gray-400">Model:</span> <span className="font-semibold text-gray-900 dark:text-white">{selectedRequest.oldVehicleModel}</span></p>
+                                                        <p><span className="text-gray-500 dark:text-gray-400">Year:</span> <span className="font-semibold text-gray-900 dark:text-white">{selectedRequest.oldVehicleYear}</span></p>
+                                                        <p><span className="text-gray-500 dark:text-gray-400">Reg No:</span> <span className="font-semibold text-gray-900 dark:text-white">{selectedRequest.oldVehicleRegistration}</span></p>
                                                     </div>
                                                 </div>
-                                                <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
-                                                    <h4 className="font-bold text-blue-800 text-sm mb-2">New Vehicle (Buying)</h4>
+                                                <div className="bg-emerald-50 dark:bg-emerald-900/20 p-4 rounded-xl border border-emerald-100 dark:border-emerald-900/40">
+                                                    <h4 className="font-bold text-emerald-800 dark:text-emerald-400 text-sm mb-2">New Vehicle (Buying)</h4>
                                                     <div className="space-y-1 text-sm">
-                                                        <p><span className="text-gray-500">Brand:</span> <span className="font-semibold">{selectedRequest.newVehicleBrand}</span></p>
-                                                        <p><span className="text-gray-500">Model:</span> <span className="font-semibold">{selectedRequest.newVehicleModel}</span></p>
+                                                        <p><span className="text-gray-500 dark:text-gray-400">Brand:</span> <span className="font-semibold text-gray-900 dark:text-white">{selectedRequest.newVehicleBrand}</span></p>
+                                                        <p><span className="text-gray-500 dark:text-gray-400">Model:</span> <span className="font-semibold text-gray-900 dark:text-white">{selectedRequest.newVehicleModel}</span></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -549,30 +549,30 @@ export default function B2BMarketplace() {
                                     {/* KYC Information */}
                                     {(selectedRequest.firstName || selectedRequest.dob || selectedRequest.aadharNumber) && (
                                         <div>
-                                            <h3 className="text-xs md:text-sm font-black text-gray-400 uppercase tracking-wider mb-3 md:mb-4">KYC Information</h3>
-                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 bg-gray-50 p-4 rounded-xl">
+                                            <h3 className="text-xs md:text-sm font-black text-gray-400 dark:text-slate-500 uppercase tracking-wider mb-3 md:mb-4">KYC Information</h3>
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 bg-gray-50 dark:bg-slate-900/50 p-4 rounded-xl">
                                                 {selectedRequest.firstName && (
                                                     <div>
-                                                        <p className="text-xs text-gray-500">Legal Name</p>
-                                                        <p className="font-bold text-gray-900 text-sm md:text-base">{selectedRequest.firstName}</p>
+                                                        <p className="text-xs text-gray-500 dark:text-gray-400">Legal Name</p>
+                                                        <p className="font-bold text-gray-900 dark:text-white text-sm md:text-base">{selectedRequest.firstName}</p>
                                                     </div>
                                                 )}
                                                 {selectedRequest.dob && (
                                                     <div>
-                                                        <p className="text-xs text-gray-500">Date of Birth</p>
-                                                        <p className="font-bold text-gray-900 text-sm md:text-base">{selectedRequest.dob}</p>
+                                                        <p className="text-xs text-gray-500 dark:text-gray-400">Date of Birth</p>
+                                                        <p className="font-bold text-gray-900 dark:text-white text-sm md:text-base">{selectedRequest.dob}</p>
                                                     </div>
                                                 )}
                                                 {selectedRequest.aadharNumber && (
                                                     <div>
-                                                        <p className="text-xs text-gray-500">Aadhar Number</p>
-                                                        <p className="font-bold text-gray-900 text-sm md:text-base font-mono">{selectedRequest.aadharNumber}</p>
+                                                        <p className="text-xs text-gray-500 dark:text-gray-400">Aadhar Number</p>
+                                                        <p className="font-bold text-gray-900 dark:text-white text-sm md:text-base font-mono">{selectedRequest.aadharNumber}</p>
                                                     </div>
                                                 )}
                                                 {selectedRequest.aadharPhone && (
                                                     <div>
-                                                        <p className="text-xs text-gray-500">Aadhar Linked Phone</p>
-                                                        <p className="font-bold text-gray-900 text-sm md:text-base">{selectedRequest.aadharPhone}</p>
+                                                        <p className="text-xs text-gray-500 dark:text-gray-400">Aadhar Linked Phone</p>
+                                                        <p className="font-bold text-gray-900 dark:text-white text-sm md:text-base">{selectedRequest.aadharPhone}</p>
                                                     </div>
                                                 )}
                                             </div>
@@ -581,46 +581,46 @@ export default function B2BMarketplace() {
 
                                     {/* Location */}
                                     <div>
-                                        <h3 className="text-xs md:text-sm font-black text-gray-400 uppercase tracking-wider mb-3 md:mb-4">Location</h3>
-                                        <div className="flex items-start gap-3 bg-blue-50 p-4 rounded-xl">
-                                            <MapPin className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                                        <h3 className="text-xs md:text-sm font-black text-gray-400 dark:text-slate-500 uppercase tracking-wider mb-3 md:mb-4">Location</h3>
+                                        <div className="flex items-start gap-3 bg-emerald-50 dark:bg-emerald-900/20 p-4 rounded-xl">
+                                            <MapPin className="w-5 h-5 text-emerald-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
                                             <div className="min-w-0">
-                                                <p className="font-bold text-gray-900 text-sm md:text-base">
+                                                <p className="font-bold text-gray-900 dark:text-white text-sm md:text-base">
                                                     {selectedRequest.address?.city || selectedRequest.city || 'Location'}, {selectedRequest.address?.state || selectedRequest.state || ''}
                                                 </p>
-                                                <p className="text-xs md:text-sm text-gray-600 mt-1">Pincode: {selectedRequest.address?.pincode || selectedRequest.pincode || 'N/A'}</p>
+                                                <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mt-1">Pincode: {selectedRequest.address?.pincode || selectedRequest.pincode || 'N/A'}</p>
                                             </div>
                                         </div>
                                     </div>
 
                                     {/* Contact Information */}
                                     <div>
-                                        <h3 className="text-xs md:text-sm font-black text-gray-400 uppercase tracking-wider mb-3 md:mb-4">Contact Information</h3>
+                                        <h3 className="text-xs md:text-sm font-black text-gray-400 dark:text-slate-500 uppercase tracking-wider mb-3 md:mb-4">Contact Information</h3>
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
-                                            <div className="flex items-start gap-3 bg-gray-50 p-4 rounded-xl">
-                                                <User className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                                            <div className="flex items-start gap-3 bg-gray-50 dark:bg-slate-900/50 p-4 rounded-xl">
+                                                <User className="w-5 h-5 text-emerald-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
                                                 <div className="min-w-0">
-                                                    <p className="text-xs text-gray-500">Name</p>
-                                                    <p className="font-bold text-gray-900 text-sm md:text-base break-words">
+                                                    <p className="text-xs text-gray-500 dark:text-gray-400">Name</p>
+                                                    <p className="font-bold text-gray-900 dark:text-white text-sm md:text-base break-words">
                                                         {selectedRequest.contact?.name || selectedRequest.name || selectedRequest.customerName || 'N/A'}
                                                     </p>
                                                 </div>
                                             </div>
-                                            <div className="flex items-start gap-3 bg-gray-50 p-4 rounded-xl">
-                                                <Phone className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                                            <div className="flex items-start gap-3 bg-gray-50 dark:bg-slate-900/50 p-4 rounded-xl">
+                                                <Phone className="w-5 h-5 text-emerald-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
                                                 <div className="min-w-0">
-                                                    <p className="text-xs text-gray-500">Phone</p>
-                                                    <p className="font-bold text-gray-900 text-sm md:text-base">
+                                                    <p className="text-xs text-gray-500 dark:text-gray-400">Phone</p>
+                                                    <p className="font-bold text-gray-900 dark:text-white text-sm md:text-base">
                                                         {selectedRequest.contact?.phone || selectedRequest.phone || selectedRequest.customerPhone || 'N/A'}
                                                     </p>
                                                 </div>
                                             </div>
                                             {(selectedRequest.email || selectedRequest.customerEmail) && (
-                                                <div className="col-span-1 sm:col-span-2 flex items-start gap-3 bg-gray-50 p-4 rounded-xl">
-                                                    <Calendar className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                                                <div className="col-span-1 sm:col-span-2 flex items-start gap-3 bg-gray-50 dark:bg-slate-900/50 p-4 rounded-xl">
+                                                    <Calendar className="w-5 h-5 text-emerald-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
                                                     <div className="min-w-0">
-                                                        <p className="text-xs text-gray-500">Email</p>
-                                                        <p className="font-bold text-gray-900 text-sm md:text-base break-all">
+                                                        <p className="text-xs text-gray-500 dark:text-gray-400">Email</p>
+                                                        <p className="font-bold text-gray-900 dark:text-white text-sm md:text-base break-all">
                                                             {selectedRequest.email || selectedRequest.customerEmail}
                                                         </p>
                                                     </div>
@@ -632,30 +632,30 @@ export default function B2BMarketplace() {
                                     {/* Documents - Re-verifying structure */}
                                     {(selectedRequest.rcFile || selectedRequest.aadharFile || selectedRequest.carPhoto) && (
                                         <div>
-                                            <h3 className="text-xs md:text-sm font-black text-gray-400 uppercase tracking-wider mb-3 md:mb-4">Documents & Photos</h3>
+                                            <h3 className="text-xs md:text-sm font-black text-gray-400 dark:text-slate-500 uppercase tracking-wider mb-3 md:mb-4">Documents & Photos</h3>
                                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                                                 {selectedRequest.rcFile && (
-                                                    <a href={selectedRequest.rcFile} target="_blank" rel="noopener noreferrer" className="block p-3 border border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition-all text-center group">
-                                                        <div className="w-10 h-10 bg-gray-100 text-gray-500 rounded-full flex items-center justify-center mx-auto mb-2 group-hover:bg-blue-200 group-hover:text-blue-700">
+                                                    <a href={selectedRequest.rcFile} target="_blank" rel="noopener noreferrer" className="block p-3 border border-gray-200 dark:border-slate-800 rounded-xl hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all text-center group">
+                                                        <div className="w-10 h-10 bg-gray-100 dark:bg-slate-900/50 text-gray-500 dark:text-gray-400 rounded-full flex items-center justify-center mx-auto mb-2 group-hover:bg-emerald-200 dark:group-hover:bg-emerald-900/40 group-hover:text-emerald-700 dark:group-hover:text-emerald-300">
                                                             <Package className="w-5 h-5" />
                                                         </div>
-                                                        <span className="text-xs font-bold text-gray-700 group-hover:text-blue-700">RC Document</span>
+                                                        <span className="text-xs font-bold text-gray-700 dark:text-gray-300 group-hover:text-emerald-700 dark:group-hover:text-emerald-400">RC Document</span>
                                                     </a>
                                                 )}
                                                 {selectedRequest.aadharFile && (
-                                                    <a href={selectedRequest.aadharFile} target="_blank" rel="noopener noreferrer" className="block p-3 border border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition-all text-center group">
-                                                        <div className="w-10 h-10 bg-gray-100 text-gray-500 rounded-full flex items-center justify-center mx-auto mb-2 group-hover:bg-blue-200 group-hover:text-blue-700">
+                                                    <a href={selectedRequest.aadharFile} target="_blank" rel="noopener noreferrer" className="block p-3 border border-gray-200 dark:border-slate-800 rounded-xl hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all text-center group">
+                                                        <div className="w-10 h-10 bg-gray-100 dark:bg-slate-900/50 text-gray-500 dark:text-gray-400 rounded-full flex items-center justify-center mx-auto mb-2 group-hover:bg-emerald-200 dark:group-hover:bg-emerald-900/40 group-hover:text-emerald-700 dark:group-hover:text-emerald-300">
                                                             <User className="w-5 h-5" />
                                                         </div>
-                                                        <span className="text-xs font-bold text-gray-700 group-hover:text-blue-700">Aadhar Card</span>
+                                                        <span className="text-xs font-bold text-gray-700 dark:text-gray-300 group-hover:text-emerald-700 dark:group-hover:text-emerald-400">Aadhar Card</span>
                                                     </a>
                                                 )}
                                                 {selectedRequest.carPhoto && (
-                                                    <a href={selectedRequest.carPhoto} target="_blank" rel="noopener noreferrer" className="block p-3 border border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition-all text-center group">
-                                                        <div className="w-10 h-10 bg-gray-100 text-gray-500 rounded-full flex items-center justify-center mx-auto mb-2 group-hover:bg-blue-200 group-hover:text-blue-700">
+                                                    <a href={selectedRequest.carPhoto} target="_blank" rel="noopener noreferrer" className="block p-3 border border-gray-200 dark:border-slate-800 rounded-xl hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all text-center group">
+                                                        <div className="w-10 h-10 bg-gray-100 dark:bg-slate-900/50 text-gray-500 dark:text-gray-400 rounded-full flex items-center justify-center mx-auto mb-2 group-hover:bg-emerald-200 dark:group-hover:bg-emerald-900/40 group-hover:text-emerald-700 dark:group-hover:text-emerald-300">
                                                             <Car className="w-5 h-5" />
                                                         </div>
-                                                        <span className="text-xs font-bold text-gray-700 group-hover:text-blue-700">Car Photo</span>
+                                                        <span className="text-xs font-bold text-gray-700 dark:text-gray-300 group-hover:text-emerald-700 dark:group-hover:text-emerald-400">Car Photo</span>
                                                     </a>
                                                 )}
                                             </div>
@@ -663,7 +663,7 @@ export default function B2BMarketplace() {
                                     )}
 
                                     {/* Timestamp */}
-                                    <div className="pt-4 border-t border-gray-100 text-center">
+                                    <div className="pt-4 border-t border-gray-100 dark:border-slate-800 text-center">
                                         <p className="text-xs text-gray-400 italic flex items-center justify-center gap-2 flex-wrap">
                                             <Calendar className="w-3 h-3" />
                                             <span>Submitted on {new Date(selectedRequest.createdAt).toLocaleString()}</span>
@@ -672,7 +672,7 @@ export default function B2BMarketplace() {
                                 </div>
 
                                 {/* Action Button */}
-                                <div className="p-4 md:p-6 bg-gray-50 border-t border-gray-100">
+                                <div className="p-4 md:p-6 bg-gray-50 dark:bg-slate-900/50 border-t border-gray-100 dark:border-slate-800">
                                     <button
                                         onClick={() => setSelectedRequest(null)}
                                         className="w-full bg-gray-900 hover:bg-black text-white font-bold py-3 md:py-4 rounded-xl transition-all shadow-lg active:scale-[0.98]"
@@ -688,3 +688,4 @@ export default function B2BMarketplace() {
         </div >
     )
 }
+

@@ -1,12 +1,14 @@
 "use client"
 
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence, useInView } from "framer-motion"
 import { Star, Quote, BadgeCheck, ChevronLeft, ChevronRight } from "lucide-react"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 
 export default function ReviewSection() {
     const [activeIndex, setActiveIndex] = useState(0)
+    const sectionRef = useRef<HTMLDivElement>(null)
+    const isInView = useInView(sectionRef, { once: false, amount: 0.2 })
 
     const reviews = [
         {
@@ -57,7 +59,7 @@ export default function ReviewSection() {
     }, [])
 
     return (
-        <section className="py-24 bg-white relative overflow-hidden">
+        <section className="py-24 bg-white relative overflow-hidden" ref={sectionRef}>
             {/* Background Pattern */}
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
                 style={{
@@ -66,7 +68,13 @@ export default function ReviewSection() {
                 }}
             ></div>
 
-            <div className="container mx-auto px-6 relative z-10">
+            <motion.div
+                animate={isInView ? { rotateY: 0, opacity: 1 } : { rotateY: 90, opacity: 0 }}
+                initial={{ rotateY: 90, opacity: 0 }}
+                transition={{ duration: 0.8, ease: [0.2, 0.65, 0.3, 0.9] }}
+                style={{ perspective: "1400px" }}
+                className="container mx-auto px-6 relative z-10"
+            >
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
                     {/* Left Column: Reviews Slider */}
@@ -89,18 +97,19 @@ export default function ReviewSection() {
                             </p>
                         </motion.div>
 
-                        <div className="relative min-h-[400px]">
+                        <div className="relative min-h-[400px]" style={{ perspective: "1200px" }}>
                             <AnimatePresence mode="wait">
                                 <motion.div
                                     key={activeIndex}
-                                    initial={{ x: 50, opacity: 0 }}
-                                    animate={{ x: 0, opacity: 1 }}
-                                    exit={{ x: -50, opacity: 0 }}
-                                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                                    initial={{ rotateY: 90, opacity: 0 }}
+                                    animate={{ rotateY: 0, opacity: 1 }}
+                                    exit={{ rotateY: -90, opacity: 0 }}
+                                    transition={{ duration: 0.5, ease: [0.2, 0.65, 0.3, 0.9] }}
+                                    style={{ transformStyle: "preserve-3d" }}
                                     className="absolute inset-0"
                                 >
-                                    <div className="bg-slate-50 p-10 rounded-3xl shadow-xl border border-emerald-50 relative h-full flex flex-col justify-between">
-                                        <Quote className="absolute top-8 right-8 w-16 h-16 text-emerald-100 fill-current transform rotate-180" />
+                                    <div className="bg-[#0E192D] p-10 rounded-3xl shadow-xl border border-emerald-900/30 relative h-full flex flex-col justify-between">
+                                        <Quote className="absolute top-8 right-8 w-16 h-16 text-emerald-800 fill-current transform rotate-180" />
 
                                         <div>
                                             <div className="flex gap-1 mb-6 text-emerald-400">
@@ -112,7 +121,7 @@ export default function ReviewSection() {
                                                 ))}
                                             </div>
 
-                                            <p className="text-slate-700 text-xl leading-relaxed mb-8 font-medium">
+                                            <p className="text-slate-200 text-xl leading-relaxed mb-8 font-medium">
                                                 "{reviews[activeIndex].text}"
                                             </p>
                                         </div>
@@ -127,7 +136,7 @@ export default function ReviewSection() {
                                                 />
                                             </div>
                                             <div>
-                                                <h3 className="font-bold text-slate-900 text-lg">{reviews[activeIndex].name}</h3>
+                                                <h3 className="font-bold text-white text-lg">{reviews[activeIndex].name}</h3>
                                                 <div className="flex items-center gap-2">
                                                     <p className="text-sm text-emerald-600 font-medium">{reviews[activeIndex].role}</p>
                                                     <BadgeCheck className="w-4 h-4 text-emerald-500" />
@@ -183,7 +192,7 @@ export default function ReviewSection() {
                             fill
                             className="object-cover object-top group-hover:scale-105 transition-transform duration-700"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-60"></div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0E192D]/60 to-transparent opacity-60"></div>
 
                         {/* Floating Badge */}
                         <motion.div
@@ -191,15 +200,16 @@ export default function ReviewSection() {
                             whileInView={{ y: 0, opacity: 1 }}
                             viewport={{ once: false }}
                             transition={{ delay: 0.4, duration: 0.6 }}
-                            className="absolute bottom-4 left-4 lg:bottom-6 lg:left-6 bg-white/95 backdrop-blur-sm p-3 lg:p-4 rounded-xl shadow-lg max-w-[150px] lg:max-w-[200px] border-l-2 lg:border-l-4 border-emerald-500"
+                            className="absolute bottom-4 left-4 lg:bottom-6 lg:left-6 bg-[#0E192D] backdrop-blur-sm p-3 lg:p-4 rounded-xl shadow-lg max-w-[150px] lg:max-w-[200px] border-l-2 lg:border-l-4 border-emerald-500"
                         >
-                            <p className="text-xl lg:text-2xl font-black text-slate-900 mb-0.5">15k+</p>
-                            <p className="text-slate-600 text-xs lg:text-sm font-medium leading-snug">Happy customers served across India</p>
+                            <p className="text-xl lg:text-2xl font-black text-white mb-0.5">15k+</p>
+                            <p className="text-slate-300 text-xs lg:text-sm font-medium leading-snug">Happy customers served across India</p>
                         </motion.div>
                     </motion.div>
 
                 </div>
-            </div>
+            </motion.div>
         </section>
     )
 }
+

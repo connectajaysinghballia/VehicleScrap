@@ -4,18 +4,38 @@ import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { Button } from "@/components/ui/button"
 import { Menu, X, Phone, ChevronDown, Sparkles, User, LogOut, LayoutDashboard, Car, RefreshCw, ShoppingCart, BookOpen, FileText, Home, ArrowRight } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence, type Variants } from "framer-motion"
 import Link from "next/link" // Import Link for navigation
 import Image from "next/image"
 import { useSession, signOut } from "next-auth/react"
 import { useRouter } from "next/navigation"
 gsap.registerPlugin(ScrollTrigger)
 
+// Animation variants for staggered dropdown items
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.1,
+    },
+  },
+  exit: { opacity: 0, transition: { staggerChildren: 0.04, staggerDirection: -1 } },
+}
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, x: -16 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.3, ease: [0, 0, 0.2, 1] } },
+  exit: { opacity: 0, x: -10, transition: { duration: 0.15 } },
+}
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const [isResourcesOpen, setIsResourcesOpen] = useState(false)
   const [isServicesOpen, setIsServicesOpen] = useState(false)
+  const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false)
   const { data: session } = useSession()
   const router = useRouter()
 
@@ -73,50 +93,51 @@ export default function Navbar() {
     )
 
     // Scroll-based navbar background and visibility
-    let lastScrollY = 0
     ScrollTrigger.create({
-      start: "top -80",
+      start: "top -10",
       end: 99999,
       onUpdate: (self) => {
         const currentScrollY = self.scroll()
 
         // Handle navbar background
-        if (self.direction === 1) {
+        if (currentScrollY > 10) {
           setIsScrolled(true)
-        } else if (self.progress < 0.1) {
+        } else {
           setIsScrolled(false)
         }
 
-        // Handle navbar visibility based on scroll direction
-        if (currentScrollY > 100) {
-          // Only hide after scrolling past 100px
-          if (self.direction === 1 && currentScrollY > lastScrollY + 10) {
-            // Scrolling down - hide navbar
-            gsap.to(".navbar", {
-              y: -100,
-              duration: 0.3,
-              ease: "power2.out",
-            })
-          } else if (self.direction === -1 && currentScrollY < lastScrollY - 10) {
-            // Scrolling up - show navbar
-            gsap.to(".navbar", {
-              y: 0,
-              duration: 0.3,
-              ease: "power2.out",
-            })
-          }
-        } else {
-          // Always show navbar when near top
-          gsap.to(".navbar", {
-            y: 0,
+        // Handle sticky behavior: Hide Bottom Row on scroll, Keep Top Row sticky
+        if (currentScrollY > 50) {
+          // Scroll down past threshold -> Hide Bottom Row
+          gsap.to(".bottom-row", {
+            height: 0,
+            opacity: 0,
+            paddingTop: 0,
+            paddingBottom: 0,
             duration: 0.3,
             ease: "power2.out",
+            overflow: "hidden"
           })
-        }
-
-        // Only update lastScrollY if there's significant movement
-        if (Math.abs(currentScrollY - lastScrollY) > 5) {
-          lastScrollY = currentScrollY
+          // Ensure navbar stays at top
+          gsap.to(".navbar", {
+            y: 0,
+            duration: 0.3
+          })
+        } else {
+          // At top -> Show Bottom Row
+          gsap.to(".bottom-row", {
+            height: "auto",
+            opacity: 1,
+            paddingTop: "0.5rem", // py-2
+            paddingBottom: "0.5rem", // py-2
+            duration: 0.3,
+            ease: "power2.out",
+            overflow: "visible"
+          })
+          gsap.to(".navbar", {
+            y: 0,
+            duration: 0.3
+          })
         }
       },
     })
@@ -154,16 +175,165 @@ export default function Navbar() {
     }
   }
 
+  // Disable scroll when Mega Menu is open
+  useEffect(() => {
+    if (isMegaMenuOpen) {
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = "unset"
+    }
+    return () => {
+      document.body.style.overflow = "unset"
+    }
+  }, [isMegaMenuOpen])
+
   return (
     <nav
       className={`navbar fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-        ? "bg-white/90 backdrop-blur-xl border-b border-emerald-600/20 shadow-lg shadow-emerald-600/5"
-        : "bg-white backdrop-blur-md shadow-sm"
+        ? "bg-[#cccccc] border-b border-emerald-600/20 shadow-lg shadow-emerald-600/5"
+        : "bg-[#cccccc] shadow-sm"
         }`}
     >
       <div className="container mx-auto px-6">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
+        {/* Desktop Layout - 2 Rows */}
+        <div className="hidden lg:flex flex-col w-full">
+
+          {/* Top Row: Quote - Logo - User */}
+          <div className="top-row flex items-center justify-between py-2 px-6">
+
+            {/* Left: Get Free Quote Button */}
+            <div className="w-1/3 flex justify-start">
+              <motion.div
+                className="cta-button"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Link href="/quote" passHref>
+                  <Button className="relative overflow-hidden bg-[#0E192D] hover:bg-emerald-600 text-white px-6 py-3 rounded-full font-bold shadow-lg shadow-emerald-900/20 transition-all duration-300 group text-xs whitespace-nowrap font-['Helvetica_Neue'] tracking-wide">
+                    <span className="relative z-10 flex items-center gap-2">
+                      Get Free Quote
+                      <ArrowRight className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-1" />
+                    </span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></div>
+                  </Button>
+                </Link>
+              </motion.div>
+            </div>
+
+            {/* Center: Logo */}
+            <div className="w-1/3 flex justify-center">
+              <div className="logo flex items-center cursor-pointer" onClick={() => handleNavClick("/")}>
+                <motion.div
+                  className="logo-icon"
+                  animate={{ rotate: [0, 5, -5, 0] }}
+                  transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY }}
+                >
+                  <Image
+                    src="/logo.png"
+                    alt="ScrapCenter India Logo"
+                    width={120}
+                    height={48}
+                    className="h-8 w-auto sm:h-10 object-contain"
+                  />
+                </motion.div>
+              </div>
+            </div>
+
+            {/* Right: User / Login */}
+            <div className="w-1/3 flex justify-end">
+              {session ? (
+                <div className="relative group">
+                  <button className="flex items-center gap-2 text-gray-600 hover:text-emerald-700 font-medium">
+                    <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center border border-emerald-200">
+                      <span className="text-emerald-700 font-bold text-sm">{(session.user?.name || "U")[0]}</span>
+                    </div>
+                    <div className="text-left hidden xl:block">
+                      <p className="text-xs font-bold text-slate-900 leading-tight">{session.user?.name}</p>
+                      <p className="text-[10px] text-slate-500">View Profile</p>
+                    </div>
+                    <ChevronDown className="w-3 h-3 ml-1" />
+                  </button>
+                  {/* User Dropdown */}
+                  <div className="absolute top-full right-0 mt-2 bg-[#cccccc] border border-gray-100 rounded-lg shadow-xl py-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-in-out z-50">
+                    <div className="px-4 py-3 border-b border-gray-50 bg-gray-50/50">
+                      <p className="text-sm font-bold text-gray-900 truncate">{session.user?.name}</p>
+                      <p className="text-xs text-gray-500 truncate">{session.user?.email}</p>
+                    </div>
+                    {(session.user as any).role === "admin" && (
+                      <Link
+                        href="/admin"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-700"
+                      >
+                        Admin Dashboard
+                      </Link>
+                    )}
+                    {(session.user as any).role !== "admin" && (
+                      <>
+                        {(session.user as any).role !== "partner" && (
+                          <Link href="/partner-register" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            Be our partner
+                          </Link>
+                        )}
+                        <Link href="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                          {(session.user as any).role === "partner" ? "Partner Dashboard" : "Profile"}
+                        </Link>
+                      </>
+                    )}
+                    <button
+                      onClick={() => signOut({ callbackUrl: "/" })}
+                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      Sign out
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <Link href="/login">
+                  <Button variant="ghost" className="text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 font-bold text-sm px-4">
+                    Login
+                  </Button>
+                </Link>
+              )}
+            </div>
+          </div>
+
+          {/* Bottom Row: Navigation Links Only */}
+          <div className="bottom-row flex items-center justify-center py-2 px-6">
+            <div className="flex justify-center gap-16 xl:gap-24">
+              {navItems.map((item) => (
+                <div
+                  key={item.name}
+                  className="relative group flex items-center"
+                >
+                  <button
+                    className="nav-item relative text-gray-600 hover:text-emerald-700 transition-colors duration-200 font-medium flex items-center gap-1 py-3 font-['Helvetica_Neue'] whitespace-nowrap tracking-wide text-sm"
+                    onClick={() => {
+                      if (item.hasDropdown) {
+                        setIsMegaMenuOpen(!isMegaMenuOpen)
+                      } else {
+                        handleNavClick(item.href)
+                      }
+                    }}
+                  >
+                    <span className="relative font-bold uppercase text-sm">
+                      {item.name}
+                      <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#0E192D] transition-all duration-300 group-hover:w-full"></span>
+                    </span>
+                    {item.hasDropdown && (
+                      <ChevronDown
+                        className={`w-3 h-3 transition-transform duration-300 ${isMegaMenuOpen && (item.name === "Services" || item.name === "Resources") ? "rotate-180 text-emerald-600" : ""}`}
+                      />
+                    )}
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
+
+        {/* Mobile Navigation Header (simplified) */}
+        <div className="lg:hidden flex items-center justify-between w-full h-16 px-4 py-2 border-b border-gray-100 bg-[#cccccc]">
           <div className="logo flex items-center cursor-pointer space-x-2" onClick={() => handleNavClick("/")}>
             <motion.div
               className="logo-icon"
@@ -173,164 +343,16 @@ export default function Navbar() {
               <Image
                 src="/logo.png"
                 alt="ScrapCenter India Logo"
-                width={200}
-                height={80}
-                className="h-16 w-auto sm:h-20"
+                width={100}
+                height={40}
+                className="h-8 w-auto"
               />
             </motion.div>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <div key={item.name} className="relative group">
-                <button
-                  className="nav-item relative text-gray-600 hover:text-emerald-700 transition-colors duration-200 font-medium flex items-center gap-1"
-                  onClick={() => !item.hasDropdown && handleNavClick(item.href)}
-                >
-                  <span className="relative">
-                    {item.name}
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#0a192f] transition-all duration-300 group-hover:w-full"></span>
-                  </span>
-                  {item.hasDropdown && <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />}
-                </button>
-
-                {/* Services Dropdown Menu */}
-                {item.name === "Services" && item.hasDropdown && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="absolute top-full mt-2 left-0 bg-white/95 backdrop-blur-lg border border-emerald-100 rounded-xl shadow-xl overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 min-w-[320px] p-2"
-                  >
-                    {servicesDropdown.map((dropdownItem) => (
-                      <Link
-                        key={dropdownItem.name}
-                        href={dropdownItem.href}
-                        onClick={() => setIsOpen(false)}
-                        className="flex items-start gap-4 p-3 rounded-lg hover:bg-[#0a192f]/5 transition-colors duration-200 group/item"
-                      >
-                        <div className="p-2 bg-[#0a192f]/5 rounded-lg text-[#0a192f] group-hover/item:bg-[#0a192f] group-hover/item:text-white transition-colors duration-200">
-                          <dropdownItem.icon className="w-5 h-5" />
-                        </div>
-                        <div>
-                          <div className="font-semibold text-[#0a192f] group-hover/item:text-emerald-700 transition-colors relative inline-block">
-                            {dropdownItem.name}
-                          </div>
-                          <p className="text-xs text-gray-500 mt-0.5 line-clamp-1">
-                            {dropdownItem.description}
-                          </p>
-                        </div>
-                      </Link>
-                    ))}
-                  </motion.div>
-                )}
-
-                {/* Resources Dropdown Menu */}
-                {item.name === "Resources" && item.hasDropdown && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="absolute top-full mt-2 left-0 bg-white/95 backdrop-blur-lg border border-emerald-100 rounded-xl shadow-xl overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 min-w-[320px] p-2"
-                  >
-                    {resourcesDropdown.map((dropdownItem) => (
-                      <Link
-                        key={dropdownItem.name}
-                        href={dropdownItem.href}
-                        onClick={() => setIsOpen(false)}
-                        className="flex items-start gap-4 p-3 rounded-lg hover:bg-[#0a192f]/5 transition-colors duration-200 group/item"
-                      >
-                        <div className="p-2 bg-[#0a192f]/5 rounded-lg text-[#0a192f] group-hover/item:bg-[#0a192f] group-hover/item:text-white transition-colors duration-200">
-                          <dropdownItem.icon className="w-5 h-5" />
-                        </div>
-                        <div>
-                          <div className="font-semibold text-[#0a192f] group-hover/item:text-emerald-700 transition-colors relative inline-block">
-                            {dropdownItem.name}
-                          </div>
-                          <p className="text-xs text-gray-500 mt-0.5 line-clamp-1">
-                            {dropdownItem.description}
-                          </p>
-                        </div>
-                      </Link>
-                    ))}
-                  </motion.div>
-                )}
-              </div>
-            ))}
-
-            {/* CTA Button */}
-            <motion.div
-              className="cta-button"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Link href="/quote" passHref>
-                <Button className="relative overflow-hidden bg-[#0a192f] hover:bg-emerald-600 text-white px-8 py-6 rounded-full font-bold shadow-lg shadow-emerald-900/20 transition-all duration-300 group">
-                  <span className="relative z-10 flex items-center gap-2">
-                    Get Free Quote
-                    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-                  </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></div>
-                </Button>
-              </Link>
-            </motion.div>
-
-            {/* Login/User Button */}
-            {session ? (
-              <div className="relative group">
-                <button className="flex items-center gap-2 text-gray-600 hover:text-emerald-700 font-medium">
-                  <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center border border-emerald-200">
-                    <span className="text-emerald-700 font-bold text-sm">{(session.user?.name || "U")[0]}</span>
-                  </div>
-                  <ChevronDown className="w-4 h-4" />
-                </button>
-                {/* User Dropdown */}
-                <div className="absolute top-full right-0 mt-2 bg-white border border-gray-100 rounded-lg shadow-xl py-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                  <div className="px-4 py-2 border-b border-gray-50">
-                    <p className="text-sm font-bold text-gray-900 truncate">{session.user?.name}</p>
-                    <p className="text-xs text-gray-500 truncate">{session.user?.email}</p>
-                  </div>
-                  {(session.user as any).role === "admin" && (
-                    <Link
-                      href="/admin"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-700"
-                    >
-                      Admin Dashboard
-                    </Link>
-                  )}
-                  {(session.user as any).role !== "admin" && (
-                    <>
-                      {(session.user as any).role !== "partner" && (
-                        <Link href="/partner-register" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                          Be our partner
-                        </Link>
-                      )}
-                      <Link href="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                        {(session.user as any).role === "partner" ? "Partner Dashboard" : "Profile"}
-                      </Link>
-                    </>
-                  )}
-                  <button
-                    onClick={() => signOut({ callbackUrl: "/" })}
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  >
-                    Sign out
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <Link href="/login">
-                <Button variant="ghost" className="text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 font-medium">
-                  Login
-                </Button>
-              </Link>
-            )}
-          </div>
-
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden text-gray-700 hover:text-emerald-600 transition-colors z-50"
+            className="text-gray-700 hover:text-emerald-600 transition-colors z-50 p-2"
             onClick={() => setIsOpen(!isOpen)}
           >
             <motion.div animate={{ rotate: isOpen ? 90 : 0 }} transition={{ duration: 0.3 }}>
@@ -339,170 +361,290 @@ export default function Navbar() {
           </button>
         </div>
       </div>
+
       {/* Mobile Navigation */}
       <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="lg:hidden overflow-hidden absolute top-full left-0 right-0"
-          >
-            <div className="py-4 bg-white/95 backdrop-blur-lg border border-emerald-600/20 max-h-[80vh] overflow-y-auto mx-2 my-2 rounded-lg shadow-xl">
-              {navItems.map((item) => (
-                <div key={item.name}>
-                  <button
-                    className="block w-full text-left px-4 py-3 text-gray-700 hover:text-emerald-700 hover:bg-emerald-50 transition-all duration-200 rounded-lg flex items-center justify-between"
-                    onClick={() => {
-                      if (item.hasDropdown) {
-                        if (item.name === "Services") {
-                          setIsServicesOpen(!isServicesOpen)
+        {
+          isOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+              className="lg:hidden overflow-hidden absolute top-full left-0 right-0 h-screen bg-[#cccccc] z-50"
+            >
+              <div className="py-4 px-4 h-full overflow-y-auto pb-20">
+                {navItems.map((item) => (
+                  <div key={item.name} className="border-b border-gray-50 last:border-0">
+                    <button
+                      className="block w-full text-left px-4 py-4 text-gray-800 hover:text-emerald-700 hover:bg-emerald-50 transition-all duration-200 rounded-lg flex items-center justify-between font-bold text-lg"
+                      onClick={() => {
+                        if (item.hasDropdown) {
+                          if (item.name === "Services") {
+                            setIsServicesOpen(!isServicesOpen)
+                          } else {
+                            setIsResourcesOpen(!isResourcesOpen)
+                          }
                         } else {
-                          setIsResourcesOpen(!isResourcesOpen)
+                          handleNavClick(item.href)
+                          setIsOpen(false)
                         }
-                      } else {
-                        handleNavClick(item.href)
-                        setIsOpen(false)
-                      }
-                    }}
-                  >
-                    <span>{item.name}</span>
-                    {item.hasDropdown && (
-                      <motion.div
-                        animate={{
-                          rotate:
-                            item.name === "Services" ? (isServicesOpen ? 180 : 0) : isResourcesOpen ? 180 : 0,
-                        }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <ChevronDown className="w-4 h-4" />
-                      </motion.div>
-                    )}
-                  </button>
-
-                  {/* Mobile Services Dropdown */}
-                  {item.name === "Services" && item.hasDropdown && isServicesOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.2 }}
-                      className="mt-2 bg-gray-50 border border-gray-100 rounded-xl overflow-hidden shadow-inner mx-4"
+                      }}
                     >
-                      {servicesDropdown.map((dropdownItem) => (
-                        <Link
-                          key={dropdownItem.name}
-                          href={dropdownItem.href}
-                          onClick={() => {
-                            setIsOpen(false)
-                            setIsServicesOpen(false)
+                      <span className="uppercase tracking-wider text-sm">{item.name}</span>
+                      {item.hasDropdown && (
+                        <motion.div
+                          animate={{
+                            rotate:
+                              item.name === "Services" ? (isServicesOpen ? 180 : 0) : isResourcesOpen ? 180 : 0,
                           }}
-                          className="flex items-center gap-3 w-full text-left px-5 py-3 text-gray-600 font-medium hover:text-emerald-700 hover:bg-emerald-50 transition-all duration-200 text-sm border-b border-gray-100 last:border-0"
+                          transition={{ duration: 0.2 }}
                         >
-                          <dropdownItem.icon className="w-4 h-4" />
-                          {dropdownItem.name}
-                        </Link>
-                      ))}
-                    </motion.div>
-                  )}
+                          <ChevronDown className="w-5 h-5 text-gray-400" />
+                        </motion.div>
+                      )}
+                    </button>
 
-                  {/* Mobile Resources Dropdown */}
-                  {item.name === "Resources" && item.hasDropdown && isResourcesOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.2 }}
-                      className="mt-2 bg-gray-50 border border-gray-100 rounded-xl overflow-hidden shadow-inner mx-4"
-                    >
-                      {resourcesDropdown.map((dropdownItem) => (
-                        <Link
-                          key={dropdownItem.name}
-                          href={dropdownItem.href}
-                          onClick={() => {
-                            setIsOpen(false)
-                            setIsResourcesOpen(false)
-                          }}
-                          className="flex items-center gap-3 w-full text-left px-5 py-3 text-gray-600 font-medium hover:text-emerald-700 hover:bg-emerald-50 transition-all duration-200 text-sm border-b border-gray-100 last:border-0"
+                    {/* Mobile Services Dropdown */}
+                    <AnimatePresence>
+                      {item.name === "Services" && item.hasDropdown && isServicesOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3, ease: "easeInOut" }}
+                          className="bg-[#cccccc] overflow-hidden"
                         >
-                          <dropdownItem.icon className="w-4 h-4" />
-                          {dropdownItem.name}
-                        </Link>
-                      ))}
-                    </motion.div>
-                  )}
-                </div>
-              ))}
-              <div className="px-2 pt-2">
-                <Link href="/quote" passHref>
-                  <Button
-                    className="w-full bg-[#0a192f] hover:bg-emerald-600 text-white py-3 rounded-lg font-semibold shadow-lg shadow-emerald-900/25 transition-all duration-300 group"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <span className="flex items-center justify-center gap-2">
-                      Get Free Quote
-                      <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-                    </span>
-                  </Button>
-                </Link>
-                {session ? (
-                  <div className="mt-4 border-t border-gray-100 pt-4">
-                    <div className="px-4 mb-3">
-                      <p className="font-semibold text-gray-900">{session.user?.name}</p>
-                      <p className="text-xs text-gray-500">{session.user?.email}</p>
-                    </div>
+                          <motion.div variants={containerVariants} initial="hidden" animate="visible" exit="exit">
+                            {servicesDropdown.map((dropdownItem) => (
+                              <motion.div key={dropdownItem.name} variants={itemVariants}>
+                                <Link
+                                  href={dropdownItem.href}
+                                  onClick={() => {
+                                    setIsOpen(false)
+                                    setIsServicesOpen(false)
+                                  }}
+                                  className="flex items-center gap-4 w-full text-left px-6 py-4 text-gray-600 font-medium hover:text-emerald-700 transition-all duration-200 text-sm border-b border-gray-100 last:border-0 pl-8"
+                                >
+                                  <div className="bg-white p-2 rounded-md shadow-sm">
+                                    <dropdownItem.icon className="w-4 h-4 text-emerald-600" />
+                                  </div>
+                                  {dropdownItem.name}
+                                </Link>
+                              </motion.div>
+                            ))}
+                          </motion.div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
 
-                    {(session.user as any).role === "admin" && (
-                      <Link href="/admin">
-                        <Button
-                          variant="ghost"
-                          className="w-full justify-start text-gray-700 hover:text-emerald-700 hover:bg-emerald-50 mb-1"
-                          onClick={() => setIsOpen(false)}
+                    {/* Mobile Resources Dropdown */}
+                    <AnimatePresence>
+                      {item.name === "Resources" && item.hasDropdown && isResourcesOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3, ease: "easeInOut" }}
+                          className="bg-[#cccccc] overflow-hidden"
                         >
-                          <LayoutDashboard className="w-4 h-4 mr-2" /> Admin Dashboard
-                        </Button>
-                      </Link>
-                    )}
-
-                    {(session.user as any).role !== "admin" && (
-                      <Link href="/profile">
-                        <Button
-                          variant="ghost"
-                          className="w-full justify-start text-gray-700 hover:text-emerald-700 hover:bg-emerald-50 mb-1"
-                          onClick={() => setIsOpen(false)}
-                        >
-                          <User className="w-4 h-4 mr-2" /> {(session.user as any).role === "partner" ? "Partner Dashboard" : "Profile"}
-                        </Button>
-                      </Link>
-                    )}
-
-                    <Button
-                      variant="ghost"
-                      className="w-full text-emerald-700 hover:bg-emerald-50 justify-start"
-                      onClick={() => signOut({ callbackUrl: "/" })}
-                    >
-                      <LogOut className="w-4 h-4 mr-2" /> Sign Out
-                    </Button>
+                          <motion.div variants={containerVariants} initial="hidden" animate="visible" exit="exit">
+                            {resourcesDropdown.map((dropdownItem) => (
+                              <motion.div key={dropdownItem.name} variants={itemVariants}>
+                                <Link
+                                  href={dropdownItem.href}
+                                  onClick={() => {
+                                    setIsOpen(false)
+                                    setIsResourcesOpen(false)
+                                  }}
+                                  className="flex items-center gap-4 w-full text-left px-6 py-4 text-gray-600 font-medium hover:text-emerald-700 transition-all duration-200 text-sm border-b border-gray-100 last:border-0 pl-8"
+                                >
+                                  <div className="bg-white p-2 rounded-md shadow-sm">
+                                    <dropdownItem.icon className="w-4 h-4 text-emerald-600" />
+                                  </div>
+                                  {dropdownItem.name}
+                                </Link>
+                              </motion.div>
+                            ))}
+                          </motion.div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
-                ) : (
-                  <Link href="/login">
+                ))}
+
+                <div className="mt-8 px-2 space-y-4">
+                  <Link href="/quote" passHref className="block">
                     <Button
-                      variant="ghost"
-                      className="w-full mt-2 text-gray-600 hover:bg-emerald-50 justify-start"
+                      className="w-full bg-[#0E192D] hover:bg-emerald-600 text-white py-4 rounded-xl font-bold shadow-lg shadow-emerald-900/25 transition-all duration-300 group text-lg"
                       onClick={() => setIsOpen(false)}
                     >
-                      <User className="w-4 h-4 mr-2" /> Login
+                      <span className="flex items-center justify-center gap-2">
+                        Get Free Quote
+                        <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                      </span>
                     </Button>
                   </Link>
-                )}
+
+                  {session ? (
+                    <div className="pt-4 border-t border-gray-100">
+                      <div className="flex items-center gap-3 px-2 mb-4">
+                        <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold border border-emerald-200">
+                          {(session.user?.name || "U")[0]}
+                        </div>
+                        <div>
+                          <p className="font-bold text-gray-900">{session.user?.name}</p>
+                          <p className="text-xs text-gray-500">{session.user?.email}</p>
+                        </div>
+                      </div>
+
+                      {(session.user as any).role === "admin" && (
+                        <Link href="/admin">
+                          <Button
+                            variant="ghost"
+                            className="w-full justify-start text-gray-700 hover:text-emerald-700 hover:bg-emerald-50 mb-2 h-12 text-base font-medium"
+                            onClick={() => setIsOpen(false)}
+                          >
+                            <LayoutDashboard className="w-5 h-5 mr-3" /> Admin Dashboard
+                          </Button>
+                        </Link>
+                      )}
+
+                      {(session.user as any).role !== "admin" && (
+                        <Link href="/profile">
+                          <Button
+                            variant="ghost"
+                            className="w-full justify-start text-gray-700 hover:text-emerald-700 hover:bg-emerald-50 mb-2 h-12 text-base font-medium"
+                            onClick={() => setIsOpen(false)}
+                          >
+                            <User className="w-5 h-5 mr-3" /> {(session.user as any).role === "partner" ? "Partner Dashboard" : "Profile"}
+                          </Button>
+                        </Link>
+                      )}
+
+                      <Button
+                        variant="ghost"
+                        className="w-full text-red-600 hover:bg-red-50 justify-start h-12 text-base font-medium"
+                        onClick={() => signOut({ callbackUrl: "/" })}
+                      >
+                        <LogOut className="w-5 h-5 mr-3" /> Sign Out
+                      </Button>
+                    </div>
+                  ) : (
+                    <Link href="/login" className="block">
+                      <Button
+                        variant="outline"
+                        className="w-full justify-center text-gray-700 hover:text-emerald-700 hover:bg-emerald-50 border-gray-200 h-12 text-base font-bold"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <User className="w-5 h-5 mr-2" /> Login
+                      </Button>
+                    </Link>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          )
+        }
+      </AnimatePresence>
+
+      {/* Unified Mega Menu */}
+      <AnimatePresence>
+        {isMegaMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            className="absolute top-full left-0 w-full h-screen bg-[#cccccc] shadow-2xl z-40"
+          >
+            <div className="container mx-auto px-6 py-12">
+              <div className="grid grid-cols-2 gap-12 max-w-4xl mx-auto">
+                {/* Services Column */}
+                <div className="col-span-1 border-r border-gray-100 pr-12">
+                  <div className="flex items-center gap-3 mb-8">
+                    <div className="p-2 rounded-lg bg-emerald-100/50 text-emerald-700">
+                      <Car className="w-6 h-6" />
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900">Our Services</h3>
+                  </div>
+                  <motion.div className="space-y-4" variants={containerVariants} initial="hidden" animate="visible" exit="exit">
+                    {servicesDropdown.map((dropdownItem) => (
+                      <motion.div key={dropdownItem.name} variants={itemVariants}>
+                        <Link
+                          href={dropdownItem.href}
+                          onClick={() => setIsMegaMenuOpen(false)}
+                          className="flex items-center gap-4 w-full text-left px-4 py-4 rounded-xl hover:bg-gray-50 transition-all duration-200 group/link"
+                        >
+                          <div className="p-2 rounded-lg bg-gray-100 text-gray-500 group-hover/link:bg-emerald-600 group-hover/link:text-white transition-colors">
+                            <dropdownItem.icon className="w-5 h-5" />
+                          </div>
+                          <div>
+                            <p className="text-base font-semibold text-gray-700 group-hover/link:text-emerald-700 transition-colors">
+                              {dropdownItem.name}
+                            </p>
+                            <p className="text-sm text-gray-500 line-clamp-1 mt-0.5">
+                              {dropdownItem.description}
+                            </p>
+                          </div>
+                        </Link>
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                </div>
+
+                {/* Resources Column */}
+                <div className="col-span-1 pl-4">
+                  <div className="flex items-center gap-3 mb-8">
+                    <div className="p-2 rounded-lg bg-emerald-100/50 text-emerald-700">
+                      <BookOpen className="w-6 h-6" />
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900">Resources</h3>
+                  </div>
+                  <motion.div className="space-y-4" variants={containerVariants} initial="hidden" animate="visible" exit="exit">
+                    {resourcesDropdown.map((dropdownItem) => (
+                      <motion.div key={dropdownItem.name} variants={itemVariants}>
+                        <Link
+                          href={dropdownItem.href}
+                          onClick={() => setIsMegaMenuOpen(false)}
+                          className="flex items-center gap-4 w-full text-left px-4 py-4 rounded-xl hover:bg-gray-50 transition-all duration-200 group/link"
+                        >
+                          <div className="p-2 rounded-lg bg-gray-100 text-gray-500 group-hover/link:bg-emerald-600 group-hover/link:text-white transition-colors">
+                            <dropdownItem.icon className="w-5 h-5" />
+                          </div>
+                          <div>
+                            <p className="text-base font-semibold text-gray-700 group-hover/link:text-emerald-700 transition-colors">
+                              {dropdownItem.name}
+                            </p>
+                            <p className="text-sm text-gray-500 line-clamp-1 mt-0.5">
+                              {dropdownItem.description}
+                            </p>
+                          </div>
+                        </Link>
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                </div>
+              </div>
+
+              {/* Close Menu Button */}
+              <div className="flex justify-center mt-12 pb-12">
+                <button
+                  onClick={() => setIsMegaMenuOpen(false)}
+                  className="flex items-center gap-2 px-6 py-3 rounded-full bg-gray-100 hover:bg-emerald-50 text-gray-600 hover:text-emerald-700 transition-all duration-200 font-medium group"
+                >
+                  <X className="w-4 h-4 transition-transform duration-200 group-hover:rotate-90" />
+                  <span>Close Menu</span>
+                </button>
               </div>
             </div>
+            {/* Bottom Border Gradient Removed */}
           </motion.div>
         )}
       </AnimatePresence>
       {/* Animated border */}
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-600/30 to-transparent"></div>
-    </nav >
+    </nav>
   )
 }
+

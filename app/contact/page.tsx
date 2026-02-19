@@ -208,7 +208,7 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-emerald-100 selection:text-emerald-900 flex flex-col">
+    <div className="min-h-screen bg-[#0E192D] font-sans text-slate-900 selection:bg-emerald-100 selection:text-emerald-900 flex flex-col">
       {/* Navbar Placeholder */}
       <div className="h-20"></div>
 
@@ -220,20 +220,20 @@ export default function ContactPage() {
 
       <div className="flex-grow flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8 relative z-10 space-y-8">
 
-        <div className="text-center max-w-2xl mx-auto mb-4">
+        <div className="text-center max-w-2xl mx-auto mb-4 mt-12">
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight mb-4"
+            className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight mb-4"
           >
-            Let's Start a <span className="text-emerald-600">Conversation</span>
+            Let's Start a <span className="text-emerald-400">Conversation</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg text-slate-600"
+            className="text-lg text-slate-400"
           >
             Have a question or need assistance? We're here to help you every step of the way.
           </motion.p>
@@ -243,10 +243,10 @@ export default function ContactPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="bg-white rounded-[32px] shadow-2xl shadow-slate-200/50 overflow-hidden flex flex-col lg:flex-row w-full max-w-6xl border border-slate-100"
+          className="bg-white rounded-[32px] shadow-2xl shadow-slate-900/50 overflow-hidden flex flex-col lg:flex-row w-full max-w-6xl border border-white/10"
         >
           {/* Left Panel: Contact Info */}
-          <div className="lg:w-2/5 bg-slate-900 relative p-10 text-white flex flex-col justify-between overflow-hidden">
+          <div className="lg:w-2/5 bg-[#0E192D] relative p-10 text-white flex flex-col justify-between overflow-hidden">
             {/* Background pattern */}
             <div className="absolute inset-0 opacity-10">
               <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -373,7 +373,7 @@ export default function ContactPage() {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full h-12 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl shadow-lg shadow-slate-900/20 transform hover:-translate-y-0.5 transition-all text-base"
+                  className="w-full h-12 bg-[#0E192D] hover:bg-slate-800 text-white font-bold rounded-xl shadow-lg shadow-slate-900/20 transform hover:-translate-y-0.5 transition-all text-base"
                 >
                   {isSubmitting ? (
                     <>
@@ -431,3 +431,4 @@ export default function ContactPage() {
     </div>
   )
 }
+

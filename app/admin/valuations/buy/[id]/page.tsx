@@ -152,15 +152,15 @@ export default function BuyDetailPage({ params }: { params: Promise<{ id: string
             {/* Header */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div className="flex items-center gap-4">
-                    <Link href="/admin/valuations/buy" className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                        <ChevronLeft className="w-5 h-5 text-gray-600" />
+                    <Link href="/admin/valuations/buy" className="p-2 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
+                        <ChevronLeft className="w-5 h-5 text-gray-600 dark:text-slate-400" />
                     </Link>
                     <div>
-                        <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-                            <ShoppingCart className="w-6 h-6 text-orange-600" />
+                        <h1 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                            <ShoppingCart className="w-6 h-6 text-orange-600 dark:text-orange-500" />
                             Buy Vehicle Request Details
                         </h1>
-                        <p className="text-gray-500 mt-1">Request ID: {request._id}</p>
+                        <p className="text-gray-500 dark:text-slate-400 mt-1">Request ID: {request._id}</p>
                     </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -196,94 +196,98 @@ export default function BuyDetailPage({ params }: { params: Promise<{ id: string
             {/* Content Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Vehicle Preferences */}
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                    <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                        <Car className="w-5 h-5 text-orange-600" />
+                {/* Vehicle Preferences */}
+                <div className="bg-white dark:bg-[#0E192D] rounded-xl shadow-sm border border-gray-200 dark:border-slate-800 p-6">
+                    <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                        <Car className="w-5 h-5 text-orange-600 dark:text-orange-500" />
                         Vehicle Preferences
                     </h2>
                     <div className="space-y-3">
-                        <div className="flex justify-between py-2 border-b border-gray-100">
-                            <span className="text-gray-500 font-medium">Brand:</span>
-                            <span className="text-gray-900 font-semibold">{request.customBrand || request.vehicleBrand}</span>
+                        <div className="flex justify-between py-2 border-b border-gray-100 dark:border-slate-800">
+                            <span className="text-gray-500 dark:text-slate-400 font-medium">Brand:</span>
+                            <span className="text-gray-900 dark:text-white font-semibold">{request.customBrand || request.vehicleBrand}</span>
                         </div>
-                        <div className="flex justify-between py-2 border-b border-gray-100">
-                            <span className="text-gray-500 font-medium">Model:</span>
-                            <span className="text-gray-900 font-semibold">{request.customModel || request.vehicleModel}</span>
+                        <div className="flex justify-between py-2 border-b border-gray-100 dark:border-slate-800">
+                            <span className="text-gray-500 dark:text-slate-400 font-medium">Model:</span>
+                            <span className="text-gray-900 dark:text-white font-semibold">{request.customModel || request.vehicleModel}</span>
                         </div>
-                        <div className="flex justify-between py-2 border-b border-gray-100">
-                            <span className="text-gray-500 font-medium">Fuel Type:</span>
-                            <span className="text-gray-900 font-semibold">{request.fuelType}</span>
+                        <div className="flex justify-between py-2 border-b border-gray-100 dark:border-slate-800">
+                            <span className="text-gray-500 dark:text-slate-400 font-medium">Fuel Type:</span>
+                            <span className="text-gray-900 dark:text-white font-semibold">{request.fuelType}</span>
                         </div>
                         <div className="flex justify-between py-2">
-                            <span className="text-gray-500 font-medium flex items-center gap-2"><DollarSign className="w-4 h-4" />Budget Range:</span>
-                            <span className="text-gray-900 font-semibold">{request.budgetRange}</span>
+                            <span className="text-gray-500 dark:text-slate-400 font-medium flex items-center gap-2"><DollarSign className="w-4 h-4" />Budget Range:</span>
+                            <span className="text-gray-900 dark:text-white font-semibold">{request.budgetRange}</span>
                         </div>
                     </div>
                 </div>
 
                 {/* Customer Information */}
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                    <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                        <User className="w-5 h-5 text-orange-600" />
+                {/* Customer Information */}
+                <div className="bg-white dark:bg-[#0E192D] rounded-xl shadow-sm border border-gray-200 dark:border-slate-800 p-6">
+                    <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                        <User className="w-5 h-5 text-orange-600 dark:text-orange-500" />
                         Customer Information
                     </h2>
                     <div className="space-y-3">
-                        <div className="flex justify-between py-2 border-b border-gray-100">
-                            <span className="text-gray-500 font-medium">Name:</span>
-                            <span className="text-gray-900 font-semibold">{request.customerName}</span>
+                        <div className="flex justify-between py-2 border-b border-gray-100 dark:border-slate-800">
+                            <span className="text-gray-500 dark:text-slate-400 font-medium">Name:</span>
+                            <span className="text-gray-900 dark:text-white font-semibold">{request.customerName}</span>
                         </div>
-                        <div className="flex justify-between py-2 border-b border-gray-100">
-                            <span className="text-gray-500 font-medium flex items-center gap-2"><Phone className="w-4 h-4" />Phone:</span>
-                            <span className="text-gray-900 font-semibold">{request.customerPhone}</span>
+                        <div className="flex justify-between py-2 border-b border-gray-100 dark:border-slate-800">
+                            <span className="text-gray-500 dark:text-slate-400 font-medium flex items-center gap-2"><Phone className="w-4 h-4" />Phone:</span>
+                            <span className="text-gray-900 dark:text-white font-semibold">{request.customerPhone}</span>
                         </div>
                         <div className="flex justify-between py-2">
-                            <span className="text-gray-500 font-medium flex items-center gap-2"><Mail className="w-4 h-4" />Email:</span>
-                            <span className="text-gray-900 font-semibold">{request.customerEmail}</span>
+                            <span className="text-gray-500 dark:text-slate-400 font-medium flex items-center gap-2"><Mail className="w-4 h-4" />Email:</span>
+                            <span className="text-gray-900 dark:text-white font-semibold">{request.customerEmail}</span>
                         </div>
                     </div>
                 </div>
 
                 {/* Location Information */}
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                    <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                        <MapPin className="w-5 h-5 text-orange-600" />
+                {/* Location Information */}
+                <div className="bg-white dark:bg-[#0E192D] rounded-xl shadow-sm border border-gray-200 dark:border-slate-800 p-6">
+                    <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                        <MapPin className="w-5 h-5 text-orange-600 dark:text-orange-500" />
                         Location
                     </h2>
                     <div className="space-y-3">
                         {request.state && (
-                            <div className="flex justify-between py-2 border-b border-gray-100">
-                                <span className="text-gray-500 font-medium">State:</span>
-                                <span className="text-gray-900 font-semibold">{request.state}</span>
+                            <div className="flex justify-between py-2 border-b border-gray-100 dark:border-slate-800">
+                                <span className="text-gray-500 dark:text-slate-400 font-medium">State:</span>
+                                <span className="text-gray-900 dark:text-white font-semibold">{request.state}</span>
                             </div>
                         )}
                         {(request.city || request.customCity) && (
-                            <div className="flex justify-between py-2 border-b border-gray-100">
-                                <span className="text-gray-500 font-medium">City:</span>
-                                <span className="text-gray-900 font-semibold">{request.customCity || request.city}</span>
+                            <div className="flex justify-between py-2 border-b border-gray-100 dark:border-slate-800">
+                                <span className="text-gray-500 dark:text-slate-400 font-medium">City:</span>
+                                <span className="text-gray-900 dark:text-white font-semibold">{request.customCity || request.city}</span>
                             </div>
                         )}
                         {request.pincode && (
                             <div className="flex justify-between py-2">
-                                <span className="text-gray-500 font-medium">Pincode:</span>
-                                <span className="text-gray-900 font-semibold">{request.pincode}</span>
+                                <span className="text-gray-500 dark:text-slate-400 font-medium">Pincode:</span>
+                                <span className="text-gray-900 dark:text-white font-semibold">{request.pincode}</span>
                             </div>
                         )}
                     </div>
                 </div>
 
                 {/* WhatsApp Logs */}
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                    <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                        <MessageCircle className="w-5 h-5 text-green-600" />
+                {/* WhatsApp Logs */}
+                <div className="bg-white dark:bg-[#0E192D] rounded-xl shadow-sm border border-gray-200 dark:border-slate-800 p-6">
+                    <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                        <MessageCircle className="w-5 h-5 text-green-600 dark:text-green-500" />
                         WhatsApp Logs
                     </h2>
                     <div className="flex flex-col items-center justify-center py-6 text-center space-y-4">
-                        <div className="p-4 bg-green-50 rounded-full">
-                            <MessageCircle className="w-8 h-8 text-green-600" />
+                        <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-full">
+                            <MessageCircle className="w-8 h-8 text-green-600 dark:text-green-500" />
                         </div>
                         <div>
-                            <h3 className="font-semibold text-gray-900">Connect via WhatsApp</h3>
-                            <p className="text-sm text-gray-500 max-w-[250px] mx-auto mt-1">
+                            <h3 className="font-semibold text-gray-900 dark:text-white">Connect via WhatsApp</h3>
+                            <p className="text-sm text-gray-500 dark:text-slate-400 max-w-[250px] mx-auto mt-1">
                                 Click below to open a direct WhatsApp chat with the client
                             </p>
                         </div>

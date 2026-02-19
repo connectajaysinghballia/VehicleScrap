@@ -135,13 +135,13 @@ export default function HeroSection() {
               className="flex justify-center lg:justify-start"
             >
               <Link href="/quote">
-                <Button className="px-10 py-7 text-xl font-bold text-white bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl shadow-xl shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 border border-white/20">
+                <Button className="px-10 py-7 text-xl font-bold text-white bg-[#0E192D] hover:bg-emerald-600 rounded-2xl shadow-xl shadow-emerald-900/20 hover:shadow-emerald-500/40 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 border border-white/10">
                   <span className="drop-shadow-sm">Get Free Quote</span> <ArrowRight className="ml-3 w-6 h-6 animate-pulse" />
                 </Button>
               </Link>
             </motion.div>
 
-            {/* Exclusive Benefits - Glassmorphism Cards */}
+            {/* Exclusive Benefits - Dark Premium Cards */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -149,46 +149,74 @@ export default function HeroSection() {
               className="pt-8 flex flex-col items-center lg:items-start w-full"
             >
               <div className="flex items-center gap-3 mb-6">
-                <div className="h-[2px] w-12 bg-gradient-to-r from-emerald-600 to-transparent"></div>
-                <p className="text-xs font-bold text-emerald-700 uppercase tracking-[0.2em] bg-emerald-50/80 backdrop-blur px-3 py-1 rounded-full border border-emerald-100">
+                <div className="h-[2px] w-12 bg-gradient-to-r from-emerald-500 to-transparent"></div>
+                <p className="text-xs font-bold text-emerald-400 uppercase tracking-[0.2em] bg-[#0E192D]/80 backdrop-blur px-3 py-1 rounded-full border border-emerald-500/30">
                   Exclusive Benefits
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-xl">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-xl" style={{ perspective: "800px" }}>
                 {[
-                  { text: "Certificate of Deposit", icon: Banknote, color: "text-slate-700", bg: "bg-slate-100", border: "border-slate-200", shadow: "shadow-slate-200/50", glow: "ring-slate-100" },
-                  { text: "25% Road Tax Rebate", icon: Sparkles, color: "text-emerald-700", bg: "bg-emerald-50", border: "border-emerald-200", shadow: "shadow-emerald-200/50", glow: "ring-emerald-100" },
-                  { text: "Registration Fee Waiver", icon: ShieldCheck, color: "text-teal-700", bg: "bg-teal-50", border: "border-teal-200", shadow: "shadow-teal-200/50", glow: "ring-teal-100" },
-                  { text: "Tax Deduction on EV", icon: Leaf, color: "text-green-700", bg: "bg-green-50", border: "border-green-200", shadow: "shadow-green-200/50", glow: "ring-green-100" }
+                  { text: "Certificate of Deposit", icon: Banknote, accent: "emerald", gradient: "bg-gradient-to-br from-[#0E192D] to-emerald-900/60" },
+                  { text: "25% Road Tax Rebate", icon: Sparkles, accent: "teal", gradient: "bg-gradient-to-br from-[#0E192D] to-teal-900/60" },
+                  { text: "Registration Fee Waiver", icon: ShieldCheck, accent: "emerald", gradient: "bg-gradient-to-br from-emerald-900/40 to-[#0E192D]" },
+                  { text: "Tax Deduction on EV", icon: Leaf, accent: "teal", gradient: "bg-gradient-to-br from-teal-900/40 to-[#0E192D]" }
                 ].map((item, index) => {
                   const isActive = index === activeBenefit
+                  const Icon = item.icon
+                  const accentColor = item.accent === "emerald"
+                    ? { ring: "ring-emerald-500/40", border: "border-emerald-500/60", glow: "shadow-emerald-500/20", icon: "text-emerald-400", iconBg: "bg-emerald-500/20" }
+                    : { ring: "ring-teal-400/40", border: "border-teal-400/60", glow: "shadow-teal-400/20", icon: "text-teal-400", iconBg: "bg-teal-500/20" }
                   return (
                     <motion.div
                       key={index}
+                      initial={{ rotateY: 90, opacity: 0 }}
                       animate={isActive ? {
-                        scale: 1.05,
-                        y: -5,
+                        rotateY: 0,
                         opacity: 1,
-                        backgroundColor: "rgba(255, 255, 255, 0.95)"
+                        scale: 1.04,
+                        y: -4,
                       } : {
+                        rotateY: 0,
+                        opacity: 1,
                         scale: 1,
                         y: 0,
-                        opacity: 0.8,
-                        backgroundColor: "rgba(255, 255, 255, 0.6)"
                       }}
-                      className={`flex items-center gap-4 p-4 rounded-xl backdrop-blur-xl border transition-all duration-500 cursor-default group 
-                        ${isActive ? `${item.border} ${item.shadow} shadow-lg ring-4 ${item.glow}` : "border-white/50 shadow-sm"}`}
+                      transition={{
+                        rotateY: { duration: 0.6, delay: index * 0.12, ease: [0.2, 0.65, 0.3, 0.9] },
+                        opacity: { duration: 0.5, delay: index * 0.12 },
+                        scale: { duration: 0.4 },
+                        y: { duration: 0.4 },
+                      }}
+                      className={`flex items-center gap-4 p-4 rounded-xl border ${item.gradient} transition-all duration-500 cursor-default
+                        ${isActive
+                          ? `${accentColor.border} ${accentColor.ring} ring-2 shadow-lg ${accentColor.glow}`
+                          : "border-slate-700/50 shadow-sm"
+                        }`}
                     >
-                      <div className={`p-3 rounded-full ${item.bg} ${isActive ? "scale-110" : "scale-100"} transition-transform duration-500`}>
-                        <item.icon className={`w-5 h-5 ${item.color}`} />
-                      </div>
-                      <span className={`font-bold text-sm transition-colors duration-500 ${isActive ? "text-slate-900" : "text-slate-600"}`}>{item.text}</span>
+                      <motion.div
+                        animate={isActive ? { scale: 1.2, rotate: [0, -8, 8, 0] } : { scale: 1, rotate: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className={`p-3 rounded-full ${accentColor.iconBg} flex-shrink-0`}
+                      >
+                        <Icon className={`w-5 h-5 ${accentColor.icon}`} />
+                      </motion.div>
+                      <span className={`font-bold text-sm transition-colors duration-500 ${isActive ? "text-white" : "text-slate-400"}`}>
+                        {item.text}
+                      </span>
+                      {isActive && (
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          className="ml-auto w-2 h-2 rounded-full bg-emerald-400 flex-shrink-0"
+                        />
+                      )}
                     </motion.div>
                   )
                 })}
               </div>
             </motion.div>
+
           </div>
 
           {/* Right: Card Stack Animation with Dynamic Heading */}
@@ -230,3 +258,4 @@ export default function HeroSection() {
     </section>
   )
 }
+

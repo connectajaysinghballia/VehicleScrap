@@ -34,3 +34,4 @@ const BuyVehicleSchema = new Schema(
 const BuyVehicle = models.BuyVehicle || model("BuyVehicle", BuyVehicleSchema)
 
 export default BuyVehicle
+

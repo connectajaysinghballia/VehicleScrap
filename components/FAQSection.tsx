@@ -28,7 +28,7 @@ export default function FAQSection({ variant = "red" }: { variant?: "red" | "gre
     // Background blobs colors
     const blob1 = isRed ? "bg-red-100/40" : "bg-emerald-500/10";
     const blob2 = isRed ? "bg-red-50/40" : "bg-yellow-500/10";
-    const sectionBg = isRed ? "bg-[#FFFDF5]" : "bg-[#020617]";
+    const sectionBg = isRed ? "bg-[#FFFDF5]" : "bg-[#0E192D]";
     const headingText = isRed ? "text-gray-900" : "text-white";
     const subText = isRed ? "text-gray-600" : "text-gray-400";
     const accordionText = isRed ? "text-gray-800" : "text-gray-200";
@@ -73,15 +73,15 @@ export default function FAQSection({ variant = "red" }: { variant?: "red" | "gre
 
                     {/* Left Column: Content & Accordion */}
                     <motion.div
-                        initial={{ opacity: 0, x: -30 }}
+                        initial={{ opacity: 0, x: -50 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: false, amount: 0.2 }}
                         transition={{ duration: 0.8 }}
                     >
                         <motion.div
                             initial="hidden"
                             whileInView="visible"
-                            viewport={{ once: true }}
+                            viewport={{ once: false, amount: 0.2 }}
                             variants={{
                                 visible: { transition: { staggerChildren: 0.1 } }
                             }}
@@ -116,7 +116,7 @@ export default function FAQSection({ variant = "red" }: { variant?: "red" | "gre
                                     key={faq.id}
                                     initial={{ opacity: 0, y: 20 }}
                                     whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
+                                    viewport={{ once: false, amount: 0.2 }}
                                     transition={{ delay: index * 0.1, duration: 0.5 }}
                                 >
                                     <AccordionItem value={faq.id} className={borderPrimary}>
@@ -143,7 +143,7 @@ export default function FAQSection({ variant = "red" }: { variant?: "red" | "gre
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
+                            viewport={{ once: false, amount: 0.2 }}
                             transition={{ delay: 0.5, duration: 0.5 }}
                         >
                             <Link
@@ -160,15 +160,10 @@ export default function FAQSection({ variant = "red" }: { variant?: "red" | "gre
                     <motion.div
                         initial={{ rotateY: 90, opacity: 0 }}
                         whileInView={{ rotateY: 0, opacity: 1 }}
-                        viewport={{ once: true }}
-                        transition={{
-                            duration: 0.8,
-                            type: "spring",
-                            stiffness: 30,
-                            damping: 15,
-                            mass: 1.2
-                        }}
+                        viewport={{ once: false, amount: 0.2 }}
+                        transition={{ duration: 0.9, ease: [0.2, 0.65, 0.3, 0.9] }}
                         className="relative perspective-1000"
+                        style={{ perspective: "1200px" }}
                     >
                         <div className={`relative rounded-3xl overflow-hidden shadow-2xl shadow-gray-900/20 border-4 border-white`}>
                             <img
@@ -204,3 +199,4 @@ export default function FAQSection({ variant = "red" }: { variant?: "red" | "gre
         </section>
     )
 }
+

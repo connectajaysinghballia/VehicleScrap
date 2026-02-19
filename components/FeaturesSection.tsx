@@ -56,7 +56,7 @@ export default function FeaturesSection() {
     <section
       className="py-24 relative overflow-hidden text-white"
       style={{
-        backgroundColor: "#0f172a", // Navy Blue (Slate-900)
+        backgroundColor: "#0E192D", // Navy Blue (Slate-900)
         backgroundImage: `
           linear-gradient(-90deg, transparent calc(5em - 3px), rgba(16, 185, 129, 0.05) calc(5em - 3px + 1px), rgba(16, 185, 129, 0.05) 5em),
           linear-gradient(0deg, transparent calc(5em - 3px), rgba(16, 185, 129, 0.05) calc(5em - 3px + 1px), rgba(16, 185, 129, 0.05) 5em)
@@ -65,7 +65,7 @@ export default function FeaturesSection() {
       }}
     >
       {/* Background Texture/Pattern */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-900/95 to-slate-900 pointer-events-none z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0E192D] via-[#0E192D]/95 to-[#0E192D] pointer-events-none z-0"></div>
 
       {/* Animated Floating Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
@@ -258,3 +258,4 @@ export default function FeaturesSection() {
     </section>
   )
 }
+

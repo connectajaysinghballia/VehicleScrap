@@ -134,7 +134,7 @@ export default function GuidePage() {
     }, [])
 
     return (
-        <div className="min-h-screen bg-[#0a192f] font-sans text-slate-100 selection:bg-emerald-500/30 selection:text-emerald-400">
+        <div className="min-h-screen bg-[#0E192D] font-sans text-slate-100 selection:bg-emerald-500/30 selection:text-emerald-400">
 
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20 relative">
                 {/* Background Decor */}
@@ -186,7 +186,7 @@ export default function GuidePage() {
                                 <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 opacity-30 group-hover:opacity-50 transition-opacity duration-700"></div>
 
                                 <div className="flex flex-col md:flex-row items-start md:items-center gap-6 mb-12 relative z-10">
-                                    <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-500/20 text-[#0a192f] shrink-0">
+                                    <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-500/20 text-[#0E192D] shrink-0">
                                         <section.icon className="w-8 h-8" />
                                     </div>
                                     <div>
@@ -219,7 +219,7 @@ export default function GuidePage() {
                                                     }`}
                                             >
                                                 {/* Step Number Badge */}
-                                                <div className={`absolute -top-3 -left-3 w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold shadow-sm transition-colors duration-300 ${isActive || isCompleted ? "bg-emerald-500 text-[#0a192f]" : "bg-[#0a192f] text-slate-500 border border-white/10"
+                                                <div className={`absolute -top-3 -left-3 w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold shadow-sm transition-colors duration-300 ${isActive || isCompleted ? "bg-emerald-500 text-[#0E192D]" : "bg-[#0E192D] text-slate-500 border border-white/10"
                                                     }`}>
                                                     {isCompleted ? <CheckCircle2 className="w-4 h-4" /> : stepIdx + 1}
                                                 </div>
@@ -256,3 +256,4 @@ export default function GuidePage() {
         </div>
     )
 }
+

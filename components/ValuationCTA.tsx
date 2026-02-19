@@ -1,28 +1,36 @@
 "use client"
 
+import { useState } from "react"
 import { motion } from "framer-motion"
 import { Car, Truck, Bike, ArrowRight } from "lucide-react"
 import Link from "next/link"
 
 export default function ValuationCTA() {
+    const [isHovered, setIsHovered] = useState(false)
+
     // Generate random positions and delays for the falling background icons
     const icons = Array.from({ length: 20 }).map((_, i) => ({
         id: i,
-        icon: [Car, Truck, Bike][i % 3], // Cycle through icons
+        icon: [Car, Truck, Bike][i % 3],
         left: `${Math.random() * 100}%`,
         delay: Math.random() * 5,
-        duration: 10 + Math.random() * 10, // Slower duration: 10-20s
-        size: 40 + Math.random() * 40, // Larger size: 40-80px
+        duration: 10 + Math.random() * 10,
+        size: 40 + Math.random() * 40,
     }))
 
     return (
-        <section className="py-8 px-4 bg-white overflow-hidden">
+        <section
+            className="py-8 px-4 overflow-hidden transition-colors duration-500"
+            style={{ backgroundColor: isHovered ? "#0E192D" : "#ffffff" }}
+        >
             <motion.div
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }} // Animation only plays once
-                transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }} // smooth graceful entrance
-                className="group relative max-w-6xl mx-auto rounded-[3rem] overflow-hidden shadow-2xl transform-gpu bg-slate-900 hover:bg-white transition-colors duration-500"
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                className="group relative max-w-6xl mx-auto rounded-[3rem] overflow-hidden shadow-2xl transform-gpu bg-[#0E192D] hover:bg-white transition-colors duration-500"
             >
                 {/* Animated Background: Falling Vehicles */}
                 <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -32,7 +40,7 @@ export default function ValuationCTA() {
                             <motion.div
                                 key={item.id}
                                 initial={{ y: -100, opacity: 0 }}
-                                animate={{ y: 600, opacity: [0, 0.3, 0.3, 0] }} // Fade in, down, fade out
+                                animate={{ y: 600, opacity: [0, 0.3, 0.3, 0] }}
                                 transition={{
                                     repeat: Infinity,
                                     duration: item.duration,
@@ -72,7 +80,7 @@ export default function ValuationCTA() {
                         whileTap={{ scale: 0.95 }}
                         className="relative"
                     >
-                        <Link href="/services/sell-vehicle" className="group/btn relative inline-flex items-center gap-3 px-8 py-4 bg-white group-hover:bg-slate-900 text-emerald-700 group-hover:text-white rounded-full text-xl font-bold shadow-[0_10px_20px_rgba(0,0,0,0.2)] hover:shadow-[0_15px_30px_rgba(16,185,129,0.3)] transition-all duration-500 border border-transparent group-hover:border-slate-800 overflow-hidden">
+                        <Link href="/quote" className="group/btn relative inline-flex items-center gap-3 px-8 py-4 bg-white group-hover:bg-[#0E192D] text-emerald-700 group-hover:text-white rounded-full text-xl font-bold shadow-[0_10px_20px_rgba(0,0,0,0.2)] hover:shadow-[0_15px_30px_rgba(16,185,129,0.3)] transition-all duration-500 border border-transparent group-hover:border-slate-800 overflow-hidden">
                             <span className="relative z-10">Check For Free</span>
                             <span className="bg-emerald-50 group-hover:group-hover/btn:bg-emerald-600 p-1 rounded-full group-hover/btn:bg-slate-800 group-hover/btn:text-white transition-colors duration-300 relative z-10">
                                 <ArrowRight className="w-5 h-5" />
@@ -91,3 +99,4 @@ export default function ValuationCTA() {
         </section>
     )
 }
+

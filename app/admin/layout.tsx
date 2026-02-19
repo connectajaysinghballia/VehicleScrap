@@ -25,6 +25,8 @@ import {
 import { signOut } from "next-auth/react"
 import { motion, AnimatePresence } from "framer-motion"
 
+import { ThemeToggle } from "@/components/ThemeToggle"
+
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true)
     const [isValuationsOpen, setIsValuationsOpen] = useState(true)
@@ -34,7 +36,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const isActive = (path: string) => pathname === path || pathname?.startsWith(path)
 
     return (
-        <div className="min-h-screen bg-gray-50 flex font-sans overflow-hidden">
+        <div className="min-h-screen bg-gray-50 dark:bg-slate-950 flex font-sans overflow-hidden transition-colors duration-300">
             {/* Mobile Sidebar Overlay */}
             <AnimatePresence>
                 {isSidebarOpen && (
@@ -55,25 +57,25 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     x: isSidebarOpen ? 0 : "-100%",
                 }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                className="fixed inset-y-0 left-0 z-50 bg-white border-r border-gray-200 shadow-xl lg:shadow-none flex flex-col h-screen w-72"
+                className="fixed inset-y-0 left-0 z-50 bg-[#0E192D] border-r border-slate-800 shadow-xl lg:shadow-none flex flex-col h-screen w-72 transition-colors duration-300"
             >
                 {/* Sidebar Header */}
-                <div className="h-20 flex items-center px-6 border-b border-gray-100 bg-white justify-between">
+                <div className="h-20 flex items-center px-6 border-b border-slate-800 bg-[#0E192D] justify-between transition-colors duration-300">
                     <div className="flex items-center">
-                        <Shield className="w-8 h-8 text-sky-600 mr-2" />
-                        <span className="text-xl font-black text-gray-900 tracking-tight">AutoScrap</span>
+                        <Shield className="w-8 h-8 text-emerald-400 mr-2" />
+                        <span className="text-xl font-black text-white tracking-tight">ScrapCenter</span>
                     </div>
                     {/* Toggle Button in Sidebar (Desktop) */}
                     <button
                         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                        className="hidden lg:flex p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors"
+                        className="hidden lg:flex p-1.5 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
                     >
                         <X className="w-5 h-5" />
                     </button>
                     {/* Close button for Mobile */}
                     <button
                         onClick={() => setIsSidebarOpen(false)}
-                        className="lg:hidden p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors"
+                        className="lg:hidden p-1.5 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
                     >
                         <X className="w-5 h-5" />
                     </button>
@@ -83,11 +85,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-1.5 scrollbar-hide">
 
                     {/* Dashboard */}
-                    <Link href="/admin" className={`flex items-center px-4 py-3 rounded-xl transition-all duration-200 group relative overflow-hidden ${isActive('/admin') && pathname === '/admin' ? 'bg-sky-50 text-sky-700 shadow-sm' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'}`}>
+                    <Link href="/admin" className={`flex items-center px-4 py-3 rounded-xl transition-all duration-200 group relative overflow-hidden ${isActive('/admin') && pathname === '/admin' ? 'bg-emerald-500/10 text-emerald-400 shadow-sm' : 'text-slate-400 hover:bg-white/5 hover:text-white'}`}>
                         {isActive('/admin') && pathname === '/admin' && (
-                            <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-sky-600 rounded-r-full" />
+                            <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-emerald-500 rounded-r-full" />
                         )}
-                        <LayoutDashboard className={`w-5 h-5 mr-3.5 transition-colors ${isActive('/admin') && pathname === '/admin' ? 'text-sky-600' : 'text-gray-400 group-hover:text-gray-600'}`} />
+                        <LayoutDashboard className={`w-5 h-5 mr-3.5 transition-colors ${isActive('/admin') && pathname === '/admin' ? 'text-emerald-400' : 'text-slate-400 group-hover:text-white'}`} />
                         <span className="font-semibold">Dashboard</span>
                     </Link>
 
@@ -95,13 +97,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     <div className="space-y-1 pt-1">
                         <button
                             onClick={() => setIsValuationsOpen(!isValuationsOpen)}
-                            className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 group"
+                            className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all duration-200 group"
                         >
                             <div className="flex items-center">
-                                <FileText className="w-5 h-5 mr-3.5 text-gray-400 group-hover:text-gray-600" />
+                                <FileText className="w-5 h-5 mr-3.5 text-slate-400 group-hover:text-white" />
                                 <span className="font-semibold">Valuations</span>
                             </div>
-                            <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${isValuationsOpen ? 'rotate-180' : ''}`} />
+                            <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${isValuationsOpen ? 'rotate-180' : ''}`} />
                         </button>
 
                         <AnimatePresence>
@@ -121,9 +123,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                                         <Link
                                             key={item.href}
                                             href={item.href}
-                                            className={`flex items-center pl-12 pr-4 py-2.5 rounded-xl text-sm font-medium transition-all ${isActive(item.href) ? `bg-${item.color}-50 text-${item.color}-700` : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'}`}
+                                            className={`flex items-center pl-12 pr-4 py-2.5 rounded-xl text-sm font-medium transition-all ${isActive(item.href) ? `bg-${item.color}-500/10 text-${item.color}-400` : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
                                         >
-                                            <div className={`w-2 h-2 rounded-full mr-3 ${isActive(item.href) ? `bg-${item.color}-500` : 'bg-gray-300'}`} />
+                                            <div className={`w-2 h-2 rounded-full mr-3 ${isActive(item.href) ? `bg-${item.color}-500` : 'bg-slate-600'}`} />
                                             {item.label}
                                         </Link>
                                     ))}
@@ -133,43 +135,43 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     </div>
 
                     {/* Approved Requests */}
-                    <Link href="/admin/approved-requests" className={`flex items-center px-4 py-3 rounded-xl transition-all duration-200 group relative overflow-hidden ${isActive('/admin/approved-requests') ? 'bg-emerald-50 text-emerald-700 shadow-sm' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'}`}>
+                    <Link href="/admin/approved-requests" className={`flex items-center px-4 py-3 rounded-xl transition-all duration-200 group relative overflow-hidden ${isActive('/admin/approved-requests') ? 'bg-emerald-500/10 text-emerald-400 shadow-sm' : 'text-slate-400 hover:bg-white/5 hover:text-white'}`}>
                         {isActive('/admin/approved-requests') && (
-                            <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-emerald-600 rounded-r-full" />
+                            <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-emerald-500 rounded-r-full" />
                         )}
-                        <CheckCircle className={`w-5 h-5 mr-3.5 transition-colors ${isActive('/admin/approved-requests') ? 'text-emerald-600' : 'text-gray-400 group-hover:text-gray-600'}`} />
+                        <CheckCircle className={`w-5 h-5 mr-3.5 transition-colors ${isActive('/admin/approved-requests') ? 'text-emerald-500' : 'text-slate-400 group-hover:text-white'}`} />
                         <span className="font-semibold">Approved Requests</span>
                     </Link>
 
                     <div className="pt-6 mt-2">
-                        <p className="px-4 text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Management</p>
+                        <p className="px-4 text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Management</p>
                         <div className="space-y-1.5">
-                            <Link href="/admin/partners" className={`flex items-center px-4 py-3 rounded-xl transition-all duration-200 group relative overflow-hidden ${isActive('/admin/partners') ? 'bg-sky-50 text-sky-700 shadow-sm' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'}`}>
+                            <Link href="/admin/partners" className={`flex items-center px-4 py-3 rounded-xl transition-all duration-200 group relative overflow-hidden ${isActive('/admin/partners') ? 'bg-emerald-500/10 text-emerald-400 shadow-sm' : 'text-slate-400 hover:bg-white/5 hover:text-white'}`}>
                                 {isActive('/admin/partners') && (
-                                    <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-sky-600 rounded-r-full" />
+                                    <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-emerald-500 rounded-r-full" />
                                 )}
-                                <Users className={`w-5 h-5 mr-3.5 transition-colors ${isActive('/admin/partners') ? 'text-sky-600' : 'text-gray-400 group-hover:text-gray-600'}`} />
+                                <Users className={`w-5 h-5 mr-3.5 transition-colors ${isActive('/admin/partners') ? 'text-emerald-400' : 'text-slate-400 group-hover:text-white'}`} />
                                 <span className="font-semibold">B2B Partners</span>
                             </Link>
-                            <Link href="/admin/blogs/upload" className={`flex items-center px-4 py-3 rounded-xl transition-all duration-200 group relative overflow-hidden ${isActive('/admin/blogs') ? 'bg-sky-50 text-sky-700 shadow-sm' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'}`}>
+                            <Link href="/admin/blogs/upload" className={`flex items-center px-4 py-3 rounded-xl transition-all duration-200 group relative overflow-hidden ${isActive('/admin/blogs') ? 'bg-emerald-500/10 text-emerald-400 shadow-sm' : 'text-slate-400 hover:bg-white/5 hover:text-white'}`}>
                                 {isActive('/admin/blogs') && (
-                                    <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-sky-600 rounded-r-full" />
+                                    <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-emerald-500 rounded-r-full" />
                                 )}
-                                <UploadCloud className={`w-5 h-5 mr-3.5 transition-colors ${isActive('/admin/blogs') ? 'text-sky-600' : 'text-gray-400 group-hover:text-gray-600'}`} />
+                                <UploadCloud className={`w-5 h-5 mr-3.5 transition-colors ${isActive('/admin/blogs') ? 'text-emerald-400' : 'text-slate-400 group-hover:text-white'}`} />
                                 <span className="font-semibold">Upload Blogs</span>
                             </Link>
-                            <Link href="/admin/b2b-generator" className={`flex items-center px-4 py-3 rounded-xl transition-all duration-200 group relative overflow-hidden ${isActive('/admin/b2b-generator') ? 'bg-sky-50 text-sky-700 shadow-sm' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'}`}>
+                            <Link href="/admin/b2b-generator" className={`flex items-center px-4 py-3 rounded-xl transition-all duration-200 group relative overflow-hidden ${isActive('/admin/b2b-generator') ? 'bg-emerald-500/10 text-emerald-400 shadow-sm' : 'text-slate-400 hover:bg-white/5 hover:text-white'}`}>
                                 {isActive('/admin/b2b-generator') && (
-                                    <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-sky-600 rounded-r-full" />
+                                    <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-emerald-500 rounded-r-full" />
                                 )}
-                                <Key className={`w-5 h-5 mr-3.5 transition-colors ${isActive('/admin/b2b-generator') ? 'text-sky-600' : 'text-gray-400 group-hover:text-gray-600'}`} />
+                                <Key className={`w-5 h-5 mr-3.5 transition-colors ${isActive('/admin/b2b-generator') ? 'text-emerald-400' : 'text-slate-400 group-hover:text-white'}`} />
                                 <span className="font-semibold">B2B Generator</span>
                             </Link>
-                            <Link href="/admin/contact" className={`flex items-center px-4 py-3 rounded-xl transition-all duration-200 group relative overflow-hidden ${isActive('/admin/contact') ? 'bg-blue-50 text-blue-700 shadow-sm' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'}`}>
+                            <Link href="/admin/contact" className={`flex items-center px-4 py-3 rounded-xl transition-all duration-200 group relative overflow-hidden ${isActive('/admin/contact') ? 'bg-blue-500/10 text-blue-400 shadow-sm' : 'text-slate-400 hover:bg-white/5 hover:text-white'}`}>
                                 {isActive('/admin/contact') && (
-                                    <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-blue-600 rounded-r-full" />
+                                    <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-blue-500 rounded-r-full" />
                                 )}
-                                <MessageSquare className={`w-5 h-5 mr-3.5 transition-colors ${isActive('/admin/contact') ? 'text-blue-600' : 'text-gray-400 group-hover:text-gray-600'}`} />
+                                <MessageSquare className={`w-5 h-5 mr-3.5 transition-colors ${isActive('/admin/contact') ? 'text-blue-400' : 'text-slate-400 group-hover:text-white'}`} />
                                 <span className="font-semibold">Contact Requests</span>
                             </Link>
                         </div>
@@ -177,14 +179,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 </nav>
 
                 {/* Sidebar Footer */}
-                <div className="p-4 border-t border-gray-200 bg-white">
-                    <Link href="/" className="flex items-center px-4 py-3 rounded-xl text-gray-500 hover:bg-gray-50 hover:text-gray-900 transition-all mb-2 group">
-                        <Home className="w-5 h-5 mr-3.5 text-gray-400 group-hover:text-gray-600" />
+                <div className="p-4 border-t border-slate-800 bg-[#0E192D] transition-colors duration-300">
+                    <Link href="/" className="flex items-center px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all mb-2 group">
+                        <Home className="w-5 h-5 mr-3.5 text-slate-400 group-hover:text-white" />
                         <span className="font-semibold">Back to Home</span>
                     </Link>
                     <button
                         onClick={() => signOut({ callbackUrl: "/" })}
-                        className="w-full flex items-center px-4 py-3 rounded-xl text-sky-600 bg-sky-50 hover:bg-sky-100 hover:shadow-sm transition-all group"
+                        className="w-full flex items-center px-4 py-3 rounded-xl text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 hover:shadow-sm transition-all group"
                     >
                         <LogOut className="w-5 h-5 mr-3.5 group-hover:scale-110 transition-transform" />
                         <span className="font-semibold">Sign Out</span>
@@ -195,30 +197,32 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             {/* Main Content Area */}
             <div className={`flex-1 flex flex-col min-h-screen overflow-hidden transition-all duration-300 ${isSidebarOpen ? 'lg:pl-72' : ''}`}>
                 {/* Desktop/Mobile Header Toggle */}
-                <header className="h-16 bg-white border-b border-gray-200 flex items-center px-4 justify-between z-30 sticky top-0">
+                <header className="h-16 bg-white dark:bg-[#0E192D] border-b border-gray-200 dark:border-slate-800 flex items-center px-4 justify-between z-30 sticky top-0 transition-colors duration-300">
                     <div className="flex items-center">
                         {!isSidebarOpen && (
                             <button
                                 onClick={() => setIsSidebarOpen(true)}
-                                className="p-2 -ml-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all"
+                                className="p-2 -ml-2 rounded-md text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-slate-800 transition-all"
                             >
                                 <Menu className="w-6 h-6" />
                             </button>
                         )}
-                        <span className={`ml-3 text-lg font-bold text-gray-900 ${isSidebarOpen ? 'lg:invisible' : ''}`}>Admin Panel</span>
+                        <span className={`ml-3 text-lg font-bold text-gray-900 dark:text-white ${isSidebarOpen ? 'lg:invisible' : ''}`}>Admin Panel</span>
                     </div>
                     <div className="flex items-center gap-4">
+                        <ThemeToggle />
                         <div className="hidden sm:flex flex-col items-end">
-                            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Administrator</span>
-                            <span className="text-sm font-semibold text-gray-900">AutoScrap Control</span>
+                            <span className="text-xs font-bold text-gray-400 dark:text-slate-500 uppercase tracking-widest">Administrator</span>
+                            <span className="text-sm font-semibold text-gray-900 dark:text-white">ScrapCenter Control</span>
                         </div>
                     </div>
                 </header>
 
-                <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-4 lg:p-8">
+                <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 dark:bg-slate-950 p-4 lg:p-8 transition-colors duration-300">
                     {children}
                 </main>
             </div>
         </div>
     )
 }
+

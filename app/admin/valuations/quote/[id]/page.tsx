@@ -150,15 +150,15 @@ export default function QuoteDetailPage({ params }: { params: Promise<{ id: stri
             {/* Header */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div className="flex items-center gap-4">
-                    <Link href="/admin/valuations/quote" className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                        <ChevronLeft className="w-5 h-5 text-gray-600" />
+                    <Link href="/admin/valuations/quote" className="p-2 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
+                        <ChevronLeft className="w-5 h-5 text-gray-600 dark:text-slate-400" />
                     </Link>
                     <div>
-                        <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-                            <FileText className="w-6 h-6 text-blue-600" />
+                        <h1 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                            <FileText className="w-6 h-6 text-blue-600 dark:text-blue-500" />
                             Quote Request Details
                         </h1>
-                        <p className="text-gray-500 mt-1">Request ID: {request._id}</p>
+                        <p className="text-gray-500 dark:text-slate-400 mt-1">Request ID: {request._id}</p>
                     </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -194,91 +194,92 @@ export default function QuoteDetailPage({ params }: { params: Promise<{ id: stri
             {/* Content Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Vehicle Information */}
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                    <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                        <Car className="w-5 h-5 text-blue-600" />
+                {/* Vehicle Information */}
+                <div className="bg-white dark:bg-[#0E192D] rounded-xl shadow-sm border border-gray-200 dark:border-slate-800 p-6">
+                    <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                        <Car className="w-5 h-5 text-blue-600 dark:text-blue-500" />
                         Vehicle Information
                     </h2>
                     <div className="space-y-3">
-                        <div className="flex justify-between py-2 border-b border-gray-100">
-                            <span className="text-gray-500 font-medium">Type:</span>
-                            <span className="text-gray-900 font-semibold">{request.vehicleType}</span>
+                        <div className="flex justify-between py-2 border-b border-gray-100 dark:border-slate-800">
+                            <span className="text-gray-500 dark:text-slate-400 font-medium">Type:</span>
+                            <span className="text-gray-900 dark:text-white font-semibold">{request.vehicleType}</span>
                         </div>
-                        <div className="flex justify-between py-2 border-b border-gray-100">
-                            <span className="text-gray-500 font-medium">Brand:</span>
-                            <span className="text-gray-900 font-semibold">{request.brand}</span>
+                        <div className="flex justify-between py-2 border-b border-gray-100 dark:border-slate-800">
+                            <span className="text-gray-500 dark:text-slate-400 font-medium">Brand:</span>
+                            <span className="text-gray-900 dark:text-white font-semibold">{request.brand}</span>
                         </div>
-                        <div className="flex justify-between py-2 border-b border-gray-100">
-                            <span className="text-gray-500 font-medium">Model:</span>
-                            <span className="text-gray-900 font-semibold">{request.model}</span>
+                        <div className="flex justify-between py-2 border-b border-gray-100 dark:border-slate-800">
+                            <span className="text-gray-500 dark:text-slate-400 font-medium">Model:</span>
+                            <span className="text-gray-900 dark:text-white font-semibold">{request.model}</span>
                         </div>
-                        <div className="flex justify-between py-2 border-b border-gray-100">
-                            <span className="text-gray-500 font-medium">Year:</span>
-                            <span className="text-gray-900 font-semibold">{request.year}</span>
+                        <div className="flex justify-between py-2 border-b border-gray-100 dark:border-slate-800">
+                            <span className="text-gray-500 dark:text-slate-400 font-medium">Year:</span>
+                            <span className="text-gray-900 dark:text-white font-semibold">{request.year}</span>
                         </div>
-                        <div className="flex justify-between py-2 border-b border-gray-100">
-                            <span className="text-gray-500 font-medium flex items-center gap-2"><Hash className="w-4 h-4" />Vehicle Number:</span>
-                            <span className="text-gray-900 font-semibold font-mono">{request.vehicleNumber}</span>
+                        <div className="flex justify-between py-2 border-b border-gray-100 dark:border-slate-800">
+                            <span className="text-gray-500 dark:text-slate-400 font-medium flex items-center gap-2"><Hash className="w-4 h-4" />Vehicle Number:</span>
+                            <span className="text-gray-900 dark:text-white font-semibold font-mono">{request.vehicleNumber}</span>
                         </div>
                         <div className="flex justify-between py-2">
-                            <span className="text-gray-500 font-medium flex items-center gap-2"><Weight className="w-4 h-4" />Weight:</span>
-                            <span className="text-gray-900 font-semibold">{request.vehicleWeight}</span>
+                            <span className="text-gray-500 dark:text-slate-400 font-medium flex items-center gap-2"><Weight className="w-4 h-4" />Weight:</span>
+                            <span className="text-gray-900 dark:text-white font-semibold">{request.vehicleWeight}</span>
                         </div>
                     </div>
                 </div>
 
                 {/* Contact Information */}
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                    <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                        <User className="w-5 h-5 text-blue-600" />
+                <div className="bg-white dark:bg-[#0E192D] rounded-xl shadow-sm border border-gray-200 dark:border-slate-800 p-6">
+                    <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                        <User className="w-5 h-5 text-blue-600 dark:text-blue-500" />
                         Contact Information
                     </h2>
                     <div className="space-y-3">
-                        <div className="flex justify-between py-2 border-b border-gray-100">
-                            <span className="text-gray-500 font-medium">Name:</span>
-                            <span className="text-gray-900 font-semibold">{request.contact?.name || "N/A"}</span>
+                        <div className="flex justify-between py-2 border-b border-gray-100 dark:border-slate-800">
+                            <span className="text-gray-500 dark:text-slate-400 font-medium">Name:</span>
+                            <span className="text-gray-900 dark:text-white font-semibold">{request.contact?.name || "N/A"}</span>
                         </div>
-                        <div className="flex justify-between py-2 border-b border-gray-100">
-                            <span className="text-gray-500 font-medium flex items-center gap-2"><Phone className="w-4 h-4" />Phone:</span>
-                            <span className="text-gray-900 font-semibold">{request.contact?.phone || "N/A"}</span>
+                        <div className="flex justify-between py-2 border-b border-gray-100 dark:border-slate-800">
+                            <span className="text-gray-500 dark:text-slate-400 font-medium flex items-center gap-2"><Phone className="w-4 h-4" />Phone:</span>
+                            <span className="text-gray-900 dark:text-white font-semibold">{request.contact?.phone || "N/A"}</span>
                         </div>
                         <div className="flex justify-between py-2">
-                            <span className="text-gray-500 font-medium flex items-center gap-2"><MapPin className="w-4 h-4" />Pincode:</span>
-                            <span className="text-gray-900 font-semibold">{request.address?.pincode || "N/A"}</span>
+                            <span className="text-gray-500 dark:text-slate-400 font-medium flex items-center gap-2"><MapPin className="w-4 h-4" />Pincode:</span>
+                            <span className="text-gray-900 dark:text-white font-semibold">{request.address?.pincode || "N/A"}</span>
                         </div>
                     </div>
                 </div>
 
                 {/* eKYC Information */}
                 {(request.firstName || request.aadharNumber) && (
-                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                        <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                            <CheckCircle className="w-5 h-5 text-blue-600" />
+                    <div className="bg-white dark:bg-[#0E192D] rounded-xl shadow-sm border border-gray-200 dark:border-slate-800 p-6">
+                        <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                            <CheckCircle className="w-5 h-5 text-blue-600 dark:text-blue-500" />
                             eKYC Information
                         </h2>
                         <div className="space-y-3">
                             {request.firstName && (
-                                <div className="flex justify-between py-2 border-b border-gray-100">
-                                    <span className="text-gray-500 font-medium">First Name:</span>
-                                    <span className="text-gray-900 font-semibold">{request.firstName}</span>
+                                <div className="flex justify-between py-2 border-b border-gray-100 dark:border-slate-800">
+                                    <span className="text-gray-500 dark:text-slate-400 font-medium">First Name:</span>
+                                    <span className="text-gray-900 dark:text-white font-semibold">{request.firstName}</span>
                                 </div>
                             )}
                             {request.dob && (
-                                <div className="flex justify-between py-2 border-b border-gray-100">
-                                    <span className="text-gray-500 font-medium">Date of Birth:</span>
-                                    <span className="text-gray-900 font-semibold">{request.dob}</span>
+                                <div className="flex justify-between py-2 border-b border-gray-100 dark:border-slate-800">
+                                    <span className="text-gray-500 dark:text-slate-400 font-medium">Date of Birth:</span>
+                                    <span className="text-gray-900 dark:text-white font-semibold">{request.dob}</span>
                                 </div>
                             )}
                             {request.aadharPhone && (
-                                <div className="flex justify-between py-2 border-b border-gray-100">
-                                    <span className="text-gray-500 font-medium">Aadhar Phone:</span>
-                                    <span className="text-gray-900 font-semibold">{request.aadharPhone}</span>
+                                <div className="flex justify-between py-2 border-b border-gray-100 dark:border-slate-800">
+                                    <span className="text-gray-500 dark:text-slate-400 font-medium">Aadhar Phone:</span>
+                                    <span className="text-gray-900 dark:text-white font-semibold">{request.aadharPhone}</span>
                                 </div>
                             )}
                             {request.aadharNumber && (
                                 <div className="flex justify-between py-2">
-                                    <span className="text-gray-500 font-medium">Aadhar Number:</span>
-                                    <span className="text-gray-900 font-semibold font-mono">{request.aadharNumber}</span>
+                                    <span className="text-gray-500 dark:text-slate-400 font-medium">Aadhar Number:</span>
+                                    <span className="text-gray-900 dark:text-white font-semibold font-mono">{request.aadharNumber}</span>
                                 </div>
                             )}
                         </div>
@@ -286,18 +287,18 @@ export default function QuoteDetailPage({ params }: { params: Promise<{ id: stri
                 )}
 
                 {/* WhatsApp Logs */}
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                    <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                        <MessageCircle className="w-5 h-5 text-green-600" />
+                <div className="bg-white dark:bg-[#0E192D] rounded-xl shadow-sm border border-gray-200 dark:border-slate-800 p-6">
+                    <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                        <MessageCircle className="w-5 h-5 text-green-600 dark:text-green-500" />
                         WhatsApp Logs
                     </h2>
                     <div className="flex flex-col items-center justify-center py-6 text-center space-y-4">
-                        <div className="p-4 bg-green-50 rounded-full">
-                            <MessageCircle className="w-8 h-8 text-green-600" />
+                        <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-full">
+                            <MessageCircle className="w-8 h-8 text-green-600 dark:text-green-500" />
                         </div>
                         <div>
-                            <h3 className="font-semibold text-gray-900">Connect via WhatsApp</h3>
-                            <p className="text-sm text-gray-500 max-w-[250px] mx-auto mt-1">
+                            <h3 className="font-semibold text-gray-900 dark:text-white">Connect via WhatsApp</h3>
+                            <p className="text-sm text-gray-500 dark:text-slate-400 max-w-[250px] mx-auto mt-1">
                                 Click below to open a direct WhatsApp chat with the client
                             </p>
                         </div>

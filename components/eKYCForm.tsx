@@ -175,7 +175,7 @@ export default function EKYCForm({
                 "#3b82f6", // blue-500
                 "#ffffff", // white
                 "#059669", // emerald-600
-                "#0a192f", // navy
+                "#0E192D", // navy
               ][i % 5],
             }}
             initial={{
@@ -211,7 +211,7 @@ export default function EKYCForm({
             <CheckCircle className="w-24 h-24 text-emerald-500" />
           </motion.div>
 
-          <h2 className="text-3xl font-bold text-center text-[#0a192f] mb-4 bg-gradient-to-r from-[#0a192f] to-emerald-600 bg-clip-text text-transparent">
+          <h2 className="text-3xl font-bold text-center text-[#0E192D] mb-4 bg-gradient-to-r from-[#0E192D] to-emerald-600 bg-clip-text text-transparent">
             Success! 🎉
           </h2>
 
@@ -228,7 +228,7 @@ export default function EKYCForm({
               setShowCollectionCenter(false)
               window.location.href = "/"
             }}
-            className="w-full px-6 py-4 bg-[#0a192f] hover:bg-emerald-600 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-emerald-500/20"
+            className="w-full px-6 py-4 bg-[#0E192D] hover:bg-emerald-600 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-emerald-500/20"
             whileHover={{ scale: 1.02, y: -2 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -246,7 +246,7 @@ export default function EKYCForm({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className={isPage ? "w-full" : "fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto"}
+      className={isPage ? "w-full" : "fixed inset-0 bg-[#0E192D]/80 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto"}
     >
       <motion.div
         initial={{ scale: 0.9, opacity: 0, y: 30 }}
@@ -288,13 +288,13 @@ export default function EKYCForm({
 
             {/* Personal Details Section */}
             <div className="bg-emerald-50/50 p-4 md:p-5 rounded-xl border border-emerald-100/50">
-              <h3 className="text-base md:text-lg font-bold text-[#0a192f] mb-3 md:mb-4 flex items-center gap-2">
+              <h3 className="text-base md:text-lg font-bold text-[#0E192D] mb-3 md:mb-4 flex items-center gap-2">
                 <span className="w-1 h-5 md:h-6 bg-emerald-500 rounded-full"></span>
                 Personal Details
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="text-xs font-bold text-[#0a192f]/70 mb-1.5 block uppercase tracking-wider ml-1">Full Name</label>
+                  <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider ml-1">Full Name</label>
                   <div className="relative group">
                     <User className="absolute left-4 top-3.5 w-5 h-5 text-gray-400 group-focus-within:text-emerald-500 transition-colors" />
                     <input
@@ -302,20 +302,20 @@ export default function EKYCForm({
                       value={eKYCData.firstName}
                       onChange={(e) => setEKYCData({ ...eKYCData, firstName: e.target.value })}
                       placeholder="As per Aadhaar"
-                      className="w-full pl-10 md:pl-12 pr-3 md:pr-4 py-2 md:py-2.5 rounded-lg bg-white border-2 border-gray-100 text-[#0a192f] placeholder-gray-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all font-medium outline-none text-xs md:text-sm"
+                      className="w-full pl-10 md:pl-12 pr-3 md:pr-4 py-2 md:py-2.5 rounded-lg bg-white border-2 border-gray-100 text-[#0E192D] placeholder-gray-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all font-medium outline-none text-xs md:text-sm"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-xs font-bold text-[#0a192f]/70 mb-1.5 block uppercase tracking-wider ml-1">Date of Birth</label>
+                  <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider ml-1">Date of Birth</label>
                   <div className="relative group">
                     <Calendar className="absolute left-4 top-3.5 w-5 h-5 text-gray-400 group-focus-within:text-emerald-500 transition-colors" />
                     <input
                       type="date"
                       value={eKYCData.dob}
                       onChange={(e) => setEKYCData({ ...eKYCData, dob: e.target.value })}
-                      className="w-full pl-12 pr-4 py-2.5 rounded-lg bg-white border-2 border-gray-100 text-[#0a192f] focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all font-medium outline-none text-sm"
+                      className="w-full pl-12 pr-4 py-2.5 rounded-lg bg-white border-2 border-gray-100 text-[#0E192D] focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all font-medium outline-none text-sm"
                     />
                   </div>
                 </div>
@@ -324,17 +324,17 @@ export default function EKYCForm({
 
             {/* Aadhar Details Section */}
             <div className="bg-blue-50/30 p-4 md:p-5 rounded-xl border border-blue-100/50">
-              <h3 className="text-base md:text-lg font-bold text-[#0a192f] mb-3 md:mb-4 flex items-center gap-2">
-                <span className="w-1 h-5 md:h-6 bg-[#0a192f] rounded-full"></span>
+              <h3 className="text-base md:text-lg font-bold text-[#0E192D] mb-3 md:mb-4 flex items-center gap-2">
+                <span className="w-1 h-5 md:h-6 bg-[#0E192D] rounded-full"></span>
                 Aadhaar Verification
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="text-xs font-bold text-[#0a192f]/70 mb-1.5 block uppercase tracking-wider ml-1">
+                  <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider ml-1">
                     Linked Mobile Number
                   </label>
                   <div className="relative group">
-                    <Smartphone className="absolute left-4 top-3.5 w-5 h-5 text-gray-400 group-focus-within:text-[#0a192f] transition-colors" />
+                    <Smartphone className="absolute left-4 top-3.5 w-5 h-5 text-gray-400 group-focus-within:text-[#0E192D] transition-colors" />
                     <input
                       type="tel"
                       value={eKYCData.aadharPhone}
@@ -344,15 +344,15 @@ export default function EKYCForm({
                       }}
                       placeholder="10-digit mobile number"
                       maxLength={10}
-                      className="w-full pl-12 pr-4 py-2.5 rounded-lg bg-white border-2 border-gray-100 text-[#0a192f] placeholder-gray-400 focus:border-[#0a192f] focus:ring-4 focus:ring-[#0a192f]/10 transition-all font-medium outline-none text-sm"
+                      className="w-full pl-12 pr-4 py-2.5 rounded-lg bg-white border-2 border-gray-100 text-[#0E192D] placeholder-gray-400 focus:border-[#0E192D] focus:ring-4 focus:ring-[#0E192D]/10 transition-all font-medium outline-none text-sm"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-xs font-bold text-[#0a192f]/70 mb-1.5 block uppercase tracking-wider ml-1">Aadhaar Number</label>
+                  <label className="text-xs font-bold text-[#0E192D]/70 mb-1.5 block uppercase tracking-wider ml-1">Aadhaar Number</label>
                   <div className="relative group">
-                    <CreditCard className="absolute left-4 top-3.5 w-5 h-5 text-gray-400 group-focus-within:text-[#0a192f] transition-colors" />
+                    <CreditCard className="absolute left-4 top-3.5 w-5 h-5 text-gray-400 group-focus-within:text-[#0E192D] transition-colors" />
                     <input
                       type="text"
                       value={eKYCData.aadharNumber}
@@ -367,7 +367,7 @@ export default function EKYCForm({
                       }}
                       placeholder="XXXX-XXXX-XXXX"
                       maxLength={14}
-                      className="w-full pl-12 pr-4 py-2.5 rounded-lg bg-white border-2 border-gray-100 text-[#0a192f] placeholder-gray-400 focus:border-[#0a192f] focus:ring-4 focus:ring-[#0a192f]/10 transition-all font-medium outline-none text-sm"
+                      className="w-full pl-12 pr-4 py-2.5 rounded-lg bg-white border-2 border-gray-100 text-[#0E192D] placeholder-gray-400 focus:border-[#0E192D] focus:ring-4 focus:ring-[#0E192D]/10 transition-all font-medium outline-none text-sm"
                     />
                   </div>
                 </div>
@@ -376,7 +376,7 @@ export default function EKYCForm({
 
             {/* Document Uploads Section */}
             <div>
-              <h3 className="text-sm md:text-lg font-bold text-[#0a192f] mb-2 md:mb-4 flex items-center gap-2">
+              <h3 className="text-sm md:text-lg font-bold text-[#0E192D] mb-2 md:mb-4 flex items-center gap-2">
                 <span className="w-1 h-4 md:h-6 bg-emerald-500 rounded-full"></span>
                 Document Uploads
               </h3>
@@ -388,12 +388,12 @@ export default function EKYCForm({
                   { label: "Car Img", type: "IMG", key: "carPhoto", icon: ImageIcon, color: "emerald" }
                 ].map((item, idx) => (
                   <div key={idx} className="group relative">
-                    <label className="text-xs md:text-sm font-bold text-[#0a192f] mb-2 block uppercase tracking-wider truncate">{item.label}</label>
+                    <label className="text-xs md:text-sm font-bold text-[#0E192D] mb-2 block uppercase tracking-wider truncate">{item.label}</label>
                     <div className={`border-2 border-dashed border-gray-300 rounded-xl md:rounded-2xl p-2 md:p-6 flex flex-col items-center justify-center bg-white hover:bg-${item.color}-50/50 hover:border-${item.color}-500 transition-all cursor-pointer relative overflow-hidden h-24 md:h-auto shadow-sm`}>
                       <div className={`w-8 h-8 md:w-12 md:h-12 bg-gray-50 rounded-full flex items-center justify-center shadow-inner mb-2 md:mb-3 group-hover:scale-110 transition-transform duration-300`}>
-                        <item.icon className={`w-4 h-4 md:w-6 md:h-6 text-${item.color === 'blue' ? '#0a192f' : 'emerald-600'}`} />
+                        <item.icon className={`w-4 h-4 md:w-6 md:h-6 text-${item.color === 'blue' ? '#0E192D' : 'emerald-600'}`} />
                       </div>
-                      <p className="text-[10px] md:text-sm font-bold text-[#0a192f] text-center leading-tight">{eKYCData[item.key as keyof eKYCFormData] ? "Selected" : "Upload"}</p>
+                      <p className="text-[10px] md:text-sm font-bold text-[#0E192D] text-center leading-tight">{eKYCData[item.key as keyof eKYCFormData] ? "Selected" : "Upload"}</p>
                       <p className="text-[8px] md:text-xs text-gray-400 mt-0.5 md:mt-1 hidden md:block">{item.type} only</p>
                       <input
                         type="file"
@@ -439,7 +439,7 @@ export default function EKYCForm({
               disabled={!eKYCData.firstName || !eKYCData.dob || !eKYCData.aadharNumber || !eKYCData.agreeTC}
               className={`w-full py-3.5 md:py-4.5 rounded-xl font-bold text-base md:text-lg shadow-lg relative overflow-hidden group ${!eKYCData.firstName || !eKYCData.dob || !eKYCData.aadharNumber || !eKYCData.agreeTC
                 ? "bg-gray-100 text-gray-400 cursor-not-allowed shadow-none"
-                : "bg-[#0a192f] text-white hover:bg-emerald-600 hover:shadow-xl hover:shadow-emerald-500/20"
+                : "bg-[#0E192D] text-white hover:bg-emerald-600 hover:shadow-xl hover:shadow-emerald-500/20"
                 }`}
               whileHover={!(!eKYCData.firstName || !eKYCData.dob || !eKYCData.aadharNumber || !eKYCData.agreeTC) ? { scale: 1.01 } : {}}
               whileTap={!(!eKYCData.firstName || !eKYCData.dob || !eKYCData.aadharNumber || !eKYCData.agreeTC) ? { scale: 0.99 } : {}}
@@ -456,3 +456,4 @@ export default function EKYCForm({
     </motion.div>
   )
 }
+

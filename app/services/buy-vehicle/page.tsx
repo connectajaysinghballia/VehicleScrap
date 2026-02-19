@@ -32,7 +32,7 @@ export default function BuyVehiclePage() {
               className="object-cover"
               priority
             />
-            <div className="absolute inset-0 bg-[#0a192f]/80 mix-blend-multiply"></div>
+            <div className="absolute inset-0 bg-[#0E192D]/80 mix-blend-multiply"></div>
           </div>
 
           <div className="relative z-10">
@@ -63,3 +63,4 @@ export default function BuyVehiclePage() {
     </div>
   )
 }
+

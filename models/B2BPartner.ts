@@ -44,3 +44,4 @@ const B2BPartnerSchema = new Schema(
 const B2BPartner = models.B2BPartner || model("B2BPartner", B2BPartnerSchema)
 
 export default B2BPartner
+

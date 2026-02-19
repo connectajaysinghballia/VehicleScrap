@@ -62,7 +62,7 @@ export default function GrowWithUs({ variant = "green" }: GrowWithUsProps) {
     return (
         <section className="py-6 bg-white">
             <div className="container mx-auto px-4 md:px-6">
-                <div className={`bg-slate-900 rounded-[2rem] overflow-hidden shadow-2xl shadow-slate-900/20 flex flex-col lg:flex-row min-h-[200px] border ${s.border}`}>
+                <div className={`bg-[#0E192D] rounded-[2rem] overflow-hidden shadow-2xl shadow-slate-900/20 flex flex-col lg:flex-row min-h-[200px] border ${s.border}`}>
 
                     {/* Left Side: Image (30%) */}
                     <div className="relative w-full lg:w-[30%] h-[160px] lg:h-auto min-h-[160px]">
@@ -72,11 +72,11 @@ export default function GrowWithUs({ variant = "green" }: GrowWithUsProps) {
                             fill
                             className="object-cover"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-slate-900/90 lg:to-slate-900/20" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-[#0E192D]/90 lg:to-[#0E192D]/20" />
                     </div>
 
                     {/* Right Side: Content (70%) */}
-                    <div className={`w-full lg:w-[70%] p-6 md:p-8 flex flex-col justify-center bg-slate-900 relative group transition-colors duration-500 ease-in-out`}>
+                    <div className={`w-full lg:w-[70%] p-6 md:p-8 flex flex-col justify-center bg-[#0E192D] relative group transition-colors duration-500 ease-in-out`}>
                         <motion.div
                             initial={{ opacity: 0, x: 20 }}
                             whileInView={{ opacity: 1, x: 0 }}
@@ -126,3 +126,4 @@ export default function GrowWithUs({ variant = "green" }: GrowWithUsProps) {
         </section>
     )
 }
+

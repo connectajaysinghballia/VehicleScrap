@@ -60,3 +60,4 @@ export default function WelcomePopup() {
         </AnimatePresence>
     )
 }
+

@@ -72,7 +72,7 @@ export default function BlogsPage() {
     ]
 
     return (
-        <div className="min-h-screen bg-[#0a192f] font-sans selection:bg-emerald-500/30 selection:text-emerald-400">
+        <div className="min-h-screen bg-[#0E192D] font-sans selection:bg-emerald-500/30 selection:text-emerald-400">
             <Navbar />
 
             {/* Header Section */}
@@ -110,7 +110,7 @@ export default function BlogsPage() {
                         {/* Search Bar Placeholder */}
                         <div className="mt-10 max-w-md mx-auto relative group">
                             <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-full blur opacity-25 group-hover:opacity-40 transition-opacity"></div>
-                            <div className="relative flex items-center bg-[#0a192f] border border-white/10 rounded-full p-2 shadow-xl">
+                            <div className="relative flex items-center bg-[#0E192D] border border-white/10 rounded-full p-2 shadow-xl">
                                 <Search className="w-5 h-5 text-slate-400 ml-4" />
                                 <input
                                     type="text"
@@ -142,7 +142,7 @@ export default function BlogsPage() {
                                 {/* Image Placeholder */}
                                 <div className="relative h-60 bg-slate-800/50 overflow-hidden">
                                     {/* In a real app, use next/image here. Using a placeholder div for now. */}
-                                    <div className="absolute inset-0 flex items-center justify-center text-slate-500 bg-slate-900/50 group-hover:scale-105 transition-transform duration-700">
+                                    <div className="absolute inset-0 flex items-center justify-center text-slate-500 bg-[#0E192D]/50 group-hover:scale-105 transition-transform duration-700">
                                         <div className="text-center">
                                             <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-2">
                                                 <BookOpen className="w-8 h-8 text-white/20" />
@@ -152,9 +152,9 @@ export default function BlogsPage() {
                                     </div>
 
                                     {/* Overlay Gradient */}
-                                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a192f] to-transparent opacity-60"></div>
+                                    <div className="absolute inset-0 bg-gradient-to-t from-[#0E192D] to-transparent opacity-60"></div>
 
-                                    <div className="absolute top-4 left-4 bg-[#0a192f]/80 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10 text-xs font-bold text-emerald-400 uppercase tracking-wide flex items-center gap-1.5 shadow-lg">
+                                    <div className="absolute top-4 left-4 bg-[#0E192D]/80 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10 text-xs font-bold text-emerald-400 uppercase tracking-wide flex items-center gap-1.5 shadow-lg">
                                         <Tag className="w-3 h-3" /> {blog.category}
                                     </div>
                                 </div>
@@ -187,7 +187,7 @@ export default function BlogsPage() {
                                             <span className="text-sm text-slate-300 font-medium">{blog.author}</span>
                                         </div>
 
-                                        <Link href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-emerald-400 group-hover:bg-emerald-500 group-hover:text-[#0a192f] transition-all duration-300 border border-white/10 group-hover:border-emerald-500">
+                                        <Link href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-emerald-400 group-hover:bg-emerald-500 group-hover:text-[#0E192D] transition-all duration-300 border border-white/10 group-hover:border-emerald-500">
                                             <ArrowRight className="w-5 h-5" />
                                         </Link>
                                     </div>
@@ -209,3 +209,4 @@ export default function BlogsPage() {
         </div>
     )
 }
+
