@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { signIn } from "next-auth/react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Mail, Lock, ArrowRight, Loader2, Sparkles, Building2, User } from "lucide-react"
@@ -9,6 +9,18 @@ import { useToast } from "@/components/ui/use-toast"
 import { useSearchParams } from "next/navigation"
 
 export default function LoginPage() {
+    return (
+        <React.Suspense fallback={
+            <div className="h-screen w-full flex items-center justify-center bg-gray-50">
+                <Loader2 className="w-10 h-10 animate-spin text-orange-600" />
+            </div>
+        }>
+            <LoginContent />
+        </React.Suspense>
+    )
+}
+
+function LoginContent() {
     const [activeTab, setActiveTab] = useState<"standard" | "b2b">("standard")
     const [isLogin, setIsLogin] = useState(true)
     const { toast } = useToast()
