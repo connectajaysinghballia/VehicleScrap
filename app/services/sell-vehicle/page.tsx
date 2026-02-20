@@ -4,17 +4,19 @@ import Navbar from "@/components/Navbar"
 import SellVehicleForm from "@/components/SellVehicleForm"
 import { motion } from "framer-motion"
 import Image from "next/image"
+import AuthGuard from "@/components/AuthGuard"
 
 export default function SellVehiclePage() {
   return (
     <div className="min-h-screen bg-slate-950 relative overflow-hidden">
+      <AuthGuard />
       <Navbar />
 
       {/* Background effects */}
       <div className="absolute top-20 left-10 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
       <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl pointer-events-none"></div>
 
-      <div className="container mx-auto px-4 pt-32 pb-16 relative z-10">
+      <div className="container mx-auto px-4 pt-44 pb-16 relative z-10">
 
         {/* Header Section */}
         <motion.div

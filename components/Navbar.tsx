@@ -8,7 +8,7 @@ import { motion, AnimatePresence, type Variants } from "framer-motion"
 import Link from "next/link" // Import Link for navigation
 import Image from "next/image"
 import { useSession, signOut } from "next-auth/react"
-import { useRouter } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
 gsap.registerPlugin(ScrollTrigger)
 
 // Animation variants for staggered dropdown items
@@ -38,6 +38,13 @@ export default function Navbar() {
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false)
   const { data: session } = useSession()
   const router = useRouter()
+  const pathname = usePathname()
+
+  // Close menus when route changes
+  useEffect(() => {
+    setIsOpen(false)
+    setIsMegaMenuOpen(false)
+  }, [pathname])
 
   const navItems = [
     { name: "Home", href: "/", hasDropdown: false },
@@ -106,8 +113,10 @@ export default function Navbar() {
           setIsScrolled(false)
         }
 
-        // Handle sticky behavior: Hide Bottom Row on scroll, Keep Top Row sticky
-        if (currentScrollY > 50) {
+        // Handle sticky behavior: Hide Bottom Row on scroll down, Show on scroll up
+        const direction = self.direction // 1 = down, -1 = up
+
+        if (direction === 1 && currentScrollY > 100) {
           // Scroll down past threshold -> Hide Bottom Row
           gsap.to(".bottom-row", {
             height: 0,
@@ -116,15 +125,10 @@ export default function Navbar() {
             paddingBottom: 0,
             duration: 0.3,
             ease: "power2.out",
-            overflow: "hidden"
+            overflow: "hidden",
           })
-          // Ensure navbar stays at top
-          gsap.to(".navbar", {
-            y: 0,
-            duration: 0.3
-          })
-        } else {
-          // At top -> Show Bottom Row
+        } else if (direction === -1 || currentScrollY <= 10) {
+          // Scroll up or at top -> Show Bottom Row
           gsap.to(".bottom-row", {
             height: "auto",
             opacity: 1,
@@ -132,11 +136,7 @@ export default function Navbar() {
             paddingBottom: "0.5rem", // py-2
             duration: 0.3,
             ease: "power2.out",
-            overflow: "visible"
-          })
-          gsap.to(".navbar", {
-            y: 0,
-            duration: 0.3
+            overflow: "visible",
           })
         }
       },
@@ -158,6 +158,7 @@ export default function Navbar() {
 
   const handleNavClick = (href: string) => {
     setIsOpen(false)
+    setIsMegaMenuOpen(false)
 
     if (href === "/") {
       router.push("/")

@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import EKYCForm from "@/components/eKYCForm"
+import AuthGuard from "@/components/AuthGuard"
 
 export default function SellVehicleEKYCPage() {
     const router = useRouter()
@@ -52,6 +53,7 @@ export default function SellVehicleEKYCPage() {
 
     return (
         <div className="bg-gray-50 min-h-screen">
+            <AuthGuard />
             <div className="max-w-4xl mx-auto pt-36 pb-12 px-4">
                 <EKYCForm
                     formData={formData}

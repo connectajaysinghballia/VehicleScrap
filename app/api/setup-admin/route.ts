@@ -9,8 +9,13 @@ export async function GET(req: Request) {
         const emailParam = searchParams.get("email")
 
         // Hardcoded admin Fix
-        const fixedEmail = "simaradmin@gmail.com"
-        const fixedPassword = "simar-ad"
+        // Admin 1: Novalytix
+        const admin1Email = "novalytix@gmail.com"
+        const admin1Password = "novalytix@123"
+
+        // Admin 2: Simar (Original)
+        const admin2Email = "simaradmin@gmail.com"
+        const admin2Password = "simar-ad"
 
         await connectToDatabase()
 
@@ -26,21 +31,34 @@ export async function GET(req: Request) {
         }
 
         // Create/Fix specific admin
-        const hashedPassword = await bcrypt.hash(fixedPassword, 10)
-
+        // Create/Update Admin 1 (Novalytix)
+        const hashedPwd1 = await bcrypt.hash(admin1Password, 10)
         await User.findOneAndUpdate(
-            { email: fixedEmail },
+            { email: admin1Email },
+            {
+                name: "Novalytix Admin",
+                email: admin1Email,
+                password: hashedPwd1,
+                role: "admin"
+            },
+            { upsert: true, new: true }
+        )
+
+        // Create/Update Admin 2 (Simar)
+        const hashedPwd2 = await bcrypt.hash(admin2Password, 10)
+        await User.findOneAndUpdate(
+            { email: admin2Email },
             {
                 name: "Simar Admin",
-                email: fixedEmail,
-                password: hashedPassword,
+                email: admin2Email,
+                password: hashedPwd2,
                 role: "admin"
             },
             { upsert: true, new: true }
         )
 
         return NextResponse.json({
-            message: `Admin Fixed! Login with: ${fixedEmail} / ${fixedPassword}`
+            message: `Admins Configured! \n1. ${admin1Email} / ${admin1Password} \n2. ${admin2Email} / ${admin2Password}`
         })
 
     } catch (error) {

@@ -58,11 +58,18 @@ export async function GET(req: Request) {
         await connectToDatabase()
         const { searchParams } = new URL(req.url)
         const userId = searchParams.get("userId")
+        const email = searchParams.get("email")
 
         if (userId) {
             // First check if they are already a partner (Approved)
+            // Check by originalUserId OR email (for backward compatibility)
             const B2BPartner = (await import("@/models/B2BPartner")).default
-            const partner = await B2BPartner.findOne({ originalUserId: userId })
+            const partner = await B2BPartner.findOne({
+                $or: [
+                    { originalUserId: userId },
+                    { email: email }
+                ]
+            })
 
             if (partner) {
                 return NextResponse.json(

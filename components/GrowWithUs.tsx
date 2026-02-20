@@ -99,7 +99,7 @@ export default function GrowWithUs({ variant = "green" }: GrowWithUsProps) {
                                         href="/partner-register"
                                         className={`inline-flex items-center gap-3 px-8 py-4 ${s.btnBg} text-white rounded-full font-bold text-lg shadow-lg ${s.btnShadow} ${s.btnHover} ${s.btnHoverShadow} ${s.btnGroupHoverBg} ${s.btnGroupHoverText} ${s.btnGroupHoverShadow} transition-all duration-300`}
                                     >
-                                        <span>Apply For Partner</span>
+                                        <span>{(session.user as any)?.role === 'partner' ? "View Credentials" : "Apply For Partner"}</span>
                                         <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
                                     </Link>
                                 ) : (

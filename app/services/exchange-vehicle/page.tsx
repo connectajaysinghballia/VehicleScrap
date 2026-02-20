@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar"
 import ExchangeVehicleForm from "@/components/ExchangeVehicleForm"
 import { motion, AnimatePresence } from "framer-motion"
 import { TrendingUp, Zap, Shield, Award } from "lucide-react"
+import AuthGuard from "@/components/AuthGuard"
 
 export default function ExchangeVehiclePage() {
   const benefits = [
@@ -32,10 +33,11 @@ export default function ExchangeVehiclePage() {
 
   return (
     <div className="bg-gray-50 min-h-screen text-gray-900 selection:bg-emerald-500/30">
+      <AuthGuard />
       <Navbar />
 
       {/* Hero Section */}
-      <section className="pt-24 pb-8 px-4">
+      <section className="pt-44 pb-8 px-4">
         <div className="container mx-auto max-w-7xl relative rounded-[2rem] overflow-hidden min-h-[400px] flex items-center justify-center shadow-xl">
           {/* Background Image */}
           <div className="absolute inset-0 z-0">

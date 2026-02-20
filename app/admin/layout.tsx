@@ -63,7 +63,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <div className="h-20 flex items-center px-6 border-b border-slate-800 bg-[#0E192D] justify-between transition-colors duration-300">
                     <div className="flex items-center">
                         <Shield className="w-8 h-8 text-emerald-400 mr-2" />
-                        <span className="text-xl font-black text-white tracking-tight">ScrapCenter</span>
+                        <span className="text-xl font-black text-white tracking-tight">Novalytix</span>
                     </div>
                     {/* Toggle Button in Sidebar (Desktop) */}
                     <button
@@ -213,7 +213,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                         <ThemeToggle />
                         <div className="hidden sm:flex flex-col items-end">
                             <span className="text-xs font-bold text-gray-400 dark:text-slate-500 uppercase tracking-widest">Administrator</span>
-                            <span className="text-sm font-semibold text-gray-900 dark:text-white">ScrapCenter Control</span>
+                            <span className="text-sm font-semibold text-gray-900 dark:text-white">Novalytix Control</span>
                         </div>
                     </div>
                 </header>

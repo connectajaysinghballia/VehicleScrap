@@ -384,7 +384,7 @@ export default function SellVehicleForm({ onClose }: SellVehicleFormProps) {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="Enter your name"
-                    className="flex-1 outline-none bg-transparent text-white placeholder-gray-500 font-medium text-sm"
+                    className="flex-1 outline-none bg-transparent text-[#0E192D] placeholder-gray-500 font-medium text-sm"
                     required
                   />
                 </div>

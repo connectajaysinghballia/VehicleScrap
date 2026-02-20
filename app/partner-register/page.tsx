@@ -7,7 +7,7 @@ import Link from "next/link"
 import confetti from "canvas-confetti"
 import { useToast } from "@/components/ui/use-toast"
 
-import { useSession } from "next-auth/react"
+import { useSession, signOut } from "next-auth/react"
 import { useRouter } from "next/navigation"
 
 export default function PartnerRegistrationPage() {
@@ -42,7 +42,7 @@ export default function PartnerRegistrationPage() {
         const checkStatus = async () => {
             if (session?.user) {
                 try {
-                    const res = await fetch(`/api/b2b-register?userId=${(session.user as any).id}`)
+                    const res = await fetch(`/api/b2b-register?userId=${(session.user as any).id}&email=${session.user?.email}`)
                     const data = await res.json()
                     if (data.data) {
                         setExistingApplication(data.data)
@@ -136,17 +136,21 @@ export default function PartnerRegistrationPage() {
                 <Link href="/login" className="flex items-center justify-center text-gray-400 hover:text-white mb-8 transition-colors group">
                     <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" /> Back to Login
                 </Link>
-                <div className="flex justify-center">
-                    <div className="w-20 h-20 bg-[#0E192D] rounded-2xl shadow-xl flex items-center justify-center border border-slate-800">
-                        <Building2 className="w-10 h-10 text-orange-500" />
-                    </div>
-                </div>
-                <h2 className="mt-8 text-center text-4xl font-extrabold text-white tracking-tight">
-                    Become a <span className="text-orange-600">Partner</span>
-                </h2>
-                <p className="mt-3 text-center text-lg text-gray-400 max-w-sm mx-auto">
-                    Join India's fastest-growing network of certified scrap dealers.
-                </p>
+                {!existingApplication && (
+                    <>
+                        <div className="flex justify-center">
+                            <div className="w-20 h-20 bg-[#0E192D] rounded-2xl shadow-xl flex items-center justify-center border border-slate-800">
+                                <Building2 className="w-10 h-10 text-orange-500" />
+                            </div>
+                        </div>
+                        <h2 className="mt-8 text-center text-4xl font-extrabold text-white tracking-tight">
+                            Become a <span className="text-orange-600">Partner</span>
+                        </h2>
+                        <p className="mt-3 text-center text-lg text-gray-400 max-w-sm mx-auto">
+                            Join India's fastest-growing network of certified scrap dealers.
+                        </p>
+                    </>
+                )}
             </div>
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-xl relative z-10">

@@ -41,7 +41,7 @@ export default function HeroSection() {
   }, [])
 
   return (
-    <section className="relative w-full min-h-screen flex items-center overflow-hidden pt-32 lg:pt-20 bg-gray-50">
+    <section className="relative w-full min-h-screen flex items-center overflow-hidden pt-32 lg:pt-40 bg-gray-50">
 
       {/* Background Layer: Advanced Composition */}
       {/* Background Layer: Split Layout */}
@@ -157,10 +157,10 @@ export default function HeroSection() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-xl" style={{ perspective: "800px" }}>
                 {[
-                  { text: "Certificate of Deposit", icon: Banknote, accent: "emerald", gradient: "bg-gradient-to-br from-[#0E192D] to-emerald-900/60" },
-                  { text: "25% Road Tax Rebate", icon: Sparkles, accent: "teal", gradient: "bg-gradient-to-br from-[#0E192D] to-teal-900/60" },
-                  { text: "Registration Fee Waiver", icon: ShieldCheck, accent: "emerald", gradient: "bg-gradient-to-br from-emerald-900/40 to-[#0E192D]" },
-                  { text: "Tax Deduction on EV", icon: Leaf, accent: "teal", gradient: "bg-gradient-to-br from-teal-900/40 to-[#0E192D]" }
+                  { text: "Certificate of Deposit", icon: Banknote, accent: "emerald", gradient: "bg-gradient-to-br from-slate-800 to-emerald-900/80" },
+                  { text: "25% Road Tax Rebate", icon: Sparkles, accent: "teal", gradient: "bg-gradient-to-br from-slate-800 to-teal-900/80" },
+                  { text: "Registration Fee Waiver", icon: ShieldCheck, accent: "emerald", gradient: "bg-gradient-to-br from-emerald-900/70 to-slate-800" },
+                  { text: "Tax Deduction on EV", icon: Leaf, accent: "teal", gradient: "bg-gradient-to-br from-teal-900/70 to-slate-800" }
                 ].map((item, index) => {
                   const isActive = index === activeBenefit
                   const Icon = item.icon
@@ -191,7 +191,7 @@ export default function HeroSection() {
                       className={`flex items-center gap-4 p-4 rounded-xl border ${item.gradient} transition-all duration-500 cursor-default
                         ${isActive
                           ? `${accentColor.border} ${accentColor.ring} ring-2 shadow-lg ${accentColor.glow}`
-                          : "border-slate-700/50 shadow-sm"
+                          : "border-white/20 shadow-md"
                         }`}
                     >
                       <motion.div
@@ -201,7 +201,7 @@ export default function HeroSection() {
                       >
                         <Icon className={`w-5 h-5 ${accentColor.icon}`} />
                       </motion.div>
-                      <span className={`font-bold text-sm transition-colors duration-500 ${isActive ? "text-white" : "text-slate-400"}`}>
+                      <span className={`font-bold text-sm transition-colors duration-500 ${isActive ? "text-white" : "text-slate-100"}`}>
                         {item.text}
                       </span>
                       {isActive && (

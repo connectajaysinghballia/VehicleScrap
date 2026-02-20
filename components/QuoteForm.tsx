@@ -148,7 +148,7 @@ export default function QuoteForm() {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-emerald-50/20 to-white py-12 px-4 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-white via-emerald-50/20 to-white pt-44 pb-12 px-4 relative overflow-hidden">
       <AuthGuard />
       {/* Background effects */}
       <div className="absolute top-20 left-10 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl"></div>
