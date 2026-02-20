@@ -29,36 +29,17 @@ interface DashboardChartsProps {
         pending: number
         approved: number
     }
+    monthlyGrowthData: { name: string, value: number }[]
+    activityData: { name: string, requests: number, partners: number }[]
 }
 
-export default function DashboardCharts({ valuationCounts, b2bStats }: DashboardChartsProps) {
+export default function DashboardCharts({ valuationCounts, b2bStats, monthlyGrowthData, activityData }: DashboardChartsProps) {
     // Chart 1: Service Distribution
     const serviceData = [
         { name: "Free Quote", value: valuationCounts.quote, color: "#3b82f6" }, // Blue
         { name: "Sell Vehicle", value: valuationCounts.sell, color: "#22c55e" }, // Green
         { name: "Exchange", value: valuationCounts.exchange, color: "#a855f7" }, // Purple
         { name: "Buy Vehicle", value: valuationCounts.buy, color: "#f97316" }, // Orange
-    ]
-
-    // Chart 2: Monthly Growth (Mock Data)
-    const monthlyGrowthData = [
-        { name: "Jan", value: 45 },
-        { name: "Feb", value: 52 },
-        { name: "Mar", value: 38 },
-        { name: "Apr", value: 65 },
-        { name: "May", value: 48 },
-        { name: "Jun", value: 59 },
-    ]
-
-    // Chart 3: Weekly Activity (Mock Data for Demo)
-    const activityData = [
-        { name: "Mon", requests: 4, partners: 1 },
-        { name: "Tue", requests: 7, partners: 2 },
-        { name: "Wed", requests: 5, partners: 0 },
-        { name: "Thu", requests: 12, partners: 3 },
-        { name: "Fri", requests: 9, partners: 1 },
-        { name: "Sat", requests: 6, partners: 0 },
-        { name: "Sun", requests: 3, partners: 0 },
     ]
 
     return (
@@ -72,7 +53,7 @@ export default function DashboardCharts({ valuationCounts, b2bStats }: Dashboard
                 className="bg-white dark:bg-[#0E192D] p-6 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm flex flex-col transition-colors duration-300"
             >
                 <h3 className="text-sm font-bold text-gray-400 dark:text-slate-500 uppercase tracking-wide mb-6">Service Distribution</h3>
-                <div className="h-[250px] w-full">
+                <div className="h-[250px] w-full [&_.recharts-wrapper]:!outline-none [&_.recharts-surface]:!outline-none">
                     <ResponsiveContainer width="100%" height="100%">
                         <PieChart>
                             <Pie
@@ -83,9 +64,10 @@ export default function DashboardCharts({ valuationCounts, b2bStats }: Dashboard
                                 outerRadius={80}
                                 paddingAngle={5}
                                 dataKey="value"
+                                style={{ outline: 'none' }}
                             >
                                 {serviceData.map((entry, index) => (
-                                    <Cell key={`cell-${index}`} fill={entry.color} strokeWidth={0} />
+                                    <Cell key={`cell-${index}`} fill={entry.color} strokeWidth={0} style={{ outline: 'none' }} />
                                 ))}
                             </Pie>
                             <Tooltip
@@ -106,7 +88,7 @@ export default function DashboardCharts({ valuationCounts, b2bStats }: Dashboard
                 className="bg-white dark:bg-[#0E192D] p-6 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm flex flex-col transition-colors duration-300"
             >
                 <h3 className="text-sm font-bold text-gray-400 dark:text-slate-500 uppercase tracking-wide mb-6">Monthly Growth</h3>
-                <div className="h-[250px] w-full">
+                <div className="h-[250px] w-full [&_.recharts-wrapper]:!outline-none [&_.recharts-surface]:!outline-none">
                     <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={monthlyGrowthData}>
                             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
@@ -130,7 +112,7 @@ export default function DashboardCharts({ valuationCounts, b2bStats }: Dashboard
                 className="bg-white dark:bg-[#0E192D] p-6 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm flex flex-col transition-colors duration-300"
             >
                 <h3 className="text-sm font-bold text-gray-400 dark:text-slate-500 uppercase tracking-wide mb-6">Weekly Activity Activity</h3>
-                <div className="h-[250px] w-full">
+                <div className="h-[250px] w-full [&_.recharts-wrapper]:!outline-none [&_.recharts-surface]:!outline-none">
                     <ResponsiveContainer width="100%" height="100%">
                         <AreaChart data={activityData}>
                             <defs>

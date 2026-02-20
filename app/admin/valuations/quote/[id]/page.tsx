@@ -161,13 +161,15 @@ export default function QuoteDetailPage({ params }: { params: Promise<{ id: stri
                         <p className="text-gray-500 dark:text-slate-400 mt-1">Request ID: {request._id}</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-3">
-                    {getStatusBadge(request.status)}
+                <div className="flex flex-wrap items-center gap-3 w-full md:w-auto mt-4 md:mt-0">
+                    <div className="w-full md:w-auto mb-2 md:mb-0">
+                        {getStatusBadge(request.status)}
+                    </div>
                     <a
                         href={`https://wa.me/${request.contact?.phone?.replace(/\D/g, '')}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors font-medium text-sm flex items-center gap-2 mr-4"
+                        className="flex-1 md:flex-none justify-center px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors font-medium text-sm flex items-center gap-2 md:mr-4"
                     >
                         <MessageCircle className="w-4 h-4" />
                         Chat
@@ -175,7 +177,7 @@ export default function QuoteDetailPage({ params }: { params: Promise<{ id: stri
                     {request.status !== "approved" && (
                         <button
                             onClick={handleApprove}
-                            className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium text-sm flex items-center gap-2"
+                            className="flex-1 md:flex-none justify-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium text-sm flex items-center gap-2"
                         >
                             <CheckCircle className="w-4 h-4" />
                             Approve
@@ -183,7 +185,7 @@ export default function QuoteDetailPage({ params }: { params: Promise<{ id: stri
                     )}
                     <button
                         onClick={handleDelete}
-                        className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium text-sm flex items-center gap-2"
+                        className="flex-1 md:flex-none justify-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium text-sm flex items-center gap-2"
                     >
                         <Trash2 className="w-4 h-4" />
                         Delete

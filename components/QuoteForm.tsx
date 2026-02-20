@@ -184,7 +184,7 @@ export default function QuoteForm() {
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <motion.div
-          className="relative rounded-3xl overflow-hidden mb-12 mt-12 text-center min-h-[350px] flex flex-col justify-center px-4"
+          className="relative rounded-3xl overflow-hidden mb-12 mt-12 text-center min-h-[350px] flex flex-col justify-center px-4 border border-slate-800"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -199,7 +199,26 @@ export default function QuoteForm() {
               style={{ objectPosition: "center 35%" }}
               priority
             />
-            <div className="absolute inset-0 bg-[#0E192D]/10 mix-blend-multiply"></div>
+            <div className="absolute inset-0 bg-[#0E192D]/50 mix-blend-multiply"></div>
+          </div>
+
+          <div className="relative z-10">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-4xl md:text-6xl font-black text-white mb-6 drop-shadow-lg tracking-tight"
+            >
+              Get <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Free Quote</span>
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed font-medium"
+            >
+              Get an instant valuation for your vehicle with maximum value, free pickup, and road tax rebate.
+            </motion.p>
           </div>
         </motion.div>
 

@@ -37,6 +37,9 @@ export default async function AdminPage() {
     let totalApproved = 0
     let formattedTotalTons = "0.0"
 
+    let formattedMonthlyGrowth: { name: string, value: number }[] = []
+    let formattedWeeklyActivity: { name: string, requests: number, partners: number }[] = []
+
     try {
         await connectToDatabase()
 
@@ -156,6 +159,135 @@ export default async function AdminPage() {
         formattedTotalTons = totalTons.toFixed(1)
 
 
+        // --- Real-time Chart Data Fetching ---
+
+        // 1. Monthly Growth (Last 6 Months)
+        const sixMonthsAgo = new Date();
+        sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 5);
+        sixMonthsAgo.setDate(1); // Start of the 6th month ago
+        sixMonthsAgo.setHours(0, 0, 0, 0);
+
+        const monthlyAggregation = [
+            {
+                $match: {
+                    createdAt: { $gte: sixMonthsAgo }
+                }
+            },
+            {
+                $group: {
+                    _id: {
+                        year: { $year: "$createdAt" },
+                        month: { $month: "$createdAt" }
+                    },
+                    count: { $sum: 1 }
+                }
+            }
+        ];
+
+        const [monthlyQuotes, monthlySells, monthlyExchanges, monthlyBuys] = await Promise.all([
+            Valuation.aggregate(monthlyAggregation),
+            SellVehicle.aggregate(monthlyAggregation),
+            ExchangeVehicle.aggregate(monthlyAggregation),
+            BuyVehicle.aggregate(monthlyAggregation)
+        ]);
+
+        const combinedMonthlyData = [...monthlyQuotes, ...monthlySells, ...monthlyExchanges, ...monthlyBuys];
+
+        const monthlyTotals: { [key: string]: number } = {};
+
+        // Initialize last 6 months with 0
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        for (let i = 5; i >= 0; i--) {
+            const d = new Date();
+            d.setMonth(d.getMonth() - i);
+            const key = `${d.getFullYear()}-${d.getMonth() + 1}`;
+            monthlyTotals[key] = 0;
+        }
+
+        // Sum up all collections
+        combinedMonthlyData.forEach(item => {
+            const key = `${item._id.year}-${item._id.month}`;
+            if (monthlyTotals[key] !== undefined) {
+                monthlyTotals[key] += item.count;
+            }
+        });
+
+        formattedMonthlyGrowth = Object.entries(monthlyTotals).map(([key, value]) => {
+            const [year, month] = key.split('-');
+            return {
+                name: monthNames[parseInt(month) - 1],
+                value: value
+            };
+        });
+
+
+        // 2. Weekly Activity (Last 7 Days)
+        const sevenDaysAgo = new Date();
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6);
+        sevenDaysAgo.setHours(0, 0, 0, 0);
+
+        const dailyAggregation = [
+            {
+                $match: {
+                    createdAt: { $gte: sevenDaysAgo }
+                }
+            },
+            {
+                $group: {
+                    _id: {
+                        year: { $year: "$createdAt" },
+                        month: { $month: "$createdAt" },
+                        day: { $dayOfMonth: "$createdAt" },
+                        dayOfWeek: { $dayOfWeek: "$createdAt" } // 1 (Sunday) - 7 (Saturday)
+                    },
+                    count: { $sum: 1 }
+                }
+            }
+        ];
+
+        const [dailyQuotes, dailySells, dailyExchanges, dailyBuys, dailyPartners, dailyRegistrations] = await Promise.all([
+            Valuation.aggregate(dailyAggregation),
+            SellVehicle.aggregate(dailyAggregation),
+            ExchangeVehicle.aggregate(dailyAggregation),
+            BuyVehicle.aggregate(dailyAggregation),
+            B2BPartner.aggregate(dailyAggregation),
+            B2BRegistration.aggregate(dailyAggregation)
+        ]);
+
+        const combinedDailyRequests = [...dailyQuotes, ...dailySells, ...dailyExchanges, ...dailyBuys];
+        const combinedDailyPartners = [...dailyPartners, ...dailyRegistrations];
+
+        const dailyTotals: { [key: string]: { requests: number, partners: number, dayOfWeek: number } } = {};
+        const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+        // Initialize last 7 days
+        for (let i = 6; i >= 0; i--) {
+            const d = new Date();
+            d.setDate(d.getDate() - i);
+            const key = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+            dailyTotals[key] = { requests: 0, partners: 0, dayOfWeek: d.getDay() + 1 }; // JS getDay is 0-6 (Sun-Sat), Mongo dayOfWeek is 1-7
+        }
+
+        combinedDailyRequests.forEach(item => {
+            const key = `${item._id.year}-${item._id.month}-${item._id.day}`;
+            if (dailyTotals[key] !== undefined) {
+                dailyTotals[key].requests += item.count;
+            }
+        });
+
+        combinedDailyPartners.forEach(item => {
+            const key = `${item._id.year}-${item._id.month}-${item._id.day}`;
+            if (dailyTotals[key] !== undefined) {
+                dailyTotals[key].partners += item.count;
+            }
+        });
+
+        formattedWeeklyActivity = Object.entries(dailyTotals).map(([key, data]) => ({
+            name: dayNames[data.dayOfWeek - 1],
+            requests: data.requests,
+            partners: data.partners
+        }));
+
     } catch (error) {
         console.error("Error fetching admin dashboard data:", error)
     }
@@ -249,6 +381,8 @@ export default async function AdminPage() {
                     pending: b2bPending,
                     approved: b2bApproved
                 }}
+                monthlyGrowthData={formattedMonthlyGrowth}
+                activityData={formattedWeeklyActivity}
             />
 
             {/* Market Feed Table */}

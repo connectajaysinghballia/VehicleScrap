@@ -82,7 +82,7 @@ function B2BGeneratorContent() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 pt-24 pb-12 px-4 sm:px-6 lg:px-8 font-sans">
+        <div className="min-h-screen bg-gray-50 dark:bg-slate-950 pt-24 pb-12 px-4 sm:px-6 lg:px-8 font-sans">
             <div className="max-w-2xl mx-auto">
                 <Link href="/admin/partners" className="inline-flex items-center text-gray-500 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white mb-6 transition-colors">
                     <ArrowLeft className="w-4 h-4 mr-2" /> Back to Partners
