@@ -456,11 +456,10 @@ export default function PortfolioSection() {
             <motion.button
               key={category.id}
               onClick={() => handleCategoryChange(category.id)}
-              className={`group relative px-3 md:px-6 py-2 md:py-3 rounded-xl text-xs md:text-sm font-semibold transition-all duration-300 ${
-                selectedCategory === category.id
+              className={`group relative px-3 md:px-6 py-2 md:py-3 rounded-xl text-xs md:text-sm font-semibold transition-all duration-300 ${selectedCategory === category.id
                   ? "bg-gradient-to-r from-green-500 to-emerald-500 text-black shadow-lg shadow-green-500/25"
                   : "bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 border border-green-500/20 hover:border-green-400/40"
-              }`}
+                }`}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.4, delay: 0.9 + index * 0.1 }}
@@ -532,7 +531,7 @@ export default function PortfolioSection() {
                       transition={{
                         duration: 2,
                         repeat: Number.POSITIVE_INFINITY,
-                        ease: "easeInOut",
+                        ease: "easeInOut" as const,
                       }}
                     />
                     <motion.div
@@ -544,7 +543,7 @@ export default function PortfolioSection() {
                       transition={{
                         duration: 1.5,
                         repeat: Number.POSITIVE_INFINITY,
-                        ease: "easeInOut",
+                        ease: "easeInOut" as const,
                         delay: 0.5,
                       }}
                     />
@@ -558,7 +557,7 @@ export default function PortfolioSection() {
                           animate={{ x: "0%" }}
                           transition={{
                             duration: 15,
-                            ease: "linear",
+                            ease: "linear" as const,
                             repeat: Number.POSITIVE_INFINITY,
                           }}
                         />
@@ -746,11 +745,10 @@ export default function PortfolioSection() {
                                   <button
                                     key={index}
                                     onClick={() => setCurrentImageIndex(index)}
-                                    className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-300 ${
-                                      index === currentImageIndex
+                                    className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-300 ${index === currentImageIndex
                                         ? "bg-green-400 w-3 sm:w-4"
                                         : "bg-white/50 hover:bg-white/70"
-                                    }`}
+                                      }`}
                                   />
                                 ))}
                               </div>
@@ -932,9 +930,8 @@ export default function PortfolioSection() {
                   resetUserInteraction()
                   setCurrentSlide(index)
                 }}
-                className={`relative overflow-hidden rounded-full transition-all duration-500 ${
-                  index === currentSlide ? "w-6 md:w-8 h-2 md:h-3 bg-green-400" : "w-2 md:w-3 h-2 md:h-3 bg-gray-600"
-                }`}
+                className={`relative overflow-hidden rounded-full transition-all duration-500 ${index === currentSlide ? "w-6 md:w-8 h-2 md:h-3 bg-green-400" : "w-2 md:w-3 h-2 md:h-3 bg-gray-600"
+                  }`}
                 whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.9 }}
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -959,7 +956,7 @@ export default function PortfolioSection() {
         </div>
 
         {/* CTA Section - Hidden on mobile */}
-       
+
       </div>
     </section>
   )

@@ -1,14 +1,20 @@
-import { NextResponse } from "next/server"
+import { type NextRequest, NextResponse } from "next/server"
 import connectToDatabase from "@/lib/db"
 import Valuation from "@/models/Valuation"
 import SellVehicle from "@/models/SellVehicle"
 import ExchangeVehicle from "@/models/ExchangeVehicle"
+import { uploadToCloudinary } from "@/lib/cloudinary"
 
-export async function PATCH(req: Request) {
+export async function PATCH(req: NextRequest) {
     try {
-        const body = await req.json()
-        console.log("eKYC API Request Body:", body)
-        const { valuationId, ...ekycData } = body
+        const formData = await req.formData()
+        const valuationId = formData.get("valuationId") as string
+        const source = formData.get("source") as string
+
+        const firstName = formData.get("firstName") as string
+        const dob = formData.get("dob") as string
+        const aadharPhone = formData.get("aadharPhone") as string
+        const aadharNumber = formData.get("aadharNumber") as string
 
         if (!valuationId) {
             return NextResponse.json(
@@ -17,48 +23,64 @@ export async function PATCH(req: Request) {
             )
         }
 
+        const aadharFile = formData.get("aadharFile") as File
+        const rcFile = formData.get("rcFile") as File
+        const carPhoto = formData.get("carPhoto") as File
+
         await connectToDatabase()
 
-        let updatedRecord;
+        const uploadFile = async (file: File | null, folder: string) => {
+            if (!file || typeof file === "string") return null
+            const buffer = Buffer.from(await file.arrayBuffer())
 
-        if (body.source === "sell-vehicle") {
-            updatedRecord = await SellVehicle.findByIdAndUpdate(
-                valuationId,
-                {
-                    $set: {
-                        ...ekycData,
-                        ekycStatus: "verified",
-                        status: "pending" // Keep as pending or update as needed
-                    }
-                },
-                { new: true }
-            )
-        } else if (body.source === "exchange-vehicle") {
-            updatedRecord = await ExchangeVehicle.findByIdAndUpdate(
-                valuationId,
-                {
-                    $set: {
-                        ...ekycData,
-                        ekycStatus: "verified",
-                        status: "pending"
-                    }
-                },
-                { new: true }
-            )
-        } else {
-            // Default to Valuation model
-            updatedRecord = await Valuation.findByIdAndUpdate(
-                valuationId,
-                {
-                    $set: {
-                        ...ekycData,
-                        ekycStatus: "verified",
-                        status: "reviewed"
-                    }
-                },
-                { new: true }
-            )
+            // Clean publicId - remove extension if present
+            const cleanName = file.name.replace(/\.[^/.]+$/, "").replace(/[^a-zA-Z0-9.\-_]/g, '')
+            const publicId = `${folder}_${Date.now()}_${cleanName}`
+
+            // Use resource_type: "auto" for all documents (now images)
+            return await uploadToCloudinary(buffer, `autoscrap/ekyc/${valuationId}`, publicId, "auto")
         }
+
+        const [aadharUrl, rcUrl, carPhotoUrl] = await Promise.all([
+            uploadFile(aadharFile, "aadhar"),
+            uploadFile(rcFile, "rc"),
+            uploadFile(carPhoto, "car")
+        ])
+
+        const ekycData: any = {
+            firstName,
+            dob,
+            aadharPhone,
+            aadharNumber,
+            ekycStatus: "verified"
+        }
+
+        if (aadharUrl) ekycData.aadharFile = aadharUrl
+        if (rcUrl) ekycData.rcFile = rcUrl
+        if (carPhotoUrl) ekycData.carPhoto = carPhotoUrl
+
+        let Model;
+        let updateStatus = "pending";
+
+        if (source === "sell-vehicle") {
+            Model = SellVehicle
+        } else if (source === "exchange-vehicle") {
+            Model = ExchangeVehicle
+        } else {
+            Model = Valuation
+            updateStatus = "reviewed"
+        }
+
+        const updatedRecord = await Model.findByIdAndUpdate(
+            valuationId,
+            {
+                $set: {
+                    ...ekycData,
+                    status: updateStatus
+                }
+            },
+            { new: true }
+        )
 
         if (!updatedRecord) {
             return NextResponse.json(
@@ -68,7 +90,7 @@ export async function PATCH(req: Request) {
         }
 
         return NextResponse.json(
-            { message: "eKYC Details updated successfully", success: true },
+            { message: "eKYC Details updated successfully", success: true, record: updatedRecord },
             { status: 200 }
         )
 

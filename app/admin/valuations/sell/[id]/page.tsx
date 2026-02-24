@@ -1,13 +1,16 @@
 "use client"
 
 import { useEffect, useState, use } from "react"
-import { useRouter } from "next/navigation"
-import { ShoppingCart, Car, User, MapPin, Calendar, ChevronLeft, CheckCircle, Trash2, Phone, Hash, DollarSign, Building2, MessageCircle } from "lucide-react"
+import { useRouter, useSearchParams } from "next/navigation"
+import { ShoppingCart, Car, User, MapPin, Calendar, ChevronLeft, CheckCircle, Trash2, Phone, Hash, DollarSign, Building2, MessageCircle, Image as ImageIcon, Download } from "lucide-react"
 import Link from "next/link"
 import { useToast } from "@/hooks/use-toast"
+import { motion } from "framer-motion"
 
 export default function SellDetailPage({ params }: { params: Promise<{ id: string }> }) {
     const router = useRouter()
+    const searchParams = useSearchParams()
+    const highlight = searchParams.get("highlight") === "true"
     const { toast } = useToast()
     const { id } = use(params)
     const [request, setRequest] = useState<any>(null)
@@ -148,7 +151,7 @@ export default function SellDetailPage({ params }: { params: Promise<{ id: strin
     }
 
     return (
-        <div className="space-y-6">
+        <div className="min-h-screen bg-gray-50 dark:bg-[#070e1a] p-4 md:p-8 space-y-6">
             {/* Header */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div className="flex items-center gap-4">
@@ -196,7 +199,13 @@ export default function SellDetailPage({ params }: { params: Promise<{ id: strin
             </div>
 
             {/* Content Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <motion.div
+                className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+                animate={highlight ? {
+                    scale: [1, 1.02, 1, 1.02, 1],
+                    transition: { duration: 1.5, times: [0, 0.25, 0.5, 0.75, 1] }
+                } : {}}
+            >
                 {/* Vehicle Information */}
                 {/* Vehicle Information */}
                 <div className="bg-white dark:bg-[#0E192D] rounded-xl shadow-sm border border-gray-200 dark:border-slate-800 p-6">
@@ -340,7 +349,82 @@ export default function SellDetailPage({ params }: { params: Promise<{ id: strin
                         </a>
                     </div>
                 </div>
-            </div>
+            </motion.div>
+
+            {/* Documents Section */}
+            {(request.aadharFile || request.rcFile || request.carPhoto) && (
+                <div className="bg-white dark:bg-[#0E192D] rounded-xl shadow-sm border border-gray-200 dark:border-slate-800 p-6">
+                    <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                        <ImageIcon className="w-5 h-5 text-green-600 dark:text-green-500" />
+                        Uploaded Documents
+                    </h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {request.aadharFile && (
+                            <div className="border border-gray-200 dark:border-slate-800 rounded-lg p-4 bg-gray-50/50 dark:bg-slate-900/50">
+                                <p className="text-sm font-medium text-gray-700 dark:text-slate-300 mb-2 font-bold uppercase tracking-wider text-[10px]">Aadhar Card</p>
+                                <div className="flex items-center gap-4">
+                                    <button
+                                        onClick={() => window.open(request.aadharFile, '_blank')}
+                                        className="text-green-600 dark:text-green-400 hover:underline text-sm font-bold flex items-center gap-1.5"
+                                    >
+                                        View Document
+                                    </button>
+                                    <button
+                                        onClick={() => window.open(request.aadharFile.replace("/upload/", "/upload/fl_attachment/"), '_blank')}
+                                        className="text-gray-500 hover:text-green-600 dark:text-slate-400 dark:hover:text-green-400 transition-colors flex items-center gap-1.5 text-sm font-bold"
+                                        title="Download Document"
+                                    >
+                                        <Download className="w-4 h-4" />
+                                        Download
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                        {request.rcFile && (
+                            <div className="border border-gray-200 dark:border-slate-800 rounded-lg p-4 bg-gray-50/50 dark:bg-slate-900/50">
+                                <p className="text-sm font-medium text-gray-700 dark:text-slate-300 mb-2 font-bold uppercase tracking-wider text-[10px]">RC Document</p>
+                                <div className="flex items-center gap-4">
+                                    <button
+                                        onClick={() => window.open(request.rcFile, '_blank')}
+                                        className="text-green-600 dark:text-green-400 hover:underline text-sm font-bold flex items-center gap-1.5"
+                                    >
+                                        View Document
+                                    </button>
+                                    <button
+                                        onClick={() => window.open(request.rcFile.replace("/upload/", "/upload/fl_attachment/"), '_blank')}
+                                        className="text-gray-500 hover:text-green-600 dark:text-slate-400 dark:hover:text-green-400 transition-colors flex items-center gap-1.5 text-sm font-bold"
+                                        title="Download Document"
+                                    >
+                                        <Download className="w-4 h-4" />
+                                        Download
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                        {request.carPhoto && (
+                            <div className="border border-gray-200 dark:border-slate-800 rounded-lg p-4 bg-gray-50/50 dark:bg-slate-900/50">
+                                <p className="text-sm font-medium text-gray-700 dark:text-slate-300 mb-2 font-bold uppercase tracking-wider text-[10px]">Car Photo</p>
+                                <div className="flex items-center gap-4">
+                                    <button
+                                        onClick={() => window.open(request.carPhoto, '_blank')}
+                                        className="text-green-600 dark:text-green-400 hover:underline text-sm font-bold flex items-center gap-1.5"
+                                    >
+                                        View Photo
+                                    </button>
+                                    <button
+                                        onClick={() => window.open(request.carPhoto.replace("/upload/", "/upload/fl_attachment/"), '_blank')}
+                                        className="text-gray-500 hover:text-green-600 dark:text-slate-400 dark:hover:text-green-400 transition-colors flex items-center gap-1.5 text-sm font-bold"
+                                        title="Download Photo"
+                                    >
+                                        <Download className="w-4 h-4" />
+                                        Download
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

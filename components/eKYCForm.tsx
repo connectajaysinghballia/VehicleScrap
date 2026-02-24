@@ -53,7 +53,6 @@ interface eKYCFormData {
 export default function EKYCForm({
   formData,
   onBack,
-  valuation,
   isPage = false,
   valuationId,
   source
@@ -93,23 +92,21 @@ export default function EKYCForm({
           return
         }
 
+        const formData = new FormData()
+        formData.append("valuationId", idToUse)
+        if (source) formData.append("source", source)
+        formData.append("firstName", eKYCData.firstName)
+        formData.append("dob", eKYCData.dob)
+        formData.append("aadharPhone", eKYCData.aadharPhone)
+        formData.append("aadharNumber", eKYCData.aadharNumber)
+
+        if (eKYCData.aadharFile) formData.append("aadharFile", eKYCData.aadharFile)
+        if (eKYCData.rcFile) formData.append("rcFile", eKYCData.rcFile)
+        if (eKYCData.carPhoto) formData.append("carPhoto", eKYCData.carPhoto)
+
         const response = await fetch("/api/ekyc", {
           method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            valuationId: idToUse,
-            source: source,
-            firstName: eKYCData.firstName,
-            dob: eKYCData.dob,
-            aadharPhone: eKYCData.aadharPhone,
-            aadharNumber: eKYCData.aadharNumber,
-            // Sending filenames for now as placeholders for actual file upload logic
-            aadharFile: eKYCData.aadharFile?.name,
-            rcFile: eKYCData.rcFile?.name,
-            carPhoto: eKYCData.carPhoto?.name,
-          }),
+          body: formData,
         })
 
         if (response.ok) {
@@ -119,8 +116,9 @@ export default function EKYCForm({
           localStorage.removeItem("kycValuation")
           localStorage.removeItem("kycValuationId")
         } else {
-          console.error("Failed to update eKYC data")
-          alert("Something went wrong. Please try again.")
+          const errorData = await response.json()
+          console.error("Failed to update eKYC data:", errorData)
+          alert(`Failed to upload: ${errorData.message || "Something went wrong"}`)
         }
       } catch (error) {
         console.error("Error submitting eKYC:", error)
@@ -177,7 +175,7 @@ export default function EKYCForm({
             transition={{
               duration: piece.duration,
               delay: piece.delay,
-              ease: "easeOut",
+              ease: "easeOut" as const,
               repeat: Infinity,
               repeatDelay: 1.5,
             }}
@@ -201,7 +199,7 @@ export default function EKYCForm({
               delay: i * 0.3,
               repeat: Infinity,
               repeatDelay: 0.5,
-              ease: "easeOut",
+              ease: "easeOut" as const,
             }}
           >
             {emoji}
@@ -455,8 +453,8 @@ export default function EKYCForm({
 
               <div className="grid grid-cols-3 gap-2 md:gap-6">
                 {[
-                  { label: "Aadhaar", type: "PDF", key: "aadharFile", icon: FileText, color: "emerald" },
-                  { label: "RC Doc", type: "PDF", key: "rcFile", icon: FileText, color: "blue" },
+                  { label: "Aadhaar", type: "IMG", key: "aadharFile", icon: ImageIcon, color: "emerald" },
+                  { label: "RC Doc", type: "IMG", key: "rcFile", icon: ImageIcon, color: "blue" },
                   { label: "Car Img", type: "IMG", key: "carPhoto", icon: ImageIcon, color: "emerald" }
                 ].map((item, idx) => (
                   <div key={idx} className="group relative">
@@ -469,7 +467,7 @@ export default function EKYCForm({
                       <p className="text-[8px] md:text-xs text-gray-400 mt-0.5 md:mt-1 hidden md:block">{item.type} only</p>
                       <input
                         type="file"
-                        accept={item.type === "PDF" || item.type === "DOC" ? ".pdf" : "image/png, image/jpeg, image/jpg"}
+                        accept="image/png, image/jpeg, image/jpg"
                         onChange={(e) => setEKYCData({ ...eKYCData, [item.key]: e.target.files ? e.target.files[0] : null })}
                         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                       />

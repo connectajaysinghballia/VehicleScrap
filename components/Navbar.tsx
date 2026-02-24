@@ -26,7 +26,7 @@ const containerVariants: Variants = {
 
 const itemVariants: Variants = {
   hidden: { opacity: 0, x: -16 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.3, ease: [0, 0, 0.2, 1] } },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.3, ease: [0, 0, 0.2, 1] as any } },
   exit: { opacity: 0, x: -10, transition: { duration: 0.15 } },
 }
 
@@ -371,7 +371,7 @@ export default function Navbar() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.4, ease: "easeInOut" }}
+              transition={{ duration: 0.4, ease: "easeInOut" as const }}
               className="lg:hidden overflow-hidden absolute top-full left-0 right-0 h-screen bg-[#cccccc] z-50"
             >
               <div className="py-4 px-4 h-full overflow-y-auto pb-20">
@@ -413,7 +413,7 @@ export default function Navbar() {
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.3, ease: "easeInOut" }}
+                          transition={{ duration: 0.3, ease: "easeInOut" as const }}
                           className="bg-[#cccccc] overflow-hidden"
                         >
                           <motion.div variants={containerVariants} initial="hidden" animate="visible" exit="exit">
@@ -446,7 +446,7 @@ export default function Navbar() {
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.3, ease: "easeInOut" }}
+                          transition={{ duration: 0.3, ease: "easeInOut" as const }}
                           className="bg-[#cccccc] overflow-hidden"
                         >
                           <motion.div variants={containerVariants} initial="hidden" animate="visible" exit="exit">
@@ -512,15 +512,28 @@ export default function Navbar() {
                       )}
 
                       {(session.user as any).role !== "admin" && (
-                        <Link href="/profile">
-                          <Button
-                            variant="ghost"
-                            className="w-full justify-start text-gray-700 hover:text-emerald-700 hover:bg-emerald-50 mb-2 h-12 text-base font-medium"
-                            onClick={() => setIsOpen(false)}
-                          >
-                            <User className="w-5 h-5 mr-3" /> {(session.user as any).role === "partner" ? "Partner Dashboard" : "Profile"}
-                          </Button>
-                        </Link>
+                        <>
+                          {(session.user as any).role !== "partner" && (
+                            <Link href="/partner-register">
+                              <Button
+                                variant="ghost"
+                                className="w-full justify-start text-gray-700 hover:text-emerald-700 hover:bg-emerald-50 mb-2 h-12 text-base font-medium"
+                                onClick={() => setIsOpen(false)}
+                              >
+                                <User className="w-5 h-5 mr-3" /> Be our partner
+                              </Button>
+                            </Link>
+                          )}
+                          <Link href="/profile">
+                            <Button
+                              variant="ghost"
+                              className="w-full justify-start text-gray-700 hover:text-emerald-700 hover:bg-emerald-50 mb-2 h-12 text-base font-medium"
+                              onClick={() => setIsOpen(false)}
+                            >
+                              <User className="w-5 h-5 mr-3" /> {(session.user as any).role === "partner" ? "Partner Dashboard" : "Profile"}
+                            </Button>
+                          </Link>
+                        </>
                       )}
 
                       <Button
@@ -556,7 +569,7 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
+            transition={{ duration: 0.4, ease: "easeInOut" as const }}
             className="absolute top-full left-0 w-full h-screen bg-[#cccccc] shadow-2xl z-40"
           >
             <div className="container mx-auto px-6 py-12">

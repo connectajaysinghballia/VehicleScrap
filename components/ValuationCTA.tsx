@@ -27,7 +27,7 @@ export default function ValuationCTA() {
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] as any }}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 className="group relative max-w-6xl mx-auto rounded-[3rem] overflow-hidden shadow-2xl transform-gpu bg-[#0E192D] hover:bg-white transition-colors duration-500"
@@ -45,7 +45,7 @@ export default function ValuationCTA() {
                                     repeat: Infinity,
                                     duration: item.duration,
                                     delay: item.delay,
-                                    ease: "linear",
+                                    ease: "linear" as const,
                                 }}
                                 style={{ left: item.left }}
                                 className="absolute top-0 text-emerald-500/10 group-hover:text-emerald-900/5 transition-colors duration-500"
@@ -90,7 +90,7 @@ export default function ValuationCTA() {
                             <motion.div
                                 className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-20deg]"
                                 animate={{ left: ["-100%", "200%"] }}
-                                transition={{ repeat: Infinity, duration: 2, ease: "easeInOut", repeatDelay: 1 }}
+                                transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" as const, repeatDelay: 1 }}
                             />
                         </Link>
                     </motion.div>

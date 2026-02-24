@@ -46,7 +46,7 @@ export default function Footer() {
               duration: item.duration,
               repeat: Number.POSITIVE_INFINITY,
               delay: item.delay,
-              ease: "linear",
+              ease: "linear" as const,
             }}
             className="absolute text-emerald-800"
             style={{ left: item.left }}

@@ -1,13 +1,16 @@
 "use client"
 
 import { useEffect, useState, use } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { ShoppingCart, Car, User, MapPin, Calendar, ChevronLeft, CheckCircle, Trash2, Phone, Mail, DollarSign, MessageCircle } from "lucide-react"
 import Link from "next/link"
 import { useToast } from "@/hooks/use-toast"
+import { motion } from "framer-motion"
 
 export default function BuyDetailPage({ params }: { params: Promise<{ id: string }> }) {
     const router = useRouter()
+    const searchParams = useSearchParams()
+    const highlight = searchParams.get("highlight") === "true"
     const { toast } = useToast()
     const { id } = use(params)
     const [request, setRequest] = useState<any>(null)
@@ -196,7 +199,13 @@ export default function BuyDetailPage({ params }: { params: Promise<{ id: string
             </div>
 
             {/* Content Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <motion.div
+                className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+                animate={highlight ? {
+                    scale: [1, 1.02, 1, 1.02, 1],
+                    transition: { duration: 1.5, times: [0, 0.25, 0.5, 0.75, 1] }
+                } : {}}
+            >
                 {/* Vehicle Preferences */}
                 {/* Vehicle Preferences */}
                 <div className="bg-white dark:bg-[#0E192D] rounded-xl shadow-sm border border-gray-200 dark:border-slate-800 p-6">
@@ -305,7 +314,7 @@ export default function BuyDetailPage({ params }: { params: Promise<{ id: string
                         </a>
                     </div>
                 </div>
-            </div>
+            </motion.div>
         </div>
     )
 }

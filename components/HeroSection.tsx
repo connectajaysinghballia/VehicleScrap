@@ -96,7 +96,7 @@ export default function HeroSection() {
                   initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
                   animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                   exit={{ opacity: 0, y: -20, filter: "blur(10px)" }}
-                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  transition={{ duration: 0.6, ease: "easeOut" as const }}
                   className="absolute w-full text-center lg:text-left"
                 >
                   {currentHeading === 0 && (
@@ -149,7 +149,6 @@ export default function HeroSection() {
               className="pt-8 flex flex-col items-center lg:items-start w-full"
             >
               <div className="flex items-center gap-3 mb-6">
-                <div className="h-[2px] w-12 bg-gradient-to-r from-emerald-500 to-transparent"></div>
                 <p className="text-xs font-bold text-emerald-400 uppercase tracking-[0.2em] bg-[#0E192D]/80 backdrop-blur px-3 py-1 rounded-full border border-emerald-500/30">
                   Exclusive Benefits
                 </p>
@@ -183,7 +182,7 @@ export default function HeroSection() {
                         y: 0,
                       }}
                       transition={{
-                        rotateY: { duration: 0.6, delay: index * 0.12, ease: [0.2, 0.65, 0.3, 0.9] },
+                        rotateY: { duration: 0.6, delay: index * 0.12, ease: [0.2, 0.65, 0.3, 0.9] as any },
                         opacity: { duration: 0.5, delay: index * 0.12 },
                         scale: { duration: 0.4 },
                         y: { duration: 0.4 },

@@ -72,7 +72,7 @@ export default function ValuationModals({ formData, valuationId, onClose }: Valu
                     }}
                     initial={{ x: 0, y: 0, opacity: 1, rotate: 0 }}
                     animate={{ x: `${piece.x}vw`, y: `${piece.y}vh`, opacity: [1, 1, 0], rotate: piece.rotate }}
-                    transition={{ duration: piece.duration, delay: piece.delay, ease: "easeOut", repeat: Infinity, repeatDelay: 3 }}
+                    transition={{ duration: piece.duration, delay: piece.delay, ease: "easeOut" as const, repeat: Infinity, repeatDelay: 3 }}
                 />
             ))}
 
@@ -267,7 +267,7 @@ export default function ValuationModals({ formData, valuationId, onClose }: Valu
                                 }}
                                 initial={{ x: 0, y: 0, opacity: 1, rotate: 0, scale: 1 }}
                                 animate={{ x: `${piece.x}vw`, y: `${piece.y}vh`, opacity: [1, 1, 0], rotate: piece.rotate, scale: [1, 1.2, 0.5] }}
-                                transition={{ duration: piece.duration, delay: piece.delay, ease: "easeOut", repeat: Infinity, repeatDelay: 1.5 }}
+                                transition={{ duration: piece.duration, delay: piece.delay, ease: "easeOut" as const, repeat: Infinity, repeatDelay: 1.5 }}
                             />
                         ))}
                         {/* Floating emoji */}
@@ -277,7 +277,7 @@ export default function ValuationModals({ formData, valuationId, onClose }: Valu
                                 className="absolute text-2xl pointer-events-none select-none z-50"
                                 style={{ left: `${10 + i * 15}%`, bottom: "-5%" }}
                                 animate={{ y: ["-0vh", "-120vh"], opacity: [0, 1, 1, 0], rotate: [0, i % 2 === 0 ? 30 : -30] }}
-                                transition={{ duration: 3 + i * 0.4, delay: i * 0.3, repeat: Infinity, repeatDelay: 0.5, ease: "easeOut" }}
+                                transition={{ duration: 3 + i * 0.4, delay: i * 0.3, repeat: Infinity, repeatDelay: 0.5, ease: "easeOut" as const }}
                             >
                                 {emoji}
                             </motion.div>

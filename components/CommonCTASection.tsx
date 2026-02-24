@@ -53,7 +53,7 @@ export default function CommonCTASection() {
           duration: 8,
           repeat: Number.POSITIVE_INFINITY,
           repeatType: "mirror",
-          ease: "easeInOut",
+          ease: "easeInOut" as const,
         }}
       />
       <motion.div
@@ -67,7 +67,7 @@ export default function CommonCTASection() {
           duration: 10,
           repeat: Number.POSITIVE_INFINITY,
           repeatType: "mirror",
-          ease: "easeInOut",
+          ease: "easeInOut" as const,
           delay: 1,
         }}
       />
@@ -95,7 +95,7 @@ export default function CommonCTASection() {
               repeat: Number.POSITIVE_INFINITY,
               repeatType: "reverse",
               delay: p.delay,
-              ease: "easeInOut",
+              ease: "easeInOut" as const,
             }}
           />
         ))}
@@ -134,7 +134,7 @@ export default function CommonCTASection() {
                 <motion.span
                   className="ml-2"
                   animate={{ x: [0, 3, 0] }}
-                  transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+                  transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" as const }}
                 >
                   →
                 </motion.span>

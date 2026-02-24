@@ -33,13 +33,13 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
+            transition={{ duration: 0.4, ease: "easeInOut" as const }}
             className="fixed inset-0 bg-white flex items-center justify-center z-50"
           >
             <motion.div
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.6, ease: "backOut" }}
+              transition={{ duration: 0.6, ease: "backOut" as const }}
               className="text-center"
             >
               <motion.img
@@ -48,7 +48,7 @@ export default function Home() {
                 className="w-32 md:w-48 mx-auto"
                 initial={{ rotate: -180, opacity: 0 }}
                 animate={{ rotate: 0, opacity: 1 }}
-                transition={{ duration: 0.6, ease: "backOut" }}
+                transition={{ duration: 0.6, ease: "backOut" as const }}
               />
             </motion.div>
           </motion.div>

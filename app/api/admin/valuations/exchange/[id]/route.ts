@@ -6,7 +6,7 @@ import ExchangeVehicle from "@/models/ExchangeVehicle"
 
 export async function GET(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         const session = await getServerSession(authOptions)
@@ -16,7 +16,8 @@ export async function GET(
         }
 
         await connectToDatabase()
-        const request = await ExchangeVehicle.findById(params.id)
+        const resolvedParams = await params
+        const request = await ExchangeVehicle.findById(resolvedParams.id)
 
         if (!request) {
             return NextResponse.json({ error: "Request not found" }, { status: 404 })

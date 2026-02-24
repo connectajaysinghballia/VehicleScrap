@@ -20,7 +20,7 @@ export default function AboutSection() {
       y: 0,
       transition: {
         duration: 0.8,
-        ease: "easeOut",
+        ease: "easeOut" as const,
       },
     },
   }
@@ -33,7 +33,7 @@ export default function AboutSection() {
       transition: {
         delay: i * 0.1,
         duration: 0.6,
-        ease: "easeOut",
+        ease: "easeOut" as const,
       },
     }),
   }
@@ -109,7 +109,7 @@ export default function AboutSection() {
               className="text-2xl font-bold text-white mb-6"
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
+              transition={{ duration: 0.6, ease: "easeOut" as const }}
               viewport={{ once: true }}
             >
               Our Mission
@@ -148,7 +148,7 @@ export default function AboutSection() {
             <motion.div
               initial={{ opacity: 0, y: 20, scale: 0.9 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
+              transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" as const }}
               viewport={{ once: true }}
               whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
@@ -173,7 +173,7 @@ export default function AboutSection() {
                 className="bg-gray-900/50 backdrop-blur-sm border border-green-500/20 rounded-2xl p-6 text-center hover:bg-gray-800/50 transition-all duration-500 scroll-animate group"
                 initial={{ opacity: 0, y: 30, scale: 0.9 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
+                transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" as const }}
                 viewport={{ once: true }}
                 whileHover={{ y: -8, scale: 1.02 }}
               >
@@ -181,7 +181,7 @@ export default function AboutSection() {
                   className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center mx-auto mb-4"
                   initial={{ scale: 0, rotate: -180 }}
                   whileInView={{ scale: 1, rotate: 0 }}
-                  transition={{ duration: 0.8, delay: index * 0.15 + 0.3, ease: "easeOut" }}
+                  transition={{ duration: 0.8, delay: index * 0.15 + 0.3, ease: "easeOut" as const }}
                   viewport={{ once: true }}
                   whileHover={{ rotate: 5, scale: 1.1 }}
                 >

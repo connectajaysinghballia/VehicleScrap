@@ -24,7 +24,7 @@ const ContactSchema = new Schema(
         },
         status: {
             type: String,
-            enum: ["new", "read", "resolved"],
+            enum: ["new", "reviewed", "resolved"],
             default: "new",
         },
         createdAt: {

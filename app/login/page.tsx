@@ -152,7 +152,7 @@ function LoginContent() {
             <motion.div
                 initial={{ x: -100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
+                transition={{ duration: 0.8, ease: "easeOut" as const }}
                 className="hidden lg:flex flex-col justify-between w-1/2 relative overflow-hidden p-6"
             >
                 {/* Illustration Image */}
@@ -176,7 +176,7 @@ function LoginContent() {
             <motion.div
                 initial={{ x: 100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
+                transition={{ duration: 0.8, ease: "easeOut" as const }}
                 className="w-full lg:w-1/2 flex items-center justify-center px-6 sm:px-12 lg:px-20 relative bg-[#0E192D]"
             >
                 <div className="w-full max-w-md space-y-6">

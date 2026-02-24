@@ -1,13 +1,16 @@
 "use client"
 
 import { useEffect, useState, use } from "react"
-import { useRouter } from "next/navigation"
-import { FileText, Car, User, MapPin, Calendar, ChevronLeft, CheckCircle, Trash2, Phone, Hash, Weight, Image as ImageIcon, MessageCircle } from "lucide-react"
+import { useRouter, useSearchParams } from "next/navigation"
+import { FileText, Car, User, MapPin, Calendar, ChevronLeft, CheckCircle, Trash2, Phone, Hash, Weight, Image as ImageIcon, MessageCircle, Download } from "lucide-react"
 import Link from "next/link"
 import { useToast } from "@/hooks/use-toast"
+import { motion } from "framer-motion"
 
 export default function QuoteDetailPage({ params }: { params: Promise<{ id: string }> }) {
     const router = useRouter()
+    const searchParams = useSearchParams()
+    const highlight = searchParams.get("highlight") === "true"
     const { toast } = useToast()
     const { id } = use(params)
     const [request, setRequest] = useState<any>(null)
@@ -19,7 +22,30 @@ export default function QuoteDetailPage({ params }: { params: Promise<{ id: stri
 
     const fetchRequest = async () => {
         try {
-            const res = await fetch(`/api/admin/valuations/quote/${id}`)
+            // Check if ID looks like a filename (contains extension)
+            const isFile = /\.(jpg|jpeg|png|pdf|webp|doc|docx)$/i.test(id);
+
+            let url = `/api/admin/valuations/quote/${id}`;
+            if (isFile) {
+                // If it's a file request, we should probably redirect to the actual file URL
+                // For now, let's try to find which valuation this file belongs to
+                const res = await fetch(`/api/admin/valuations/search?file=${id}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.fileUrl) {
+                        window.location.href = data.fileUrl;
+                        return;
+                    }
+                }
+
+                toast({
+                    title: "Notice",
+                    description: "File requested directly. If this was a valuation view, please check the link.",
+                    variant: "default"
+                });
+            }
+
+            const res = await fetch(url)
             if (res.ok) {
                 const data = await res.json()
                 setRequest(data)
@@ -117,13 +143,13 @@ export default function QuoteDetailPage({ params }: { params: Promise<{ id: stri
     function getStatusBadge(status: string) {
         switch (status) {
             case "pending":
-                return <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800 border border-yellow-200">Pending</span>
+                return <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-500 border border-yellow-200 dark:border-yellow-900/50">Pending</span>
             case "reviewed":
-                return <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 border border-blue-200">Reviewed</span>
+                return <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-500 border border-blue-200 dark:border-blue-900/50">Reviewed</span>
             case "completed":
-                return <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 border border-green-200">Completed</span>
+                return <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-500 border border-green-200 dark:border-green-900/50">Completed</span>
             case "approved":
-                return <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200"><CheckCircle className="w-3.5 h-3.5" />Approved</span>
+                return <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-500 border border-emerald-200 dark:border-emerald-900/50"><CheckCircle className="w-3.5 h-3.5" />Approved</span>
             default:
                 return <span className="px-2 py-1 rounded bg-gray-100 text-gray-600 text-xs">{status}</span>
         }
@@ -146,7 +172,7 @@ export default function QuoteDetailPage({ params }: { params: Promise<{ id: stri
     }
 
     return (
-        <div className="space-y-6">
+        <div className="min-h-screen bg-gray-50 dark:bg-[#070e1a] p-4 md:p-8 space-y-6">
             {/* Header */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div className="flex items-center gap-4">
@@ -158,13 +184,13 @@ export default function QuoteDetailPage({ params }: { params: Promise<{ id: stri
                             <FileText className="w-6 h-6 text-blue-600 dark:text-blue-500" />
                             Quote Request Details
                         </h1>
-                        <p className="text-gray-500 dark:text-slate-400 mt-1">Request ID: {request._id}</p>
+                        <div className="flex items-center gap-3 mt-1">
+                            {getStatusBadge(request.status)}
+                            <span className="text-sm text-gray-500 dark:text-slate-500 font-mono">ID: {request._id}</span>
+                        </div>
                     </div>
                 </div>
                 <div className="flex flex-wrap items-center gap-3 w-full md:w-auto mt-4 md:mt-0">
-                    <div className="w-full md:w-auto mb-2 md:mb-0">
-                        {getStatusBadge(request.status)}
-                    </div>
                     <a
                         href={`https://wa.me/${request.contact?.phone?.replace(/\D/g, '')}`}
                         target="_blank"
@@ -194,7 +220,13 @@ export default function QuoteDetailPage({ params }: { params: Promise<{ id: stri
             </div>
 
             {/* Content Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <motion.div
+                className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+                animate={highlight ? {
+                    scale: [1, 1.02, 1, 1.02, 1],
+                    transition: { duration: 1.5, times: [0, 0.25, 0.5, 0.75, 1] }
+                } : {}}
+            >
                 {/* Vehicle Information */}
                 {/* Vehicle Information */}
                 <div className="bg-white dark:bg-[#0E192D] rounded-xl shadow-sm border border-gray-200 dark:border-slate-800 p-6">
@@ -316,32 +348,77 @@ export default function QuoteDetailPage({ params }: { params: Promise<{ id: stri
                         </a>
                     </div>
                 </div>
-            </div>
+            </motion.div>
 
             {/* Documents Section */}
             {(request.aadharFile || request.rcFile || request.carPhoto) && (
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                    <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                        <ImageIcon className="w-5 h-5 text-blue-600" />
+                <div className="bg-white dark:bg-[#0E192D] rounded-xl shadow-sm border border-gray-200 dark:border-slate-800 p-6">
+                    <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                        <ImageIcon className="w-5 h-5 text-blue-600 dark:text-blue-500" />
                         Uploaded Documents
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         {request.aadharFile && (
-                            <div className="border border-gray-200 rounded-lg p-4">
-                                <p className="text-sm font-medium text-gray-700 mb-2">Aadhar Card</p>
-                                <a href={request.aadharFile} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-sm">View Document</a>
+                            <div className="border border-gray-200 dark:border-slate-800 rounded-lg p-4 bg-gray-50/50 dark:bg-slate-900/50">
+                                <p className="text-sm font-medium text-gray-700 dark:text-slate-300 mb-2 font-bold uppercase tracking-wider text-[10px]">Aadhar Card</p>
+                                <div className="flex items-center gap-3">
+                                    <button
+                                        onClick={() => window.open(request.aadharFile, '_blank')}
+                                        className="text-blue-600 dark:text-blue-500 hover:underline text-sm font-bold flex items-center gap-1.5"
+                                    >
+                                        View Document
+                                    </button>
+                                    <button
+                                        onClick={() => window.open(request.aadharFile.replace("/upload/", "/upload/fl_attachment/"), '_blank')}
+                                        className="text-gray-500 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400 transition-colors flex items-center gap-1.5 text-sm font-bold"
+                                        title="Download Document"
+                                    >
+                                        <Download className="w-3.5 h-3.5" />
+                                        Download
+                                    </button>
+                                </div>
                             </div>
                         )}
                         {request.rcFile && (
-                            <div className="border border-gray-200 rounded-lg p-4">
-                                <p className="text-sm font-medium text-gray-700 mb-2">RC Document</p>
-                                <a href={request.rcFile} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-sm">View Document</a>
+                            <div className="border border-gray-200 dark:border-slate-800 rounded-lg p-4 bg-gray-50/50 dark:bg-slate-900/50">
+                                <p className="text-sm font-medium text-gray-700 dark:text-slate-300 mb-2 font-bold uppercase tracking-wider text-[10px]">RC Document</p>
+                                <div className="flex items-center gap-3">
+                                    <button
+                                        onClick={() => window.open(request.rcFile, '_blank')}
+                                        className="text-blue-600 dark:text-blue-500 hover:underline text-sm font-bold flex items-center gap-1.5"
+                                    >
+                                        View Document
+                                    </button>
+                                    <button
+                                        onClick={() => window.open(request.rcFile.replace("/upload/", "/upload/fl_attachment/"), '_blank')}
+                                        className="text-gray-500 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400 transition-colors flex items-center gap-1.5 text-sm font-bold"
+                                        title="Download Document"
+                                    >
+                                        <Download className="w-3.5 h-3.5" />
+                                        Download
+                                    </button>
+                                </div>
                             </div>
                         )}
                         {request.carPhoto && (
-                            <div className="border border-gray-200 rounded-lg p-4">
-                                <p className="text-sm font-medium text-gray-700 mb-2">Car Photo</p>
-                                <a href={request.carPhoto} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-sm">View Photo</a>
+                            <div className="border border-gray-200 dark:border-slate-800 rounded-lg p-4 bg-gray-50/50 dark:bg-slate-900/50">
+                                <p className="text-sm font-medium text-gray-700 dark:text-slate-300 mb-2 font-bold uppercase tracking-wider text-[10px]">Car Photo</p>
+                                <div className="flex items-center gap-3">
+                                    <button
+                                        onClick={() => window.open(request.carPhoto, '_blank')}
+                                        className="text-blue-600 dark:text-blue-500 hover:underline text-sm font-bold flex items-center gap-1.5"
+                                    >
+                                        View Photo
+                                    </button>
+                                    <button
+                                        onClick={() => window.open(request.carPhoto.replace("/upload/", "/upload/fl_attachment/"), '_blank')}
+                                        className="text-gray-500 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400 transition-colors flex items-center gap-1.5 text-sm font-bold"
+                                        title="Download Photo"
+                                    >
+                                        <Download className="w-3.5 h-3.5" />
+                                        Download
+                                    </button>
+                                </div>
                             </div>
                         )}
                     </div>

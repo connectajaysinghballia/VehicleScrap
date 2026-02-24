@@ -6,7 +6,7 @@ import Valuation from "@/models/Valuation"
 
 export async function GET(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         const session = await getServerSession(authOptions)
@@ -16,7 +16,8 @@ export async function GET(
         }
 
         await connectToDatabase()
-        const valuation = await Valuation.findById(params.id)
+        const resolvedParams = await params
+        const valuation = await Valuation.findById(resolvedParams.id)
 
         if (!valuation) {
             return NextResponse.json({ error: "Request not found" }, { status: 404 })

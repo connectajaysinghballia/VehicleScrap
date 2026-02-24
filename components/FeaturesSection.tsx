@@ -78,7 +78,7 @@ export default function FeaturesSection() {
           transition={{
             duration: 20,
             repeat: Infinity,
-            ease: "linear"
+            ease: "linear" as const
           }}
           className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl"
         />
@@ -91,7 +91,7 @@ export default function FeaturesSection() {
           transition={{
             duration: 25,
             repeat: Infinity,
-            ease: "linear"
+            ease: "linear" as const
           }}
           className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-3xl opacity-50"
         />
@@ -103,7 +103,7 @@ export default function FeaturesSection() {
           transition={{
             duration: 15,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: "easeInOut" as const
           }}
           className="absolute top-1/2 left-1/2 w-64 h-64 bg-teal-500/10 rounded-full blur-2xl transform -translate-x-1/2 -translate-y-1/2"
         />
@@ -116,7 +116,7 @@ export default function FeaturesSection() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
+          transition={{ duration: 0.7, ease: "easeOut" as const }}
         >
           <span className="text-emerald-400 font-bold uppercase tracking-[0.2em] mb-3 block text-sm">
             Why Choose AutoScrap
@@ -136,7 +136,7 @@ export default function FeaturesSection() {
             initial={{ opacity: 0, scale: 0.8, x: -50 }}
             whileInView={{ opacity: 1, scale: 1, x: 0 }}
             viewport={{ once: false, amount: 0.4 }}
-            transition={{ duration: 0.8, ease: [0.2, 0.65, 0.3, 0.9] }}
+            transition={{ duration: 0.8, ease: [0.2, 0.65, 0.3, 0.9] as any }}
             className="relative lg:col-span-2"
           >
             <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-emerald-500/10 border border-slate-700/50">

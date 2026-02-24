@@ -161,7 +161,7 @@ export default function FAQSection({ variant = "red" }: { variant?: "red" | "gre
                         initial={{ rotateY: 90, opacity: 0 }}
                         whileInView={{ rotateY: 0, opacity: 1 }}
                         viewport={{ once: false, amount: 0.2 }}
-                        transition={{ duration: 0.9, ease: [0.2, 0.65, 0.3, 0.9] }}
+                        transition={{ duration: 0.9, ease: [0.2, 0.65, 0.3, 0.9] as any }}
                         className="relative perspective-1000"
                         style={{ perspective: "1200px" }}
                     >

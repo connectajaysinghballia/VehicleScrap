@@ -28,7 +28,7 @@ export default function LogoStrip() {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: "easeOut",
+        ease: "easeOut" as const,
       },
     },
   }
@@ -54,7 +54,7 @@ export default function LogoStrip() {
                 <motion.div
                   className="text-4xl mb-4"
                   animate={{ y: [0, -8, 0] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" as const }}
                 >
                   {benefit.icon}
                 </motion.div>

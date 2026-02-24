@@ -71,7 +71,7 @@ export default function ReviewSection() {
             <motion.div
                 animate={isInView ? { rotateY: 0, opacity: 1 } : { rotateY: 90, opacity: 0 }}
                 initial={{ rotateY: 90, opacity: 0 }}
-                transition={{ duration: 0.8, ease: [0.2, 0.65, 0.3, 0.9] }}
+                transition={{ duration: 0.8, ease: [0.2, 0.65, 0.3, 0.9] as any }}
                 style={{ perspective: "1400px" }}
                 className="container mx-auto px-6 relative z-10"
             >
@@ -83,7 +83,7 @@ export default function ReviewSection() {
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: false, amount: 0.3 }}
-                            transition={{ duration: 0.8, ease: "easeOut" }}
+                            transition={{ duration: 0.8, ease: "easeOut" as const }}
                             className="mb-12"
                         >
                             <span className="text-emerald-600 font-bold uppercase tracking-wider text-sm mb-3 block">
@@ -104,7 +104,7 @@ export default function ReviewSection() {
                                     initial={{ rotateY: 90, opacity: 0 }}
                                     animate={{ rotateY: 0, opacity: 1 }}
                                     exit={{ rotateY: -90, opacity: 0 }}
-                                    transition={{ duration: 0.5, ease: [0.2, 0.65, 0.3, 0.9] }}
+                                    transition={{ duration: 0.5, ease: [0.2, 0.65, 0.3, 0.9] as any }}
                                     style={{ transformStyle: "preserve-3d" }}
                                     className="absolute inset-0"
                                 >
@@ -182,7 +182,7 @@ export default function ReviewSection() {
                         viewport={{ once: false, amount: 0.3 }}
                         transition={{
                             duration: 0.8,
-                            ease: [0.22, 1, 0.36, 1]
+                            ease: [0.22, 1, 0.36, 1] as any
                         }}
                         className="order-1 lg:order-2 relative h-[300px] lg:h-[500px] w-full rounded-3xl overflow-hidden shadow-2xl shadow-emerald-900/10 group perspective-1000"
                     >

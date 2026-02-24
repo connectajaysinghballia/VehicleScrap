@@ -104,7 +104,7 @@ export default async function QuoteValuationsPage() {
                                             {getStatusBadge(val.status)}
                                         </td>
                                         <td className="px-6 py-4 text-right">
-                                            <Link href={`/admin/valuations/quote/${val._id}`} className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium text-xs">
+                                            <Link href={`/admin/valuations/quote/${val._id}`} target="_blank" className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium text-xs">
                                                 View
                                             </Link>
                                         </td>

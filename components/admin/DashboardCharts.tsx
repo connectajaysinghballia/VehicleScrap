@@ -49,7 +49,7 @@ export default function DashboardCharts({ valuationCounts, b2bStats, monthlyGrow
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.6, ease: [0.215, 0.61, 0.355, 1] as any }}
                 className="bg-white dark:bg-[#0E192D] p-6 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm flex flex-col transition-colors duration-300"
             >
                 <h3 className="text-sm font-bold text-gray-400 dark:text-slate-500 uppercase tracking-wide mb-6">Service Distribution</h3>
@@ -84,7 +84,7 @@ export default function DashboardCharts({ valuationCounts, b2bStats, monthlyGrow
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
+                transition={{ duration: 0.6, delay: 0.1, ease: [0.215, 0.61, 0.355, 1] as any }}
                 className="bg-white dark:bg-[#0E192D] p-6 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm flex flex-col transition-colors duration-300"
             >
                 <h3 className="text-sm font-bold text-gray-400 dark:text-slate-500 uppercase tracking-wide mb-6">Monthly Growth</h3>
@@ -108,7 +108,7 @@ export default function DashboardCharts({ valuationCounts, b2bStats, monthlyGrow
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
+                transition={{ duration: 0.6, delay: 0.2, ease: [0.215, 0.61, 0.355, 1] as any }}
                 className="bg-white dark:bg-[#0E192D] p-6 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm flex flex-col transition-colors duration-300"
             >
                 <h3 className="text-sm font-bold text-gray-400 dark:text-slate-500 uppercase tracking-wide mb-6">Weekly Activity Activity</h3>
