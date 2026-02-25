@@ -138,59 +138,13 @@ export default function BuyNewVehicleForm({ onClose }: BuyNewVehicleFormProps) {
     }
 
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-            {/* Benefits Section - Left Side */}
-            <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6 }}
-                className="space-y-6"
-            >
-                <div className="bg-[#0E192D] p-6 rounded-2xl border border-emerald-500/20 shadow-xl">
-                    <h3 className="text-2xl font-bold text-white mb-2">Our Benefits</h3>
-                    <div className="w-12 h-1 bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full mb-6"></div>
-
-                    <div className="space-y-6">
-                        {benefits.map((benefit, index) => {
-                            const IconComponent = benefit.icon
-                            return (
-                                <motion.div
-                                    key={index}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.4, delay: index * 0.1 }}
-                                    className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white hover:border-emerald-500 hover:shadow-2xl hover:shadow-emerald-500/20 hover:-translate-y-1 transition-all duration-300 group cursor-pointer"
-                                >
-                                    <div className="flex gap-5 items-start">
-                                        <div className="flex-shrink-0">
-                                            <div className="flex items-center justify-center h-14 w-14 rounded-2xl bg-emerald-500/20 group-hover:bg-emerald-100 transition-colors duration-300 border border-emerald-500/30 group-hover:border-emerald-200">
-                                                <IconComponent className="h-7 w-7 text-emerald-400 group-hover:text-emerald-600 transition-colors duration-300" />
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <h4 className="text-xl font-bold text-white mb-2 group-hover:text-[#0E192D] transition-colors duration-300">{benefit.title}</h4>
-                                            <p className="text-slate-300 text-sm leading-relaxed group-hover:text-gray-600 transition-colors duration-300">{benefit.description}</p>
-                                        </div>
-                                    </div>
-                                </motion.div>
-                            )
-                        })}
-                    </div>
-                    <div className="bg-emerald-900/40 rounded-xl p-5 border border-emerald-500/30 mt-8 backdrop-blur-sm">
-                        <p className="text-slate-200 text-sm leading-relaxed">
-                            <span className="text-emerald-400 font-bold block mb-1 text-base">EcoScrap Guarantee 🛡️</span>
-                            We ensure all vehicles are quality checked and come with verified documentation for your peace of mind.
-                        </p>
-                    </div>
-                </div>
-            </motion.div>
-
-            {/* Form Section - Right Side */}
+        <div className="grid grid-cols-1 items-start">
+            {/* Form Section - Full Width */}
             <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6 }}
-                className="bg-white rounded-3xl shadow-2xl p-8 md:p-10 border border-emerald-100 backdrop-blur-xl relative"
+                className="relative"
             >
                 <form onSubmit={handleSubmit} className="space-y-5">
 

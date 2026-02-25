@@ -9,18 +9,17 @@ import Link from "next/link"
 interface ValuationModalsProps {
     formData: any
     valuationId: string | null
+    estimatedValue: number | null
     onClose: () => void
 }
 
-export default function ValuationModals({ formData, valuationId, onClose }: ValuationModalsProps) {
+export default function ValuationModals({ formData, valuationId, estimatedValue, onClose }: ValuationModalsProps) {
     const router = useRouter()
     const [step, setStep] = useState<1 | 2 | 3>(1)
     const [isSubmitting, setIsSubmitting] = useState(false)
 
-    // Calculate estimated value
-    const ratePerTon = formData.vehicleType === "Car" ? 25000 : formData.vehicleType === "Bike" ? 15000 : 35000
-    const weight = parseFloat(formData.vehicleWeight) || 0
-    const estimatedValue = (weight * ratePerTon).toLocaleString("en-IN")
+    // Format estimated value (Fallback to 0 if API didn't return one)
+    const formattedValue = (estimatedValue || 0).toLocaleString("en-IN")
 
     // Pre-generate confetti pieces (stable across renders)
     const confettiPieces = useMemo(() => Array.from({ length: 60 }, (_, i) => ({
@@ -104,7 +103,7 @@ export default function ValuationModals({ formData, valuationId, onClose }: Valu
                             <div className="mt-4 md:mt-8 bg-white/5 backdrop-blur-md rounded-xl md:rounded-2xl p-3 md:p-6 border border-emerald-500/30 inline-block w-full max-w-[250px] md:max-w-sm mx-auto relative z-10">
                                 <p className="text-[10px] md:text-sm font-medium text-emerald-400 uppercase tracking-widest mb-1">Estimated Valuation</p>
                                 <div className="text-2xl md:text-5xl font-black tracking-tight text-white drop-shadow-sm break-words">
-                                    ₹{estimatedValue}
+                                    ₹{formattedValue}
                                 </div>
                             </div>
                         </div>
@@ -141,7 +140,7 @@ export default function ValuationModals({ formData, valuationId, onClose }: Valu
                             <button
                                 onClick={() => {
                                     localStorage.setItem("kycFormData", JSON.stringify(formData))
-                                    localStorage.setItem("kycValuation", estimatedValue.replace(/,/g, ""))
+                                    localStorage.setItem("kycValuation", (estimatedValue || 0).toString())
                                     if (valuationId) localStorage.setItem("kycValuationId", valuationId)
                                     router.push("/ekyc/get-quote")
                                 }}

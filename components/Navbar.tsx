@@ -272,7 +272,7 @@ export default function Navbar() {
                       <>
                         {(session.user as any).role !== "partner" && (
                           <Link href="/partner-register" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                            Be our partner
+                            Partner Login
                           </Link>
                         )}
                         <Link href="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
@@ -289,11 +289,18 @@ export default function Navbar() {
                   </div>
                 </div>
               ) : (
-                <Link href="/login">
-                  <Button variant="ghost" className="text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 font-bold text-sm px-4">
-                    Login
-                  </Button>
-                </Link>
+                <div className="flex items-center gap-2">
+                  <Link href="/login">
+                    <Button variant="ghost" className="text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 font-bold text-sm px-4">
+                      Login
+                    </Button>
+                  </Link>
+                  <Link href="/partner-register">
+                    <Button variant="ghost" className="text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 font-bold text-sm px-4">
+                      Partner Login
+                    </Button>
+                  </Link>
+                </div>
               )}
             </div>
           </div>
@@ -520,7 +527,7 @@ export default function Navbar() {
                                 className="w-full justify-start text-gray-700 hover:text-emerald-700 hover:bg-emerald-50 mb-2 h-12 text-base font-medium"
                                 onClick={() => setIsOpen(false)}
                               >
-                                <User className="w-5 h-5 mr-3" /> Be our partner
+                                <User className="w-5 h-5 mr-3" /> Partner Login
                               </Button>
                             </Link>
                           )}
@@ -545,15 +552,26 @@ export default function Navbar() {
                       </Button>
                     </div>
                   ) : (
-                    <Link href="/login" className="block">
-                      <Button
-                        variant="outline"
-                        className="w-full justify-center text-gray-700 hover:text-emerald-700 hover:bg-emerald-50 border-gray-200 h-12 text-base font-bold"
-                        onClick={() => setIsOpen(false)}
-                      >
-                        <User className="w-5 h-5 mr-2" /> Login
-                      </Button>
-                    </Link>
+                    <div className="grid grid-cols-2 gap-3">
+                      <Link href="/login" className="block">
+                        <Button
+                          variant="outline"
+                          className="w-full justify-center text-gray-700 hover:text-emerald-700 hover:bg-emerald-50 border-gray-200 h-12 text-sm font-bold px-2"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          <User className="w-4 h-4 mr-1 sm:mr-2" /> Login
+                        </Button>
+                      </Link>
+                      <Link href="/partner-register" className="block">
+                        <Button
+                          variant="outline"
+                          className="w-full justify-center text-gray-700 hover:text-emerald-700 hover:bg-emerald-50 border-gray-200 h-12 text-sm font-bold px-2"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          <User className="w-4 h-4 mr-1 sm:mr-2" /> Partner Login
+                        </Button>
+                      </Link>
+                    </div>
                   )}
                 </div>
               </div>

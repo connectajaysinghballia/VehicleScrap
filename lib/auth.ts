@@ -4,6 +4,7 @@ import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
 import connectToDatabase from "@/lib/db"
 import User from "@/models/User"
+import B2BPartner from "@/models/B2BPartner"
 import bcrypt from "bcryptjs"
 
 export const authOptions: NextAuthOptions = {
@@ -61,11 +62,6 @@ export const authOptions: NextAuthOptions = {
                 }
 
                 await connectToDatabase();
-
-                // Mongoose might not be loaded with B2BPartner model if we don't import it?
-                // Ensure dynamic import or simple require if needed, but standard import top-level usually works if Next.js bundles it.
-                // However, circular deps can be an issue. Let's rely on global connection.
-                const B2BPartner = (await import("@/models/B2BPartner")).default;
 
                 const partner = await B2BPartner.findOne({ userId: credentials.userId });
 

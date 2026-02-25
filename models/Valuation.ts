@@ -32,6 +32,8 @@ const ValuationSchema = new Schema(
         },
         address: {
             pincode: String,
+            state: String,
+            city: String,
         },
         contact: {
             name: String,

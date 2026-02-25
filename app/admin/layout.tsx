@@ -20,8 +20,10 @@ import {
     ChevronRight,
     Shield,
     CheckCircle,
-    MessageSquare
+    MessageSquare,
+    Settings
 } from "lucide-react"
+
 import { signOut } from "next-auth/react"
 import { motion, AnimatePresence } from "framer-motion"
 
@@ -176,6 +178,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     <div className="pt-6 mt-2">
                         <motion.p variants={sidebarLinkVariants} className="px-4 text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Management</motion.p>
                         <div className="space-y-1.5">
+                            <motion.div variants={sidebarLinkVariants}>
+                                <Link href="/admin/settings" className={`flex items-center px-4 py-3 rounded-xl transition-all duration-200 group relative overflow-hidden ${isActive('/admin/settings') ? 'bg-indigo-500/10 text-indigo-400 shadow-sm' : 'text-slate-400 hover:bg-white/5 hover:text-white'}`}>
+                                    {isActive('/admin/settings') && (
+                                        <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-indigo-500 rounded-r-full" />
+                                    )}
+                                    <Settings className={`w-5 h-5 mr-3.5 transition-colors ${isActive('/admin/settings') ? 'text-indigo-400' : 'text-slate-400 group-hover:text-white'}`} />
+                                    <span className="font-semibold">Global Settings</span>
+                                </Link>
+                            </motion.div>
                             <motion.div variants={sidebarLinkVariants}>
                                 <Link href="/admin/partners" className={`flex items-center px-4 py-3 rounded-xl transition-all duration-200 group relative overflow-hidden ${isActive('/admin/partners') ? 'bg-emerald-500/10 text-emerald-400 shadow-sm' : 'text-slate-400 hover:bg-white/5 hover:text-white'}`}>
                                     {isActive('/admin/partners') && (

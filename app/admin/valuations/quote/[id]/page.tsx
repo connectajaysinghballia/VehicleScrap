@@ -277,10 +277,24 @@ export default function QuoteDetailPage({ params }: { params: Promise<{ id: stri
                             <span className="text-gray-500 dark:text-slate-400 font-medium flex items-center gap-2"><Phone className="w-4 h-4" />Phone:</span>
                             <span className="text-gray-900 dark:text-white font-semibold">{request.contact?.phone || "N/A"}</span>
                         </div>
-                        <div className="flex justify-between py-2">
-                            <span className="text-gray-500 dark:text-slate-400 font-medium flex items-center gap-2"><MapPin className="w-4 h-4" />Pincode:</span>
-                            <span className="text-gray-900 dark:text-white font-semibold">{request.address?.pincode || "N/A"}</span>
-                        </div>
+                        {request.address?.city || request.address?.state ? (
+                            <div className="flex justify-between py-2">
+                                <span className="text-gray-500 dark:text-slate-400 font-medium flex items-center gap-2"><MapPin className="w-4 h-4" />Location:</span>
+                                <div className="text-right">
+                                    <span className="block text-gray-900 dark:text-white font-semibold">
+                                        {[request.address?.city, request.address?.state].filter(Boolean).join(", ")}
+                                    </span>
+                                    <span className="text-xs text-gray-500 dark:text-slate-400 font-normal">
+                                        {request.address?.pincode}
+                                    </span>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="flex justify-between py-2">
+                                <span className="text-gray-500 dark:text-slate-400 font-medium flex items-center gap-2"><MapPin className="w-4 h-4" />Pincode:</span>
+                                <span className="text-gray-900 dark:text-white font-semibold">{request.address?.pincode || "N/A"}</span>
+                            </div>
+                        )}
                     </div>
                 </div>
 

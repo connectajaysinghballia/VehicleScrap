@@ -97,8 +97,19 @@ export default async function QuoteValuationsPage() {
                                             <p className="font-medium text-gray-900 dark:text-white">{val.brand} {val.model}</p>
                                             <p className="text-xs text-gray-500 dark:text-slate-400">{val.year} • {val.vehicleNumber}</p>
                                         </td>
-                                        <td className="px-6 py-4 text-gray-600 dark:text-slate-400">
-                                            {val.address?.city || val.address?.pincode}
+                                        <td className="px-6 py-4">
+                                            {val.address?.city || val.address?.state ? (
+                                                <div className="flex flex-col">
+                                                    <span className="text-gray-900 dark:text-white font-medium text-sm">
+                                                        {[val.address?.city, val.address?.state].filter(Boolean).join(", ")}
+                                                    </span>
+                                                    <span className="text-xs text-gray-500 dark:text-slate-400">
+                                                        {val.address?.pincode}
+                                                    </span>
+                                                </div>
+                                            ) : (
+                                                <span className="text-gray-600 dark:text-slate-400">{val.address?.pincode || "N/A"}</span>
+                                            )}
                                         </td>
                                         <td className="px-6 py-4">
                                             {getStatusBadge(val.status)}
