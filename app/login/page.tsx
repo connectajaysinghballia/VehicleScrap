@@ -5,7 +5,7 @@ import { signIn } from "next-auth/react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Mail, Lock, ArrowRight, Loader2, Sparkles, Building2, User, Eye, EyeOff } from "lucide-react"
 import Link from "next/link"
-import { useToast } from "@/components/ui/use-toast"
+import { useToast } from "@/hooks/use-toast"
 import { useSearchParams } from "next/navigation"
 
 export default function LoginPage() {
@@ -31,7 +31,33 @@ function LoginContent() {
         if (searchParams.get("tab") === "b2b") {
             setActiveTab("b2b")
         }
-    }, [searchParams])
+
+        // Handle NextAuth URL errors
+        const error = searchParams.get("error")
+        if (error) {
+            let errorMessage = "An unexpected error occurred during login."
+            if (error === "CredentialsSignin") {
+                errorMessage = "Invalid credentials provided."
+            } else if (error === "OAuthAccountNotLinked") {
+                errorMessage = "Email already in use with a different login method."
+            } else if (error === "AccessDenied") {
+                errorMessage = "Access denied. You do not have permission to log in."
+            } else if (error === "OAuthSignin" || error === "OAuthCallback") {
+                errorMessage = "Failed to communicate with Google authentication."
+            } else if (error === "Configuration") {
+                errorMessage = "Server authentication configuration error."
+            }
+
+            // Using setTimeout to ensure toast fires correctly post-render mounting
+            setTimeout(() => {
+                toast({
+                    title: "Authentication Error",
+                    description: errorMessage,
+                    variant: "destructive",
+                })
+            }, 100)
+        }
+    }, [searchParams, toast])
 
     // Standard (User/Admin) State
     const [name, setName] = useState("")
@@ -135,7 +161,11 @@ function LoginContent() {
         } catch (error) {
             console.error(error)
             setIsLoading(false)
-            alert("An error occurred. Please try again.")
+            toast({
+                title: "Error",
+                description: "An unexpected error occurred. Please try again.",
+                variant: "destructive"
+            })
         }
     }
 
@@ -179,13 +209,13 @@ function LoginContent() {
                 transition={{ duration: 0.8, ease: "easeOut" as const }}
                 className="w-full lg:w-1/2 flex items-center justify-center px-6 sm:px-12 lg:px-20 relative bg-[#0E192D]"
             >
-                <div className="w-full max-w-md space-y-6">
+                <div className="w-full max-w-[380px] space-y-5">
                     {/* Header */}
-                    <div className="text-center lg:text-left space-y-2">
-                        <h2 className="text-4xl font-bold text-white tracking-tight">
+                    <div className="text-center lg:text-left space-y-1.5">
+                        <h2 className="text-3xl font-bold text-white tracking-tight">
                             {activeTab === "standard" ? (isLogin ? "Welcome Back" : "Create Account") : "Partner Portal"}
                         </h2>
-                        <p className="text-gray-400 text-lg">
+                        <p className="text-gray-400 text-sm">
                             {activeTab === "standard"
                                 ? (isLogin ? "Please enter your details to sign in." : "Join us to get the best value for your scrap.")
                                 : "Access for registered corporate partners."}
@@ -193,10 +223,10 @@ function LoginContent() {
                     </div>
 
                     {/* Custom Tabs */}
-                    <div className="flex p-1.5 bg-slate-900 border border-slate-800 rounded-xl">
+                    <div className="flex p-1 bg-slate-900 border border-slate-800 rounded-xl">
                         <button
                             onClick={() => setActiveTab("standard")}
-                            className={`flex-1 flex items-center justify-center gap-2 py-3 text-sm font-bold rounded-lg transition-all duration-300 ${activeTab === "standard"
+                            className={`flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-bold rounded-lg transition-all duration-300 ${activeTab === "standard"
                                 ? "bg-slate-800 text-white shadow-sm ring-1 ring-white/10"
                                 : "text-gray-400 hover:text-white hover:bg-white/5"
                                 }`}
@@ -206,7 +236,7 @@ function LoginContent() {
                         </button>
                         <button
                             onClick={() => setActiveTab("b2b")}
-                            className={`flex-1 flex items-center justify-center gap-2 py-3 text-sm font-bold rounded-lg transition-all duration-300 ${activeTab === "b2b"
+                            className={`flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-bold rounded-lg transition-all duration-300 ${activeTab === "b2b"
                                 ? "bg-slate-800 text-emerald-400 shadow-sm ring-1 ring-white/10"
                                 : "text-gray-400 hover:text-white hover:bg-white/5"
                                 }`}
@@ -224,15 +254,15 @@ function LoginContent() {
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
                                 transition={{ duration: 0.2 }}
-                                className="space-y-5"
+                                className="space-y-4"
                             >
                                 {/* Standard Auth Form */}
-                                <form onSubmit={handleAuth} className="space-y-5">
+                                <form onSubmit={handleAuth} className="space-y-4">
                                     {!isLogin && (
-                                        <div className="space-y-1.5">
-                                            <label className="text-sm font-semibold text-gray-300 ml-1">Full Name</label>
+                                        <div className="space-y-1">
+                                            <label className="text-xs font-semibold text-gray-300 ml-1">Full Name</label>
                                             <div className="relative group transition-all">
-                                                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
                                                     <User className="h-5 w-5 text-gray-500 group-focus-within:text-emerald-500 transition-colors" />
                                                 </div>
                                                 <input
@@ -241,16 +271,16 @@ function LoginContent() {
                                                     value={name}
                                                     onChange={(e) => setName(e.target.value)}
                                                     placeholder="John Doe"
-                                                    className="block w-full pl-11 pr-4 py-3.5 bg-slate-900 border border-slate-700 rounded-xl text-base text-white placeholder-gray-500 focus:bg-slate-900 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all duration-200"
+                                                    className="block w-full pl-10 pr-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white placeholder-gray-500 focus:bg-slate-900 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all duration-200"
                                                 />
                                             </div>
                                         </div>
                                     )}
 
-                                    <div className="space-y-1.5">
-                                        <label className="text-sm font-semibold text-gray-300 ml-1">Email Address</label>
+                                    <div className="space-y-1">
+                                        <label className="text-xs font-semibold text-gray-300 ml-1">Email Address</label>
                                         <div className="relative group transition-all">
-                                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
                                                 <Mail className="h-5 w-5 text-gray-500 group-focus-within:text-emerald-500 transition-colors" />
                                             </div>
                                             <input
@@ -259,18 +289,18 @@ function LoginContent() {
                                                 value={email}
                                                 onChange={(e) => setEmail(e.target.value)}
                                                 placeholder="name@example.com"
-                                                className="block w-full pl-11 pr-4 py-3.5 bg-slate-900 border border-slate-700 rounded-xl text-base text-white placeholder-gray-500 focus:bg-slate-900 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all duration-200"
+                                                className="block w-full pl-10 pr-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white placeholder-gray-500 focus:bg-slate-900 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all duration-200"
                                             />
                                         </div>
                                     </div>
 
-                                    <div className="space-y-1.5">
+                                    <div className="space-y-1">
                                         <div className="flex justify-between items-center ml-1">
-                                            <label className="text-sm font-semibold text-gray-300">Password</label>
+                                            <label className="text-xs font-semibold text-gray-300">Password</label>
                                         </div>
                                         <div className="relative group transition-all">
-                                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                                <Lock className="h-5 w-5 text-gray-500 group-focus-within:text-emerald-500 transition-colors" />
+                                            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                                <Lock className="h-4 w-4 text-gray-500 group-focus-within:text-emerald-500 transition-colors" />
                                             </div>
                                             <input
                                                 type={showPassword ? "text" : "password"}
@@ -278,14 +308,14 @@ function LoginContent() {
                                                 value={password}
                                                 onChange={(e) => setPassword(e.target.value)}
                                                 placeholder="••••••••"
-                                                className="block w-full pl-11 pr-12 py-3.5 bg-slate-900 border border-slate-700 rounded-xl text-base text-white placeholder-gray-500 focus:bg-slate-900 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all duration-200"
+                                                className="block w-full pl-10 pr-10 py-3 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white placeholder-gray-500 focus:bg-slate-900 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all duration-200"
                                             />
                                             <button
                                                 type="button"
                                                 onClick={() => setShowPassword(!showPassword)}
-                                                className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-500 hover:text-emerald-500 transition-colors"
+                                                className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-500 hover:text-emerald-500 transition-colors"
                                             >
-                                                {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                                                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                                             </button>
                                         </div>
                                     </div>
@@ -293,14 +323,14 @@ function LoginContent() {
                                     <button
                                         type="submit"
                                         disabled={isLoading}
-                                        className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl shadow-xl shadow-emerald-900/20 transform transition-all active:scale-[0.98] flex items-center justify-center gap-2 text-base"
+                                        className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl shadow-xl shadow-emerald-900/20 transform transition-all active:scale-[0.98] flex items-center justify-center gap-2 text-sm mt-2"
                                     >
                                         {isLoading ? (
                                             <Loader2 className="w-5 h-5 animate-spin" />
                                         ) : (
                                             <>
                                                 {isLogin ? "Sign In" : "Create Account"}
-                                                <ArrowRight className="w-5 h-5" />
+                                                <ArrowRight className="w-4 h-4" />
                                             </>
                                         )}
                                     </button>
@@ -308,23 +338,23 @@ function LoginContent() {
 
                                 {isLogin && (
                                     <>
-                                        <div className="relative py-2">
+                                        <div className="relative py-1">
                                             <div className="absolute inset-0 flex items-center">
                                                 <div className="w-full border-t border-slate-800"></div>
                                             </div>
-                                            <div className="relative flex justify-center text-sm">
+                                            <div className="relative flex justify-center text-xs">
                                                 <span className="px-4 bg-[#0E192D] text-gray-500 font-medium">Or</span>
                                             </div>
                                         </div>
 
                                         <button
                                             onClick={() => handleGoogleLogin("/")}
-                                            className="w-full bg-slate-900 border border-slate-700 hover:bg-slate-800 text-white font-semibold py-3.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-3 group"
+                                            className="w-full bg-slate-900 border border-slate-700 hover:bg-slate-800 text-white font-semibold py-3 rounded-xl transition-all duration-200 flex items-center justify-center gap-3 group mt-1"
                                         >
                                             <img
                                                 src="https://www.svgrepo.com/show/475656/google-color.svg"
                                                 alt="Google"
-                                                className="w-5 h-5 group-hover:scale-110 transition-transform"
+                                                className="w-4 h-4 group-hover:scale-110 transition-transform"
                                             />
                                             <span className="text-sm">Continue with Google</span>
                                         </button>
@@ -333,7 +363,7 @@ function LoginContent() {
 
 
 
-                                <p className="text-center text-sm text-gray-500 mt-6">
+                                <p className="text-center text-xs text-gray-500 mt-4">
                                     {isLogin ? "New to ScrapCenter?" : "Already have an account?"}
                                     <button
                                         onClick={() => setIsLogin(!isLogin)}
@@ -350,13 +380,13 @@ function LoginContent() {
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
                                 transition={{ duration: 0.2 }}
-                                className="space-y-6"
+                                className="space-y-5"
                             >
-                                <form onSubmit={handleB2BLogin} className="space-y-5">
-                                    <div className="space-y-1.5">
-                                        <label className="text-sm font-semibold text-gray-300 ml-1">User ID</label>
+                                <form onSubmit={handleB2BLogin} className="space-y-4">
+                                    <div className="space-y-1">
+                                        <label className="text-xs font-semibold text-gray-300 ml-1">User ID</label>
                                         <div className="relative group transition-all">
-                                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
                                                 <User className="h-5 w-5 text-gray-500 group-focus-within:text-blue-500 transition-colors" />
                                             </div>
                                             <input
@@ -365,16 +395,16 @@ function LoginContent() {
                                                 value={b2bUserId}
                                                 onChange={(e) => setB2BUserId(e.target.value)}
                                                 placeholder="Enter Partner ID"
-                                                className="block w-full pl-11 pr-4 py-3.5 bg-slate-900 border border-slate-700 rounded-xl text-base text-white placeholder-gray-500 focus:bg-slate-900 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all duration-200"
+                                                className="block w-full pl-10 pr-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white placeholder-gray-500 focus:bg-slate-900 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all duration-200"
                                             />
                                         </div>
                                     </div>
 
-                                    <div className="space-y-1.5">
-                                        <label className="text-sm font-semibold text-gray-300 ml-1">Password</label>
+                                    <div className="space-y-1">
+                                        <label className="text-xs font-semibold text-gray-300 ml-1">Password</label>
                                         <div className="relative group transition-all">
-                                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                                <Lock className="h-5 w-5 text-gray-500 group-focus-within:text-blue-500 transition-colors" />
+                                            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                                <Lock className="h-4 w-4 text-gray-500 group-focus-within:text-blue-500 transition-colors" />
                                             </div>
                                             <input
                                                 type={showB2BPassword ? "text" : "password"}
@@ -382,14 +412,14 @@ function LoginContent() {
                                                 value={b2bPassword}
                                                 onChange={(e) => setB2BPassword(e.target.value)}
                                                 placeholder="••••••••"
-                                                className="block w-full pl-11 pr-12 py-3.5 bg-slate-900 border border-slate-700 rounded-xl text-base text-white placeholder-gray-500 focus:bg-slate-900 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all duration-200"
+                                                className="block w-full pl-10 pr-10 py-3 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white placeholder-gray-500 focus:bg-slate-900 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all duration-200"
                                             />
                                             <button
                                                 type="button"
                                                 onClick={() => setShowB2BPassword(!showB2BPassword)}
-                                                className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-500 hover:text-blue-500 transition-colors"
+                                                className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-500 hover:text-blue-500 transition-colors"
                                             >
-                                                {showB2BPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                                                {showB2BPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                                             </button>
                                         </div>
                                     </div>
@@ -397,34 +427,34 @@ function LoginContent() {
                                     <button
                                         type="submit"
                                         disabled={isLoading}
-                                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl shadow-xl shadow-blue-600/20 transform transition-all active:scale-[0.98] flex items-center justify-center gap-2 text-base"
+                                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl shadow-xl shadow-blue-600/20 transform transition-all active:scale-[0.98] flex items-center justify-center gap-2 text-sm mt-2"
                                     >
                                         {isLoading ? (
                                             <Loader2 className="w-5 h-5 animate-spin" />
                                         ) : (
                                             <>
                                                 Partner Sign In
-                                                <ArrowRight className="w-5 h-5" />
+                                                <ArrowRight className="w-4 h-4" />
                                             </>
                                         )}
                                     </button>
                                 </form>
 
-                                <div className="relative py-2">
+                                <div className="relative py-1 border-t-0">
                                     <div className="absolute inset-0 flex items-center">
                                         <div className="w-full border-t border-slate-800"></div>
                                     </div>
-                                    <div className="relative flex justify-center text-sm">
+                                    <div className="relative flex justify-center text-xs">
                                         <span className="px-4 bg-[#0E192D] text-gray-500 font-medium">New Partner?</span>
                                     </div>
                                 </div>
 
-                                <Link href="/partner-register" className="block">
+                                <Link href="/partner-register" className="block mt-1">
                                     <button
                                         type="button"
-                                        className="w-full bg-slate-900 border-2 border-blue-600 text-blue-500 font-bold py-3.5 rounded-xl hover:bg-blue-900/20 transition-all duration-200 flex items-center justify-center gap-2 text-sm"
+                                        className="w-full bg-slate-900 border-2 border-blue-600 text-blue-500 font-bold py-3 rounded-xl hover:bg-blue-900/20 transition-all duration-200 flex items-center justify-center gap-2 text-sm"
                                     >
-                                        <Building2 className="w-5 h-5" />
+                                        <Building2 className="w-4 h-4" />
                                         Be Our Partner
                                     </button>
                                 </Link>

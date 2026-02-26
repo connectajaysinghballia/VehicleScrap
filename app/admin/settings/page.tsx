@@ -2,32 +2,34 @@
 
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import { Settings, Save, AlertCircle, RefreshCw } from "lucide-react"
+import { Settings, Save, AlertCircle, RefreshCw, DollarSign, MapPin, IndianRupee } from "lucide-react"
 import { useToast } from "@/components/ui/use-toast"
 
 export default function AdminSettingsPage() {
     const { toast } = useToast()
     const [scrapPrice, setScrapPrice] = useState<string>("")
+    const [pickupCharge, setPickupCharge] = useState<string>("")
     const [isLoading, setIsLoading] = useState(true)
     const [isSaving, setIsSaving] = useState(false)
 
     useEffect(() => {
-        fetchScrapPrice()
+        fetchSettings()
     }, [])
 
-    const fetchScrapPrice = async () => {
+    const fetchSettings = async () => {
         setIsLoading(true)
         try {
             const res = await fetch("/api/settings/scrapRates")
             if (res.ok) {
                 const data = await res.json()
-                setScrapPrice(data.scrapPricePerKg.toString())
+                setScrapPrice(data.scrapPricePerKg?.toString() || "")
+                setPickupCharge(data.pickupChargePerKm?.toString() || "")
             }
         } catch (error) {
-            console.error("Failed to fetch scrap price", error)
+            console.error("Failed to fetch settings", error)
             toast({
                 title: "Error",
-                description: "Failed to load current scrap price settings.",
+                description: "Failed to load current settings.",
                 variant: "destructive"
             })
         } finally {
@@ -39,10 +41,11 @@ export default function AdminSettingsPage() {
         e.preventDefault()
 
         const price = parseFloat(scrapPrice)
-        if (isNaN(price) || price <= 0) {
+        const pickup = parseFloat(pickupCharge)
+        if (isNaN(price) || price <= 0 || isNaN(pickup) || pickup < 0) {
             toast({
                 title: "Invalid Input",
-                description: "Please enter a valid price greater than 0.",
+                description: "Please enter valid numbers for both fields.",
                 variant: "destructive"
             })
             return
@@ -53,23 +56,23 @@ export default function AdminSettingsPage() {
             const res = await fetch("/api/settings/scrapRates", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ scrapPricePerKg: price })
+                body: JSON.stringify({ scrapPricePerKg: price, pickupChargePerKm: pickup })
             })
 
             if (res.ok) {
                 toast({
                     title: "Success",
-                    description: "Scrap price updated successfully.",
-                    className: "bg-emerald-50 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/20 text-emerald-900 dark:text-emerald-400"
+                    description: "Global settings updated successfully.",
+                    className: "bg-emerald-950/50 border-emerald-500/20 text-emerald-400"
                 })
             } else {
                 throw new Error("Failed to update")
             }
         } catch (error) {
-            console.error("Failed to save scrap price", error)
+            console.error("Failed to save settings", error)
             toast({
                 title: "Error",
-                description: "Failed to save the new scrap price.",
+                description: "Failed to save the new configuration.",
                 variant: "destructive"
             })
         } finally {
@@ -78,81 +81,175 @@ export default function AdminSettingsPage() {
     }
 
     return (
-        <div className="p-6 max-w-4xl mx-auto space-y-6">
-            <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-100 dark:border-slate-800">
-                <div className="p-3 bg-indigo-100 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 rounded-xl">
-                    <Settings className="w-6 h-6" />
-                </div>
-                <div>
-                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Global Settings</h1>
-                    <p className="text-gray-500 dark:text-gray-400 text-sm">Manage platform-wide configurations</p>
-                </div>
-            </div>
+        <div className="min-h-screen bg-[#0E192D] text-white p-4 md:p-8 selection:bg-red-500/30">
+            <div className="max-w-4xl mx-auto space-y-8">
 
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="bg-white dark:bg-[#0E192D] rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden"
-            >
-                <div className="bg-gray-50/50 dark:bg-slate-900/50 px-6 py-4 border-b border-gray-100 dark:border-slate-800">
-                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-                        <AlertCircle className="w-5 h-5 text-indigo-500 dark:text-indigo-400" />
-                        Scrap Pricing Configuration
-                    </h2>
-                </div>
+                {/* Header */}
+                <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="relative overflow-hidden rounded-3xl bg-slate-900 border border-slate-800 p-8 shadow-2xl"
+                >
+                    <div className="absolute -top-24 -right-24 w-64 h-64 bg-red-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                    <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-                <div className="p-6">
-                    {isLoading ? (
-                        <div className="flex items-center justify-center py-12 text-gray-400 dark:text-slate-500">
-                            <RefreshCw className="w-6 h-6 animate-spin mr-2" />
-                            Loading configuration...
-                        </div>
-                    ) : (
-                        <form onSubmit={handleSave} className="space-y-6 max-w-md">
-                            <div>
-                                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    Scrap Price per KG (₹)
-                                </label>
-                                <div className="relative">
-                                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 font-medium">₹</span>
-                                    <input
-                                        type="number"
-                                        step="0.01"
-                                        min="0.01"
-                                        required
-                                        value={scrapPrice}
-                                        onChange={(e) => setScrapPrice(e.target.value)}
-                                        className="w-full pl-8 pr-4 py-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900/50 focus:border-indigo-500 dark:focus:border-indigo-400 focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-500/20 outline-none transition-all font-medium text-gray-900 dark:text-white"
-                                        placeholder="e.g. 25.50"
-                                    />
-                                </div>
-                                <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 flex items-start gap-1">
-                                    <AlertCircle className="w-4 h-4 shrink-0 text-amber-500 dark:text-amber-400" />
-                                    This rate will be used to calculate all new "Get Free Quote" estimates dynamically based on the vehicle weight explicitly provided by the user.
-                                </p>
+                    <div className="relative z-10 flex flex-col md:flex-row md:items-center gap-6 justify-between">
+                        <div className="flex items-center gap-5">
+                            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-500/20 to-red-900/40 flex items-center justify-center border border-red-500/30 shadow-lg shadow-red-500/10">
+                                <Settings className="w-8 h-8 text-red-500" />
                             </div>
+                            <div>
+                                <h1 className="text-3xl font-black tracking-tight text-white mb-1">
+                                    Global Settings
+                                </h1>
+                                <p className="text-slate-400 font-medium">Manage platform-wide pricing & configurations</p>
+                            </div>
+                        </div>
 
-                            <button
-                                type="submit"
-                                disabled={isSaving}
-                                className="flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white font-medium rounded-xl transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
-                            >
-                                {isSaving ? (
-                                    <>
-                                        <RefreshCw className="w-4 h-4 animate-spin" />
-                                        Saving...
-                                    </>
-                                ) : (
-                                    <>
-                                        <Save className="w-4 h-4" />
-                                        Save Configuration
-                                    </>
-                                )}
-                            </button>
-                        </form>
-                    )}
+                        <div className="flex bg-slate-800/50 rounded-xl p-1 border border-slate-700/50">
+                            <span className="px-4 py-2 text-xs font-bold text-slate-300 uppercase tracking-wider">Admin Override</span>
+                        </div>
+                    </div>
+                </motion.div>
+
+                {/* Main Content */}
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                >
+                    <div className="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl relative">
+                        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent pointer-events-none"></div>
+
+                        {/* Section Header */}
+                        <div className="px-8 py-6 border-b border-slate-800 flex items-center gap-3 bg-slate-950/50">
+                            <IndianRupee className="w-5 h-5 text-red-500" />
+                            <h2 className="text-xl font-bold font-mono">Pricing Configuration</h2>
+                        </div>
+
+                        {/* Form Area */}
+                        <div className="p-8">
+                            {isLoading ? (
+                                <div className="space-y-8 animate-pulse">
+                                    <div className="space-y-3">
+                                        <div className="h-5 bg-slate-800 rounded w-1/4"></div>
+                                        <div className="h-14 bg-slate-800/50 rounded-xl w-full max-w-lg"></div>
+                                        <div className="h-4 bg-slate-800/30 rounded w-2/3"></div>
+                                    </div>
+                                    <div className="space-y-3">
+                                        <div className="h-5 bg-slate-800 rounded w-1/4"></div>
+                                        <div className="h-14 bg-slate-800/50 rounded-xl w-full max-w-lg"></div>
+                                        <div className="h-4 bg-slate-800/30 rounded w-2/3"></div>
+                                    </div>
+                                    <div className="h-14 bg-slate-800 rounded-xl w-40 mt-8"></div>
+                                </div>
+                            ) : (
+                                <form onSubmit={handleSave} className="space-y-10">
+
+                                    {/* Scrap Price Row */}
+                                    <div className="grid md:grid-cols-[1fr_2fr] gap-6 md:gap-12 items-start max-w-5xl">
+                                        <div>
+                                            <h3 className="text-lg font-bold text-white mb-2">Base Scrap Rate</h3>
+                                            <p className="text-sm text-slate-400 font-medium leading-relaxed">
+                                                Determines the per-KG payout for users obtaining a free scrap quote on the platform.
+                                            </p>
+                                        </div>
+                                        <div className="space-y-3">
+                                            <div className="relative group">
+                                                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                                    <span className="text-slate-500 font-bold group-focus-within:text-red-500 transition-colors">₹</span>
+                                                </div>
+                                                <input
+                                                    type="number"
+                                                    step="0.01"
+                                                    min="0.01"
+                                                    required
+                                                    value={scrapPrice}
+                                                    onChange={(e) => setScrapPrice(e.target.value)}
+                                                    className="w-full pl-10 pr-4 py-4 bg-slate-950 border border-slate-800 focus:border-red-500 rounded-xl outline-none text-white font-mono text-lg transition-all focus:ring-4 focus:ring-red-500/10 placeholder-slate-700 hover:border-slate-700"
+                                                    placeholder="0.00"
+                                                />
+                                            </div>
+                                            <div className="flex items-start gap-2 text-xs font-semibold text-slate-500 bg-slate-950/50 p-3 rounded-lg border border-slate-800">
+                                                <AlertCircle className="w-4 h-4 text-emerald-500 shrink-0" />
+                                                <p>Example: If weight is 1.5 Tons (1500kg) and rate is ₹25, quote = ₹37,500.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="h-px bg-slate-800 w-full line-gradient"></div>
+
+                                    {/* Pickup Charge Row */}
+                                    <div className="grid md:grid-cols-[1fr_2fr] gap-6 md:gap-12 items-start max-w-5xl">
+                                        <div>
+                                            <h3 className="text-lg font-bold text-white mb-2 ml-1">Distance Surcharge</h3>
+                                            <p className="text-sm text-slate-400 font-medium leading-relaxed">
+                                                The calculated fee applied <span className="text-red-400 font-bold">per kilometer</span> for any collection distance exceeding the 100km free limit.
+                                            </p>
+                                        </div>
+                                        <div className="space-y-3">
+                                            <div className="relative group">
+                                                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                                    <span className="text-slate-500 font-bold group-focus-within:text-red-500 transition-colors">₹</span>
+                                                </div>
+                                                <input
+                                                    type="number"
+                                                    step="0.01"
+                                                    min="0"
+                                                    required
+                                                    value={pickupCharge}
+                                                    onChange={(e) => setPickupCharge(e.target.value)}
+                                                    className="w-full pl-10 pr-4 py-4 bg-slate-950 border border-slate-800 focus:border-red-500 rounded-xl outline-none text-white font-mono text-lg transition-all focus:ring-4 focus:ring-red-500/10 placeholder-slate-700 hover:border-slate-700"
+                                                    placeholder="0.00"
+                                                />
+                                                <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+                                                    <span className="text-slate-600 font-bold text-sm bg-slate-900 px-2 py-1 rounded">/ KM</span>
+                                                </div>
+                                            </div>
+                                            <div className="flex items-start gap-2 text-xs font-semibold text-slate-500 bg-slate-950/50 p-3 rounded-lg border border-slate-800">
+                                                <MapPin className="w-4 h-4 text-blue-500 shrink-0" />
+                                                <p>Applies automatically to all incoming requests evaluated by the Google Distance Matrix.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Save Actions */}
+                                    <div className="pt-8 border-t border-slate-800 flex items-center justify-end">
+                                        <motion.button
+                                            type="submit"
+                                            disabled={isSaving}
+                                            whileHover={{ scale: isSaving ? 1 : 1.02 }}
+                                            whileTap={{ scale: isSaving ? 1 : 0.98 }}
+                                            className="relative overflow-hidden flex items-center justify-center gap-3 w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white font-bold rounded-xl transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-red-500/20 group"
+                                        >
+                                            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
+                                            {isSaving ? (
+                                                <>
+                                                    <RefreshCw className="w-5 h-5 animate-spin relative z-10" />
+                                                    <span className="relative z-10 text-lg tracking-wide">Applying Changes...</span>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Save className="w-5 h-5 relative z-10" />
+                                                    <span className="relative z-10 text-lg tracking-wide">Save Globally</span>
+                                                </>
+                                            )}
+                                        </motion.button>
+                                    </div>
+                                </form>
+                            )}
+                        </div>
+                    </div>
+                </motion.div>
+
+                {/* Footer Note */}
+                <div className="text-center pb-8">
+                    <p className="text-xs font-bold text-slate-600 uppercase tracking-widest">
+                        Automated Valuation Engine • AutoScrap Admin
+                    </p>
                 </div>
-            </motion.div>
+
+            </div>
         </div>
     )
 }

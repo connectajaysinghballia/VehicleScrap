@@ -59,6 +59,7 @@ export default async function AdminPage() {
         ])
 
         b2bPending = b2bPendingCount
+        b2bApproved = b2bPartnerCount
         b2bTotal = b2bPartnerCount + b2bPending // Active Partners + Pending Requests
         b2bCount = b2bPending // For the "New" badge
 

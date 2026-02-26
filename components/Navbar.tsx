@@ -63,6 +63,7 @@ export default function Navbar() {
   const resourcesDropdown = [
     { name: "Blogs", href: "/blogs", icon: BookOpen, description: "Latest industry news and updates" },
     { name: "Guides", href: "/guide", icon: FileText, description: "Step-by-step guides for vehicle scrapping" },
+    { name: "Homex", href: "/homex", icon: Home, description: "Doorstep scrap collection and more" },
   ]
 
   useEffect(() => {

@@ -35,8 +35,6 @@ export default function LoginPopup() {
         router.push("/login")
     }
 
-    if (!isVisible) return null
-
     return (
         <AnimatePresence>
             {isVisible && (

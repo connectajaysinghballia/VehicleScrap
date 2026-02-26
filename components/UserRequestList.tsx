@@ -224,6 +224,12 @@ export default function UserRequestList({ requests }: UserRequestListProps) {
                                             <DetailItem icon={<Calendar />} label="Model Year" value={selectedRequest.year} />
                                             <DetailItem icon={<Scale />} label="Approx Weight" value={`${selectedRequest.vehicleWeight} Tons`} />
                                             <DetailItem icon={<MapPin />} label="Pincode" value={selectedRequest.address?.pincode} />
+                                            {selectedRequest.distance !== undefined && selectedRequest.distance !== null && (
+                                                <DetailItem icon={<MapPin />} label="Distance" value={`${selectedRequest.distance} km`} />
+                                            )}
+                                            {selectedRequest.pickupCost !== undefined && selectedRequest.pickupCost !== null && (
+                                                <DetailItem icon={<DollarSign />} label="Pickup Cost" value={selectedRequest.pickupCost === 0 ? "Free (< 100km)" : `₹${selectedRequest.pickupCost.toLocaleString("en-IN")}`} />
+                                            )}
                                         </>
                                     )}
 

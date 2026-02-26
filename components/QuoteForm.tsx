@@ -10,6 +10,7 @@ import ValuationModals from "./ValuationModals"
 import AuthGuard from "./AuthGuard"
 import Link from "next/link"
 import { indiaData, states } from "@/lib/india-data"
+import { useToast } from "@/hooks/use-toast"
 
 const vehicleData = {
   Car: ["Maruti Suzuki", "Hyundai", "Tata", "Honda", "Toyota", "Mahindra", "Kia", "Skoda"],
@@ -85,6 +86,12 @@ export default function QuoteForm() {
   const [showValuation, setShowValuation] = useState(false)
   const [valuationId, setValuationId] = useState<string | null>(null)
   const [estimatedValue, setEstimatedValue] = useState<number | null>(null)
+  const [pickupCost, setPickupCost] = useState<number | null>(null)
+  const [distance, setDistance] = useState<number | null>(null)
+  const [appliedPickupRate, setAppliedPickupRate] = useState<number | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const { toast } = useToast()
 
   const handleVehicleType = (type: string) => {
     setFormData({
@@ -106,9 +113,15 @@ export default function QuoteForm() {
     const cityToUse = formData.city === "other" ? formData.customCity : formData.city
 
     if (!formData.vehicleType || !brandToUse || !modelToUse || !formData.year || !formData.vehicleNumber || !formData.vehicleWeight || !formData.name || !formData.phone || !formData.pincode || !formData.state || !cityToUse || !formData.agreeTC) {
-      alert("Please fill in all required fields and agree to the terms.")
+      toast({
+        title: "Missing fields",
+        description: "Please fill in all required fields and agree to the terms.",
+        variant: "destructive"
+      })
       return
     }
+
+    setIsLoading(true)
 
     try {
       // Submit to API to get ID
@@ -138,19 +151,38 @@ export default function QuoteForm() {
         if (data.id) {
           setValuationId(data.id)
         }
-        if (data.estimatedValue) {
+        if (data.estimatedValue !== undefined) {
           setEstimatedValue(data.estimatedValue)
+        }
+        if (data.pickupCost !== undefined) {
+          setPickupCost(data.pickupCost)
+        }
+        if (data.distance !== undefined) {
+          setDistance(data.distance)
+        }
+        if (data.appliedPickupRate !== undefined) {
+          setAppliedPickupRate(data.appliedPickupRate)
         }
         setShowValuation(true)
         setShowSuccess(true)
         setTimeout(() => setShowSuccess(false), 3000)
       } else {
         const data = await response.json()
-        alert(data.message || "Failed to submit valuation request. Please try again.")
+        toast({
+          title: "Submission Failed",
+          description: data.message || "Failed to submit valuation request. Please try again.",
+          variant: "destructive"
+        })
       }
     } catch (error) {
       console.error("Error submitting valuation:", error)
-      alert("Something went wrong. Please try again.")
+      toast({
+        title: "Network Error",
+        description: "Something went wrong communicating with the server. Please try again.",
+        variant: "destructive"
+      })
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -172,6 +204,9 @@ export default function QuoteForm() {
             formData={formData}
             valuationId={valuationId}
             estimatedValue={estimatedValue}
+            pickupCost={pickupCost}
+            distance={distance}
+            appliedPickupRate={appliedPickupRate}
             onClose={() => {
               setShowValuation(false)
               setFormData({
@@ -645,15 +680,24 @@ export default function QuoteForm() {
                     {/* Submit Button */}
                     <motion.button
                       type="submit"
-                      disabled={!formData.agreeTC}
+                      disabled={!formData.agreeTC || isLoading}
                       variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
                       className="w-full bg-[#0E192D] hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl hover:shadow-emerald-500/20 transition-all duration-300 flex items-center justify-center gap-2 text-base relative overflow-hidden group"
-                      whileHover={{ scale: formData.agreeTC ? 1.02 : 1 }}
-                      whileTap={{ scale: formData.agreeTC ? 0.98 : 1 }}
+                      whileHover={{ scale: formData.agreeTC && !isLoading ? 1.02 : 1 }}
+                      whileTap={{ scale: formData.agreeTC && !isLoading ? 0.98 : 1 }}
                     >
                       <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      <FileText className="w-5 h-5 relative z-10" />
-                      <span className="relative z-10">Get My Free Quote</span>
+                      {isLoading ? (
+                        <>
+                          <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin relative z-10" />
+                          <span className="relative z-10">Calculating Quote...</span>
+                        </>
+                      ) : (
+                        <>
+                          <FileText className="w-5 h-5 relative z-10" />
+                          <span className="relative z-10">Get My Free Quote</span>
+                        </>
+                      )}
                     </motion.button>
                   </motion.form>
                 </div>

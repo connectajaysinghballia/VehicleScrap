@@ -25,7 +25,7 @@ export default function QuoteDetailPage({ params }: { params: Promise<{ id: stri
             // Check if ID looks like a filename (contains extension)
             const isFile = /\.(jpg|jpeg|png|pdf|webp|doc|docx)$/i.test(id);
 
-            let url = `/api/admin/valuations/quote/${id}`;
+            const url = `/api/admin/valuations/quote/${id}`;
             if (isFile) {
                 // If it's a file request, we should probably redirect to the actual file URL
                 // For now, let's try to find which valuation this file belongs to

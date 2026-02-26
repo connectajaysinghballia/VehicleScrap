@@ -391,42 +391,7 @@ export default function ContactPage() {
           </div>
         </motion.div>
 
-        {/* Separate Map Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="w-full max-w-6xl rounded-[30px] overflow-hidden shadow-xl border border-slate-200 bg-white"
-        >
-          <div className="w-full h-[400px] relative">
-            <iframe
-              title="Google Map Location"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14285.632231362098!2d80.34440263690623!3d26.435773289053995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399c475069279503%3A0xc392de483015694a!2sTransport%20Nagar%2C%20Kanpur%2C%20Uttar%20Pradesh%20208023!5e0!3m2!1sen!2sin!4v1709650000000!5m2!1sen!2sin"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="grayscale-[20%] hover:grayscale-0 transition-all duration-500"
-            ></iframe>
-            {/* Floating Location Card */}
-            <div className="absolute top-6 right-6 bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-slate-100 max-w-xs hidden sm:block">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center">
-                  <MapPin className="w-4 h-4" />
-                </div>
-                <div>
-                  <p className="text-xs font-bold text-slate-500 uppercase">Headquarters</p>
-                  <p className="text-sm font-bold text-slate-900">Kanpur, Uttar Pradesh</p>
-                </div>
-              </div>
-              <p className="text-xs text-slate-600 pl-11">
-                Transport Nagar, Kanpur, Uttar Pradesh 208023
-              </p>
-            </div>
-          </div>
-        </motion.div>
+
       </div>
     </div>
   )

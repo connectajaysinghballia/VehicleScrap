@@ -44,6 +44,12 @@ const ValuationSchema = new Schema(
             enum: ["pending", "reviewed", "completed", "approved"],
             default: "pending",
         },
+        pickupCost: {
+            type: Number,
+        },
+        distance: {
+            type: Number, // Distance in km
+        },
         // eKYC Data
         firstName: { type: String },
         dob: { type: String },
