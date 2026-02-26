@@ -87,25 +87,25 @@ export default function ValuationModals({ formData, valuationId, estimatedValue,
                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                        className="w-full max-w-3xl bg-white rounded-2xl md:rounded-3xl shadow-2xl flex flex-col max-h-[95vh] md:max-h-[90vh] relative overflow-hidden"
+                        className="w-full max-w-lg sm:max-w-xl bg-white rounded-2xl md:rounded-3xl shadow-2xl flex flex-col max-h-[95vh] md:max-h-[90vh] relative overflow-hidden"
                     >
                         {/* Close Button */}
                         <button onClick={onClose} className="absolute top-3 right-3 sm:top-4 sm:right-4 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors z-20 text-white backdrop-blur-sm shrink-0">
-                            <X className="w-5 h-5" />
+                            <X className="w-4 h-4" />
                         </button>
 
-                        <div className="bg-[#0E192D] p-5 sm:p-8 lg:p-10 text-center text-white relative shrink-0">
+                        <div className="bg-[#0E192D] p-5 sm:p-6 text-center text-white relative shrink-0">
                             {/* Background Effects */}
                             <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
                             <div className="absolute -top-24 -right-24 w-48 h-48 bg-emerald-500/20 rounded-full blur-3xl"></div>
                             <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-blue-500/20 rounded-full blur-3xl"></div>
 
-                            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2 relative z-10 w-[90%] mx-auto">Build Your Quote</h2>
-                            <p className="opacity-90 text-sm sm:text-base lg:text-lg text-emerald-100 relative z-10">Based on your {formData.vehicleType} details</p>
+                            <h2 className="text-xl sm:text-2xl font-bold mb-1 relative z-10 w-[90%] mx-auto">Build Your Quote</h2>
+                            <p className="opacity-90 text-xs sm:text-sm text-emerald-100 relative z-10">Based on your {formData.vehicleType} details</p>
 
-                            <div className="mt-4 sm:mt-6 lg:mt-8 bg-white/5 backdrop-blur-md rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 border border-emerald-500/30 inline-block w-full max-w-[280px] sm:max-w-sm lg:max-w-md mx-auto relative z-10 shadow-xl">
-                                <p className="text-xs lg:text-sm font-medium text-emerald-400 uppercase tracking-widest mb-1 lg:mb-2">Estimated Valuation</p>
-                                <div className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white drop-shadow-md break-words">
+                            <div className="mt-4 bg-white/5 backdrop-blur-md rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-emerald-500/30 inline-block w-full max-w-[280px] sm:max-w-xs mx-auto relative z-10 shadow-xl">
+                                <p className="text-xs font-medium text-emerald-400 uppercase tracking-widest mb-1">Estimated Valuation</p>
+                                <div className="text-3xl sm:text-4xl font-black tracking-tight text-white drop-shadow-md break-words">
                                     ₹{formattedValue}
                                 </div>
                                 {distance !== undefined && distance !== null && pickupCost !== undefined && pickupCost !== null && (
@@ -126,35 +126,35 @@ export default function ValuationModals({ formData, valuationId, estimatedValue,
                             </div>
                         </div>
 
-                        <div className="p-5 sm:p-8 lg:p-10 bg-white overflow-y-auto">
-                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-5 mb-6 md:mb-8">
+                        <div className="p-3 sm:p-4 bg-white overflow-y-auto">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-2 sm:gap-3 mb-4 sm:mb-5">
                                 {[
                                     { icon: Shield, title: "Certificate of Deposit", desc: "Secure investment options" },
                                     { icon: Sparkles, title: "25% Tax Rebate", desc: "Save big on new purchases" },
                                     { icon: Award, title: "Registration Waiver", desc: "Complete fee exemption" }
                                 ].map((item, i) => (
-                                    <div key={i} className="bg-gray-50 border border-gray-100 rounded-xl p-4 sm:p-5 text-center hover:bg-emerald-50 hover:border-emerald-200 transition-all duration-300 flex flex-row sm:flex-col items-center sm:justify-center gap-4 sm:gap-0 group">
-                                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center sm:mb-3 shadow-sm group-hover:scale-110 transition-transform duration-300 shrink-0">
-                                            <item.icon className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600" />
+                                    <div key={i} className="bg-gray-50 border border-gray-100 rounded-xl p-3 sm:p-4 hover:bg-emerald-50 hover:border-emerald-200 transition-all duration-300 flex flex-row md:flex-col items-center justify-start md:justify-center text-left md:text-center gap-3 sm:gap-2 group">
+                                        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white rounded-full flex items-center justify-center sm:mb-1 shadow-sm group-hover:scale-110 transition-transform duration-300 shrink-0">
+                                            <item.icon className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600" />
                                         </div>
-                                        <div className="text-left sm:text-center">
-                                            <h3 className="font-bold text-[#0E192D] text-sm sm:text-[13px] md:text-sm leading-tight mb-0.5 sm:mb-1">{item.title}</h3>
-                                            <p className="text-[11px] sm:text-xs text-gray-500 group-hover:text-emerald-700/80 transition-colors leading-snug">{item.desc}</p>
+                                        <div>
+                                            <h3 className="font-bold text-[#0E192D] text-[12px] sm:text-[13px] md:text-[12px] leading-tight mb-0.5">{item.title}</h3>
+                                            <p className="text-[10px] sm:text-[11px] md:text-[10px] text-gray-500 group-hover:text-emerald-700/80 transition-colors leading-snug">{item.desc}</p>
                                         </div>
                                     </div>
                                 ))}
                             </div>
 
-                            <div className="flex flex-row items-center gap-4 p-4 lg:p-5 bg-emerald-50 border-l-[6px] border-emerald-500 rounded-xl shadow-sm mb-6 lg:mb-8 relative overflow-hidden text-left">
+                            <div className="flex flex-row items-center gap-3 p-3 sm:p-4 bg-emerald-50 border-l-4 border-emerald-500 rounded-xl shadow-sm mb-4 sm:mb-5 relative overflow-hidden text-left">
                                 <div className="absolute top-1/2 -translate-y-1/2 right-2 p-2 opacity-5 pointer-events-none hidden sm:block">
-                                    <Smartphone className="w-28 h-28 text-emerald-800" />
+                                    <Smartphone className="w-20 h-20 text-emerald-800" />
                                 </div>
-                                <div className="w-12 h-12 lg:w-14 lg:h-14 bg-white rounded-full flex items-center justify-center shadow-md animate-[pulse_3s_ease-in-out_infinite] shrink-0 z-10">
-                                    <Smartphone className="w-6 h-6 lg:w-7 lg:h-7 text-emerald-600" />
+                                <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md animate-[pulse_3s_ease-in-out_infinite] shrink-0 z-10">
+                                    <Smartphone className="w-5 h-5 text-emerald-600" />
                                 </div>
                                 <div className="z-10">
-                                    <p className="font-black text-[#0E192D] text-base lg:text-lg leading-tight mb-1">Our Call Center will contact you</p>
-                                    <p className="text-sm border border-emerald-200 bg-white/50 inline-block px-2 py-0.5 rounded-full font-bold text-emerald-700">Support available 24/7</p>
+                                    <p className="font-black text-[#0E192D] text-sm leading-tight mb-1">Our Call Center will contact you</p>
+                                    <p className="text-[10px] border border-emerald-200 bg-white/50 inline-block px-2 py-0.5 rounded-full font-bold text-emerald-700">Support available 24/7</p>
                                 </div>
                             </div>
                             <button
@@ -164,9 +164,9 @@ export default function ValuationModals({ formData, valuationId, estimatedValue,
                                     if (valuationId) localStorage.setItem("kycValuationId", valuationId)
                                     router.push("/ekyc/get-quote")
                                 }}
-                                className="w-full bg-[#0E192D] hover:bg-emerald-600 text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-emerald-500/30 transform transition-all duration-300 active:scale-[0.98] flex items-center justify-center gap-2 text-base lg:text-lg"
+                                className="w-full bg-[#0E192D] hover:bg-emerald-600 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-emerald-500/30 transform transition-all duration-300 active:scale-[0.98] flex items-center justify-center gap-2 text-sm"
                             >
-                                <Sparkles className="w-5 h-5 text-emerald-400 group-hover:text-white" />
+                                <Sparkles className="w-4 h-4 text-emerald-400 group-hover:text-white" />
                                 Proceed to Final Step (eKYC)
                             </button>
                         </div>

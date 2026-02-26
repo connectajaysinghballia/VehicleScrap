@@ -6,6 +6,7 @@ import { Building2, MapPin, Phone, Mail, User, CheckCircle, ArrowRight, ArrowLef
 import Link from "next/link"
 import confetti from "canvas-confetti"
 import { useToast } from "@/components/ui/use-toast"
+import { indiaData, states } from "@/lib/india-data"
 
 import { useSession, signOut } from "next-auth/react"
 import { useRouter } from "next/navigation"
@@ -30,6 +31,7 @@ export default function PartnerRegistrationPage() {
         address: "",
         pincode: "",
         city: "",
+        customCity: "",
         state: "",
         contactNumber: "",
         email: ""
@@ -96,6 +98,7 @@ export default function PartnerRegistrationPage() {
                 },
                 body: JSON.stringify({
                     ...formData,
+                    city: formData.city === "other" ? formData.customCity : formData.city,
                     userId: session?.user ? (session.user as any).id : undefined
                 }),
             })
@@ -265,45 +268,72 @@ export default function PartnerRegistrationPage() {
                                     </div>
                                 </div>
 
-                                {/* Pincode & City */}
-                                <div className="grid grid-cols-2 gap-5">
+                                {/* State & City */}
+                                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                                     <div>
-                                        <label className="block text-sm font-bold text-gray-300 ml-1 mb-2">Pincode</label>
-                                        <input
-                                            type="text"
-                                            name="pincode"
+                                        <label className="block text-sm font-bold text-gray-300 ml-1 mb-2">State</label>
+                                        <select
+                                            name="state"
                                             required
-                                            value={formData.pincode}
-                                            onChange={handleChange}
+                                            value={formData.state}
+                                            onChange={(e) => {
+                                                const newState = e.target.value;
+                                                setFormData(prev => ({ ...prev, state: newState, city: "" }));
+                                            }}
                                             className="block w-full px-4 py-4 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-gray-500 focus:bg-slate-900 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all duration-200"
-                                            placeholder="110001"
-                                        />
+                                        >
+                                            <option value="" className="text-gray-500">Select State</option>
+                                            {states.map((state) => (
+                                                <option key={state} value={state}>{state}</option>
+                                            ))}
+                                        </select>
                                     </div>
                                     <div>
                                         <label className="block text-sm font-bold text-gray-300 ml-1 mb-2">City</label>
-                                        <input
-                                            type="text"
+                                        <select
                                             name="city"
                                             required
+                                            disabled={!formData.state}
                                             value={formData.city}
                                             onChange={handleChange}
-                                            className="block w-full px-4 py-4 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-gray-500 focus:bg-slate-900 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all duration-200"
-                                            placeholder="New Delhi"
-                                        />
+                                            className="block w-full px-4 py-4 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-gray-500 focus:bg-slate-900 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all duration-200 disabled:opacity-50"
+                                        >
+                                            <option value="" className="text-gray-500">Select City</option>
+                                            <option value="other">Other</option>
+                                            {formData.state && indiaData[formData.state as string]?.map((city) => (
+                                                <option key={city} value={city}>{city}</option>
+                                            ))}
+                                        </select>
                                     </div>
                                 </div>
 
-                                {/* State */}
+                                {/* Custom City */}
+                                {formData.city === "other" && (
+                                    <div>
+                                        <label className="block text-sm font-bold text-gray-300 ml-1 mb-2">Enter City</label>
+                                        <input
+                                            type="text"
+                                            name="customCity"
+                                            required={formData.city === "other"}
+                                            value={formData.customCity}
+                                            onChange={handleChange}
+                                            className="block w-full px-4 py-4 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-gray-500 focus:bg-slate-900 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all duration-200"
+                                            placeholder="Enter your city"
+                                        />
+                                    </div>
+                                )}
+
+                                {/* Pincode */}
                                 <div>
-                                    <label className="block text-sm font-bold text-gray-300 ml-1 mb-2">State</label>
+                                    <label className="block text-sm font-bold text-gray-300 ml-1 mb-2">Pincode</label>
                                     <input
                                         type="text"
-                                        name="state"
+                                        name="pincode"
                                         required
-                                        value={formData.state}
+                                        value={formData.pincode}
                                         onChange={handleChange}
                                         className="block w-full px-4 py-4 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-gray-500 focus:bg-slate-900 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all duration-200"
-                                        placeholder="Delhi"
+                                        placeholder="110001"
                                     />
                                 </div>
 
