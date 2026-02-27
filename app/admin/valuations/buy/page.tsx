@@ -6,6 +6,7 @@ import connectToDatabase from "@/lib/db"
 import BuyVehicle from "@/models/BuyVehicle"
 import { ShoppingCart } from "lucide-react"
 import Link from "next/link"
+import ExportCSVButton from "@/components/admin/ExportCSVButton"
 
 export const dynamic = "force-dynamic"
 
@@ -34,6 +35,18 @@ export default async function BuyValuationsPage() {
         }
     }
 
+    const exportHeaders = ["Date", "Customer Name", "Phone Number", "Email", "Interested In", "Fuel Type", "Budget", "Status"]
+    const exportRows = requests.map((req: any) => {
+        const date = new Date(req.createdAt).toLocaleDateString()
+        const customer = req.customerName || "N/A"
+        const phone = req.customerPhone || "N/A"
+        const email = req.customerEmail || "N/A"
+        const interestedIn = `${req.vehicleBrand} ${req.vehicleModel}`
+        const budget = req.budgetRange || "N/A"
+
+        return [date, customer, phone, email, interestedIn, req.fuelType, budget, req.status]
+    })
+
     return (
         <div className="space-y-6">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -44,6 +57,7 @@ export default async function BuyValuationsPage() {
                     </h1>
                     <p className="text-gray-500 dark:text-slate-400 mt-1">Inquiries for purchasing new vehicles.</p>
                 </div>
+                <ExportCSVButton headers={exportHeaders} rows={exportRows} filename="buy_requests.csv" />
             </div>
 
             <div className="bg-white dark:bg-[#0E192D] rounded-xl shadow-sm border border-gray-200 dark:border-slate-800 overflow-hidden">

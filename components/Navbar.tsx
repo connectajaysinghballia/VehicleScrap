@@ -233,9 +233,9 @@ export default function Navbar() {
                   <Image
                     src="/logo.png"
                     alt="ScrapCenter India Logo"
-                    width={120}
-                    height={48}
-                    className="h-8 w-auto sm:h-10 object-contain"
+                    width={150}
+                    height={60}
+                    className="h-10 w-auto sm:h-12 object-contain"
                   />
                 </motion.div>
               </div>
@@ -352,9 +352,9 @@ export default function Navbar() {
               <Image
                 src="/logo.png"
                 alt="ScrapCenter India Logo"
-                width={100}
-                height={40}
-                className="h-8 w-auto"
+                width={120}
+                height={48}
+                className="h-9 w-auto sm:h-10 object-contain"
               />
             </motion.div>
           </div>

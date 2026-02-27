@@ -153,7 +153,7 @@ export default function B2BMarketplace() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-slate-950 pt-24 pb-12 px-4 sm:px-6 lg:px-8 font-sans transition-colors duration-300">
+        <div className="min-h-screen bg-gray-50 dark:bg-slate-950 pt-8 pb-12 px-4 sm:px-6 lg:px-8 font-sans transition-colors duration-300">
             <div className="max-w-7xl mx-auto space-y-8">
 
                 {/* Hero section removed for direct access */}
@@ -177,7 +177,7 @@ export default function B2BMarketplace() {
                                 </h2>
                                 <div className="flex gap-3 w-full md:w-auto">
                                     <button
-                                        onClick={fetchOpportunities}
+                                        onClick={() => fetchOpportunities()}
                                         className="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-white dark:bg-[#0E192D] border border-gray-200 dark:border-slate-800 rounded-xl text-sm font-bold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors shadow-sm"
                                     >
                                         <RefreshCcw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
@@ -274,13 +274,13 @@ export default function B2BMarketplace() {
                                         </div>
                                         <div className="flex gap-3">
                                             <button
-                                                onClick={applyFilters}
+                                                onClick={() => applyFilters()}
                                                 className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-6 rounded-lg transition-colors shadow-md"
                                             >
                                                 Apply Filters
                                             </button>
                                             <button
-                                                onClick={clearFilters}
+                                                onClick={() => clearFilters()}
                                                 className="flex-1 bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-300 font-bold py-2.5 px-6 rounded-lg transition-colors"
                                             >
                                                 Clear All
@@ -298,7 +298,7 @@ export default function B2BMarketplace() {
                                         <p className="text-red-700">{error}</p>
                                     </div>
                                     <button
-                                        onClick={fetchOpportunities}
+                                        onClick={() => fetchOpportunities()}
                                         className="bg-red-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-red-700"
                                     >
                                         Try Again

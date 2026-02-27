@@ -7,7 +7,7 @@ import connectToDatabase from "@/lib/db"
 import SellVehicle from "@/models/SellVehicle"
 import { ShoppingCart, Calendar, CheckCircle, Clock } from "lucide-react"
 import Link from "next/link"
-
+import ExportCSVButton from "@/components/admin/ExportCSVButton"
 
 export const dynamic = "force-dynamic"
 
@@ -37,6 +37,18 @@ export default async function SellValuationsPage() {
         }
     }
 
+    const exportHeaders = ["Date", "Owner Name", "Phone Number", "Vehicle Info", "Registration", "Loan Status", "Status"]
+    const exportRows = requests.map((req: any) => {
+        const date = new Date(req.createdAt).toLocaleDateString()
+        const owner = req.name || "N/A"
+        const phone = req.phone || "N/A"
+        const vehicleInfo = `${req.brand} ${req.model} (${req.registrationYear} - ${req.fuelType})`
+        const reg = req.registrationNumber || "N/A"
+        const loan = req.pendingLoan === "yes" ? `Yes (${req.loanAmount || "N/A"})` : "No Loan"
+
+        return [date, owner, phone, vehicleInfo, reg, loan, req.status]
+    })
+
     return (
         <div className="space-y-6">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -47,6 +59,7 @@ export default async function SellValuationsPage() {
                     </h1>
                     <p className="text-gray-500 dark:text-slate-400 mt-1">Direct requests from users wanting to sell/scrap vehicles.</p>
                 </div>
+                <ExportCSVButton headers={exportHeaders} rows={exportRows} filename="sell_requests.csv" />
             </div>
 
             <div className="bg-white dark:bg-[#0E192D] rounded-xl shadow-sm border border-gray-200 dark:border-slate-800 overflow-hidden">

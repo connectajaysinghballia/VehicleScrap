@@ -21,7 +21,9 @@ import {
     Shield,
     CheckCircle,
     MessageSquare,
-    Settings
+    Settings,
+    Briefcase,
+    Database
 } from "lucide-react"
 
 import { signOut } from "next-auth/react"
@@ -178,6 +180,24 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     <div className="pt-6 mt-2">
                         <motion.p variants={sidebarLinkVariants} className="px-4 text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Management</motion.p>
                         <div className="space-y-1.5">
+                            <motion.div variants={sidebarLinkVariants}>
+                                <Link href="/admin/subcontracting" className={`flex items-center px-4 py-3 rounded-xl transition-all duration-200 group relative overflow-hidden ${isActive('/admin/subcontracting') ? 'bg-amber-500/10 text-amber-400 shadow-sm' : 'text-slate-400 hover:bg-white/5 hover:text-white'}`}>
+                                    {isActive('/admin/subcontracting') && (
+                                        <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-amber-500 rounded-r-full" />
+                                    )}
+                                    <Briefcase className={`w-5 h-5 mr-3.5 transition-colors ${isActive('/admin/subcontracting') ? 'text-amber-400' : 'text-slate-400 group-hover:text-white'}`} />
+                                    <span className="font-semibold">Subcontracting</span>
+                                </Link>
+                            </motion.div>
+                            <motion.div variants={sidebarLinkVariants}>
+                                <Link href="/admin/bulk-outsourcing" className={`flex items-center px-4 py-3 rounded-xl transition-all duration-200 group relative overflow-hidden ${isActive('/admin/bulk-outsourcing') ? 'bg-purple-500/10 text-purple-400 shadow-sm' : 'text-slate-400 hover:bg-white/5 hover:text-white'}`}>
+                                    {isActive('/admin/bulk-outsourcing') && (
+                                        <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-purple-500 rounded-r-full" />
+                                    )}
+                                    <Database className={`w-5 h-5 mr-3.5 transition-colors ${isActive('/admin/bulk-outsourcing') ? 'text-purple-400' : 'text-slate-400 group-hover:text-white'}`} />
+                                    <span className="font-semibold">Bulk Outsourcing</span>
+                                </Link>
+                            </motion.div>
                             <motion.div variants={sidebarLinkVariants}>
                                 <Link href="/admin/settings" className={`flex items-center px-4 py-3 rounded-xl transition-all duration-200 group relative overflow-hidden ${isActive('/admin/settings') ? 'bg-indigo-500/10 text-indigo-400 shadow-sm' : 'text-slate-400 hover:bg-white/5 hover:text-white'}`}>
                                     {isActive('/admin/settings') && (

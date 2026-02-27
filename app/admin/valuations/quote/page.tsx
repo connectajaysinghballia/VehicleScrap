@@ -6,6 +6,7 @@ import connectToDatabase from "@/lib/db"
 import Valuation from "@/models/Valuation"
 import { FileText, Car, Smartphone, MapPin, Clock, Calendar, CheckCircle, ChevronLeft } from "lucide-react"
 import Link from "next/link"
+import ExportCSVButton from "@/components/admin/ExportCSVButton"
 
 export const dynamic = "force-dynamic"
 
@@ -44,6 +45,17 @@ export default async function QuoteValuationsPage() {
         }
     }
 
+    const exportHeaders = ["Date", "Customer Name", "Phone Number", "Vehicle Details", "Location", "Status"]
+    const exportRows = valuations.map((val: any) => {
+        const date = new Date(val.createdAt).toLocaleDateString()
+        const customerName = val.contact?.name || "N/A"
+        const phone = val.contact?.phone || "N/A"
+        const vehicle = `${val.brand} ${val.model} (${val.year}) ${val.vehicleNumber ? `- ${val.vehicleNumber}` : ''}`
+        const location = [val.address?.city, val.address?.state].filter(Boolean).join(", ") || val.address?.pincode || "N/A"
+
+        return [date, customerName, phone, vehicle, location, val.status]
+    })
+
     return (
         <div className="space-y-6">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -54,6 +66,7 @@ export default async function QuoteValuationsPage() {
                     </h1>
                     <p className="text-gray-500 dark:text-slate-400 mt-1">Manage standard valuation inquiries.</p>
                 </div>
+                <ExportCSVButton headers={exportHeaders} rows={exportRows} filename="quote_requests.csv" />
             </div>
 
             <div className="bg-white dark:bg-[#0E192D] rounded-xl shadow-sm border border-gray-200 dark:border-slate-800 overflow-hidden">

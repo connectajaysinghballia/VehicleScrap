@@ -6,6 +6,7 @@ import connectToDatabase from "@/lib/db"
 import ExchangeVehicle from "@/models/ExchangeVehicle"
 import { RefreshCcw } from "lucide-react"
 import Link from "next/link"
+import ExportCSVButton from "@/components/admin/ExportCSVButton"
 
 export const dynamic = "force-dynamic"
 
@@ -34,6 +35,18 @@ export default async function ExchangeValuationsPage() {
         }
     }
 
+    const exportHeaders = ["Date", "Customer Name", "Phone Number", "Old Vehicle", "Registration", "Interested In", "Status"]
+    const exportRows = requests.map((req: any) => {
+        const date = new Date(req.createdAt).toLocaleDateString()
+        const customer = req.customerName || "N/A"
+        const phone = req.customerPhone || "N/A"
+        const oldVehicle = `${req.oldVehicleBrand} ${req.oldVehicleModel} (${req.oldVehicleYear} - ${req.oldVehicleFuelType})`
+        const reg = req.oldVehicleRegistration || "N/A"
+        const newVehicle = `${req.newVehicleBrand} ${req.newVehicleModel || "Any Model"}`
+
+        return [date, customer, phone, oldVehicle, reg, newVehicle, req.status]
+    })
+
     return (
         <div className="space-y-6">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -44,6 +57,7 @@ export default async function ExchangeValuationsPage() {
                     </h1>
                     <p className="text-gray-500 dark:text-slate-400 mt-1">Users wanting to exchange old vehicle for a new one.</p>
                 </div>
+                <ExportCSVButton headers={exportHeaders} rows={exportRows} filename="exchange_requests.csv" />
             </div>
 
             <div className="bg-white dark:bg-[#0E192D] rounded-xl shadow-sm border border-gray-200 dark:border-slate-800 overflow-hidden">
