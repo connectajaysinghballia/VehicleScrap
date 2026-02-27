@@ -63,7 +63,6 @@ export default function Navbar() {
   const resourcesDropdown = [
     { name: "Blogs", href: "/blogs", icon: BookOpen, description: "Latest industry news and updates" },
     { name: "Guides", href: "/guide", icon: FileText, description: "Step-by-step guides for vehicle scrapping" },
-    { name: "Homex", href: "/homex", icon: Home, description: "Doorstep scrap collection and more" },
   ]
 
   useEffect(() => {
@@ -189,11 +188,15 @@ export default function Navbar() {
     }
   }, [isMegaMenuOpen])
 
+  const isTransparent = (pathname === "/homex" || pathname === "/") && !isScrolled
+
   return (
     <nav
-      className={`navbar fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-        ? "bg-[#cccccc] shadow-lg shadow-emerald-600/5"
-        : "bg-[#cccccc] shadow-sm"
+      className={`navbar fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isTransparent
+        ? "bg-transparent shadow-none"
+        : isScrolled
+          ? "bg-[#cccccc] shadow-lg shadow-emerald-600/5"
+          : "bg-[#cccccc] shadow-sm"
         }`}
     >
       <div className="container mx-auto px-6">
@@ -245,13 +248,13 @@ export default function Navbar() {
             <div className="w-1/3 flex justify-end">
               {session ? (
                 <div className="relative group">
-                  <button className="flex items-center gap-2 text-gray-600 hover:text-emerald-700 font-medium">
+                  <button className={`flex items-center gap-2 font-medium transition-colors ${isTransparent ? "text-white hover:text-emerald-300" : "text-gray-600 hover:text-emerald-700"}`}>
                     <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center border border-emerald-200">
                       <span className="text-emerald-700 font-bold text-sm">{(session.user?.name || "U")[0]}</span>
                     </div>
                     <div className="text-left hidden xl:block">
-                      <p className="text-xs font-bold text-slate-900 leading-tight">{session.user?.name}</p>
-                      <p className="text-[10px] text-slate-500">View Profile</p>
+                      <p className={`text-xs font-bold leading-tight ${isTransparent ? "text-white" : "text-slate-900"}`}>{session.user?.name}</p>
+                      <p className={`text-[10px] ${isTransparent ? "text-emerald-100" : "text-slate-500"}`}>View Profile</p>
                     </div>
                     <ChevronDown className="w-3 h-3 ml-1" />
                   </button>
@@ -292,12 +295,12 @@ export default function Navbar() {
               ) : (
                 <div className="flex items-center gap-2">
                   <Link href="/login">
-                    <Button variant="ghost" className="text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 font-bold text-sm px-4">
+                    <Button variant="ghost" className={`font-bold text-sm px-4 transition-colors ${isTransparent ? "text-white hover:text-emerald-300 hover:bg-white/10" : "text-gray-600 hover:text-emerald-700 hover:bg-emerald-50"}`}>
                       Login
                     </Button>
                   </Link>
                   <Link href="/partner-register">
-                    <Button variant="ghost" className="text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 font-bold text-sm px-4">
+                    <Button variant="ghost" className={`font-bold text-sm px-4 transition-colors ${isTransparent ? "text-white hover:text-emerald-300 hover:bg-white/10" : "text-gray-600 hover:text-emerald-700 hover:bg-emerald-50"}`}>
                       Partner Login
                     </Button>
                   </Link>
@@ -315,7 +318,7 @@ export default function Navbar() {
                   className="relative group flex items-center"
                 >
                   <button
-                    className="nav-item relative text-gray-600 hover:text-emerald-700 transition-colors duration-200 font-medium flex items-center gap-1 py-3 font-['Helvetica_Neue'] whitespace-nowrap tracking-wide text-sm"
+                    className={`nav-item relative transition-colors duration-200 font-medium flex items-center gap-1 py-3 font-['Helvetica_Neue'] whitespace-nowrap tracking-wide text-sm ${isTransparent ? "text-white hover:text-emerald-300" : "text-gray-600 hover:text-emerald-700"}`}
                     onClick={() => {
                       if (item.hasDropdown) {
                         setIsMegaMenuOpen(!isMegaMenuOpen)
@@ -326,7 +329,7 @@ export default function Navbar() {
                   >
                     <span className="relative font-bold uppercase text-sm">
                       {item.name}
-                      <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#0E192D] transition-all duration-300 group-hover:w-full"></span>
+                      <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full ${isTransparent ? "bg-white" : "bg-[#0E192D]"}`}></span>
                     </span>
                     {item.hasDropdown && (
                       <ChevronDown
@@ -342,7 +345,7 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Navigation Header (simplified) */}
-        <div className="lg:hidden flex items-center justify-between w-full h-16 px-4 py-2 border-b border-gray-100 bg-[#cccccc]">
+        <div className={`lg:hidden flex items-center justify-between w-full h-16 px-4 py-2 border-b transition-colors duration-300 ${isTransparent ? "bg-transparent border-white/20" : "bg-[#cccccc] border-gray-100"}`}>
           <div className="logo flex items-center cursor-pointer space-x-2" onClick={() => handleNavClick("/")}>
             <motion.div
               className="logo-icon"
@@ -361,7 +364,7 @@ export default function Navbar() {
 
           {/* Mobile Menu Button */}
           <button
-            className="text-gray-700 hover:text-emerald-600 transition-colors z-50 p-2"
+            className={`transition-colors z-50 p-2 ${isTransparent ? "text-white hover:text-emerald-300" : "text-gray-700 hover:text-emerald-600"}`}
             onClick={() => setIsOpen(!isOpen)}
           >
             <motion.div animate={{ rotate: isOpen ? 90 : 0 }} transition={{ duration: 0.3 }}>

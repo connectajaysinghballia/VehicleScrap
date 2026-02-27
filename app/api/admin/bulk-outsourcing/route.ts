@@ -17,7 +17,7 @@ export async function GET(req: Request) {
 
         await connectToDatabase();
 
-        const submissions = await BulkOutsourcing.find({}).sort({ createdAt: -1 });
+        const submissions = await BulkOutsourcing.find({ status: { $ne: "approved" } }).sort({ createdAt: -1 });
 
         return NextResponse.json(
             { success: true, count: submissions.length, data: submissions },

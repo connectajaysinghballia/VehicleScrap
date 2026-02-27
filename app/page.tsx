@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 
 import { AnimatePresence, motion } from "framer-motion"
-import HeroSection from "@/components/HeroSection"
+import HomexHero from "@/components/HomexHero"
 import ServicesSection from "@/components/ServicesSection"
 import FeaturesSection from "@/components/FeaturesSection"
 import ValuationCTA from "@/components/ValuationCTA"
@@ -58,7 +58,7 @@ export default function Home() {
       {!showLoader && (
         <>
           <WelcomePopup />
-          <HeroSection />
+          <HomexHero />
           <ServicesSection />
           <ValuationCTA />
           <FeaturesSection />

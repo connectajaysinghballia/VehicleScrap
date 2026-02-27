@@ -9,7 +9,11 @@ import {
     Hash,
     Scale,
     Activity,
-    ChevronDown
+    ChevronDown,
+    Clock,
+    CheckCircle2,
+    ShieldCheck,
+    XCircle
 } from "lucide-react"
 import { format } from "date-fns"
 import Link from "next/link"
@@ -26,9 +30,38 @@ interface BulkOutsourcingDoc {
     partnerName: string
     partnerEmail: string
     entries: VehicleEntry[]
-    status: "pending" | "reviewed" | "rejected"
+    status: "pending" | "reviewed" | "approved" | "rejected"
     createdAt: string
     updatedAt: string
+}
+
+const getStatusConfig = (status: string) => {
+    switch (status) {
+        case "reviewed":
+            return {
+                style: "bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-800",
+                icon: <ShieldCheck className="w-4 h-4 mr-1.5" />,
+                label: "Under Process"
+            }
+        case "approved":
+            return {
+                style: "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800",
+                icon: <CheckCircle2 className="w-4 h-4 mr-1.5" />,
+                label: "Approved"
+            }
+        case "rejected":
+            return {
+                style: "bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 border-red-200 dark:border-red-800",
+                icon: <XCircle className="w-4 h-4 mr-1.5" />,
+                label: "Rejected"
+            }
+        default:
+            return {
+                style: "bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 border-amber-200 dark:border-amber-800",
+                icon: <Clock className="w-4 h-4 mr-1.5" />,
+                label: "Pending"
+            }
+    }
 }
 
 export default function PartnerLogsPage() {
@@ -100,6 +133,7 @@ export default function PartnerLogsPage() {
                 <div className="space-y-6">
                     {submissions.map((sub, index) => {
                         const isExpanded = expandedIds.includes(sub._id)
+                        const statusConfig = getStatusConfig(sub.status)
 
                         return (
                             <motion.div
@@ -116,6 +150,10 @@ export default function PartnerLogsPage() {
                                             <h2 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
                                                 Batch <span className="text-purple-600 dark:text-purple-400">#{sub._id.slice(-6).toUpperCase()}</span>
                                             </h2>
+                                            <span className={`px-2.5 py-0.5 flex items-center text-[10px] font-bold rounded-full border ${statusConfig.style} uppercase tracking-wider`}>
+                                                {statusConfig.icon}
+                                                {statusConfig.label}
+                                            </span>
                                         </div>
                                         <p className="text-gray-500 dark:text-slate-400 flex items-center text-sm font-medium">
                                             <Calendar className="w-3.5 h-3.5 mr-1.5" />

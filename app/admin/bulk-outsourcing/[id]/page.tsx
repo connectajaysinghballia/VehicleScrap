@@ -13,7 +13,8 @@ import {
     Mail,
     CheckCircle,
     Download,
-    Send
+    Send,
+    XCircle
 } from "lucide-react"
 import Link from "next/link"
 import { format } from "date-fns"
@@ -64,10 +65,53 @@ export default function BulkOutsourcingAdminDetailsPage() {
         }
     }
 
+    const handleApprove = async () => {
+        try {
+            const res = await fetch(`/api/admin/bulk-outsourcing/${id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: 'approved' })
+            });
+            const data = await res.json();
+            if (data.success) {
+                setSubmission(prev => prev ? { ...prev, status: 'approved' } : null);
+            }
+        } catch (error) {
+            console.error("Failed to approve:", error);
+        }
+    }
+
+    const handleDelete = async () => {
+        if (!confirm("Are you sure you want to reject and delete this submission?")) return;
+
+        try {
+            const res = await fetch(`/api/admin/bulk-outsourcing/${id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: 'rejected' })
+            });
+            const data = await res.json();
+            if (data.success) {
+                setSubmission(prev => prev ? { ...prev, status: 'rejected' } : null);
+            } else {
+                alert(data.message || "Failed to reject submission");
+            }
+        } catch (error) {
+            console.error("Failed to reject:", error);
+            alert("An error occurred while rejecting the submission");
+        }
+    }
+
     const getStatusStyle = (status: string) => {
         switch (status.toLowerCase()) {
             case 'pending':
                 return 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400 border-amber-200 dark:border-amber-800/30'
+            case 'reviewed':
+                return 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400 border-blue-200 dark:border-blue-800/30'
+            case 'approved':
+                return 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800/30'
+            case 'rejected':
+                return 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400 border-red-200 dark:border-red-800/30'
             default:
                 return 'bg-gray-100 text-gray-800 dark:bg-slate-800 dark:text-slate-300 border-gray-200 dark:border-slate-700'
         }
@@ -179,6 +223,24 @@ export default function BulkOutsourcingAdminDetailsPage() {
                         <Send className="w-4 h-4" />
                         Export to Mail
                     </button>
+                    {submission.status !== 'rejected' && submission.status !== 'approved' && (
+                        <button
+                            onClick={handleDelete}
+                            className="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold transition-all shadow-md shadow-red-600/20"
+                        >
+                            <XCircle className="w-4 h-4" />
+                            Delete Request
+                        </button>
+                    )}
+                    {submission.status !== 'approved' && submission.status !== 'rejected' && (
+                        <button
+                            onClick={handleApprove}
+                            className="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold transition-all shadow-md shadow-emerald-600/20"
+                        >
+                            <CheckCircle className="w-4 h-4" />
+                            Approve Request
+                        </button>
+                    )}
                 </div>
             </div>
 

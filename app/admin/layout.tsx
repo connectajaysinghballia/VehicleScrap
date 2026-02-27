@@ -177,6 +177,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                         </Link>
                     </motion.div>
 
+                    {/* Approved Partner Requests */}
+                    <motion.div variants={sidebarLinkVariants} className="mt-1">
+                        <Link href="/admin/approved-partner-request" className={`flex items-center px-4 py-3 rounded-xl transition-all duration-200 group relative overflow-hidden ${isActive('/admin/approved-partner-request') ? 'bg-purple-500/10 text-purple-400 shadow-sm' : 'text-slate-400 hover:bg-white/5 hover:text-white'}`}>
+                            {isActive('/admin/approved-partner-request') && (
+                                <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-purple-500 rounded-r-full" />
+                            )}
+                            <CheckCircle className={`w-5 h-5 mr-3.5 transition-colors ${isActive('/admin/approved-partner-request') ? 'text-purple-500' : 'text-slate-400 group-hover:text-white'}`} />
+                            <span className="font-semibold text-sm">Approved Partner Req</span>
+                        </Link>
+                    </motion.div>
+
                     <div className="pt-6 mt-2">
                         <motion.p variants={sidebarLinkVariants} className="px-4 text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Management</motion.p>
                         <div className="space-y-1.5">
