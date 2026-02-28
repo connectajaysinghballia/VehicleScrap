@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { gsap } from "gsap"
 
 import { motion } from "framer-motion"
-import { CheckCircle2, Recycle, ShoppingCart, Car, Repeat, BookOpen, ChevronRight } from "lucide-react"
+import { CheckCircle2, Recycle, ShoppingCart, Car, Repeat, ChevronRight } from "lucide-react"
 import Link from "next/link"
 
 export default function GuidePage() {
@@ -136,7 +136,7 @@ export default function GuidePage() {
     return (
         <div className="min-h-screen bg-[#0E192D] font-sans text-slate-100 selection:bg-emerald-500/30 selection:text-emerald-400">
 
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20 relative">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-40 pb-20 relative">
                 {/* Background Decor */}
                 <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
                     <div className="absolute top-[10%] left-[10%] w-[400px] h-[400px] bg-emerald-500/10 rounded-full blur-[100px]"></div>
@@ -144,14 +144,6 @@ export default function GuidePage() {
                 </div>
 
                 <div className="text-center max-w-3xl mx-auto mb-20 relative z-10">
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-emerald-400 font-semibold text-sm mb-6 backdrop-blur-sm"
-                    >
-                        <BookOpen className="w-4 h-4" />
-                        <span>User Guides</span>
-                    </motion.div>
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -193,7 +185,7 @@ export default function GuidePage() {
                                         <h2 className="text-2xl md:text-3xl font-bold text-white mb-1">
                                             {section.title}
                                         </h2>
-                                        <p className="text-slate-400 flex items-center gap-2">
+                                        <p className="text-slate-300 font-semibold flex items-center gap-2">
                                             Follow these simple steps
                                             <ChevronRight className="w-4 h-4 text-emerald-500 animate-pulse" />
                                         </p>
@@ -224,10 +216,10 @@ export default function GuidePage() {
                                                     {isCompleted ? <CheckCircle2 className="w-4 h-4" /> : stepIdx + 1}
                                                 </div>
 
-                                                <h3 className={`text-lg font-bold mb-3 transition-colors ${isActive ? "text-emerald-400" : "text-white"}`}>
+                                                <h3 className={`text-xl font-extrabold mb-3 tracking-tight transition-colors ${isActive ? "text-emerald-400" : "text-white"}`}>
                                                     {step.title}
                                                 </h3>
-                                                <p className="text-slate-400 text-sm leading-relaxed flex-grow">
+                                                <p className="text-slate-200 text-base leading-relaxed font-medium flex-grow">
                                                     {step.description}
                                                 </p>
 

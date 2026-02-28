@@ -98,7 +98,7 @@ export default function HomexHero() {
     }
 
     return (
-        <div className="h-screen flex flex-col bg-[#0A0F1C] font-sans selection:bg-emerald-500/30 overflow-hidden">
+        <div className="h-[82vh] sm:h-[85vh] md:h-screen flex flex-col bg-[#0A0F1C] font-sans selection:bg-emerald-500/30 overflow-hidden">
             {/* Hero Section Container */}
             <div className="relative flex-1 min-h-[400px] overflow-hidden">
                 {/* Floating Particles */}
@@ -208,7 +208,7 @@ export default function HomexHero() {
                                             animate={{ opacity: 1, y: 0 }}
                                             exit={{ opacity: 0, y: -20 }}
                                             transition={{ delay: 0.5, duration: 0.8 }}
-                                            className="hidden sm:block text-sm sm:text-lg md:text-xl lg:text-2xl text-slate-300 font-light max-w-2xl mx-auto leading-relaxed tracking-wide drop-shadow-lg"
+                                            className="block text-sm sm:text-lg md:text-xl lg:text-2xl text-slate-300 font-light max-w-2xl mx-auto leading-relaxed tracking-wide drop-shadow-lg"
                                         >
                                             {slides[currentSlide].subtitle}
                                         </motion.p>
@@ -268,14 +268,14 @@ export default function HomexHero() {
                                                         initial={{ opacity: 0, y: 16 }}
                                                         animate={{ opacity: 1, y: 0 }}
                                                         transition={{ delay: 0.55 + idx * 0.1, duration: 0.45, ease: "easeOut" }}
-                                                        className="flex items-center justify-center w-[45%] xs:w-[40%] sm:w-auto sm:flex-1"
+                                                        className="flex items-center justify-center w-[30%] xs:w-[28%] sm:w-auto sm:flex-1"
                                                     >
                                                         <img
                                                             src={src}
                                                             alt={`Certification ${idx + 1}`}
                                                             className={`object-contain ${idx === 1 || idx === 3
-                                                                ? 'w-[140px] h-[140px] sm:w-[170px] sm:h-[170px] md:w-[200px] md:h-[200px] lg:max-w-[240px] lg:h-52'
-                                                                : 'w-[105px] h-[105px] sm:w-[130px] sm:h-[130px] md:w-[150px] md:h-[150px] lg:max-w-[160px] lg:h-36'
+                                                                ? 'w-[70px] h-[70px] sm:w-[120px] sm:h-[120px] md:w-[200px] md:h-[200px] lg:max-w-[200px] lg:h-44'
+                                                                : 'w-[55px] h-[55px] sm:w-[90px] sm:h-[90px] md:w-[150px] md:h-[150px] lg:max-w-[130px] lg:h-28'
                                                                 }`}
                                                             draggable={false}
                                                         />
@@ -293,7 +293,7 @@ export default function HomexHero() {
                                         initial={{ opacity: 0, scale: 0.94, y: 40 }}
                                         animate={{ opacity: 1, scale: 1, y: 0 }}
                                         transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-                                        className="w-full max-w-4xl mx-auto rounded-3xl px-4 sm:px-6 md:px-6 lg:px-8 py-3 sm:py-4 md:py-4 lg:py-6"
+                                        className="w-full max-w-3xl mx-auto rounded-3xl px-4 sm:px-6 md:px-6 lg:px-6 py-3 sm:py-4 md:py-4 lg:py-4"
                                         style={{
                                             background: 'rgba(0,0,0,0.15)',
                                             backdropFilter: 'blur(28px)',
@@ -386,7 +386,7 @@ export default function HomexHero() {
                                                             initial={{ scale: 0, rotate: -20 }}
                                                             animate={{ scale: 1, rotate: 0 }}
                                                             transition={{ delay: step.delay + 0.15, type: "spring", stiffness: 200, damping: 15 }}
-                                                            className="w-14 h-14 sm:w-20 sm:h-20 md:w-[80px] md:h-[80px] lg:w-[110px] lg:h-[110px] rounded-full flex items-center justify-center"
+                                                            className="w-10 h-10 sm:w-14 sm:h-14 md:w-[80px] md:h-[80px] lg:w-[90px] lg:h-[90px] rounded-full flex items-center justify-center"
                                                             style={{
                                                                 background: 'linear-gradient(135deg, #f0fdf4, #dcfce7)',
                                                                 border: '2.5px solid #6ee7b7',
@@ -397,7 +397,7 @@ export default function HomexHero() {
                                                                 animate={{ y: [0, -5, 0] }}
                                                                 transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: idx * 0.9 }}
                                                             >
-                                                                <step.icon className="w-6 h-6 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-11 lg:h-11 text-emerald-600" strokeWidth={1.6} />
+                                                                <step.icon className="w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 lg:w-9 lg:h-9 text-emerald-600" strokeWidth={1.6} />
                                                             </motion.div>
                                                         </motion.div>
 
@@ -406,7 +406,7 @@ export default function HomexHero() {
                                                             initial={{ scale: 0, y: -10 }}
                                                             animate={{ scale: 1, y: 0 }}
                                                             transition={{ delay: step.delay + 0.35, type: "spring", stiffness: 300, damping: 16 }}
-                                                            className="absolute -top-2 -right-2 w-6 h-6 sm:w-7 sm:h-7 md:w-7 md:h-7 lg:w-9 lg:h-9 rounded-full flex items-center justify-center font-black text-[10px] sm:text-xs md:text-xs lg:text-sm text-white shadow-lg"
+                                                            className="absolute -top-1.5 -right-1.5 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-9 lg:h-9 rounded-full flex items-center justify-center font-black text-[8px] sm:text-[10px] md:text-xs lg:text-sm text-white shadow-lg"
                                                             style={{
                                                                 background: 'linear-gradient(135deg, #10b981, #0d9488)',
                                                                 boxShadow: '0 4px 14px rgba(16,185,129,0.5)'
@@ -422,7 +422,7 @@ export default function HomexHero() {
                                                             initial={{ opacity: 0 }}
                                                             animate={{ opacity: 1 }}
                                                             transition={{ delay: step.delay + 0.3, duration: 0.4 }}
-                                                            className="text-white font-black text-sm sm:text-base md:text-sm lg:text-lg xl:text-xl mb-0.5 md:mb-1 lg:mb-2 tracking-tight"
+                                                            className="text-white font-black text-xs sm:text-sm md:text-sm lg:text-lg xl:text-xl mb-0.5 md:mb-1 lg:mb-2 tracking-tight"
                                                         >
                                                             {step.title}
                                                         </motion.h4>
@@ -431,7 +431,7 @@ export default function HomexHero() {
                                                             initial={{ opacity: 0 }}
                                                             animate={{ opacity: 1 }}
                                                             transition={{ delay: step.delay + 0.45, duration: 0.4 }}
-                                                            className="text-white/65 text-xs leading-relaxed font-medium md:max-w-[140px] lg:max-w-[175px]"
+                                                            className="text-white/65 text-[10px] sm:text-xs leading-relaxed font-medium md:max-w-[140px] lg:max-w-[175px]"
                                                         >
                                                             {step.desc}
                                                         </motion.p>
@@ -468,9 +468,9 @@ export default function HomexHero() {
             </div>
 
             {/* Stats Bar */}
-            <div className="relative z-30 bg-white py-6 md:py-8 border-t border-gray-100">
-                <div className="container mx-auto px-6">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+            <div className="relative z-30 bg-white py-8 sm:py-8 md:py-8 border-t border-gray-100">
+                <div className="container mx-auto px-2 sm:px-4 md:px-6">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-5 md:gap-12">
                         {stats.map((stat, index) => (
                             <motion.div
                                 key={index}
@@ -478,7 +478,7 @@ export default function HomexHero() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.8, delay: index * 0.1, ease: [0.21, 1.02, 0.73, 1] }}
-                                className={`flex items-center justify-center gap-4 px-6 ${index !== stats.length - 1 ? "md:border-r border-gray-200" : ""}`}
+                                className={`flex items-center justify-center gap-2 sm:gap-3 md:gap-4 px-1 sm:px-3 md:px-6 ${index !== stats.length - 1 ? "md:border-r border-gray-200" : ""}`}
                             >
                                 <motion.div
                                     className="text-black shrink-0"
@@ -487,7 +487,7 @@ export default function HomexHero() {
                                     viewport={{ once: true }}
                                     transition={{ type: "spring", stiffness: 200, damping: 15, delay: index * 0.1 + 0.3 }}
                                 >
-                                    <stat.icon className="w-6 h-6 md:w-8 md:h-8" />
+                                    <stat.icon className="w-4 h-4 sm:w-5 sm:h-5 md:w-8 md:h-8" />
                                 </motion.div>
                                 <div className="flex flex-col items-start text-left">
                                     <div className="overflow-hidden">
@@ -496,7 +496,7 @@ export default function HomexHero() {
                                             whileInView={{ y: 0 }}
                                             viewport={{ once: true }}
                                             transition={{ duration: 0.6, delay: index * 0.1 + 0.4, ease: "easeOut" }}
-                                            className="text-lg md:text-xl font-black text-emerald-600 font-['Helvetica_Neue'] tracking-tight uppercase leading-none"
+                                            className="text-xs sm:text-sm md:text-xl font-black text-emerald-600 font-['Helvetica_Neue'] tracking-tight uppercase leading-none"
                                         >
                                             {stat.value}
                                         </motion.h3>
@@ -506,7 +506,7 @@ export default function HomexHero() {
                                         whileInView={{ opacity: 1, x: 0 }}
                                         viewport={{ once: true }}
                                         transition={{ duration: 0.6, delay: index * 0.1 + 0.6 }}
-                                        className="text-emerald-500/70 text-[9px] md:text-[10px] font-black uppercase font-['Helvetica_Neue'] tracking-wider leading-tight"
+                                        className="text-emerald-500/70 text-[7px] sm:text-[9px] md:text-[10px] font-black uppercase font-['Helvetica_Neue'] tracking-wider leading-tight"
                                     >
                                         {stat.label}
                                     </motion.p>
