@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import { Settings, Save, AlertCircle, RefreshCw, DollarSign, MapPin, IndianRupee } from "lucide-react"
+import { Settings, Save, AlertCircle, RefreshCw, MapPin, IndianRupee } from "lucide-react"
 import { useToast } from "@/components/ui/use-toast"
 
 export default function AdminSettingsPage() {
@@ -81,14 +81,14 @@ export default function AdminSettingsPage() {
     }
 
     return (
-        <div className="min-h-screen bg-[#0E192D] text-white p-4 md:p-8 selection:bg-red-500/30">
+        <div className="min-h-screen bg-gray-50 dark:bg-[#0E192D] text-gray-900 dark:text-white p-4 md:p-8 selection:bg-red-500/30">
             <div className="max-w-4xl mx-auto space-y-8">
 
                 {/* Header */}
                 <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="relative overflow-hidden rounded-3xl bg-slate-900 border border-slate-800 p-8 shadow-2xl"
+                    className="relative overflow-hidden rounded-3xl bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 p-8 shadow-2xl"
                 >
                     <div className="absolute -top-24 -right-24 w-64 h-64 bg-red-500/10 rounded-full blur-3xl pointer-events-none"></div>
                     <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -99,15 +99,15 @@ export default function AdminSettingsPage() {
                                 <Settings className="w-8 h-8 text-red-500" />
                             </div>
                             <div>
-                                <h1 className="text-3xl font-black tracking-tight text-white mb-1">
+                                <h1 className="text-3xl font-black tracking-tight text-gray-900 dark:text-white mb-1">
                                     Global Settings
                                 </h1>
-                                <p className="text-slate-400 font-medium">Manage platform-wide pricing & configurations</p>
+                                <p className="text-gray-500 dark:text-slate-400 font-medium">Manage platform-wide pricing &amp; configurations</p>
                             </div>
                         </div>
 
-                        <div className="flex bg-slate-800/50 rounded-xl p-1 border border-slate-700/50">
-                            <span className="px-4 py-2 text-xs font-bold text-slate-300 uppercase tracking-wider">Admin Override</span>
+                        <div className="flex bg-gray-100 dark:bg-slate-800/50 rounded-xl p-1 border border-gray-200 dark:border-slate-700/50">
+                            <span className="px-4 py-2 text-xs font-bold text-gray-500 dark:text-slate-300 uppercase tracking-wider">Admin Override</span>
                         </div>
                     </div>
                 </motion.div>
@@ -118,13 +118,13 @@ export default function AdminSettingsPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
                 >
-                    <div className="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl relative">
+                    <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-2xl relative">
                         <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent pointer-events-none"></div>
 
                         {/* Section Header */}
-                        <div className="px-8 py-6 border-b border-slate-800 flex items-center gap-3 bg-slate-950/50">
+                        <div className="px-8 py-6 border-b border-gray-200 dark:border-slate-800 flex items-center gap-3 bg-gray-50 dark:bg-slate-950/50">
                             <IndianRupee className="w-5 h-5 text-red-500" />
-                            <h2 className="text-xl font-bold font-mono">Pricing Configuration</h2>
+                            <h2 className="text-xl font-bold font-mono text-gray-900 dark:text-white">Pricing Configuration</h2>
                         </div>
 
                         {/* Form Area */}
@@ -132,16 +132,16 @@ export default function AdminSettingsPage() {
                             {isLoading ? (
                                 <div className="space-y-8 animate-pulse">
                                     <div className="space-y-3">
-                                        <div className="h-5 bg-slate-800 rounded w-1/4"></div>
-                                        <div className="h-14 bg-slate-800/50 rounded-xl w-full max-w-lg"></div>
-                                        <div className="h-4 bg-slate-800/30 rounded w-2/3"></div>
+                                        <div className="h-5 bg-gray-200 dark:bg-slate-800 rounded w-1/4"></div>
+                                        <div className="h-14 bg-gray-100 dark:bg-slate-800/50 rounded-xl w-full max-w-lg"></div>
+                                        <div className="h-4 bg-gray-100 dark:bg-slate-800/30 rounded w-2/3"></div>
                                     </div>
                                     <div className="space-y-3">
-                                        <div className="h-5 bg-slate-800 rounded w-1/4"></div>
-                                        <div className="h-14 bg-slate-800/50 rounded-xl w-full max-w-lg"></div>
-                                        <div className="h-4 bg-slate-800/30 rounded w-2/3"></div>
+                                        <div className="h-5 bg-gray-200 dark:bg-slate-800 rounded w-1/4"></div>
+                                        <div className="h-14 bg-gray-100 dark:bg-slate-800/50 rounded-xl w-full max-w-lg"></div>
+                                        <div className="h-4 bg-gray-100 dark:bg-slate-800/30 rounded w-2/3"></div>
                                     </div>
-                                    <div className="h-14 bg-slate-800 rounded-xl w-40 mt-8"></div>
+                                    <div className="h-14 bg-gray-200 dark:bg-slate-800 rounded-xl w-40 mt-8"></div>
                                 </div>
                             ) : (
                                 <form onSubmit={handleSave} className="space-y-10">
@@ -149,15 +149,15 @@ export default function AdminSettingsPage() {
                                     {/* Scrap Price Row */}
                                     <div className="grid md:grid-cols-[1fr_2fr] gap-6 md:gap-12 items-start max-w-5xl">
                                         <div>
-                                            <h3 className="text-lg font-bold text-white mb-2">Base Scrap Rate</h3>
-                                            <p className="text-sm text-slate-400 font-medium leading-relaxed">
+                                            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Base Scrap Rate</h3>
+                                            <p className="text-sm text-gray-500 dark:text-slate-400 font-medium leading-relaxed">
                                                 Determines the per-KG payout for users obtaining a free scrap quote on the platform.
                                             </p>
                                         </div>
                                         <div className="space-y-3">
                                             <div className="relative group">
                                                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                                    <span className="text-slate-500 font-bold group-focus-within:text-red-500 transition-colors">₹</span>
+                                                    <span className="text-gray-400 dark:text-slate-500 font-bold group-focus-within:text-red-500 transition-colors">₹</span>
                                                 </div>
                                                 <input
                                                     type="number"
@@ -166,31 +166,31 @@ export default function AdminSettingsPage() {
                                                     required
                                                     value={scrapPrice}
                                                     onChange={(e) => setScrapPrice(e.target.value)}
-                                                    className="w-full pl-10 pr-4 py-4 bg-slate-950 border border-slate-800 focus:border-red-500 rounded-xl outline-none text-white font-mono text-lg transition-all focus:ring-4 focus:ring-red-500/10 placeholder-slate-700 hover:border-slate-700"
+                                                    className="w-full pl-10 pr-4 py-4 bg-gray-50 dark:bg-slate-950 border border-gray-300 dark:border-slate-800 focus:border-red-500 rounded-xl outline-none text-gray-900 dark:text-white font-mono text-lg transition-all focus:ring-4 focus:ring-red-500/10 placeholder-gray-400 dark:placeholder-slate-700 hover:border-gray-400 dark:hover:border-slate-700"
                                                     placeholder="0.00"
                                                 />
                                             </div>
-                                            <div className="flex items-start gap-2 text-xs font-semibold text-slate-500 bg-slate-950/50 p-3 rounded-lg border border-slate-800">
+                                            <div className="flex items-start gap-2 text-xs font-semibold text-gray-500 dark:text-slate-500 bg-gray-50 dark:bg-slate-950/50 p-3 rounded-lg border border-gray-200 dark:border-slate-800">
                                                 <AlertCircle className="w-4 h-4 text-emerald-500 shrink-0" />
                                                 <p>Example: If weight is 1.5 Tons (1500kg) and rate is ₹25, quote = ₹37,500.</p>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div className="h-px bg-slate-800 w-full line-gradient"></div>
+                                    <div className="h-px bg-gray-200 dark:bg-slate-800 w-full"></div>
 
                                     {/* Pickup Charge Row */}
                                     <div className="grid md:grid-cols-[1fr_2fr] gap-6 md:gap-12 items-start max-w-5xl">
                                         <div>
-                                            <h3 className="text-lg font-bold text-white mb-2 ml-1">Distance Surcharge</h3>
-                                            <p className="text-sm text-slate-400 font-medium leading-relaxed">
+                                            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 ml-1">Distance Surcharge</h3>
+                                            <p className="text-sm text-gray-500 dark:text-slate-400 font-medium leading-relaxed">
                                                 The calculated fee applied <span className="text-red-400 font-bold">per kilometer</span> for any collection distance exceeding the 100km free limit.
                                             </p>
                                         </div>
                                         <div className="space-y-3">
                                             <div className="relative group">
                                                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                                    <span className="text-slate-500 font-bold group-focus-within:text-red-500 transition-colors">₹</span>
+                                                    <span className="text-gray-400 dark:text-slate-500 font-bold group-focus-within:text-red-500 transition-colors">₹</span>
                                                 </div>
                                                 <input
                                                     type="number"
@@ -199,14 +199,14 @@ export default function AdminSettingsPage() {
                                                     required
                                                     value={pickupCharge}
                                                     onChange={(e) => setPickupCharge(e.target.value)}
-                                                    className="w-full pl-10 pr-4 py-4 bg-slate-950 border border-slate-800 focus:border-red-500 rounded-xl outline-none text-white font-mono text-lg transition-all focus:ring-4 focus:ring-red-500/10 placeholder-slate-700 hover:border-slate-700"
+                                                    className="w-full pl-10 pr-4 py-4 bg-gray-50 dark:bg-slate-950 border border-gray-300 dark:border-slate-800 focus:border-red-500 rounded-xl outline-none text-gray-900 dark:text-white font-mono text-lg transition-all focus:ring-4 focus:ring-red-500/10 placeholder-gray-400 dark:placeholder-slate-700 hover:border-gray-400 dark:hover:border-slate-700"
                                                     placeholder="0.00"
                                                 />
                                                 <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
-                                                    <span className="text-slate-600 font-bold text-sm bg-slate-900 px-2 py-1 rounded">/ KM</span>
+                                                    <span className="text-gray-400 dark:text-slate-600 font-bold text-sm bg-gray-100 dark:bg-slate-900 px-2 py-1 rounded">/ KM</span>
                                                 </div>
                                             </div>
-                                            <div className="flex items-start gap-2 text-xs font-semibold text-slate-500 bg-slate-950/50 p-3 rounded-lg border border-slate-800">
+                                            <div className="flex items-start gap-2 text-xs font-semibold text-gray-500 dark:text-slate-500 bg-gray-50 dark:bg-slate-950/50 p-3 rounded-lg border border-gray-200 dark:border-slate-800">
                                                 <MapPin className="w-4 h-4 text-blue-500 shrink-0" />
                                                 <p>Applies automatically to all incoming requests evaluated by the Google Distance Matrix.</p>
                                             </div>
@@ -214,7 +214,7 @@ export default function AdminSettingsPage() {
                                     </div>
 
                                     {/* Save Actions */}
-                                    <div className="pt-8 border-t border-slate-800 flex items-center justify-end">
+                                    <div className="pt-8 border-t border-gray-200 dark:border-slate-800 flex items-center justify-end">
                                         <motion.button
                                             type="submit"
                                             disabled={isSaving}
@@ -244,7 +244,7 @@ export default function AdminSettingsPage() {
 
                 {/* Footer Note */}
                 <div className="text-center pb-8">
-                    <p className="text-xs font-bold text-slate-600 uppercase tracking-widest">
+                    <p className="text-xs font-bold text-gray-400 dark:text-slate-600 uppercase tracking-widest">
                         Automated Valuation Engine • AutoScrap Admin
                     </p>
                 </div>

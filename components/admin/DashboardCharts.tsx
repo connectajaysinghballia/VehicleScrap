@@ -147,7 +147,7 @@ export default function DashboardCharts({ valuationCounts, b2bStats, monthlyGrow
                 className="col-span-1 md:col-span-2 lg:col-span-3"
             >
                 <a
-                    href="https://lookerstudio.google.com/embed/u/0/reporting/ff389c8c-c9db-4f3d-97e6-e4145d5aa926/page/oHhqF"
+                    href="https://lookerstudio.google.com/embed/reporting/f57410b3-d8fb-4599-ab16-f8d4f3626314/page/1M"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group flex items-center justify-center gap-4 w-full py-5 px-8 rounded-2xl font-bold text-lg text-white tracking-wide shadow-lg transition-all duration-300 hover:scale-[1.015] hover:shadow-emerald-500/30 active:scale-[0.985]"

@@ -98,7 +98,7 @@ export default function HomexHero() {
     }
 
     return (
-        <div className="h-[82vh] sm:h-[85vh] md:h-screen flex flex-col bg-[#0A0F1C] font-sans selection:bg-emerald-500/30 overflow-hidden">
+        <div className="h-[90vh] sm:h-[85vh] md:h-screen flex flex-col bg-[#0A0F1C] font-sans selection:bg-emerald-500/30 overflow-hidden">
             {/* Hero Section Container */}
             <div className="relative flex-1 min-h-[400px] overflow-hidden">
                 {/* Floating Particles */}
@@ -470,7 +470,7 @@ export default function HomexHero() {
             {/* Stats Bar */}
             <div className="relative z-30 bg-white py-8 sm:py-8 md:py-8 border-t border-gray-100">
                 <div className="container mx-auto px-2 sm:px-4 md:px-6">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-5 md:gap-12">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-0 sm:gap-5 md:gap-12">
                         {stats.map((stat, index) => (
                             <motion.div
                                 key={index}
@@ -478,7 +478,11 @@ export default function HomexHero() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.8, delay: index * 0.1, ease: [0.21, 1.02, 0.73, 1] }}
-                                className={`flex items-center justify-center gap-2 sm:gap-3 md:gap-4 px-1 sm:px-3 md:px-6 ${index !== stats.length - 1 ? "md:border-r border-gray-200" : ""}`}
+                                className={`flex items-center justify-start md:justify-center gap-3 md:gap-4 px-4 py-3 sm:py-4 md:px-6
+                                    ${index % 2 === 0 ? 'border-r border-gray-100 md:border-r-0' : ''}
+                                    ${index < 2 ? 'border-b border-gray-100 md:border-b-0' : ''}
+                                    ${index !== stats.length - 1 ? 'md:border-r md:border-gray-200' : 'md:border-r-0'}
+                                `}
                             >
                                 <motion.div
                                     className="text-black shrink-0"
@@ -487,7 +491,7 @@ export default function HomexHero() {
                                     viewport={{ once: true }}
                                     transition={{ type: "spring", stiffness: 200, damping: 15, delay: index * 0.1 + 0.3 }}
                                 >
-                                    <stat.icon className="w-4 h-4 sm:w-5 sm:h-5 md:w-8 md:h-8" />
+                                    <stat.icon className="w-5 h-5 md:w-8 md:h-8" />
                                 </motion.div>
                                 <div className="flex flex-col items-start text-left">
                                     <div className="overflow-hidden">
@@ -496,7 +500,7 @@ export default function HomexHero() {
                                             whileInView={{ y: 0 }}
                                             viewport={{ once: true }}
                                             transition={{ duration: 0.6, delay: index * 0.1 + 0.4, ease: "easeOut" }}
-                                            className="text-xs sm:text-sm md:text-xl font-black text-emerald-600 font-['Helvetica_Neue'] tracking-tight uppercase leading-none"
+                                            className="text-sm md:text-xl font-black text-emerald-600 font-['Helvetica_Neue'] tracking-tight uppercase leading-none"
                                         >
                                             {stat.value}
                                         </motion.h3>
@@ -506,7 +510,7 @@ export default function HomexHero() {
                                         whileInView={{ opacity: 1, x: 0 }}
                                         viewport={{ once: true }}
                                         transition={{ duration: 0.6, delay: index * 0.1 + 0.6 }}
-                                        className="text-emerald-500/70 text-[7px] sm:text-[9px] md:text-[10px] font-black uppercase font-['Helvetica_Neue'] tracking-wider leading-tight"
+                                        className="text-emerald-500/70 text-[9px] md:text-[10px] font-black uppercase font-['Helvetica_Neue'] tracking-wider leading-tight mt-0.5"
                                     >
                                         {stat.label}
                                     </motion.p>
