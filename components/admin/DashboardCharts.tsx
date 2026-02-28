@@ -139,6 +139,33 @@ export default function DashboardCharts({ valuationCounts, b2bStats, monthlyGrow
                 </div>
             </motion.div>
 
+            {/* Analytics Report Button — full width below charts */}
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3, ease: [0.215, 0.61, 0.355, 1] as any }}
+                className="col-span-1 md:col-span-2 lg:col-span-3"
+            >
+                <a
+                    href="https://lookerstudio.google.com/embed/u/0/reporting/ff389c8c-c9db-4f3d-97e6-e4145d5aa926/page/oHhqF"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center justify-center gap-4 w-full py-5 px-8 rounded-2xl font-bold text-lg text-white tracking-wide shadow-lg transition-all duration-300 hover:scale-[1.015] hover:shadow-emerald-500/30 active:scale-[0.985]"
+                    style={{
+                        background: 'linear-gradient(135deg, #059669 0%, #0d9488 50%, #0891b2 100%)',
+                        boxShadow: '0 4px 24px rgba(5,150,105,0.25)',
+                    }}
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 shrink-0 opacity-90" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                    <span>Customer Journey &amp; Conversion Analytics Report</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 shrink-0 opacity-75 group-hover:translate-x-1 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                </a>
+            </motion.div>
+
         </div>
     )
 }

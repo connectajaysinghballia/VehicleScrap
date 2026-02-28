@@ -193,63 +193,79 @@ export default function BulkOutsourcingAdminDetailsPage() {
     }
 
     return (
-        <div className="max-w-5xl mx-auto space-y-8 pb-12">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-2">
-                <div className="flex items-center gap-4">
-                    <Link href="/admin/bulk-outsourcing" className="p-2 hover:bg-gray-200 dark:hover:bg-slate-800 rounded-xl transition-colors group">
-                        <ArrowLeft className="w-6 h-6 text-gray-500 dark:text-slate-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors" />
+        <div className="max-w-5xl mx-auto space-y-6 pb-12 px-4 sm:px-6 lg:px-0">
+            {/* Header: Title left, 2×2 buttons right */}
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+
+                {/* Left: Back + Title */}
+                <div className="flex items-start gap-3">
+                    <Link href="/admin/bulk-outsourcing" className="mt-1 p-2 hover:bg-gray-200 dark:hover:bg-slate-800 rounded-xl transition-colors group shrink-0">
+                        <ArrowLeft className="w-5 h-5 text-gray-500 dark:text-slate-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors" />
                     </Link>
                     <div>
-                        <h1 className="text-3xl font-black text-gray-900 dark:text-white flex items-center gap-3 tracking-tight">
-                            <Database className="w-8 h-8 text-purple-600 dark:text-purple-400" />
+                        <h1 className="text-2xl sm:text-3xl font-black text-gray-900 dark:text-white flex items-center gap-2 sm:gap-3 tracking-tight leading-tight">
+                            <Database className="w-6 h-6 sm:w-8 sm:h-8 text-purple-600 dark:text-purple-400 shrink-0" />
                             Batch Review Details
                         </h1>
-                        <p className="text-gray-500 dark:text-gray-400 mt-2 font-medium">Review the complete list of vehicles submitted by the partner.</p>
+                        <p className="text-gray-500 dark:text-gray-400 mt-1 font-medium text-sm sm:text-base">Review the complete list of vehicles submitted by the partner.</p>
                     </div>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-3 w-full md:w-auto mt-4 md:mt-0 lg:ml-auto">
+                {/* Right: 2×2 action button grid */}
+                <div className="grid grid-cols-2 gap-2 sm:shrink-0">
+                    {/* Row 1: Download + Export */}
                     <button
                         onClick={handleDownloadCSV}
-                        className="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-2.5 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 rounded-xl font-bold transition-all shadow-sm"
+                        className="flex items-center justify-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 rounded-xl font-bold text-sm transition-all shadow-sm whitespace-nowrap"
                     >
-                        <Download className="w-4 h-4" />
-                        Download CSV
+                        <Download className="w-4 h-4 shrink-0" />
+                        <span>Download CSV</span>
                     </button>
                     <button
                         onClick={handleExportToMail}
-                        className="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-bold transition-all shadow-md shadow-purple-600/20"
+                        className="flex items-center justify-center gap-2 px-4 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-bold text-sm transition-all shadow-md shadow-purple-600/20 whitespace-nowrap"
                     >
-                        <Send className="w-4 h-4" />
-                        Export to Mail
+                        <Send className="w-4 h-4 shrink-0" />
+                        <span>Export to Mail</span>
                     </button>
-                    {submission.status !== 'rejected' && submission.status !== 'approved' && (
-                        <button
-                            onClick={handleDelete}
-                            className="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold transition-all shadow-md shadow-red-600/20"
-                        >
-                            <XCircle className="w-4 h-4" />
-                            Delete Request
-                        </button>
-                    )}
-                    {submission.status !== 'approved' && submission.status !== 'rejected' && (
-                        <button
-                            onClick={handleApprove}
-                            className="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold transition-all shadow-md shadow-emerald-600/20"
-                        >
-                            <CheckCircle className="w-4 h-4" />
-                            Approve Request
-                        </button>
+
+                    {/* Row 2: Approve + Delete (pending only) or status badge */}
+                    {submission.status !== 'approved' && submission.status !== 'rejected' ? (
+                        <>
+                            <button
+                                onClick={handleApprove}
+                                className="flex items-center justify-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-sm transition-all shadow-md shadow-emerald-600/20 whitespace-nowrap"
+                            >
+                                <CheckCircle className="w-4 h-4 shrink-0" />
+                                <span>Approve</span>
+                            </button>
+                            <button
+                                onClick={handleDelete}
+                                className="flex items-center justify-center gap-2 px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold text-sm transition-all shadow-md shadow-red-600/20 whitespace-nowrap"
+                            >
+                                <XCircle className="w-4 h-4 shrink-0" />
+                                <span>Delete</span>
+                            </button>
+                        </>
+                    ) : (
+                        <div className="col-span-2 flex items-center justify-center mt-1">
+                            <span className={`px-4 py-1.5 text-xs font-black rounded-full border uppercase tracking-widest ${submission.status === 'approved'
+                                    ? 'bg-emerald-100 text-emerald-800 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-800/30'
+                                    : 'bg-red-100 text-red-800 border-red-200 dark:bg-red-900/30 dark:text-red-400 dark:border-red-800/30'
+                                }`}>
+                                {submission.status}
+                            </span>
+                        </div>
                     )}
                 </div>
             </div>
 
             {/* Partner Information Card */}
-            <div className="bg-white dark:bg-[#0E192D] rounded-3xl shadow-sm border border-gray-100 dark:border-slate-800 p-8">
+            <div className="bg-white dark:bg-[#0E192D] rounded-3xl shadow-sm border border-gray-100 dark:border-slate-800 p-4 sm:p-6 md:p-8">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6">
                     <div className="space-y-4">
-                        <div className="flex items-center gap-4">
-                            <h2 className="text-2xl font-black text-gray-900 dark:text-white">Partner Information</h2>
+                        <div className="flex flex-wrap items-center gap-2 sm:gap-4">
+                            <h2 className="text-xl sm:text-2xl font-black text-gray-900 dark:text-white">Partner Information</h2>
                             <span className={`px-4 py-1.5 inline-flex text-xs font-black rounded-full border ${getStatusStyle(submission.status)} uppercase tracking-widest`}>
                                 {submission.status}
                             </span>
@@ -273,24 +289,24 @@ export default function BulkOutsourcingAdminDetailsPage() {
 
                 {/* Submissions Section */}
                 <div className="border-t border-gray-100 dark:border-slate-800 pt-8 mt-4">
-                    <div className="flex items-center justify-center mb-8">
-                        <h3 className="font-black text-gray-900 dark:text-white text-2xl tracking-tight bg-gray-50 dark:bg-slate-900/50 px-8 py-3 rounded-2xl border border-gray-100 dark:border-slate-800">
+                    <div className="flex items-center justify-center mb-5 sm:mb-8">
+                        <h3 className="font-black text-gray-900 dark:text-white text-lg sm:text-2xl tracking-tight bg-gray-50 dark:bg-slate-900/50 px-5 sm:px-8 py-2.5 sm:py-3 rounded-2xl border border-gray-100 dark:border-slate-800">
                             Submitted Vehicles <span className="text-purple-600 dark:text-purple-400 ml-2">({submission.entries.length})</span>
                         </h3>
                     </div>
 
                     <div className="space-y-6">
                         {submission.entries.map((entry, idx) => (
-                            <div key={idx} className="bg-gray-50 hover:bg-white dark:bg-slate-900/50 dark:hover:bg-slate-900 p-8 rounded-3xl border border-gray-200 dark:border-slate-700 hover:border-purple-300 dark:hover:border-purple-500/50 transition-all shadow-sm text-center relative overflow-hidden group">
+                            <div key={idx} className="bg-gray-50 hover:bg-white dark:bg-slate-900/50 dark:hover:bg-slate-900 p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl border border-gray-200 dark:border-slate-700 hover:border-purple-300 dark:hover:border-purple-500/50 transition-all shadow-sm text-center relative overflow-hidden group">
                                 <div className="absolute left-0 top-0 bottom-0 w-2 bg-purple-500 opacity-50 group-hover:opacity-100 transition-opacity" />
 
-                                <div className="flex items-center justify-center mb-8">
+                                <div className="flex items-center justify-center mb-4 sm:mb-8">
                                     <h4 className="font-black text-gray-800 dark:text-gray-200 uppercase tracking-widest text-sm flex items-center gap-3">
                                         <span className="bg-purple-600 text-white px-3 py-1 rounded-lg shadow-sm">#{idx + 1}</span>
                                         Vehicle Entry
                                     </h4>
                                 </div>
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-8">
                                     {/* Type */}
                                     <div className="flex flex-col items-center p-4 bg-white dark:bg-[#0E192D] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm">
                                         <p className="text-xs font-black text-gray-400 dark:text-slate-500 uppercase tracking-widest mb-3 flex items-center gap-2 bg-purple-50 dark:bg-purple-900/20 px-3 py-1 rounded-full text-purple-600 dark:text-purple-400">
