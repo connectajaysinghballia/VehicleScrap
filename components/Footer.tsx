@@ -141,7 +141,7 @@ export default function Footer() {
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-semibold text-gray-900">Visit Us</p>
-                  <p className="text-gray-600 text-sm">133/306, Transport Nagar, T. P. Nagar, Kanpur – 208023, Uttar Pradesh, India</p>
+                  <p className="text-gray-600 text-sm">21-E, Block Panki, Kanpur, 208020</p>
                 </div>
               </li>
               <li className="flex items-center gap-4 group cursor-default">
@@ -151,7 +151,7 @@ export default function Footer() {
                 <div className="flex-1">
                   <p className="text-sm font-semibold text-gray-900">Call Us</p>
                   <p className="text-gray-600 text-sm font-medium">
-                    +91 90053 33587 <br /> +91 94154 80154
+                    +91-9839447733
                   </p>
                 </div>
               </li>
@@ -161,7 +161,7 @@ export default function Footer() {
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-semibold text-gray-900">Email Us</p>
-                  <p className="text-gray-600 text-sm break-all">service.desk@novalytixtechservices.com</p>
+                  <p className="text-gray-600 text-sm break-all">contact@scrapcentre.com</p>
                 </div>
               </li>
             </ul>

@@ -263,23 +263,23 @@ export default function ContactPage() {
               </p>
 
               <div className="space-y-6">
-                <a href="tel:+919005333587" className="flex items-start gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors group">
+                <a href="tel:+919839447733" className="flex items-start gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors group">
                   <div className="w-10 h-10 bg-emerald-500/10 rounded-full flex items-center justify-center group-hover:bg-emerald-500/20 transition-colors">
                     <Phone className="w-5 h-5 text-emerald-400 py-0.5" />
                   </div>
                   <div>
                     <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Phone</p>
-                    <p className="text-white font-medium">+91 90053 33587</p>
+                    <p className="text-white font-medium">+91-9839447733</p>
                   </div>
                 </a>
 
-                <a href="mailto:service.desk@.com" className="flex items-start gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors group">
+                <a href="mailto:contact@scrapcentre.com" className="flex items-start gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors group">
                   <div className="w-10 h-10 bg-emerald-500/10 rounded-full flex items-center justify-center group-hover:bg-emerald-500/20 transition-colors">
                     <Mail className="w-5 h-5 text-emerald-400 py-0.5" />
                   </div>
                   <div>
                     <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Email</p>
-                    <p className="text-white font-medium">service.desk@.com</p>
+                    <p className="text-white font-medium">contact@scrapcentre.com</p>
                   </div>
                 </a>
 
@@ -289,7 +289,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Office</p>
-                    <p className="text-white font-medium">Transport Nagar, Kanpur,<br />Uttar Pradesh 208023</p>
+                    <p className="text-white font-medium">21-E, Block Panki,<br />Kanpur, 208020</p>
                   </div>
                 </div>
               </div>
@@ -391,6 +391,27 @@ export default function ContactPage() {
           </div>
         </motion.div>
 
+        {/* Map Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          className="w-full max-w-6xl mt-8 bg-[#0E192D] rounded-[32px] p-2 sm:p-4 border border-emerald-500/20 shadow-2xl shadow-emerald-900/20"
+        >
+          <div className="w-full h-[350px] sm:h-[400px] rounded-[24px] overflow-hidden relative group">
+            <iframe
+              title="Office Location Map"
+              src="https://maps.google.com/maps?q=21-E,%20Block%20Panki,%20Kanpur,%20208020&t=&z=15&ie=UTF8&iwloc=&output=embed"
+              width="100%"
+              height="100%"
+              className="absolute inset-0 grayscale-[15%] group-hover:grayscale-0 transition-all duration-500"
+              style={{ border: 0 }}
+              allowFullScreen={false}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        </motion.div>
 
       </div>
     </div>

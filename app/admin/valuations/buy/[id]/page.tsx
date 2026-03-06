@@ -163,7 +163,7 @@ export default function BuyDetailPage({ params }: { params: Promise<{ id: string
                             <ShoppingCart className="w-6 h-6 text-orange-600 dark:text-orange-500" />
                             Buy Vehicle Request Details
                         </h1>
-                        <p className="text-gray-500 dark:text-slate-400 mt-1">Request ID: {request._id}</p>
+                        <p className="text-[13px] sm:text-sm text-gray-500 dark:text-slate-400 mt-1 break-all">Request ID: {request._id}</p>
                     </div>
                 </div>
                 <div className="flex flex-wrap items-center gap-3 w-full md:w-auto mt-4 md:mt-0">

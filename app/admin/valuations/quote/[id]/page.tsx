@@ -184,9 +184,9 @@ export default function QuoteDetailPage({ params }: { params: Promise<{ id: stri
                             <FileText className="w-6 h-6 text-blue-600 dark:text-blue-500" />
                             Quote Request Details
                         </h1>
-                        <div className="flex items-center gap-3 mt-1">
+                        <div className="flex flex-wrap items-center gap-2 mt-2 sm:mt-1">
                             {getStatusBadge(request.status)}
-                            <span className="text-sm text-gray-500 dark:text-slate-500 font-mono">ID: {request._id}</span>
+                            <span className="text-xs sm:text-sm text-gray-500 dark:text-slate-500 font-mono break-all">ID: {request._id}</span>
                         </div>
                     </div>
                 </div>

@@ -8,6 +8,7 @@ import ExchangeVehicle from "@/models/ExchangeVehicle"
 import BuyVehicle from "@/models/BuyVehicle"
 import B2BRegistration from "@/models/B2BRegistration"
 import B2BPartner from "@/models/B2BPartner"
+import Setting from "@/models/Setting"
 import { User, Package, Clock, Calendar, CheckCircle, Car, Building2, AlertCircle, RefreshCw, ShoppingCart, Tag } from "lucide-react"
 import Link from "next/link"
 import UserRequestList from "@/components/UserRequestList"
@@ -46,18 +47,29 @@ export default async function ProfilePage() {
             ].filter(q => q.userId !== null)
         }
 
-        const [valuations, sellRequests, exchangeRequests, buyRequests, latestRegistration, existingPartner] = await Promise.all([
+        const [valuations, sellRequests, exchangeRequests, buyRequests, latestRegistration, existingPartner, scrapSetting] = await Promise.all([
             Valuation.find(query).sort({ createdAt: -1 }),
             SellVehicle.find(query).sort({ createdAt: -1 }),
             ExchangeVehicle.find(query).sort({ createdAt: -1 }),
             BuyVehicle.find(query).sort({ createdAt: -1 }),
             B2BRegistration.findOne({ userId }).sort({ createdAt: -1 }),
-            B2BPartner.findOne({ originalUserId: userId })
+            B2BPartner.findOne({ originalUserId: userId }),
+            Setting.findOne({ key: "scrapPricePerKg" })
         ])
+
+        const scrapPricePerKg = scrapSetting ? scrapSetting.value : 25
 
         // Merge and add types for identification
         allRequests = [
-            ...valuations.map(v => ({ ...v.toObject(), type: 'valuation' })),
+            ...valuations.map(v => {
+                const obj = v.toObject()
+                // Backfill estimatedValue if missing
+                if (obj.estimatedValue == null && obj.vehicleWeight) {
+                    const weightInTons = parseFloat(obj.vehicleWeight) || 0
+                    obj.estimatedValue = weightInTons * 1000 * scrapPricePerKg
+                }
+                return { ...obj, type: 'valuation' }
+            }),
             ...sellRequests.map(s => ({ ...s.toObject(), type: 'sell' })),
             ...exchangeRequests.map(e => ({ ...e.toObject(), type: 'exchange' })),
             ...buyRequests.map(b => ({ ...b.toObject(), type: 'buy' })),
@@ -139,14 +151,14 @@ export default async function ProfilePage() {
                                             <p className="text-sm text-green-700 dark:text-green-300">{partner.businessName} (ID: {partner.userId})</p>
                                         </div>
                                     </div>
-                                    <Link href="/b2b" className="text-sm font-bold text-green-600 dark:text-green-500 hover:text-green-700 dark:hover:text-green-400 hover:underline">
-                                        Go to Marketplace
-                                    </Link>
                                 </div>
                             ) : registration ? (
-                                <div className="p-4 bg-yellow-50 dark:bg-yellow-900/10 rounded-xl border border-yellow-100 dark:border-yellow-900/30 flex items-center justify-between">
+                                <div className={`p-4 rounded-xl border flex items-center justify-between ${registration.status === 'pending'
+                                        ? 'bg-yellow-50 dark:bg-yellow-900/10 border-yellow-100 dark:border-yellow-900/30'
+                                        : 'bg-red-50 dark:bg-red-900/10 border-red-100 dark:border-red-900/30'
+                                    }`}>
                                     <div className="flex items-center gap-4">
-                                        <div className="p-2 bg-white dark:bg-yellow-900/20 rounded-lg shadow-sm">
+                                        <div className="p-2 bg-white dark:bg-slate-900/40 rounded-lg shadow-sm">
                                             {registration.status === 'pending' ? (
                                                 <Clock className="w-5 h-5 text-yellow-600 dark:text-yellow-500" />
                                             ) : (
@@ -154,12 +166,14 @@ export default async function ProfilePage() {
                                             )}
                                         </div>
                                         <div>
-                                            <p className="font-bold text-yellow-900 dark:text-yellow-400 capitalize">Registration {registration.status}</p>
-                                            <p className="text-sm text-yellow-700 dark:text-yellow-300">We'll notify you once our team reviews your application.</p>
+                                            <p className={`font-bold capitalize ${registration.status === 'pending' ? 'text-yellow-900 dark:text-yellow-400' : 'text-red-900 dark:text-red-400'
+                                                }`}>Registration {registration.status}</p>
+                                            {registration.status === 'pending' && (
+                                                <p className="text-sm text-yellow-700 dark:text-yellow-300">We'll notify you once our team reviews your application.</p>
+                                            )}
                                         </div>
                                     </div>
-                                </div>
-                            ) : (
+                                </div>) : (
                                 <div className="p-8 text-center border-2 border-dashed border-gray-200 dark:border-slate-800 rounded-xl hover:border-blue-300 dark:hover:border-blue-800 transition-colors">
                                     <p className="text-gray-500 dark:text-gray-400 mb-6 text-lg">Want to become a B2B partner and access our marketplace?</p>
                                     <Link

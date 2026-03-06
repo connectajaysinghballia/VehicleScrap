@@ -149,3 +149,42 @@ export async function DELETE(req: Request) {
     }
 }
 
+export async function PATCH(req: Request) {
+    try {
+        await connectToDatabase()
+        const { searchParams } = new URL(req.url)
+        const id = searchParams.get("id")
+        const { status } = await req.json()
+
+        if (!id || !status) {
+            return NextResponse.json(
+                { message: "Registration ID and Status are required" },
+                { status: 400 }
+            )
+        }
+
+        const updatedRegistration = await B2BRegistration.findByIdAndUpdate(
+            id,
+            { status },
+            { new: true }
+        )
+
+        if (!updatedRegistration) {
+            return NextResponse.json(
+                { message: "Registration not found" },
+                { status: 404 }
+            )
+        }
+
+        return NextResponse.json(
+            { message: `Registration ${status} successfully`, data: updatedRegistration },
+            { status: 200 }
+        )
+    } catch (error: any) {
+        console.error("B2B Status Update Error:", error)
+        return NextResponse.json(
+            { message: error.message || "Internal Server Error" },
+            { status: 500 }
+        )
+    }
+}

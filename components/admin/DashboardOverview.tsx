@@ -147,7 +147,7 @@ export default function DashboardOverview({
                 />
             </motion.div>
 
-            {/* Market Feed Table */}
+            {/* Market Feed Section */}
             <motion.div variants={itemVariants} className="mt-8 bg-white dark:bg-[#0E192D] rounded-xl shadow-sm border border-gray-200 dark:border-slate-800 overflow-hidden">
                 <div className="px-6 py-4 border-b border-gray-200 dark:border-slate-800 flex justify-between items-center bg-gray-50 dark:bg-slate-900/50">
                     <h2 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
@@ -159,7 +159,8 @@ export default function DashboardOverview({
                     </span>
                 </div>
 
-                <div className="overflow-x-auto">
+                {/* Desktop View (Table) */}
+                <div className="hidden md:block overflow-x-auto">
                     <table className="w-full text-left text-sm">
                         <thead className="bg-gray-50 dark:bg-slate-900/50 text-gray-500 dark:text-slate-400 font-medium border-b border-gray-200 dark:border-slate-800">
                             <tr>
@@ -224,15 +225,76 @@ export default function DashboardOverview({
                                     </td>
                                 </tr>
                             ))}
-                            {marketFeed.length === 0 && (
-                                <tr>
-                                    <td colSpan={6} className="px-6 py-12 text-center text-gray-500 dark:text-gray-400">
-                                        No recent activity found throughout the market.
-                                    </td>
-                                </tr>
-                            )}
                         </tbody>
                     </table>
+                </div>
+
+                {/* Mobile View (Cards) */}
+                <div className="md:hidden p-4 space-y-4 bg-gray-50/30 dark:bg-slate-900/20">
+                    {marketFeed.length === 0 ? (
+                        <div className="px-6 py-8 text-center text-gray-500 dark:text-slate-500 text-sm bg-white dark:bg-[#0E192D] rounded-xl border border-gray-200 dark:border-slate-800">
+                            No recent activity found.
+                        </div>
+                    ) : (
+                        marketFeed.map((item: any) => (
+                            <Link key={item._id} href={`/admin/valuations/${item.type}/${item._id}`} className="block">
+                                <div className="bg-white dark:bg-[#0E192D] rounded-xl border border-gray-200 dark:border-slate-800 shadow-sm overflow-hidden transition-all active:scale-[0.98]">
+                                    <div className="p-4 space-y-3">
+                                        <div className="flex justify-between items-start">
+                                            {item.type === 'quote' && (
+                                                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 border border-blue-200 dark:border-blue-800/50">
+                                                    Quote
+                                                </span>
+                                            )}
+                                            {item.type === 'sell' && (
+                                                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 border border-green-200 dark:border-green-800/50">
+                                                    Sell
+                                                </span>
+                                            )}
+                                            {item.type === 'exchange' && (
+                                                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-400 border border-purple-200 dark:border-purple-800/50">
+                                                    Exchange
+                                                </span>
+                                            )}
+                                            {item.type === 'buy' && (
+                                                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-400 border border-orange-200 dark:border-orange-800/50">
+                                                    Buy
+                                                </span>
+                                            )}
+                                            <p className="text-[11px] text-gray-400 dark:text-slate-500 font-medium">
+                                                {new Date(item.createdAt).toLocaleDateString()}
+                                            </p>
+                                        </div>
+
+                                        <div className="space-y-1">
+                                            <p className="text-[10px] text-gray-400 dark:text-slate-500 font-bold uppercase tracking-wider">Request Details</p>
+                                            <p className="text-sm font-bold text-gray-900 dark:text-white leading-snug line-clamp-2">
+                                                {item.vehicleInfo}
+                                            </p>
+                                        </div>
+
+                                        <div className="flex items-center justify-between pt-2 border-t border-gray-50 dark:border-slate-800/50">
+                                            <div className="flex flex-col">
+                                                <p className="text-[13px] font-bold text-gray-900 dark:text-white">{item.customerName || "N/A"}</p>
+                                                <p className="text-[10px] font-mono text-gray-500 dark:text-slate-400">{item.customerPhone}</p>
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${item.status === 'pending' ? 'bg-yellow-50 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400' :
+                                                    item.status === 'approved' ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400' :
+                                                        'bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400'
+                                                    }`}>
+                                                    {item.status}
+                                                </span>
+                                                <div className="w-7 h-7 rounded-lg bg-gray-50 dark:bg-slate-800 flex items-center justify-center text-gray-400 border border-gray-100 dark:border-slate-700">
+                                                    <ChevronRight className="w-4 h-4" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Link>
+                        ))
+                    )}
                 </div>
             </motion.div>
         </motion.div>

@@ -82,20 +82,25 @@ export default function B2BPartnersPage() {
     }, [])
 
     // Handlers
-    const handleDelete = async (id: string) => {
+    const handleReject = async (id: string) => {
         try {
             const res = await fetch(`/api/b2b-register?id=${id}`, {
-                method: "DELETE",
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ status: 'rejected' })
             })
 
             if (res.ok) {
+                // Keep the registration but remove from the pending list if needed?
+                // Actually, the current registrations state filters for 'pending'.
+                // So updating it will hide it from the list anyway if we refetch or update state localy.
                 setRegistrations(prev => prev.filter(reg => reg._id !== id))
                 toast({
                     title: "Request Rejected",
-                    description: "The B2B registration request has been permanently deleted.",
+                    description: "The B2B registration request has been marked as rejected.",
                 })
             } else {
-                throw new Error("Failed to delete request")
+                throw new Error("Failed to reject request")
             }
         } catch (error) {
             toast({
@@ -138,7 +143,7 @@ export default function B2BPartnersPage() {
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
                         <AlertDialogAction
                             className="bg-red-600 hover:bg-red-700"
-                            onClick={() => deletingId && handleDelete(deletingId)}
+                            onClick={() => deletingId && handleReject(deletingId)}
                         >
                             Reject
                         </AlertDialogAction>

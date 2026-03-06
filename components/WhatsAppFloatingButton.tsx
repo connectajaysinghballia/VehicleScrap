@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react"
 
 export default function WhatsAppFloatingButton() {
     const { data: session } = useSession()
-    const phoneNumber = "919005333587"
+    const phoneNumber = "919839447733"
     const whatsappUrl = `https://wa.me/${phoneNumber}`
 
     const [isVisible, setIsVisible] = useState(false)

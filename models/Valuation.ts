@@ -44,6 +44,9 @@ const ValuationSchema = new Schema(
             enum: ["pending", "reviewed", "completed", "approved"],
             default: "pending",
         },
+        estimatedValue: {
+            type: Number, // Calculated scrap value (weight in tons * 1000 * scrapPricePerKg)
+        },
         pickupCost: {
             type: Number,
         },

@@ -20,7 +20,8 @@ import {
     Hash,
     Fuel,
     DollarSign,
-    Box
+    Box,
+    IndianRupee
 } from "lucide-react"
 
 interface BaseRequest {
@@ -170,6 +171,11 @@ export default function UserRequestList({ requests }: UserRequestListProps) {
                                     <div className={`flex items-center gap-1 text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity ${colors.text}`}>
                                         View Details <ChevronRight className="w-4 h-4" />
                                     </div>
+                                    {req.type === 'valuation' && req.estimatedValue != null && (
+                                        <div className="flex items-center gap-1 text-xs font-bold text-emerald-400 bg-emerald-900/20 px-2.5 py-1.5 rounded-lg border border-emerald-900/30">
+                                            ₹{req.estimatedValue.toLocaleString('en-IN')}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </motion.div>
@@ -210,6 +216,18 @@ export default function UserRequestList({ requests }: UserRequestListProps) {
 
                             {/* Modal Content */}
                             <div className="p-8 space-y-8 max-h-[70vh] overflow-y-auto scrollbar-hide">
+                                {/* Estimated Value Banner - valuation only */}
+                                {selectedRequest.type === 'valuation' && selectedRequest.estimatedValue != null && (
+                                    <div className="flex items-center justify-between p-4 bg-emerald-900/20 rounded-2xl border border-emerald-900/30">
+                                        <span className="text-sm font-bold text-emerald-400 uppercase tracking-wide flex items-center gap-2">
+                                            Estimated Scrap Value
+                                        </span>
+                                        <span className="text-2xl font-black text-emerald-300">
+                                            ₹{selectedRequest.estimatedValue.toLocaleString('en-IN')}
+                                        </span>
+                                    </div>
+                                )}
+
                                 {/* Status Section */}
                                 <div className="flex items-center justify-between p-4 bg-slate-900 rounded-2xl border border-slate-800">
                                     <span className="text-sm font-bold text-gray-400 uppercase tracking-wide">Status</span>
@@ -228,7 +246,10 @@ export default function UserRequestList({ requests }: UserRequestListProps) {
                                                 <DetailItem icon={<MapPin />} label="Distance" value={`${selectedRequest.distance} km`} />
                                             )}
                                             {selectedRequest.pickupCost !== undefined && selectedRequest.pickupCost !== null && (
-                                                <DetailItem icon={<DollarSign />} label="Pickup Cost" value={selectedRequest.pickupCost === 0 ? "Free (< 100km)" : `₹${selectedRequest.pickupCost.toLocaleString("en-IN")}`} />
+                                                <DetailItem icon={<IndianRupee />} label="Pickup Cost" value={selectedRequest.pickupCost === 0 ? "Free (< 100km)" : `${selectedRequest.pickupCost.toLocaleString("en-IN")}`} />
+                                            )}
+                                            {selectedRequest.estimatedValue != null && (
+                                                <DetailItem icon={null} label="Estimated Value" value={`₹${selectedRequest.estimatedValue.toLocaleString("en-IN")}`} />
                                             )}
                                         </>
                                     )}
@@ -238,7 +259,7 @@ export default function UserRequestList({ requests }: UserRequestListProps) {
                                             <DetailItem icon={<Hash />} label="Reg. Number" value={selectedRequest.registrationNumber} />
                                             <DetailItem icon={<Calendar />} label="Reg. Year" value={selectedRequest.registrationYear} />
                                             <DetailItem icon={<Fuel />} label="Fuel Type" value={selectedRequest.fuelType} />
-                                            <DetailItem icon={<DollarSign />} label="Pending Loan" value={selectedRequest.pendingLoan} />
+                                            <DetailItem icon={<IndianRupee />} label="Pending Loan" value={selectedRequest.pendingLoan} />
                                             <DetailItem icon={<MapPin />} label="Location" value={`${selectedRequest.city}, ${selectedRequest.state}`} />
                                             <DetailItem icon={<MapPin />} label="Pincode" value={selectedRequest.pincode} />
                                         </>
@@ -257,7 +278,7 @@ export default function UserRequestList({ requests }: UserRequestListProps) {
 
                                     {selectedRequest.type === 'buy' && (
                                         <>
-                                            <DetailItem icon={<DollarSign />} label="Budget" value={selectedRequest.budgetRange} />
+                                            <DetailItem icon={<IndianRupee />} label="Budget" value={selectedRequest.budgetRange} />
                                             <DetailItem icon={<Fuel />} label="Fuel Preference" value={selectedRequest.fuelType} />
                                             <DetailItem icon={<MapPin />} label="Location" value={`${selectedRequest.city}, ${selectedRequest.state}`} />
                                             <DetailItem icon={<MapPin />} label="Pincode" value={selectedRequest.pincode} />

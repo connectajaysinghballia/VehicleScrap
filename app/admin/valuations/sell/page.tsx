@@ -63,7 +63,8 @@ export default async function SellValuationsPage() {
             </div>
 
             <div className="bg-white dark:bg-[#0E192D] rounded-xl shadow-sm border border-gray-200 dark:border-slate-800 overflow-hidden">
-                <div className="overflow-x-auto">
+                {/* Desktop Table View */}
+                <div className="hidden md:block overflow-x-auto">
                     <table className="w-full text-sm text-left">
                         <thead className="bg-gray-50 dark:bg-slate-900/50 text-gray-700 dark:text-slate-300 font-semibold border-b border-gray-200 dark:border-slate-800">
                             <tr>
@@ -127,6 +128,66 @@ export default async function SellValuationsPage() {
                             )}
                         </tbody>
                     </table>
+                </div>
+
+                {/* Mobile Card View */}
+                <div className="md:hidden p-4 space-y-4 bg-gray-50/30 dark:bg-slate-900/20">
+                    {requests.length === 0 ? (
+                        <div className="px-6 py-8 text-center text-gray-500 dark:text-slate-500 text-sm bg-white dark:bg-[#0E192D] rounded-xl border border-gray-200 dark:border-slate-800">
+                            No sell requests found.
+                        </div>
+                    ) : (
+                        requests.map((req: any) => (
+                            <div key={req._id} className="bg-white dark:bg-[#0E192D] rounded-xl border border-gray-200 dark:border-slate-800 shadow-sm overflow-hidden transition-all active:scale-[0.98]">
+                                <div className="p-4 space-y-4">
+                                    <div className="flex justify-between items-start">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-10 h-10 rounded-full bg-green-50 dark:bg-green-900/20 flex items-center justify-center text-green-600 dark:text-green-400 font-bold text-sm">
+                                                {(req.name || "U")[0]}
+                                            </div>
+                                            <div>
+                                                <p className="font-bold text-gray-900 dark:text-white leading-tight">{req.name}</p>
+                                                <p className="text-[11px] text-gray-400 dark:text-slate-500 mt-0.5">{new Date(req.createdAt).toLocaleDateString()}</p>
+                                            </div>
+                                        </div>
+                                        {getStatusBadge(req.status)}
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-4 text-sm py-3 border-y border-gray-50 dark:border-slate-800/50">
+                                        <div>
+                                            <p className="text-[10px] text-gray-400 dark:text-slate-500 font-bold uppercase tracking-wider mb-1">Vehicle</p>
+                                            <p className="font-semibold text-gray-900 dark:text-white truncate">{req.brand} {req.model}</p>
+                                            <p className="text-[11px] text-gray-500 dark:text-slate-400 truncate">{req.fuelType} • {req.registrationYear}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-[10px] text-gray-400 dark:text-slate-500 font-bold uppercase tracking-wider mb-1">Registration</p>
+                                            <p className="font-mono text-[11px] text-gray-900 dark:text-white">{req.registrationNumber}</p>
+                                            <div className="mt-1">
+                                                {req.pendingLoan === "yes" ? (
+                                                    <span className="text-red-600 dark:text-red-400 font-bold text-[10px] uppercase bg-red-50 dark:bg-red-900/20 px-1.5 py-0.5 rounded">Loan: Yes</span>
+                                                ) : (
+                                                    <span className="text-green-600 dark:text-green-400 font-bold text-[10px] uppercase bg-green-50 dark:bg-green-900/20 px-1.5 py-0.5 rounded">No Loan</span>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex items-center justify-between pt-1">
+                                        <div className="flex flex-col">
+                                            <p className="text-[10px] text-gray-400 dark:text-slate-500 font-bold uppercase tracking-wider">Contact</p>
+                                            <p className="text-xs font-mono text-gray-600 dark:text-slate-400">{req.phone}</p>
+                                        </div>
+                                        <Link
+                                            href={`/admin/valuations/sell/${req._id}`}
+                                            className="inline-flex items-center justify-center px-4 py-2 bg-green-600 hover:bg-green-700 dark:bg-green-500/10 dark:hover:bg-green-500/20 text-white dark:text-green-400 rounded-lg font-bold text-xs transition-all shadow-md shadow-green-200 dark:shadow-none"
+                                        >
+                                            View Details
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    )}
                 </div>
             </div>
         </div>

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Building2, MapPin, Phone, Mail, User, CheckCircle, ArrowRight, ArrowLeft, Lock } from "lucide-react"
+import { Building2, MapPin, Phone, Mail, User, CheckCircle, ArrowRight, ArrowLeft, Lock, Copy, Check, Shield } from "lucide-react"
 import Link from "next/link"
 import confetti from "canvas-confetti"
 import { useToast } from "@/components/ui/use-toast"
@@ -39,6 +39,17 @@ export default function PartnerRegistrationPage() {
 
     const [existingApplication, setExistingApplication] = useState<any>(null)
     const [isCheckingStatus, setIsCheckingStatus] = useState(true)
+    const [copiedField, setCopiedField] = useState<string | null>(null)
+
+    const copyToClipboard = (text: string, field: string) => {
+        navigator.clipboard.writeText(text)
+        setCopiedField(field)
+        toast({
+            title: "Copied!",
+            description: `${field} copied to clipboard.`,
+        })
+        setTimeout(() => setCopiedField(null), 2000)
+    }
 
     useEffect(() => {
         const checkStatus = async () => {
@@ -79,7 +90,7 @@ export default function PartnerRegistrationPage() {
         )
     }
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target
         setFormData(prev => ({ ...prev, [name]: value }))
     }
@@ -129,9 +140,7 @@ export default function PartnerRegistrationPage() {
     return (
         <div className="min-h-screen bg-slate-950 flex flex-col justify-center py-12 sm:px-6 lg:px-8 font-sans relative overflow-hidden">
             {/* Background Gradients */}
-            <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-sky-900/20 rounded-full filter blur-3xl opacity-50 animate-blob"></div>
-                <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-orange-900/20 rounded-full filter blur-3xl opacity-50 animate-blob animation-delay-2000"></div>
+            <div className="absolute inset-0 pointer-events-none focus:outline-none">
             </div>
 
 
@@ -156,8 +165,19 @@ export default function PartnerRegistrationPage() {
                 )}
             </div>
 
-            <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-xl relative z-10">
-                <div className="bg-[#0E192D] py-10 px-6 shadow-2xl shadow-black/20 sm:rounded-3xl sm:px-12 border border-slate-800">
+            <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-3xl relative z-10 px-4">
+                <div
+                    className="bg-[#0E192D] py-4 px-6 shadow-2xl shadow-black/20 sm:rounded-3xl sm:px-10 border border-slate-800 relative overflow-hidden"
+                    style={{
+                        backgroundImage: `url(${existingApplication?.backgroundImage || ''})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                    }}
+                >
+                    {/* Overlay for readability if BG image exists */}
+                    {existingApplication?.backgroundImage && (
+                        <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-[2px]"></div>
+                    )}
 
                     <AnimatePresence mode="wait">
                         {isCheckingStatus ? (
@@ -169,40 +189,123 @@ export default function PartnerRegistrationPage() {
                                 key="status"
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
-                                className="text-center py-8"
+                                className="text-center py-4"
                             >
                                 {existingApplication.status === "approved" ? (
-                                    <>
-                                        <div className="mx-auto flex items-center justify-center h-24 w-24 rounded-full bg-green-900/20 mb-6">
-                                            <CheckCircle className="h-12 w-12 text-green-400" />
-                                        </div>
-                                        <h3 className="text-3xl font-bold text-white mb-2">Congratulations!</h3>
-                                        <p className="text-gray-400 mb-8 max-w-lg mx-auto text-lg">
-                                            We have approved you as our partner. You can now login to your B2B account properly.
-                                        </p>
+                                    <div className="relative">
+                                        {/* Content for approved status */}
+                                        <motion.div
+                                            initial={{ scale: 0 }}
+                                            animate={{ scale: 1 }}
+                                            transition={{ type: "spring", damping: 12, stiffness: 200 }}
+                                            className="mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-gradient-to-br from-green-500/20 to-emerald-500/10 border border-green-500/30 mb-2 relative z-10"
+                                        >
+                                            <CheckCircle className="h-10 w-10 text-green-400 drop-shadow-[0_0_15px_rgba(74,222,128,0.5)]" />
+                                        </motion.div>
+                                        <motion.div
+                                            initial={{ y: 20, opacity: 0 }}
+                                            animate={{ y: 0, opacity: 1 }}
+                                            transition={{ delay: 0.2 }}
+                                        >
+                                            <h3 className="text-3xl font-black bg-gradient-to-r from-white via-green-100 to-white bg-clip-text text-transparent mb-0.5 tracking-tight">
+                                                Congratulations!
+                                            </h3>
+                                            <p className="text-slate-400 mb-4 max-w-lg mx-auto text-base leading-relaxed font-medium">
+                                                Your partnership has been <span className="text-green-400 font-bold">Approved</span>. Welcome to the network!
+                                            </p>
+                                        </motion.div>
 
-                                        <div className="bg-slate-900 rounded-xl p-6 mb-8 max-w-md mx-auto border border-slate-800 text-left">
-                                            <h4 className="font-bold text-white mb-4 border-b border-slate-800 pb-2">Your Credentials</h4>
-                                            <div className="space-y-3">
-                                                <div>
-                                                    <p className="text-xs text-gray-400 uppercase tracking-wider font-semibold">User ID</p>
-                                                    <p className="font-mono text-lg font-bold text-white break-all">{existingApplication.userId}</p>
+                                        <motion.div
+                                            initial={{ y: 30, opacity: 0 }}
+                                            animate={{ y: 0, opacity: 1 }}
+                                            transition={{ delay: 0.4 }}
+                                            className="relative group"
+                                        >
+                                            <div className="absolute -inset-1 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+                                            <div className="relative bg-[#0E192D]/40 backdrop-blur-2xl rounded-2xl p-5 mb-3 w-full border border-white/10 text-left shadow-2xl">
+                                                <div className="flex items-center justify-between mb-4 border-b border-white/10 pb-4">
+                                                    <h4 className="font-black text-white text-xs uppercase tracking-widest flex items-center gap-2">
+                                                        Login Credentials
+                                                    </h4>
+                                                    <span className="px-2 py-0.5 bg-green-500/10 text-green-500 text-[9px] font-black rounded-lg border border-green-500/20 uppercase tracking-tighter">Secure</span>
                                                 </div>
-                                                <div>
-                                                    <p className="text-xs text-gray-400 uppercase tracking-wider font-semibold">Password</p>
-                                                    <p className="font-mono text-lg font-bold text-white">{existingApplication.password || "Use your email password"}</p>
+
+                                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                                    <div className="group/field relative">
+                                                        <p className="text-[10px] text-slate-500 uppercase tracking-widest font-black mb-1.5 ml-1">Partner ID</p>
+                                                        <div className="flex items-center justify-between bg-slate-950/50 p-3 rounded-xl border border-white/5 group-hover/field:border-green-500/30 transition-colors">
+                                                            <p className="font-mono text-lg font-bold text-white tracking-wider">{existingApplication.userId}</p>
+                                                            <button
+                                                                onClick={() => copyToClipboard(existingApplication.userId, "Partner ID")}
+                                                                className="p-1.5 hover:bg-white/5 rounded-lg transition-colors text-slate-400 hover:text-green-400"
+                                                            >
+                                                                {copiedField === "Partner ID" ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="group/field relative">
+                                                        <p className="text-[10px] text-slate-500 uppercase tracking-widest font-black mb-1.5 ml-1">Password</p>
+                                                        <div className="flex items-center justify-between bg-slate-950/50 p-3 rounded-xl border border-white/5 group-hover/field:border-green-500/30 transition-colors">
+                                                            <p className="font-mono text-lg font-bold text-white tracking-wider">
+                                                                {existingApplication.password || "••••••••"}
+                                                            </p>
+                                                            <button
+                                                                onClick={() => copyToClipboard(existingApplication.password || "", "Password")}
+                                                                className="p-1.5 hover:bg-white/5 rounded-lg transition-colors text-slate-400 hover:text-green-400"
+                                                            >
+                                                                {copiedField === "Password" ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                                                            </button>
+                                                        </div>
+                                                        {!existingApplication.password && (
+                                                            <p className="text-[10px] text-slate-500 mt-2 ml-1 italic font-medium">
+                                                                Use your existing email password
+                                                            </p>
+                                                        )}
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </motion.div>
 
-                                        <button
-                                            onClick={() => {
-                                                signOut({ callbackUrl: "/login" })
-                                            }}
-                                            className="inline-flex items-center px-8 py-4 border border-transparent text-base font-bold rounded-xl text-white bg-green-600 hover:bg-green-700 transition-colors shadow-lg shadow-green-600/20"
+                                        <motion.div
+                                            initial={{ y: 20, opacity: 0 }}
+                                            animate={{ y: 0, opacity: 1 }}
+                                            transition={{ delay: 0.6 }}
                                         >
-                                            Log Out & Login as Partner
-                                        </button>
+                                            <button
+                                                onClick={() => signOut({ callbackUrl: "/login" })}
+                                                className="group relative w-full inline-flex items-center justify-center px-8 py-3.5 border border-transparent text-lg font-black rounded-2xl text-white bg-green-600 hover:bg-green-500 transition-all shadow-[0_10px_40px_-10px_rgba(22,163,74,0.5)] hover:shadow-[0_15px_50px_-10px_rgba(22,163,74,0.6)] hover:-translate-y-1 active:scale-[0.98] overflow-hidden"
+                                            >
+                                                <div className="absolute inset-0 bg-gradient-to-r from-green-400/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out"></div>
+                                                <Lock className="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" />
+                                                Log Out & Login as Partner
+                                            </button>
+                                            <p className="mt-2 text-slate-500 text-sm font-medium">
+                                                Need help? <Link href="/contact" className="text-green-400 hover:underline">Contact Support</Link>
+                                            </p>
+                                        </motion.div>
+                                    </div>
+                                ) : existingApplication.status === "rejected" ? (
+                                    <>
+                                        <div className="mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-red-900/20 mb-6 border border-red-500/30">
+                                            <Shield className="h-10 w-10 text-red-500" />
+                                        </div>
+                                        <h3 className="text-2xl font-black text-white mb-2 uppercase tracking-tight">Application Rejected</h3>
+                                        <p className="text-gray-400 mb-8 max-w-sm mx-auto font-medium leading-relaxed">
+                                            We regret to inform you that your partnership request for <span className="text-red-400 font-bold">{existingApplication.name}</span> has been <span className="text-red-500 font-bold">Rejected</span> by our review team.
+                                        </p>
+                                        <div className="space-y-4">
+                                            <Link href="/contact">
+                                                <button className="w-full inline-flex items-center justify-center px-6 py-3 border border-slate-700 text-base font-bold rounded-xl text-white bg-slate-900 hover:bg-slate-800 transition-all shadow-lg active:scale-[0.98]">
+                                                    Contact Support <Mail className="ml-2 h-5 w-5" />
+                                                </button>
+                                            </Link>
+                                            <Link href="/">
+                                                <button className="w-full flex items-center justify-center text-slate-500 hover:text-white text-sm font-bold transition-colors">
+                                                    Back to Home
+                                                </button>
+                                            </Link>
+                                        </div>
                                     </>
                                 ) : (
                                     <>
