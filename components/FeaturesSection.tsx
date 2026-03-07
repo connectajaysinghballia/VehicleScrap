@@ -118,8 +118,8 @@ export default function FeaturesSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: "easeOut" as const }}
         >
-          <span className="text-emerald-400 font-bold uppercase tracking-[0.2em] mb-3 block text-sm">
-            Why Choose AutoScrap
+            <span className="text-emerald-400 font-bold uppercase tracking-[0.2em] mb-3 block text-sm">
+            Why Choose ScrapCenter
           </span>
           <h2 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tight leading-tight">
             Premium <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">Features</span>
@@ -142,7 +142,7 @@ export default function FeaturesSection() {
             <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-emerald-500/10 border border-slate-700/50">
               <img
                 src="/frontpage/features.jpg"
-                alt="AutoScrap Features"
+                alt="ScrapCenter Features"
                 className="w-full h-[450px] object-cover transform hover:scale-105 transition-transform duration-700"
               />
             </div>

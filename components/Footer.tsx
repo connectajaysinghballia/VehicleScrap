@@ -61,7 +61,7 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="space-y-6">
             <div className="mb-6 -ml-6">
-              <Image src="/logo.png" alt="AutoScrap Logo" width={200} height={80} className="h-20 w-auto" />
+              <Image src="/logo.png" alt="ScrapCenter Logo" width={200} height={80} className="h-20 w-auto" />
             </div>
             <p className="text-gray-600 leading-relaxed font-medium">
               Your trusted partner for responsible vehicle recycling. We turn your old vehicles into cash while protecting the environment.
@@ -148,21 +148,21 @@ export default function Footer() {
                 <div className="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center shrink-0 group-hover:bg-emerald-600 transition-colors duration-300">
                   <Phone className="w-5 h-5 text-emerald-600 group-hover:text-white transition-colors" />
                 </div>
-                <div className="flex-1">
+                <a href="tel:+919839447733" className="flex-1 hover:text-emerald-600 transition-colors">
                   <p className="text-sm font-semibold text-gray-900">Call Us</p>
                   <p className="text-gray-600 text-sm font-medium">
                     +91-9839447733
                   </p>
-                </div>
+                </a>
               </li>
               <li className="flex items-center gap-4 group cursor-default">
                 <div className="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center shrink-0 group-hover:bg-emerald-600 transition-colors duration-300">
                   <Mail className="w-5 h-5 text-emerald-600 group-hover:text-white transition-colors" />
                 </div>
-                <div className="flex-1">
+                <a href="mailto:contact@scrapcentre.com" className="flex-1 hover:text-emerald-600 transition-colors">
                   <p className="text-sm font-semibold text-gray-900">Email Us</p>
                   <p className="text-gray-600 text-sm break-all">contact@scrapcentre.com</p>
-                </div>
+                </a>
               </li>
             </ul>
           </div>
@@ -174,10 +174,10 @@ export default function Footer() {
       <div className="w-full bg-slate-950 relative z-10">
         <div className="container mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-white text-sm font-medium">
-            © {new Date().getFullYear()} AutoScrap. All rights reserved.
+            © {new Date().getFullYear()} ScrapCenter. All rights reserved.
           </p>
           <p className="text-white text-sm font-medium flex items-center gap-1">
-            Made with <span className="text-emerald-500 animate-pulse">♥</span> in India
+            Made by Novalytix Technology Services
           </p>
         </div>
       </div>
