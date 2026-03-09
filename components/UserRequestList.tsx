@@ -191,7 +191,7 @@ export default function UserRequestList({ requests }: UserRequestListProps) {
                             initial={{ opacity: 0, scale: 0.9, y: 20 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                            className="bg-[#0E192D] rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden relative border border-slate-800"
+                            className="bg-[#0E192D] rounded-3xl shadow-2xl w-full max-w-md mx-auto overflow-hidden relative border border-slate-800 flex flex-col max-h-[90vh]"
                         >
                             {/* Close Button */}
                             <button
@@ -202,27 +202,27 @@ export default function UserRequestList({ requests }: UserRequestListProps) {
                             </button>
 
                             {/* Modal Header */}
-                            <div className={`${getTypeColor(selectedRequest.type).solid} p-8 text-white relative overflow-hidden`}>
+                            <div className={`${getTypeColor(selectedRequest.type).solid} p-5 sm:p-6 text-white relative overflow-hidden shrink-0`}>
                                 {/* Decorative circle */}
-                                <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
+                                <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
 
-                                <div className="flex items-center gap-3 mb-2 text-white/90 relative z-10">
+                                <div className="flex items-center gap-3 mb-1 text-white/90 relative z-10">
                                     {getTypeIcon(selectedRequest.type)}
-                                    <span className="text-sm font-bold uppercase tracking-wider">{getTypeDisplayName(selectedRequest.type)}</span>
+                                    <span className="text-xs sm:text-sm font-bold uppercase tracking-wider">{getTypeDisplayName(selectedRequest.type)}</span>
                                 </div>
-                                <h2 className="text-3xl font-black relative z-10">{getRequestTitle(selectedRequest)}</h2>
-                                <p className="text-white/80 mt-1 font-medium italic relative z-10">{getRequestSubtitle(selectedRequest)}</p>
+                                <h2 className="text-xl sm:text-2xl font-black relative z-10">{getRequestTitle(selectedRequest)}</h2>
+                                <p className="text-sm text-white/80 mt-1 font-medium italic relative z-10">{getRequestSubtitle(selectedRequest)}</p>
                             </div>
 
                             {/* Modal Content */}
-                            <div className="p-8 space-y-8 max-h-[70vh] overflow-y-auto scrollbar-hide">
+                            <div className="p-5 sm:p-6 space-y-6 overflow-y-auto scrollbar-hide">
                                 {/* Estimated Value Banner - valuation only */}
                                 {selectedRequest.type === 'valuation' && selectedRequest.estimatedValue != null && (
-                                    <div className="flex items-center justify-between p-4 bg-emerald-900/20 rounded-2xl border border-emerald-900/30">
-                                        <span className="text-sm font-bold text-emerald-400 uppercase tracking-wide flex items-center gap-2">
+                                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-emerald-900/20 rounded-2xl border border-emerald-900/30 gap-2">
+                                        <span className="text-xs sm:text-sm font-bold text-emerald-400 uppercase tracking-wide flex items-center gap-2">
                                             Estimated Scrap Value
                                         </span>
-                                        <span className="text-2xl font-black text-emerald-300">
+                                        <span className="text-xl sm:text-2xl font-black text-emerald-300">
                                             ₹{selectedRequest.estimatedValue.toLocaleString('en-IN')}
                                         </span>
                                     </div>
@@ -235,7 +235,7 @@ export default function UserRequestList({ requests }: UserRequestListProps) {
                                 </div>
 
                                 {/* Details Grid - Dynamic based on type */}
-                                <div className="grid grid-cols-2 gap-6">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                     {selectedRequest.type === 'valuation' && (
                                         <>
                                             <DetailItem icon={<Car />} label="Vehicle Type" value={selectedRequest.vehicleType} />
@@ -287,9 +287,9 @@ export default function UserRequestList({ requests }: UserRequestListProps) {
                                 </div>
 
                                 {/* Contact Information */}
-                                <div className="pt-6 border-t border-slate-800">
-                                    <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-4">Contact Information</p>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-orange-900/10 p-6 rounded-2xl border border-orange-900/20">
+                                <div className="pt-5 border-t border-slate-800">
+                                    <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3">Contact Information</p>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-orange-900/10 p-4 sm:p-5 rounded-2xl border border-orange-900/20">
                                         <div className="flex items-center gap-3">
                                             <div className="w-10 h-10 bg-slate-800 rounded-xl flex items-center justify-center shadow-sm text-orange-500">
                                                 <UserIcon className="w-5 h-5" />
@@ -322,10 +322,10 @@ export default function UserRequestList({ requests }: UserRequestListProps) {
                             </div>
 
                             {/* Action Button */}
-                            <div className="p-6 bg-slate-900 border-t border-slate-800">
+                            <div className="p-4 sm:p-5 bg-slate-900 border-t border-slate-800 shrink-0">
                                 <button
                                     onClick={() => setSelectedRequest(null)}
-                                    className="w-full bg-white hover:bg-gray-200 text-slate-900 font-bold py-4 rounded-xl transition-all shadow-lg active:scale-[0.98]"
+                                    className="w-full bg-white hover:bg-gray-200 text-slate-900 font-bold py-3 sm:py-3.5 rounded-xl transition-all shadow-lg active:scale-[0.98]"
                                 >
                                     Done
                                 </button>

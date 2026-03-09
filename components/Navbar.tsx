@@ -39,6 +39,7 @@ export default function Navbar() {
   const { data: session } = useSession()
   const router = useRouter()
   const pathname = usePathname()
+  const displayName = session?.user?.name === "Novalytix Admin" ? "Admin" : session?.user?.name;
 
   // Close menus when route changes
   useEffect(() => {
@@ -250,10 +251,10 @@ export default function Navbar() {
                 <div className="relative group">
                   <button className={`flex items-center gap-2 font-medium transition-colors ${isTransparent ? "text-white hover:text-emerald-300" : "text-gray-600 hover:text-emerald-700"}`}>
                     <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center border border-emerald-200">
-                      <span className="text-emerald-700 font-bold text-sm">{(session.user?.name || "U")[0]}</span>
+                      <span className="text-emerald-700 font-bold text-sm">{(displayName || "U")[0]}</span>
                     </div>
                     <div className="text-left hidden xl:block">
-                      <p className={`text-xs font-bold leading-tight ${isTransparent ? "text-white" : "text-slate-900"}`}>{session.user?.name}</p>
+                      <p className={`text-xs font-bold leading-tight ${isTransparent ? "text-white" : "text-slate-900"}`}>{displayName}</p>
                       <p className={`text-[10px] ${isTransparent ? "text-emerald-100" : "text-slate-500"}`}>View Profile</p>
                     </div>
                     <ChevronDown className="w-3 h-3 ml-1" />
@@ -261,7 +262,7 @@ export default function Navbar() {
                   {/* User Dropdown */}
                   <div className="absolute top-full right-0 mt-2 bg-[#cccccc] border border-gray-100 rounded-lg shadow-xl py-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-in-out z-50">
                     <div className="px-4 py-3 border-b border-gray-50 bg-gray-50/50">
-                      <p className="text-sm font-bold text-gray-900 truncate">{session.user?.name}</p>
+                      <p className="text-sm font-bold text-gray-900 truncate">{displayName}</p>
                       <p className="text-xs text-gray-500 truncate">{session.user?.email}</p>
                     </div>
                     {(session.user as any).role === "admin" && (
@@ -502,10 +503,10 @@ export default function Navbar() {
                     <div className="pt-4 border-t border-gray-100">
                       <div className="flex items-center gap-3 px-2 mb-4">
                         <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold border border-emerald-200">
-                          {(session.user?.name || "U")[0]}
+                          {(displayName || "U")[0]}
                         </div>
                         <div>
-                          <p className="font-bold text-gray-900">{session.user?.name}</p>
+                          <p className="font-bold text-gray-900">{displayName}</p>
                           <p className="text-xs text-gray-500">{session.user?.email}</p>
                         </div>
                       </div>

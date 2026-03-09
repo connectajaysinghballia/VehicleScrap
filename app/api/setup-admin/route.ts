@@ -9,9 +9,9 @@ export async function GET(req: Request) {
         const emailParam = searchParams.get("email")
 
         // Hardcoded admin Fix
-        // Admin 1: Novalytix
-        const admin1Email = "novalytix@gmail.com"
-        const admin1Password = "novalytix@123"
+        // Admin 1: Admin
+        const admin1Email = "admin@gmail.com"
+        const admin1Password = "admin@123"
 
         // Admin 2: Simar (Original)
         const admin2Email = "simaradmin@gmail.com"
@@ -31,12 +31,12 @@ export async function GET(req: Request) {
         }
 
         // Create/Fix specific admin
-        // Create/Update Admin 1 (Novalytix)
+        // Create/Update Admin 1 (Admin)
         const hashedPwd1 = await bcrypt.hash(admin1Password, 10)
         await User.findOneAndUpdate(
             { email: admin1Email },
             {
-                name: "Novalytix Admin",
+                name: "Admin",
                 email: admin1Email,
                 password: hashedPwd1,
                 role: "admin"

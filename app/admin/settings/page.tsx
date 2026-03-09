@@ -8,9 +8,31 @@ import { useToast } from "@/components/ui/use-toast"
 export default function AdminSettingsPage() {
     const { toast } = useToast()
     const [scrapPrice, setScrapPrice] = useState<string>("")
+    const [scrapDiscount, setScrapDiscount] = useState<string>("")
     const [pickupCharge, setPickupCharge] = useState<string>("")
+    const [pickupDiscount, setPickupDiscount] = useState<string>("")
     const [isLoading, setIsLoading] = useState(true)
     const [isSaving, setIsSaving] = useState(false)
+
+    const applyScrapDiscount = () => {
+        const price = parseFloat(scrapPrice);
+        const discount = parseFloat(scrapDiscount);
+        if (!isNaN(price) && !isNaN(discount)) {
+            const newPrice = price - (price * (discount / 100));
+            setScrapPrice(newPrice.toFixed(2).toString());
+            setScrapDiscount("");
+        }
+    }
+
+    const applyPickupDiscount = () => {
+        const charge = parseFloat(pickupCharge);
+        const discount = parseFloat(pickupDiscount);
+        if (!isNaN(charge) && !isNaN(discount)) {
+            const newCharge = charge - (charge * (discount / 100));
+            setPickupCharge(newCharge.toFixed(2).toString());
+            setPickupDiscount("");
+        }
+    }
 
     useEffect(() => {
         fetchSettings()
@@ -155,20 +177,38 @@ export default function AdminSettingsPage() {
                                             </p>
                                         </div>
                                         <div className="space-y-3">
-                                            <div className="relative group">
-                                                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                                    <span className="text-gray-400 dark:text-slate-500 font-bold group-focus-within:text-red-500 transition-colors">₹</span>
+                                            <div className="flex flex-col sm:flex-row gap-2">
+                                                <div className="relative group flex-1">
+                                                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                                        <span className="text-gray-400 dark:text-slate-500 font-bold group-focus-within:text-red-500 transition-colors">₹</span>
+                                                    </div>
+                                                    <input
+                                                        type="number"
+                                                        step="0.01"
+                                                        min="0.01"
+                                                        required
+                                                        value={scrapPrice}
+                                                        onChange={(e) => setScrapPrice(e.target.value)}
+                                                        className="w-full pl-10 pr-4 py-4 bg-gray-50 dark:bg-slate-950 border border-gray-300 dark:border-slate-800 focus:border-red-500 rounded-xl outline-none text-gray-900 dark:text-white font-mono text-lg transition-all focus:ring-4 focus:ring-red-500/10 placeholder-gray-400 dark:placeholder-slate-700 hover:border-gray-400 dark:hover:border-slate-700"
+                                                        placeholder="0.00"
+                                                    />
                                                 </div>
-                                                <input
-                                                    type="number"
-                                                    step="0.01"
-                                                    min="0.01"
-                                                    required
-                                                    value={scrapPrice}
-                                                    onChange={(e) => setScrapPrice(e.target.value)}
-                                                    className="w-full pl-10 pr-4 py-4 bg-gray-50 dark:bg-slate-950 border border-gray-300 dark:border-slate-800 focus:border-red-500 rounded-xl outline-none text-gray-900 dark:text-white font-mono text-lg transition-all focus:ring-4 focus:ring-red-500/10 placeholder-gray-400 dark:placeholder-slate-700 hover:border-gray-400 dark:hover:border-slate-700"
-                                                    placeholder="0.00"
-                                                />
+                                                <div className="flex items-center gap-2 sm:w-[35%] w-full">
+                                                    <input
+                                                        type="number"
+                                                        placeholder="% Off"
+                                                        value={scrapDiscount}
+                                                        onChange={(e) => setScrapDiscount(e.target.value)}
+                                                        className="w-full px-4 py-4 bg-gray-50 dark:bg-slate-950 border border-gray-300 dark:border-slate-800 focus:border-red-500 rounded-xl outline-none text-gray-900 dark:text-white font-mono text-sm transition-all focus:ring-4 focus:ring-red-500/10 placeholder-gray-400 dark:placeholder-slate-700 hover:border-gray-400 dark:hover:border-slate-700"
+                                                    />
+                                                    <button
+                                                        type="button"
+                                                        onClick={applyScrapDiscount}
+                                                        className="px-4 py-4 bg-gray-200 dark:bg-slate-800 hover:bg-gray-300 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-300 font-bold rounded-xl transition-all shadow-sm whitespace-nowrap"
+                                                    >
+                                                        Apply
+                                                    </button>
+                                                </div>
                                             </div>
                                             <div className="flex items-start gap-2 text-xs font-semibold text-gray-500 dark:text-slate-500 bg-gray-50 dark:bg-slate-950/50 p-3 rounded-lg border border-gray-200 dark:border-slate-800">
                                                 <AlertCircle className="w-4 h-4 text-emerald-500 shrink-0" />
@@ -188,22 +228,40 @@ export default function AdminSettingsPage() {
                                             </p>
                                         </div>
                                         <div className="space-y-3">
-                                            <div className="relative group">
-                                                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                                    <span className="text-gray-400 dark:text-slate-500 font-bold group-focus-within:text-red-500 transition-colors">₹</span>
+                                            <div className="flex flex-col sm:flex-row gap-2">
+                                                <div className="relative group flex-1">
+                                                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                                        <span className="text-gray-400 dark:text-slate-500 font-bold group-focus-within:text-red-500 transition-colors">₹</span>
+                                                    </div>
+                                                    <input
+                                                        type="number"
+                                                        step="0.01"
+                                                        min="0"
+                                                        required
+                                                        value={pickupCharge}
+                                                        onChange={(e) => setPickupCharge(e.target.value)}
+                                                        className="w-full pl-10 pr-16 py-4 bg-gray-50 dark:bg-slate-950 border border-gray-300 dark:border-slate-800 focus:border-red-500 rounded-xl outline-none text-gray-900 dark:text-white font-mono text-lg transition-all focus:ring-4 focus:ring-red-500/10 placeholder-gray-400 dark:placeholder-slate-700 hover:border-gray-400 dark:hover:border-slate-700"
+                                                        placeholder="0.00"
+                                                    />
+                                                    <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+                                                        <span className="text-gray-400 dark:text-slate-600 font-bold text-sm bg-gray-100 dark:bg-slate-900 px-2 py-1 rounded">/ KM</span>
+                                                    </div>
                                                 </div>
-                                                <input
-                                                    type="number"
-                                                    step="0.01"
-                                                    min="0"
-                                                    required
-                                                    value={pickupCharge}
-                                                    onChange={(e) => setPickupCharge(e.target.value)}
-                                                    className="w-full pl-10 pr-4 py-4 bg-gray-50 dark:bg-slate-950 border border-gray-300 dark:border-slate-800 focus:border-red-500 rounded-xl outline-none text-gray-900 dark:text-white font-mono text-lg transition-all focus:ring-4 focus:ring-red-500/10 placeholder-gray-400 dark:placeholder-slate-700 hover:border-gray-400 dark:hover:border-slate-700"
-                                                    placeholder="0.00"
-                                                />
-                                                <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
-                                                    <span className="text-gray-400 dark:text-slate-600 font-bold text-sm bg-gray-100 dark:bg-slate-900 px-2 py-1 rounded">/ KM</span>
+                                                <div className="flex items-center gap-2 sm:w-[35%] w-full">
+                                                    <input
+                                                        type="number"
+                                                        placeholder="% Off"
+                                                        value={pickupDiscount}
+                                                        onChange={(e) => setPickupDiscount(e.target.value)}
+                                                        className="w-full px-4 py-4 bg-gray-50 dark:bg-slate-950 border border-gray-300 dark:border-slate-800 focus:border-red-500 rounded-xl outline-none text-gray-900 dark:text-white font-mono text-sm transition-all focus:ring-4 focus:ring-red-500/10 placeholder-gray-400 dark:placeholder-slate-700 hover:border-gray-400 dark:hover:border-slate-700"
+                                                    />
+                                                    <button
+                                                        type="button"
+                                                        onClick={applyPickupDiscount}
+                                                        className="px-4 py-4 bg-gray-200 dark:bg-slate-800 hover:bg-gray-300 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-300 font-bold rounded-xl transition-all shadow-sm whitespace-nowrap"
+                                                    >
+                                                        Apply
+                                                    </button>
                                                 </div>
                                             </div>
                                             <div className="flex items-start gap-2 text-xs font-semibold text-gray-500 dark:text-slate-500 bg-gray-50 dark:bg-slate-950/50 p-3 rounded-lg border border-gray-200 dark:border-slate-800">

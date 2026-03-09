@@ -121,7 +121,7 @@ export default async function ProfilePage() {
                                 <User className="w-10 h-10" />
                             </div>
                             <div>
-                                <h1 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight">{session.user?.name}</h1>
+                                <h1 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight">{session.user?.name === "Novalytix Admin" ? "Admin" : session.user?.name}</h1>
                                 <p className="text-gray-500 dark:text-gray-400 font-medium">{session.user?.email}</p>
                                 <div className="mt-3 inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold bg-gray-100 dark:bg-slate-800 text-gray-800 dark:text-gray-300 border border-gray-200 dark:border-slate-700 uppercase tracking-wide">
                                     {allRequests.length} Total Requests

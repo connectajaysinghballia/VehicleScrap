@@ -1,14 +1,14 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { Bell, Clock, FileText, MessageSquare, Car, RefreshCcw, ShoppingCart, ChevronRight } from "lucide-react"
+import { Bell, Clock, FileText, MessageSquare, Car, RefreshCcw, ShoppingCart, ChevronRight, Building2, Database } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import { formatDistanceToNow } from "date-fns"
 
 interface Notification {
     id: string
-    type: "valuation" | "sell" | "exchange" | "buy" | "contact"
+    type: "valuation" | "sell" | "exchange" | "buy" | "contact" | "b2b_registration" | "b2b_bulk"
     title: string
     description: string
     createdAt: string
@@ -58,6 +58,8 @@ export default function NotificationBox() {
             case "exchange": return <RefreshCcw className="w-4 h-4 text-purple-500" />
             case "buy": return <ShoppingCart className="w-4 h-4 text-orange-500" />
             case "contact": return <MessageSquare className="w-4 h-4 text-pink-500" />
+            case "b2b_registration": return <Building2 className="w-4 h-4 text-orange-500" />
+            case "b2b_bulk": return <Database className="w-4 h-4 text-indigo-500" />
             default: return <Bell className="w-4 h-4 text-slate-400" />
         }
     }

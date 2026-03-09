@@ -138,19 +138,16 @@ export default function PartnerRegistrationPage() {
     }
 
     return (
-        <div className="min-h-screen bg-slate-950 flex flex-col justify-center py-12 sm:px-6 lg:px-8 font-sans relative overflow-hidden">
+        <div className="min-h-screen bg-slate-950 flex flex-col justify-center pt-32 pb-16 sm:px-6 lg:px-8 font-sans relative overflow-hidden">
             {/* Background Gradients */}
             <div className="absolute inset-0 pointer-events-none focus:outline-none">
             </div>
 
 
             <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
-                <Link href="/login" className="flex items-center justify-center text-gray-400 hover:text-white mb-8 transition-colors group">
-                    <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" /> Back to Login
-                </Link>
                 {!existingApplication && (
                     <>
-                        <div className="flex justify-center">
+                        <div className="flex justify-center mt-6">
                             <div className="w-20 h-20 bg-[#0E192D] rounded-2xl shadow-xl flex items-center justify-center border border-slate-800">
                                 <Building2 className="w-10 h-10 text-orange-500" />
                             </div>
@@ -333,22 +330,41 @@ export default function PartnerRegistrationPage() {
                                 className="space-y-6"
                                 onSubmit={handleSubmit}
                             >
-                                {/* Name */}
-                                <div>
-                                    <label className="block text-sm font-bold text-gray-300 ml-1 mb-2">Business / Owner Name</label>
-                                    <div className="relative group">
-                                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                            <User className="h-5 w-5 text-gray-400 group-focus-within:text-orange-500 transition-colors" />
+                                {/* Row 1: Name and Contact */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label className="block text-sm font-bold text-gray-300 ml-1 mb-2">Business / Owner Name</label>
+                                        <div className="relative group">
+                                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                                <User className="h-5 w-5 text-gray-400 group-focus-within:text-orange-500 transition-colors" />
+                                            </div>
+                                            <input
+                                                type="text"
+                                                name="name"
+                                                required
+                                                value={formData.name}
+                                                onChange={handleChange}
+                                                className="block w-full pl-11 pr-4 py-4 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-gray-500 focus:bg-slate-900 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all duration-200"
+                                                placeholder="Enter full name"
+                                            />
                                         </div>
-                                        <input
-                                            type="text"
-                                            name="name"
-                                            required
-                                            value={formData.name}
-                                            onChange={handleChange}
-                                            className="block w-full pl-11 pr-4 py-4 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-gray-500 focus:bg-slate-900 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all duration-200"
-                                            placeholder="Enter full name"
-                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-bold text-gray-300 ml-1 mb-2">Contact Number</label>
+                                        <div className="relative group">
+                                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                                <Phone className="h-5 w-5 text-gray-400 group-focus-within:text-orange-500 transition-colors" />
+                                            </div>
+                                            <input
+                                                type="tel"
+                                                name="contactNumber"
+                                                required
+                                                value={formData.contactNumber}
+                                                onChange={handleChange}
+                                                className="block w-full pl-11 pr-4 py-4 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-gray-500 focus:bg-slate-900 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all duration-200"
+                                                placeholder="+91 98765 43210"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
 
@@ -372,7 +388,7 @@ export default function PartnerRegistrationPage() {
                                 </div>
 
                                 {/* State & City */}
-                                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                                     <div>
                                         <label className="block text-sm font-bold text-gray-300 ml-1 mb-2">State</label>
                                         <select
@@ -426,54 +442,41 @@ export default function PartnerRegistrationPage() {
                                     </div>
                                 )}
 
-                                {/* Pincode */}
-                                <div>
-                                    <label className="block text-sm font-bold text-gray-300 ml-1 mb-2">Pincode</label>
-                                    <input
-                                        type="text"
-                                        name="pincode"
-                                        required
-                                        value={formData.pincode}
-                                        onChange={handleChange}
-                                        className="block w-full px-4 py-4 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-gray-500 focus:bg-slate-900 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all duration-200"
-                                        placeholder="110001"
-                                    />
-                                </div>
-
-                                {/* Contact & Email */}
-                                <div>
-                                    <label className="block text-sm font-bold text-gray-300 ml-1 mb-2">Contact Number</label>
-                                    <div className="relative group">
-                                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                            <Phone className="h-5 w-5 text-gray-400 group-focus-within:text-orange-500 transition-colors" />
+                                {/* Row 4: Pincode and Email */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label className="block text-sm font-bold text-gray-300 ml-1 mb-2">Email Address</label>
+                                        <div className="relative group">
+                                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                                <Mail className="h-5 w-5 text-gray-400 group-focus-within:text-orange-500 transition-colors" />
+                                            </div>
+                                            <input
+                                                type="email"
+                                                name="email"
+                                                required
+                                                value={formData.email}
+                                                onChange={handleChange}
+                                                className="block w-full pl-11 pr-4 py-4 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-gray-500 focus:bg-slate-900 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all duration-200"
+                                                placeholder="partner@business.com"
+                                            />
                                         </div>
-                                        <input
-                                            type="tel"
-                                            name="contactNumber"
-                                            required
-                                            value={formData.contactNumber}
-                                            onChange={handleChange}
-                                            className="block w-full pl-11 pr-4 py-4 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-gray-500 focus:bg-slate-900 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all duration-200"
-                                            placeholder="+91 98765 43210"
-                                        />
                                     </div>
-                                </div>
-
-                                <div>
-                                    <label className="block text-sm font-bold text-gray-300 ml-1 mb-2">Email Address</label>
-                                    <div className="relative group">
-                                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                            <Mail className="h-5 w-5 text-gray-400 group-focus-within:text-orange-500 transition-colors" />
+                                    <div>
+                                        <label className="block text-sm font-bold text-gray-300 ml-1 mb-2">Pincode</label>
+                                        <div className="relative group">
+                                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                                <MapPin className="h-5 w-5 text-gray-400 group-focus-within:text-orange-500 transition-colors" />
+                                            </div>
+                                            <input
+                                                type="text"
+                                                name="pincode"
+                                                required
+                                                value={formData.pincode}
+                                                onChange={handleChange}
+                                                className="block w-full pl-11 pr-4 py-4 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-gray-500 focus:bg-slate-900 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all duration-200"
+                                                placeholder="110001"
+                                            />
                                         </div>
-                                        <input
-                                            type="email"
-                                            name="email"
-                                            required
-                                            value={formData.email}
-                                            onChange={handleChange}
-                                            className="block w-full pl-11 pr-4 py-4 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-gray-500 focus:bg-slate-900 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all duration-200"
-                                            placeholder="partner@business.com"
-                                        />
                                     </div>
                                 </div>
 
